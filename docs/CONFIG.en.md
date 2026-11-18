@@ -29,7 +29,7 @@ Config file: `~/.config/gf-shell/config.json`
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "volume", "battery", "tray",
+    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
@@ -138,7 +138,8 @@ The Settings → System → Language selector switches live; every string bound 
 | `clock` | Centred clock + date + AM/PM (or H24); click for the calendar |
 | `media` | Now-playing transmission + play/pause |
 | `stats` | CPU / MEM segmented readout |
-| `net` | Wi-Fi / wired + four signal bars + SSID |
+| `net` | Wi-Fi / wired + four signal bars + SSID; click for link details and nearby connectable Wi-Fi |
+| `bluetooth` | Bluetooth state and connected count; click for adapter and known devices |
 | `volume` | Volume; left click mutes, right click opens the control centre, scroll adjusts |
 | `battery` | Charge / charging; turns red when low |
 | `tray` | StatusNotifierItem icons |

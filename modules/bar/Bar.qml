@@ -61,7 +61,7 @@ PanelWindow {
 
     readonly property var leftItems: Settings.get("bar.left", ["launcher", "workspaces", "title"])
     readonly property var centerItems: Settings.get("bar.center", ["clock"])
-    readonly property var rightItems: Settings.get("bar.right", ["stats", "control", "power"])
+    readonly property var rightItems: Settings.get("bar.right", ["stats", "net", "bluetooth", "control", "power"])
 
     // 窄屏幕按优先级隐藏
     function itemVisible(kind) {
@@ -72,6 +72,7 @@ PanelWindow {
         case "stats": return w >= Theme.px(1050);
         case "tray": return w >= Theme.px(950);
         case "net": return w >= Theme.px(840);
+        case "bluetooth": return w >= Theme.px(900);
         default: return true;
         }
     }

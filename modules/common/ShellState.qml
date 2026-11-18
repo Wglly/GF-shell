@@ -29,6 +29,7 @@ QtObject {
     }
 
     function close() {
+        state.popupKind = "";
         state.open("none");
     }
 

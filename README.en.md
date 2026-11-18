@@ -39,7 +39,7 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 
 | Module | Description |
 | --- | --- |
-| **Status bar** | G&K emblem block, operator entry, echelon/workspace numbers, active window title, centred clock, media, CPU/memory, network, volume, battery, system tray, and entries for the operation map, tactical control and system halt. Secondary blocks are hidden automatically on narrow screens. Each block can be switched off and moved between left / centre / right in Settings → Status bar → Components. |
+| **Status bar** | G&K emblem block, operator entry, echelon/workspace numbers, active window title, centred clock, media, CPU/memory, network, Bluetooth, volume, battery, system tray, and entries for the operation map, tactical control and system halt. Secondary blocks are hidden automatically on narrow screens. Each block can be switched off and moved between left / centre / right in Settings → Status bar → Components. Network, Bluetooth and performance are independent blocks; click them for details, and the network panel lists nearby Wi-Fi networks. |
 | **Deployment terminal (Launcher)** | Full-screen unit list with categories (all/recent/network/development/media/office/combat/system), fuzzy search, keyboard navigation, a unit dossier on the right (CLASS/STATUS/SOURCE/EXEC) and a DEPLOY button. |
 | **Tactical control (Control Center)** | Link status (Wi-Fi/Bluetooth), segmented volume/brightness sliders, module switches, CPU/MEM/BAT segmented gauges, notification history and media controls. |
 | **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window; drag a unit onto another sector to move that window. |
@@ -100,6 +100,10 @@ Also:
 | Light theme: desktop | Light theme: launcher | Settings: scale & surface |
 | --- | --- | --- |
 | ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
+
+| Network details & nearby Wi-Fi | Bluetooth details | Performance details |
+| --- | --- | --- |
+| ![Network popup](docs/screenshots/24-network-popup.png) | ![Bluetooth popup](docs/screenshots/25-bluetooth-popup.png) | ![Stats popup](docs/screenshots/26-stats-popup.png) |
 
 The same shell running on **niri** (nested inside Hyprland for testing):
 
@@ -260,7 +264,7 @@ Config file: `~/.config/gf-shell/config.json` (created on first start).
 Available `bar.left/center/right` blocks:
 
 ```
-launcher | emblem | user | workspaces | title | clock | media | stats | net | volume
+launcher | emblem | user | workspaces | title | clock | media | stats | net | bluetooth | volume
 | battery | tray | overview | control | power
 ```
 

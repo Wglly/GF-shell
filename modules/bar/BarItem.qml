@@ -2,7 +2,7 @@ import QtQuick
 import qs.modules.common
 
 // BarItem — 按 kind 动态加载 bar 上的一个块。
-// kind: launcher | emblem | workspaces | title | clock | media | stats | net
+// kind: launcher | emblem | workspaces | title | clock | media | stats | net | bluetooth
 //       | volume | battery | tray | overview | control | power
 Item {
     id: root
@@ -35,6 +35,8 @@ Item {
                 return Qt.resolvedUrl("blocks/StatsBlock.qml");
             case "net":
                 return Qt.resolvedUrl("blocks/NetBlock.qml");
+            case "bluetooth":
+                return Qt.resolvedUrl("blocks/BluetoothBlock.qml");
             case "volume":
                 return Qt.resolvedUrl("blocks/VolumeBlock.qml");
             case "battery":

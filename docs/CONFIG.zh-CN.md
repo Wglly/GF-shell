@@ -29,7 +29,7 @@
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "volume", "battery", "tray",
+    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
@@ -138,8 +138,9 @@
 | `title` | 当前单位（窗口）appId + 标题 |
 | `clock` | 中央时钟 + 日期 + AM/PM（或 H24），点击打开日历 |
 | `media` | 正在播放的通讯；点击展开媒体 + 歌词弹出栏 |
-| `stats` | CPU / MEM 分段读数 |
-| `net` | Wi-Fi / 有线 + 四段信号柱 + SSID |
+| `stats` | CPU / MEM 分段读数；点击展开负载、内存、磁盘、网络与前 5 进程 |
+| `net` | Wi-Fi / 有线 + 四段信号柱 + SSID；点击展开网络详情与附近可连接 Wi-Fi |
+| `bluetooth` | 蓝牙状态与已连接数量；点击展开适配器与已知设备 |
 | `volume` | 音量，左键静音、右键控制中心、滚轮调整 |
 | `battery` | 电量 / 充电，低电变红 |
 | `tray` | StatusNotifierItem 图标 |

@@ -1,6 +1,7 @@
 singleton Apps 1.0 Apps.qml
 singleton Audio 1.0 Audio.qml
 singleton Battery 1.0 Battery.qml
+singleton Blue 1.0 Blue.qml
 singleton Capture 1.0 Capture.qml
 singleton Compositor 1.0 Compositor.qml
 singleton I18n 1.0 I18n.qml

@@ -58,7 +58,7 @@ QtObject {
         "sidebar.incomingLog": "INCOMING LOG", "sidebar.noTransmissions": "NO NEW TRANSMISSIONS",
         "sidebar.sector": "G&K  //  S09 COMMAND", "sidebar.array": "G&K  //  COMMS ARRAY",
 
-        "popup.operatorFile": "OPERATOR FILE", "popup.transmissionLog": "TRANSMISSION LOG",
+        "popup.operatorFile": "OPERATOR FILE", "popup.network": "NETWORK LINK", "popup.bluetooth": "BLUETOOTH LINK", "popup.stats": "SYSTEM PERFORMANCE", "popup.transmissionLog": "TRANSMISSION LOG",
         "popup.hint": "ESC  /  CLICK OUTSIDE  TO CLOSE",
 
         "user.session": "SESSION", "user.host": "HOST", "user.uptime": "UPTIME",
@@ -216,7 +216,7 @@ QtObject {
         "widget.mission": "CURRENT MISSION", "dock.title": "ECHELON",
         "dock.pin": "PIN TO DOCK", "dock.unpin": "UNPIN", "dock.newWindow": "NEW WINDOW", "dock.closeWindow": "CLOSE",
         "bar.launcher": "Deployment", "bar.workspaces": "Echelon", "bar.media": "Now playing",
-        "bar.stats": "System load", "bar.network": "Network", "bar.volume": "Volume",
+        "bar.stats": "System load", "bar.network": "Network", "bar.bluetooth": "Bluetooth", "bar.volume": "Volume",
         "bar.battery": "Power cell", "bar.tray": "Tray", "bar.overview": "Operation map",
         "bar.control": "Tactical control", "bar.power": "System halt"
     })
@@ -351,7 +351,7 @@ QtObject {
         "sidebar.incomingLog": "通訊紀錄", "sidebar.noTransmissions": "目前沒有新通訊",
         "sidebar.sector": "G&K  //  S09 指揮部", "sidebar.array": "G&K  //  通訊陣列",
 
-        "popup.operatorFile": "操作員檔案", "popup.transmissionLog": "通訊紀錄",
+        "popup.operatorFile": "操作員檔案", "popup.network": "網路鏈路", "popup.bluetooth": "藍牙鏈路", "popup.stats": "系統性能", "popup.transmissionLog": "通訊紀錄",
         "popup.hint": "ESC  /  點擊外部關閉",
 
         "user.session": "會話", "user.host": "主機", "user.uptime": "上線時間",
@@ -398,7 +398,7 @@ QtObject {
         "dock.pin": "固定到 Dock", "dock.unpin": "取消固定", "dock.newWindow": "新視窗", "dock.closeWindow": "關閉",
         "bar.launcher": "部署終端", "bar.workspaces": "梯隊", "bar.user": "操作員",
         "bar.clock": "時計", "bar.title": "視窗標題", "bar.media": "播放",
-        "bar.stats": "系統負載", "bar.network": "網路", "bar.volume": "音量",
+        "bar.stats": "系統負載", "bar.network": "網路", "bar.bluetooth": "藍牙", "bar.volume": "音量",
         "bar.battery": "電池", "bar.tray": "托盤", "bar.overview": "作戰地圖",
         "bar.control": "戰術控制", "bar.power": "系統停機"
     })
@@ -627,6 +627,9 @@ QtObject {
         "sidebar.sector": "G&K  //  S09 指挥部",
         "sidebar.array": "G&K  //  通讯阵列",
         "popup.operatorFile": "操作员档案",
+        "popup.network": "网路链路",
+        "popup.bluetooth": "蓝牙链路",
+        "popup.stats": "系统性能",
         "popup.transmissionLog": "通讯纪录",
         "popup.hint": "ESC  /  点击外部关闭",
         "user.session": "会话",
@@ -712,6 +715,7 @@ QtObject {
         "bar.media": "播放",
         "bar.stats": "系统负载",
         "bar.network": "网路",
+        "bar.bluetooth": "蓝牙",
         "bar.volume": "音量",
         "bar.battery": "电池",
         "bar.tray": "托盘",
@@ -845,7 +849,7 @@ QtObject {
         "sidebar.comms": "通信", "sidebar.commsSub": "通信 / 歌詞",
         "sidebar.roster": "分隊名簿", "sidebar.openDeployment": "デプロイ端末を開く",
         "sidebar.incomingLog": "受信ログ", "sidebar.noTransmissions": "新しい通信はありません",
-        "popup.operatorFile": "オペレーターファイル", "popup.transmissionLog": "通信ログ",
+        "popup.operatorFile": "オペレーターファイル", "popup.network": "ネットワークリンク", "popup.bluetooth": "Bluetooth リンク", "popup.stats": "システムパフォーマンス", "popup.transmissionLog": "通信ログ",
         "popup.hint": "ESC  /  外側をクリックで閉じる",
         "user.session": "セッション", "user.host": "ホスト", "user.uptime": "稼働時間",
         "user.loadout": "装備", "user.deploy": "出撃", "user.tact": "戦術",
@@ -882,7 +886,7 @@ QtObject {
         "dock.pin": "Dock に固定", "dock.unpin": "固定解除", "dock.newWindow": "新しいウィンドウ", "dock.closeWindow": "閉じる",
         "bar.launcher": "デプロイ", "bar.workspaces": "エシュロン", "bar.user": "オペレーター",
         "bar.clock": "時計", "bar.title": "ウィンドウタイトル", "bar.media": "再生中",
-        "bar.stats": "システム負荷", "bar.network": "ネットワーク", "bar.volume": "音量",
+        "bar.stats": "システム負荷", "bar.network": "ネットワーク", "bar.bluetooth": "Bluetooth", "bar.volume": "音量",
         "bar.battery": "バッテリー", "bar.tray": "トレイ", "bar.overview": "作戦マップ",
         "bar.control": "戦術コントロール", "bar.power": "システム停止"
     })

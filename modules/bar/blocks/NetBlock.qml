@@ -49,9 +49,22 @@ Item {
         }
     }
 
+    Rectangle {
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 1
+        color: Theme.accent
+        visible: ShellState.popupKind === "network"
+    }
+
     MouseArea {
         anchors.fill: parent
+        hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-        onClicked: ShellState.toggle("control")
+        onClicked: {
+            var p = root.mapToItem(null, root.width / 2, root.height);
+            ShellState.togglePopup("network", p.x, p.y, "");
+        }
     }
 }

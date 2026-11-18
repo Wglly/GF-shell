@@ -192,6 +192,11 @@ ShellRoot {
             ShellState.toggleWidgetsEditing();
         }
 
+        function popup(kind: string): string {
+            ShellState.openPopup(kind, 960, 40, "");
+            return ShellState.popupKind;
+        }
+
         function volume(v: real): void {
             Audio.setVolume(v);
         }
@@ -202,7 +207,8 @@ ShellRoot {
 
 
         function status(): string {
-            return "overlay=" + ShellState.overlay + " backend=" + Compositor.backend
+            return "overlay=" + ShellState.overlay + " popup=" + ShellState.popupKind
+                + " backend=" + Compositor.backend
                 + " workspaces=" + Compositor.workspaces.length;
         }
     }

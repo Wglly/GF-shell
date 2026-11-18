@@ -10,6 +10,7 @@ Item {
     property string placeholder: ""
     property string icon: "search"
     property bool showClear: true
+    property int echoMode: TextInput.Normal
     property color accentColor: Theme.accent
 
     signal accepted()
@@ -63,6 +64,7 @@ Item {
         }
 
         TextInput {
+            echoMode: root.echoMode
             id: input
             anchors.verticalCenter: parent.verticalCenter
             width: parent.width - Theme.px(24)

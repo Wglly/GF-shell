@@ -29,7 +29,7 @@
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "volume", "battery", "tray",
+    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
@@ -138,14 +138,15 @@
 | `title` | 當前單位（視窗）appId + 標題 |
 | `clock` | 中央時鐘 + 日期 + AM/PM（或 H24），點擊在該處展開月曆 |
 | `media` | 正在播放的通訊；點擊展開媒體 + 歌詞彈出欄 |
-| `stats` | CPU / MEM 分段讀數 |
-| `net` | Wi-Fi / 有線 + 四段信號柱 + SSID |
+| `stats` | CPU / MEM 分段讀數；點擊展開負載、記憶體、磁碟、網路與前 5 進程 |
+| `net` | Wi-Fi / 有線 + 四段信號柱 + SSID；點擊展開網路詳情與附近可連接 Wi-Fi |
+| `bluetooth` | 藍牙狀態與已連線數量；點擊展開轉接器與已知裝置 |
 | `volume` | 音量，左鍵靜音、右鍵控制中心、滾輪調整 |
 | `battery` | 電量 / 充電，低電變紅 |
 | `tray` | StatusNotifierItem 圖示 |
 | `overview` / `control` / `power` | 三個入口按鈕 |
 
-窄螢幕自動隱藏順序：`title` → `media` → `stats` → `tray` → `net`。
+窄螢幕自動隱藏順序：`title` → `media` → `stats` → `tray` → `net` → `bluetooth`。
 
 ## 主題預設
 

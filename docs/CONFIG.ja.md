@@ -29,7 +29,7 @@
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "volume", "battery", "tray",
+    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
@@ -139,7 +139,8 @@
 | `clock` | 中央時計 + 日付 + AM/PM（または H24）。クリックでカレンダー |
 | `media` | 再生中の通信 + 再生／一時停止 |
 | `stats` | CPU / MEM のセグメント表示 |
-| `net` | Wi-Fi / 有線 + 4 本の信号バー + SSID |
+| `net` | Wi-Fi / 有線 + 4 本の信号バー + SSID。クリックでリンク詳細と付近の Wi-Fi |
+| `bluetooth` | Bluetooth 状態と接続数。クリックでアダプターと既知のデバイス |
 | `volume` | 音量。左クリックでミュート、右クリックでコントロールセンター、スクロールで調整 |
 | `battery` | 残量／充電。低下すると赤色 |
 | `tray` | StatusNotifierItem アイコン |

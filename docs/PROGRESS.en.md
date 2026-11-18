@@ -45,6 +45,7 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 - **Desktop layout editor**: `SUPER+SHIFT+W`, Settings → Layout, or IPC `shell widgets`; grid overlay, drag-to-snap, bottom-right resizing and a per-widget ON/OFF button.
 - **Dock hot zone**: `dock.trigger` 4–48 px, adjustable in Settings → Dock; a wider gold handle marks the hidden area.
 - **Dock apps**: running apps are appended after pinned entries; right-click offers pin/unpin, new window and close, with the pinned list saved to `dock.pinned`.
+- **Status bar details**: the network block opens link details and nearby connectable Wi-Fi (open networks connect directly, WPA asks for a password); Bluetooth is a separate block with details; CPU/MEM stats open a performance panel.
 - **Overview move**: drag a unit row onto another sector; `Compositor.moveWindow()` moves the window there on Hyprland and niri.
 - **Volume**: the default sink is now read/written through `wpctl`, fixing empty Quickshell `channelVolumes` on some WirePlumber setups; IPC `volume` / `mute` added.
 - **Widget sizes**: `widgets.<name>.width/height` resize freely and snap to the grid.
@@ -89,6 +90,10 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | ![Widget layout editor](screenshots/20-widget-editor.png) |
 
 ### Theme & scaling
+
+| Network details & nearby Wi-Fi | Bluetooth details | Performance details |
+| --- | --- | --- |
+| ![Network popup](screenshots/24-network-popup.png) | ![Bluetooth popup](screenshots/25-bluetooth-popup.png) | ![Stats popup](screenshots/26-stats-popup.png) |
 
 | Light theme: desktop | Light theme: launcher | Settings: scale & surface |
 | --- | --- | --- |

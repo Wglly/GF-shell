@@ -37,7 +37,7 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 
 | 模組 | 說明 |
 | --- | --- |
-| **狀態列 (Bar)** | G&K 識別塊、操作員入口、梯隊/工作區編號、當前單位（視窗）標題、中央時鐘、通訊/CPU/記憶體/網路/音量/電池/托盤、作戰地圖、戰術控制、系統停機。窄螢幕會自動隱藏次要區塊；組件可在「設定 → 狀態列 → 組件」逐項開關，並指定左/中/右。 |
+| **狀態列 (Bar)** | G&K 識別塊、操作員入口、梯隊/工作區編號、當前單位（視窗）標題、中央時鐘、通訊/CPU/記憶體/網路/藍牙/音量/電池/托盤、作戰地圖、戰術控制、系統停機。窄螢幕會自動隱藏次要區塊；組件可在「設定 → 狀態列 → 組件」逐項開關，並指定左/中/右。網路、藍牙、性能監控為獨立組件，點擊展開詳情；網路詳情會列出附近可連接的 Wi-Fi。 |
 | **部署終端 (Launcher)** | 全螢幕單位清單：分類（全部/最近/通訊/開發/媒體/文書/作戰/系統）、模糊搜尋、鍵盤導航、右側單位檔案（CLASS/STATUS/SOURCE/EXEC）與 DEPLOY。 |
 | **戰術控制 (Control Center)** | 鏈路（Wi-Fi/藍牙）、音量/亮度分段滑條、模組開關、CPU/MEM/BAT 分段儀表、通訊紀錄、隨媒體控制。 |
 | **作戰地圖 (Overview)** | 每個工作區一張「扇區」卡，列出其中單位；點扇區切換工作區、點單位聚焦視窗；把單位拖到另一扇區即可移動視窗。 |
@@ -98,6 +98,10 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | 亮色主題：桌面 | 亮色主題：部署終端 | 設定：縮放與表面 |
 | --- | --- | --- |
 | ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
+
+| Network details & nearby Wi-Fi | Bluetooth details | Performance details |
+| --- | --- | --- |
+| ![Network popup](docs/screenshots/24-network-popup.png) | ![Bluetooth popup](docs/screenshots/25-bluetooth-popup.png) | ![Stats popup](docs/screenshots/26-stats-popup.png) |
 
 同一套外殼跑在 **niri** 上（嵌套於 Hyprland 測試的視窗）：
 
@@ -256,7 +260,7 @@ qs -c gf-shell ipc call shell status
 `bar.left/center/right` 可用區塊：
 
 ```
-launcher | emblem | user | workspaces | title | clock | media | stats | net | volume
+launcher | emblem | user | workspaces | title | clock | media | stats | net | bluetooth | volume
 | battery | tray | overview | control | power
 ```
 

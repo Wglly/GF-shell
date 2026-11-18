@@ -3,6 +3,7 @@ import Quickshell
 import Quickshell.Wayland
 import qs.modules.common
 import qs.modules.common.widgets
+import qs.modules.bar.popups
 import qs.services
 
 // BarPopup — 状态列组件的展开详细栏，锚定被点击组件的位置。
@@ -39,6 +40,9 @@ PanelWindow {
         case "user": return Theme.px(320);
         case "calendar": return Theme.px(334);
         case "media": return Theme.px(404);
+        case "network": return Theme.px(376);
+        case "bluetooth": return Theme.px(360);
+        case "stats": return Theme.px(384);
         default: return Theme.px(320);
         }
     }
@@ -121,7 +125,11 @@ PanelWindow {
 
                     GfText {
                         text: root.kind === "user" ? I18n.t("popup.operatorFile")
-                            : (root.kind === "calendar" ? I18n.t("calendar.schedule") : I18n.t("popup.transmissionLog"))
+                            : root.kind === "calendar" ? I18n.t("calendar.schedule")
+                            : root.kind === "network" ? I18n.t("popup.network")
+                            : root.kind === "bluetooth" ? I18n.t("popup.bluetooth")
+                            : root.kind === "stats" ? I18n.t("popup.stats")
+                            : I18n.t("popup.transmissionLog")
                         role: "mono"
                         size: Theme.sizeTiny
                         color: Theme.accent
@@ -160,6 +168,21 @@ PanelWindow {
                     showLyrics: true
                     showVisualizer: true
                     lyricLines: 5
+                }
+
+                NetworkCard {
+                    visible: root.kind === "network"
+                    width: parent.width
+                }
+
+                BluetoothCard {
+                    visible: root.kind === "bluetooth"
+                    width: parent.width
+                }
+
+                StatsCard {
+                    visible: root.kind === "stats"
+                    width: parent.width
                 }
 
                 GfText {

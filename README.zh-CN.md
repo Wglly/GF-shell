@@ -41,7 +41,7 @@ IPC](#快捷键与-ipc)
 
 | 模块 | 说明 |
 | --- | --- |
-| **状态栏 (Bar)** | G&K 识别块、操作员入口、梯队/工作区编号、当前单位（窗口）标题、中央时钟、通讯/CPU/内存/网络/音量/电池/托盘、作战地图、战术控制、系统停机。窄屏幕会自动隐藏次要区块；组件可在「设置 → 状态栏 → 组件」逐项开关，并指定左/中/右。 |
+| **状态栏 (Bar)** | G&K 识别块、操作员入口、梯队/工作区编号、当前单位（窗口）标题、中央时钟、通讯/CPU/内存/网络/蓝牙/音量/电池/托盘、作战地图、战术控制、系统停机。窄屏幕会自动隐藏次要区块；组件可在「设置 → 状态栏 → 组件」逐项开关，并指定左/中/右。网络、蓝牙、性能监控为独立组件，点击展开详情；网络详情会列出附近可连接的 Wi-Fi。 |
 | **部署终端 (Launcher)** | 全屏单位清单：分类（全部/最近/通讯/开发/媒体/文书/作战/系统）、模糊搜索、键盘导航、右侧单位档案（CLASS/STATUS/SOURCE/EXEC）与 DEPLOY。 |
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。 |
 | **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口；把单位拖到另一个扇区即可移动窗口。 |
@@ -102,6 +102,10 @@ IPC](#快捷键与-ipc)
 | 亮色主题：桌面 | 亮色主题：部署终端 | 设置：缩放与表面 |
 | --- | --- | --- |
 | ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
+
+| Network details & nearby Wi-Fi | Bluetooth details | Performance details |
+| --- | --- | --- |
+| ![Network popup](docs/screenshots/24-network-popup.png) | ![Bluetooth popup](docs/screenshots/25-bluetooth-popup.png) | ![Stats popup](docs/screenshots/26-stats-popup.png) |
 
 同一套外壳跑在 **niri** 上（嵌套于 Hyprland 测试的窗口）：
 
@@ -255,7 +259,7 @@ qs -c gf-shell ipc call shell status
 `bar.left/center/right` 可用区块：
 
 ```
-launcher | emblem | user | workspaces | title | clock | media | stats | net | volume
+launcher | emblem | user | workspaces | title | clock | media | stats | net | bluetooth | volume
 | battery | tray | overview | control | power
 ```
 

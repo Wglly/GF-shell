@@ -44,7 +44,7 @@ IPC](#キーバインドと-ipc)
 
 | モジュール | 内容 |
 | --- | --- |
-| **ステータスバー (Bar)** | G&K エンブレム、オペレーター入口、エシュロン／ワークスペース番号、アクティブウィンドウのタイトル、中央時計、メディア、CPU／メモリ、ネットワーク、音量、バッテリー、システムトレイ、作戦マップ／戦術コントロール／システム停止への入口。狭い画面では副次ブロックを自動的に隠します。各ブロックは「設定 → ステータスバー → コンポーネント」で OFF／左／中央／右に変更できます。 |
+| **ステータスバー (Bar)** | G&K エンブレム、オペレーター入口、エシュロン／ワークスペース番号、アクティブウィンドウのタイトル、中央時計、メディア、CPU／メモリ、ネットワーク、Bluetooth、音量、バッテリー、システムトレイ、作戦マップ／戦術コントロール／システム停止への入口。狭い画面では副次ブロックを自動的に隠します。各ブロックは「設定 → ステータスバー → コンポーネント」で OFF／左／中央／右に変更できます。ネットワーク／Bluetooth／パフォーマンスは独立したブロックで、クリックすると詳細が開きます。ネットワーク詳細には付近の Wi-Fi 一覧が表示されます。 |
 | **デプロイ端末 (Launcher)** | 全画面のユニット一覧。カテゴリ（すべて／最近／通信／開発／メディア／オフィス／戦闘／システム）、あいまい検索、キーボード操作、右側のユニット情報（CLASS／STATUS／SOURCE／EXEC）と DEPLOY ボタン。 |
 | **戦術コントロール (Control Center)** | リンク状態（Wi-Fi／Bluetooth）、音量・亮度のセグメントスライダー、モジュールスイッチ、CPU／MEM／BAT のセグメントゲージ、通知履歴、メディア操作。 |
 | **作戦マップ (Overview)** | ワークスペースごとに 1 枚の「セクター」カードを表示し、その中のユニットを一覧。セクターをクリックでワークスペース移動、ユニットをクリックでそのウィンドウにフォーカス。ユニットを別セクターへドラッグするとウィンドウを移動できます。 |
@@ -105,6 +105,10 @@ IPC](#キーバインドと-ipc)
 | ライトテーマ：デスクトップ | ライトテーマ：ランチャー | 設定：スケールと表面 |
 | --- | --- | --- |
 | ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
+
+| Network details & nearby Wi-Fi | Bluetooth details | Performance details |
+| --- | --- | --- |
+| ![Network popup](docs/screenshots/24-network-popup.png) | ![Bluetooth popup](docs/screenshots/25-bluetooth-popup.png) | ![Stats popup](docs/screenshots/26-stats-popup.png) |
 
 同じシェルを **niri** 上で実行した様子（Hyprland 内にネストしたウィンドウ）：
 
@@ -260,7 +264,7 @@ qs -c gf-shell ipc call shell status
 `bar.left/center/right` で使用できるブロック：
 
 ```
-launcher | emblem | user | workspaces | title | clock | media | stats | net | volume
+launcher | emblem | user | workspaces | title | clock | media | stats | net | bluetooth | volume
 | battery | tray | overview | control | power
 ```
 

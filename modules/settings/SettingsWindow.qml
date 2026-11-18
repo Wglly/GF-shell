@@ -51,6 +51,7 @@ PanelWindow {
         { key: "media", labelKey: "bar.media" },
         { key: "stats", labelKey: "bar.stats" },
         { key: "net", labelKey: "bar.network" },
+        { key: "bluetooth", labelKey: "bar.bluetooth" },
         { key: "volume", labelKey: "bar.volume" },
         { key: "battery", labelKey: "bar.battery" },
         { key: "tray", labelKey: "bar.tray" },

@@ -18,7 +18,7 @@ QtObject {
 
     function defaults() {
         return {
-            version: 5,
+            version: 6,
             language: "auto",            // auto | zh_TW | zh_CN | en | ja
             bar: {
                 position: "top",         // top | bottom
@@ -34,7 +34,7 @@ QtObject {
                 size: 1.0,
                 left: ["launcher", "user", "workspaces", "title"],
                 center: ["clock"],
-                right: ["media", "stats", "net", "volume", "battery", "tray", "overview", "control", "power"]
+                right: ["media", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]
             },
             dock: {
                 enabled: true,
@@ -357,6 +357,21 @@ QtObject {
         cfgFile.setText(JSON.stringify(root.data, null, 2) + "\n");
     }
 
+    // v5 → v6：把藍牙從控制中心拆成狀態列獨立組件。
+    function migrateBluetooth(parsed) {
+        var v = parsed && parsed.version ? parsed.version : 0;
+        if (v >= 6)
+            return;
+        var right = root.get("bar.right", []);
+        if (Array.isArray(right) && right.indexOf("bluetooth") < 0) {
+            right = right.slice();
+            var idx = right.indexOf("net");
+            right.splice(idx >= 0 ? idx + 1 : right.length, 0, "bluetooth");
+            root.set("bar.right", right);
+        }
+        root.set("version", 6);
+    }
+
     property FileView cfgFile: FileView {
         id: cfg
         path: root.path
@@ -376,6 +391,7 @@ QtObject {
                 root.migrateLayout(parsed);
                 root.migrateBar(parsed);
                 root.migrateLanguage(parsed);
+                root.migrateBluetooth(parsed);
             }
             if (!parsed)
                 root.save();
