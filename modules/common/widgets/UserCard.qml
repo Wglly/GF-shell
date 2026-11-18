@@ -9,15 +9,15 @@ Column {
 
     property bool compact: false
     property bool showActions: true
-    spacing: Theme.px(10)
+    spacing: Theme.fpx(10)
 
     // 头像 + 身份
     Row {
         width: parent.width
-        spacing: Theme.px(12)
+        spacing: Theme.fpx(12)
 
         Item {
-            width: root.compact ? Theme.px(54) : Theme.px(64)
+            width: root.compact ? Theme.fpx(54) : Theme.fpx(64)
             height: width
 
             Rectangle {
@@ -46,15 +46,15 @@ Column {
             Rectangle {
                 x: 0
                 y: 0
-                width: Theme.px(18)
-                height: Theme.px(2)
+                width: Theme.fpx(18)
+                height: Theme.fpx(2)
                 color: Theme.accent
             }
             Rectangle {
                 x: 0
                 y: 0
-                width: Theme.px(2)
-                height: Theme.px(18)
+                width: Theme.fpx(2)
+                height: Theme.fpx(18)
                 color: Theme.accent
             }
             GfText {
@@ -69,7 +69,7 @@ Column {
         }
 
         Column {
-            width: parent.width - (root.compact ? Theme.px(66) : Theme.px(76))
+            width: parent.width - (root.compact ? Theme.fpx(66) : Theme.fpx(76))
             anchors.verticalCenter: parent.verticalCenter
             spacing: 0
 
@@ -107,7 +107,7 @@ Column {
     // 档案行
     Column {
         width: parent.width
-        spacing: Theme.px(3)
+        spacing: Theme.fpx(3)
 
         Repeater {
             model: [
@@ -120,17 +120,17 @@ Column {
             delegate: Row {
                 required property var modelData
                 width: parent.width
-                height: Theme.px(15)
+                height: Theme.fpx(15)
 
                 GfText {
                     text: modelData.k
                     role: "mono"
                     size: Theme.sizeTiny - 1
                     color: Theme.alpha(Theme.accent, 0.7)
-                    width: Theme.px(70)
+                    width: Theme.fpx(70)
                 }
                 GfText {
-                    width: parent.width - Theme.px(70)
+                    width: parent.width - Theme.fpx(70)
                     text: modelData.v
                     role: "mono"
                     size: Theme.sizeTiny - 1
@@ -146,11 +146,11 @@ Column {
     Row {
         visible: root.showActions
         width: parent.width
-        spacing: Theme.px(6)
+        spacing: Theme.fpx(6)
 
         GfButton {
-            width: (parent.width - Theme.px(18)) / 4
-            height: Theme.px(30)
+            width: (parent.width - Theme.fpx(18)) / 4
+            height: Theme.fpx(30)
             text: I18n.t("user.deploy")
             checked: true
             onClicked: {
@@ -160,8 +160,8 @@ Column {
             }
         }
         GfButton {
-            width: (parent.width - Theme.px(18)) / 4
-            height: Theme.px(30)
+            width: (parent.width - Theme.fpx(18)) / 4
+            height: Theme.fpx(30)
             text: I18n.t("user.tact")
             onClicked: {
                 ShellState.closePopup();
@@ -170,8 +170,8 @@ Column {
             }
         }
         GfButton {
-            width: (parent.width - Theme.px(18)) / 4
-            height: Theme.px(30)
+            width: (parent.width - Theme.fpx(18)) / 4
+            height: Theme.fpx(30)
             text: I18n.t("user.config")
             onClicked: {
                 ShellState.closePopup();
@@ -180,8 +180,8 @@ Column {
             }
         }
         GfButton {
-            width: (parent.width - Theme.px(18)) / 4
-            height: Theme.px(30)
+            width: (parent.width - Theme.fpx(18)) / 4
+            height: Theme.fpx(30)
             text: I18n.t("user.halt")
             danger: true
             onClicked: {

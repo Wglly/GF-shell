@@ -16,7 +16,7 @@ PanelWindow {
     readonly property bool autoHide: Settings.get("dock.autoHide", false)
     readonly property bool avoid: Settings.get("dock.avoid", true)
     readonly property int iconSize: Math.round(Settings.get("dock.iconSize", 42) * Theme.uiScale)
-    readonly property int maxItems: Settings.get("dock.maxItems", 9)
+    readonly property int maxItems: Settings.get("dock.maxItems", 12)
     readonly property bool atTop: Settings.get("dock.position", "bottom") === "top"
     readonly property bool hasWindows: Compositor.windows.length > 0
     // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
@@ -164,8 +164,28 @@ PanelWindow {
     }
 
     readonly property var entries: {
-        var all = root.resolvePinned().concat(root.resolveRunning());
-        return all.slice(0, root.maxItems);
+        var pinned = root.resolvePinned();
+        var running = root.resolveRunning();
+        var room = Math.max(0, root.maxItems - pinned.length);
+        return pinned.concat(running.slice(0, room));
+    }
+
+    function cleanPinned() {
+        if (Apps.apps.length === 0)
+            return;
+        var ids = Settings.get("dock.pinned", []) || [];
+        var out = [];
+        for (var i = 0; i < ids.length; i++) {
+            if (root.appById(ids[i]))
+                out.push(ids[i]);
+        }
+        if (out.length !== ids.length)
+            Settings.set("dock.pinned", out);
+    }
+
+    Connections {
+        target: Apps
+        function onAppsChanged() { root.cleanPinned(); }
     }
 
     function entryByKey(key) {

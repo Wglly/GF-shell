@@ -26,12 +26,12 @@ Item {
         property string label: ""
         property string value: ""
         width: parent.width
-        height: Theme.px(17)
+        height: Theme.fpx(17)
 
         GfText {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: Theme.px(86)
+            width: Theme.fpx(86)
             text: label
             role: "mono"
             size: Theme.sizeTiny - 2
@@ -40,7 +40,7 @@ Item {
         }
         GfText {
             anchors.left: parent.left
-            anchors.leftMargin: Theme.px(90)
+            anchors.leftMargin: Theme.fpx(90)
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: value
@@ -54,7 +54,7 @@ Item {
     Column {
         id: column
         width: parent.width
-        spacing: Theme.px(6)
+        spacing: Theme.fpx(6)
 
         InfoRow { label: "STATUS"; value: !Net.wifiEnabled ? "WI-FI OFF" : (Net.online ? "ONLINE" : (Net.portal ? "PORTAL" : "OFFLINE")) }
         InfoRow { label: "SSID"; value: Net.ssid !== "" ? Net.ssid : "—" }
@@ -64,16 +64,16 @@ Item {
 
         Row {
             width: parent.width
-            spacing: Theme.px(8)
+            spacing: Theme.fpx(8)
             GfText {
-                width: Theme.px(86)
+                width: Theme.fpx(86)
                 text: "SIGNAL"
                 role: "mono"; size: Theme.sizeTiny - 2
                 color: Theme.alpha(Theme.accent, 0.8); tracking: 1
             }
             GfMeter {
                 anchors.verticalCenter: parent.verticalCenter
-                width: Theme.px(120); height: Theme.px(5)
+                width: Theme.fpx(120); height: Theme.fpx(5)
                 value: Net.strength / 100
                 segments: 12
                 color: Net.bars >= 2 ? Theme.accent : Theme.red
@@ -94,7 +94,7 @@ Item {
                 role: "mono"; size: Theme.sizeTiny - 2
                 color: Theme.accent; tracking: 1.4
             }
-            Item { width: parent.width - Theme.px(210); height: 1 }
+            Item { width: parent.width - Theme.fpx(210); height: 1 }
             GfText {
                 text: Net.nearbyNetworks.length + " FOUND"
                 role: "mono"; size: Theme.sizeTiny - 3; tone: "faint"
@@ -103,7 +103,7 @@ Item {
 
         Column {
             width: parent.width
-            spacing: Theme.px(2)
+            spacing: Theme.fpx(2)
 
             Repeater {
                 model: Net.nearbyNetworks.length > 8 ? Net.nearbyNetworks.slice(0, 8) : Net.nearbyNetworks
@@ -112,7 +112,7 @@ Item {
                     required property var modelData
                     readonly property var net: modelData
                     width: parent.width
-                    height: Theme.px(26)
+                    height: Theme.fpx(26)
 
                     Rectangle {
                         anchors.fill: parent
@@ -122,11 +122,11 @@ Item {
 
                     Row {
                         anchors.left: parent.left
-                        anchors.leftMargin: Theme.px(4)
+                        anchors.leftMargin: Theme.fpx(4)
                         anchors.right: parent.right
-                        anchors.rightMargin: Theme.px(4)
+                        anchors.rightMargin: Theme.fpx(4)
                         anchors.verticalCenter: parent.verticalCenter
-                        spacing: Theme.px(6)
+                        spacing: Theme.fpx(6)
 
                         Row {
                             anchors.verticalCenter: parent.verticalCenter
@@ -142,7 +142,7 @@ Item {
                             }
                         }
                         GfText {
-                            width: Theme.px(150)
+                            width: Theme.fpx(150)
                             text: net.name
                             role: "ui"; size: Theme.sizeSmall
                             color: net.connected ? Theme.accent : Theme.text
@@ -153,7 +153,7 @@ Item {
                             role: "mono"; size: Theme.sizeTiny - 3
                             color: net.connected ? Theme.accent : Theme.textFaint
                         }
-                        Item { width: parent.width - Theme.px(300); height: 1 }
+                        Item { width: parent.width - Theme.fpx(300); height: 1 }
                         GfText {
                             text: Math.round((net.signalStrength || 0) * 100) + "%"
                             role: "mono"; size: Theme.sizeTiny - 3
@@ -191,11 +191,11 @@ Item {
         Row {
             visible: root.pendingNetwork !== null
             width: parent.width
-            spacing: Theme.px(6)
+            spacing: Theme.fpx(6)
 
             GfText {
                 anchors.verticalCenter: parent.verticalCenter
-                width: Theme.px(110)
+                width: Theme.fpx(110)
                 text: "PASSWORD"
                 role: "mono"; size: Theme.sizeTiny - 2
                 color: Theme.accent
@@ -203,7 +203,7 @@ Item {
             GfTextField {
                 id: pskField
                 anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - Theme.px(230)
+                width: parent.width - Theme.fpx(230)
                 text: root.psk
                 placeholder: root.pendingNetwork ? root.pendingNetwork.name : ""
                 echoMode: TextInput.Password
@@ -214,7 +214,7 @@ Item {
             }
             GfButton {
                 anchors.verticalCenter: parent.verticalCenter
-                height: Theme.px(26)
+                height: Theme.fpx(26)
                 compact: true
                 text: "JOIN"
                 onClicked: {
@@ -224,7 +224,7 @@ Item {
             }
             GfButton {
                 anchors.verticalCenter: parent.verticalCenter
-                height: Theme.px(26)
+                height: Theme.fpx(26)
                 compact: true
                 text: "X"
                 square: true
@@ -238,16 +238,16 @@ Item {
 
         Row {
             width: parent.width
-            spacing: Theme.px(6)
+            spacing: Theme.fpx(6)
 
             GfButton {
-                height: Theme.px(26)
+                height: Theme.fpx(26)
                 compact: true
                 text: Net.wifiEnabled ? "WI-FI OFF" : "WI-FI ON"
                 onClicked: Net.toggleWifi()
             }
             GfButton {
-                height: Theme.px(26)
+                height: Theme.fpx(26)
                 compact: true
                 text: "SCAN"
                 enabled: Net.wifiEnabled

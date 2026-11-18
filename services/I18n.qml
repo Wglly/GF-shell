@@ -181,6 +181,7 @@ QtObject {
         "set.trigger": "TRIGGER AREA", "set.trigger.desc": "Hot-zone height when the dock is hidden (4 – 48 px)",
 
         "set.maxItems": "MAX ITEMS", "set.maxItems.desc": "Number of apps shown (5 – 12)",
+        "set.addPinned": "PIN AN APP", "set.addPinned.desc": "Type an app name and press Enter",
         "set.iconSize": "ICON SIZE", "set.iconSize.desc": "Icon size in pixels (32 – 64)",
         "set.width": "WIDTH", "set.width.desc": "Panel width (280 – 460)",
         "set.delay": "CLOSE DELAY", "set.delay.desc": "Auto-close delay after the pointer leaves (ms)",
@@ -299,6 +300,7 @@ QtObject {
         "set.trigger": "觸發面積", "set.trigger.desc": "Dock 收起時的热區高度（4 – 48px）",
 
         "set.maxItems": "最大數量", "set.maxItems.desc": "顯示的應用數量（5 – 12）",
+        "set.addPinned": "固定應用", "set.addPinned.desc": "輸入應用名稱後按 Enter",
         "set.iconSize": "圖示尺寸", "set.iconSize.desc": "像素（32 – 64）",
         "set.width": "寬度", "set.width.desc": "面板寬度（280 – 460）",
         "set.delay": "收起延遲", "set.delay.desc": "滑出後自動收起延遲（ms）",
@@ -534,6 +536,8 @@ QtObject {
         "set.trigger.desc": "Dock 收起时的热区高度（4 – 48px）",
         "set.maxItems": "最大数量",
         "set.maxItems.desc": "显示的应用数量（5 – 12）",
+        "set.addPinned": "固定应用",
+        "set.addPinned.desc": "输入应用名称后按 Enter",
         "set.iconSize": "图示尺寸",
         "set.iconSize.desc": "像素（32 – 64）",
         "set.width": "宽度",

@@ -107,6 +107,30 @@ PanelWindow {
         Settings.set("sidebar.assign." + id, side);
     }
 
+    function pinByName(value) {
+        var q = ("" + value).trim().toLowerCase();
+        if (q === "")
+            return;
+        var ids = (Settings.get("dock.pinned", []) || []).slice();
+        if (ids.length >= Settings.get("dock.maxItems", 12))
+            return;
+        for (var i = 0; i < Apps.apps.length; i++) {
+            var app = Apps.apps[i];
+            var base = app.path.split("/").pop();
+            if (app.name.toLowerCase().indexOf(q) < 0 && base.toLowerCase().indexOf(q) < 0)
+                continue;
+            var found = false;
+            for (var j = 0; j < ids.length; j++)
+                if (("" + ids[j]).toLowerCase() === base.toLowerCase())
+                    found = true;
+            if (!found) {
+                ids.push(base);
+                Settings.set("dock.pinned", ids);
+            }
+            return;
+        }
+    }
+
     function setHex(key, value) {
         var v = ("" + value).trim();
         if (!/^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$/.test(v))
@@ -865,12 +889,25 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; last: true; label: I18n.t("set.maxItems"); desc: I18n.t("set.maxItems.desc")
+                                width: parent.width; label: I18n.t("set.maxItems"); desc: I18n.t("set.maxItems.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.px(200); from: 5; to: 12; step: 1
-                                    value: Settings.get("dock.maxItems", 9)
+                                    value: Settings.get("dock.maxItems", 12)
                                     onMoved: v => Settings.set("dock.maxItems", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true
+                                label: I18n.t("set.addPinned")
+                                desc: I18n.t("set.addPinned.desc") + "  ·  "
+                                    + Settings.get("dock.pinned", []).length + " / "
+                                    + Settings.get("dock.maxItems", 12)
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(220)
+                                    placeholder: "app name"
+                                    onAccepted: value => root.pinByName(value)
                                 }
                             }
 

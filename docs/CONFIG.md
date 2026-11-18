@@ -241,7 +241,8 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
 - 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
 - 滑出後自動收起，視窗恢復原位。
-- `dock.pinned` 是桌面檔名陣列；Dock 依序顯示固定項目，並把正在執行但未固定的應用接在後面。
+- `dock.pinned` 是桌面檔名陣列；Dock 依序顯示固定項目，並把正在執行但未固定的應用接在後面，上限 `dock.maxItems`（預設 12）。
+- 設定 → Dock 的「PIN AN APP」可輸入應用名稱後按 Enter 直接固定。
 - 右鍵點擊 Dock 圖示可固定/取消固定、開新視窗或關閉；固定狀態寫回 `dock.pinned`。
 - `dock.trigger`（4–48px）是 Dock 收起時的熱區高度；越大越容易滑出。收起時熱區透明、面板完全隱藏，僅留 2px 指示線；`exclusiveZone` 為 0，不推開視窗。
 - `dock.avoid = false` 時 Dock 始終完整顯示；`dock.autoHide` 只在避讓開啟時生效。
@@ -288,7 +289,7 @@ OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從�
 ## 主題模式、縮放與設定表面
 
 - `theme.mode`：`dark` / `light` / `custom`；也可直接套用 `preset`（含 `light`）。
-- `theme.fontScale`（0.8–1.4）只縮放文字；`theme.scale`（0.8–1.3）縮放整個 shell（間距、面板、圖示與文字）。
+- `theme.fontScale`（0.8–1.4）縮放文字，以及展開欄/卡片佈局；`theme.scale`（0.8–1.3）縮放整個 shell（間距、面板、圖示與文字）。
 - `theme.settingsOpacity`（0.5–1.0）與 `theme.settingsGray`（0–1）控制 **設定介面** 的灰白透明遮罩；
   黑色導航列與頁首保持不透明。
 - 自訂 `bg0/bg1/bg/panel/text/accent/...` 會把 `mode` 設為 `custom`；壁紙會依 `bg0` 亮度自動加上

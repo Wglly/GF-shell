@@ -220,7 +220,8 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 - ウィンドウがあると Dock は 6px の金線まで縮み、下端のホットゾーンで展開します。
 - 展開中は `exclusiveZone` が Dock の高さになり、ウィンドウが押し上げられます。
-- `dock.pinned` は .desktop ファイル名の配列。固定項目を順に表示し、未固定の実行中アプリを後ろに追加します。
+- `dock.pinned` は .desktop ファイル名の配列。固定項目を順に表示し、未固定の実行中アプリを後ろに追加します（上限 `dock.maxItems`、既定 12）。
+- 設定 → Dock の「PIN AN APP」でアプリ名を入力して Enter すると固定できます。
 - Dock アイコンを右クリックすると固定／解除、新しいウィンドウ、閉じるを選べます。固定状態は `dock.pinned` に保存されます。
 - `dock.trigger`（4–48px）は非表示時のホットゾーン高さ。非表示時はホットゾーンが透明でパネルは完全に隠れ、2px の線だけ残ります。`exclusiveZone` は 0 です。
 - `dock.avoid = false` なら Dock は常に表示。`dock.autoHide` は回避が有効なときだけ作用します。
@@ -254,7 +255,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 ## テーマモード・スケール・設定画面の表面
 
 - `theme.mode`：`dark` / `light` / `custom`。プリセット（`light` を含む）が自動設定します。
-- `theme.fontScale`（0.8–1.4）は文字のみ、`theme.scale`（0.8–1.3）はシェル全体を拡大します。
+- `theme.fontScale`（0.8–1.4）は文字と展開パネル／カードのレイアウト、`theme.scale`（0.8–1.3）はシェル全体を拡大します。
 - `theme.settingsOpacity`（0.5–1.0）と `theme.settingsGray`（0–1）で設定画面のグレーホワイト半透明を調整。
 - `bg0/bg1/panel/text/accent` を変えると `mode` は `custom` になります。壁紙は `bg0` の明るさに応じて
   紙白に洗われ、ライトテーマでも濃い文字が読めます。

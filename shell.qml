@@ -192,10 +192,8 @@ ShellRoot {
             ShellState.toggleWidgetsEditing();
         }
 
-        function popup(kind: string): string {
-            ShellState.openPopup(kind, 960, 40, "");
-            return ShellState.popupKind;
-        }
+
+
 
         function volume(v: real): void {
             Audio.setVolume(v);

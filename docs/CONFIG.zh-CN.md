@@ -241,7 +241,8 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
 - 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
 - 滑出後自動收起，視窗恢復原位。
-- `dock.pinned` 是桌面文件名数组；Dock 按顺序显示固定项目，并把正在运行但未固定的应用接在后面。
+- `dock.pinned` 是桌面文件名数组；Dock 按顺序显示固定项目，并把正在运行但未固定的应用接在后面，上限 `dock.maxItems`（默认 12）。
+- 设置 → Dock 的“PIN AN APP”可输入应用名称后按 Enter 直接固定。
 - 右键点击 Dock 图标可固定/取消固定、开新窗口或关闭；固定状态写回 `dock.pinned`。
 - `dock.trigger`（4–48px）是 Dock 收起时的热区高度；越大越容易滑出。收起时热区透明、面板完全隐藏，仅留 2px 指示线；`exclusiveZone` 为 0，不推开窗口。
 - `dock.avoid = false` 时 Dock 始终完整显示；`dock.autoHide` 只在避让开启时生效。
@@ -276,7 +277,7 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 ## 主题模式、缩放与设置表面
 
 - `theme.mode`：`dark` / `light` / `custom`；预设（含 `light`）会自动设置。
-- `theme.fontScale`（0.8–1.4）只缩放文字；`theme.scale`（0.8–1.3）缩放整个 shell。
+- `theme.fontScale`（0.8–1.4）缩放文字，以及展开栏/卡片布局；`theme.scale`（0.8–1.3）缩放整个 shell。
 - `theme.settingsOpacity`（0.5–1.0）与 `theme.settingsGray`（0–1）控制设置窗口的灰白半透明遮罩。
 - 自定义 `bg0/bg1/panel/text/accent` 会把 `mode` 设为 `custom`；壁纸会按 `bg0` 亮度加纸白洗色。
 

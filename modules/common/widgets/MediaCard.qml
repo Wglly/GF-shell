@@ -11,17 +11,17 @@ Column {
     property bool showLyrics: true
     property bool showVisualizer: true
     property int lyricLines: 5
-    spacing: Theme.px(8)
+    spacing: Theme.fpx(8)
 
     readonly property var lyricWindow: Lyrics.around(Math.floor(root.lyricLines / 2), Math.floor(root.lyricLines / 2))
 
     // 封面 + 曲目
     Row {
         width: parent.width
-        spacing: Theme.px(11)
+        spacing: Theme.fpx(11)
 
         Item {
-            width: root.compact ? Theme.px(64) : Theme.px(84)
+            width: root.compact ? Theme.fpx(64) : Theme.fpx(84)
             height: width
 
             Rectangle {
@@ -62,7 +62,7 @@ Column {
         }
 
         Column {
-            width: parent.width - (root.compact ? Theme.px(75) : Theme.px(95))
+            width: parent.width - (root.compact ? Theme.fpx(75) : Theme.fpx(95))
             anchors.verticalCenter: parent.verticalCenter
             spacing: 1
 
@@ -95,7 +95,7 @@ Column {
 
             GfSlider {
                 width: parent.width
-                height: Theme.px(20)
+                height: Theme.fpx(20)
                 value: Media.progress
                 showValue: false
                 segments: 12
@@ -108,25 +108,25 @@ Column {
     // 控制行
     Row {
         width: parent.width
-        spacing: Theme.px(4)
+        spacing: Theme.fpx(4)
 
         GfIconButton {
-            icon: "skip_previous"; glyphSize: Theme.px(13); buttonSize: Theme.px(24)
+            icon: "skip_previous"; glyphSize: Theme.fpx(13); buttonSize: Theme.fpx(24)
             onClicked: Media.previous()
         }
         MediaPlayButton {
-            buttonSize: Theme.px(28)
+            buttonSize: Theme.fpx(28)
         }
         GfIconButton {
-            icon: "skip_next"; glyphSize: Theme.px(13); buttonSize: Theme.px(24)
+            icon: "skip_next"; glyphSize: Theme.fpx(13); buttonSize: Theme.fpx(24)
             onClicked: Media.next()
         }
 
-        Item { width: parent.width - Theme.px(150); height: 1 }
+        Item { width: parent.width - Theme.fpx(150); height: 1 }
 
         GfText {
             anchors.verticalCenter: parent.verticalCenter
-            width: parent.width - Theme.px(150)
+            width: parent.width - Theme.fpx(150)
             text: Util.clockText(new Date(Media.position * 1000), false, false)
                 + " / " + Util.clockText(new Date(Media.length * 1000), false, false)
             role: "mono"
@@ -140,7 +140,7 @@ Column {
     Item {
         visible: root.showVisualizer
         width: parent.width
-        height: Theme.px(30)
+        height: Theme.fpx(30)
 
         VisualizerBars {
             anchors.fill: parent
@@ -161,7 +161,7 @@ Column {
     Column {
         visible: root.showLyrics
         width: parent.width
-        spacing: Theme.px(4)
+        spacing: Theme.fpx(4)
 
         Row {
             width: parent.width
@@ -189,7 +189,7 @@ Column {
 
         Column {
             width: parent.width
-            spacing: Theme.px(2)
+            spacing: Theme.fpx(2)
             visible: root.lyricWindow.length > 0
 
             Repeater {

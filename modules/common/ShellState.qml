@@ -81,7 +81,7 @@ QtObject {
     }
 
     // 状态列弹出：跟随点击位置
-    property string popupKind: ""       // "" | "user" | "calendar" | "media"
+    property string popupKind: ""       // "" | "user" | "calendar" | "media" | "network" | "bluetooth" | "stats"
     property real popupAnchorX: 0
     property real popupAnchorY: 0
     property string popupScreen: ""

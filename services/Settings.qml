@@ -18,7 +18,7 @@ QtObject {
 
     function defaults() {
         return {
-            version: 6,
+            version: 7,
             language: "auto",            // auto | zh_TW | zh_CN | en | ja
             bar: {
                 position: "top",         // top | bottom
@@ -47,7 +47,7 @@ QtObject {
                 size: 1.0,
                 avoid: true,
                 trigger: 24,
-                maxItems: 9,
+                maxItems: 12,
                 pinned: ["firefox.desktop", "kitty.desktop", "foot.desktop",
                          "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
             },
@@ -372,6 +372,16 @@ QtObject {
         root.set("version", 6);
     }
 
+    // v6 → v7：Dock 應用上限提升到 12。
+    function migrateDockLimit(parsed) {
+        var v = parsed && parsed.version ? parsed.version : 0;
+        if (v >= 7)
+            return;
+        if (root.get("dock.maxItems", 12) < 12)
+            root.set("dock.maxItems", 12);
+        root.set("version", 7);
+    }
+
     property FileView cfgFile: FileView {
         id: cfg
         path: root.path
@@ -392,6 +402,7 @@ QtObject {
                 root.migrateBar(parsed);
                 root.migrateLanguage(parsed);
                 root.migrateBluetooth(parsed);
+                root.migrateDockLimit(parsed);
             }
             if (!parsed)
                 root.save();

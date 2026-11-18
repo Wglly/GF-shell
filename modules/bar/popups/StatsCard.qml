@@ -21,19 +21,19 @@ Item {
         property string label: ""
         property string value: ""
         width: parent.width
-        height: Theme.px(17)
+        height: Theme.fpx(17)
 
         GfText {
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
-            width: Theme.px(92)
+            width: Theme.fpx(92)
             text: label
             role: "mono"; size: Theme.sizeTiny - 2
             color: Theme.alpha(Theme.accent, 0.8); tracking: 1
         }
         GfText {
             anchors.left: parent.left
-            anchors.leftMargin: Theme.px(96)
+            anchors.leftMargin: Theme.fpx(96)
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: value
@@ -46,15 +46,15 @@ Item {
     Column {
         id: column
         width: parent.width
-        spacing: Theme.px(6)
+        spacing: Theme.fpx(6)
 
         Row {
             width: parent.width
-            spacing: Theme.px(8)
-            GfText { width: Theme.px(70); text: "CPU"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
+            spacing: Theme.fpx(8)
+            GfText { width: Theme.fpx(70); text: "CPU"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
             GfMeter {
                 anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - Theme.px(130); height: Theme.px(6)
+                width: parent.width - Theme.fpx(130); height: Theme.fpx(6)
                 value: Stats.cpu; segments: 16
                 color: Stats.cpu > 0.85 ? Theme.red : Theme.accent
             }
@@ -62,11 +62,11 @@ Item {
         }
         Row {
             width: parent.width
-            spacing: Theme.px(8)
-            GfText { width: Theme.px(70); text: "MEMORY"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
+            spacing: Theme.fpx(8)
+            GfText { width: Theme.fpx(70); text: "MEMORY"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
             GfMeter {
                 anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - Theme.px(130); height: Theme.px(6)
+                width: parent.width - Theme.fpx(130); height: Theme.fpx(6)
                 value: Stats.mem; segments: 16
                 color: Stats.mem > 0.9 ? Theme.red : Theme.accent2
             }
@@ -74,11 +74,11 @@ Item {
         }
         Row {
             width: parent.width
-            spacing: Theme.px(8)
-            GfText { width: Theme.px(70); text: "SWAP"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
+            spacing: Theme.fpx(8)
+            GfText { width: Theme.fpx(70); text: "SWAP"; role: "mono"; size: Theme.sizeTiny - 2; color: Theme.accent }
             GfMeter {
                 anchors.verticalCenter: parent.verticalCenter
-                width: parent.width - Theme.px(130); height: Theme.px(4)
+                width: parent.width - Theme.fpx(130); height: Theme.fpx(4)
                 value: Stats.swapTotal > 0 ? Stats.swapUsed / Stats.swapTotal : 0
                 segments: 16
                 color: Theme.textFaint
@@ -110,18 +110,18 @@ Item {
             delegate: Row {
                 required property var modelData
                 width: parent.width
-                height: Theme.px(16)
-                spacing: Theme.px(6)
+                height: Theme.fpx(16)
+                spacing: Theme.fpx(6)
 
                 GfText {
-                    width: Theme.px(160)
+                    width: Theme.fpx(160)
                     text: modelData.name
                     role: "mono"; size: Theme.sizeTiny - 2
                     color: Theme.textDim
                     elide: Text.ElideRight
                 }
                 GfText {
-                    width: Theme.px(60)
+                    width: Theme.fpx(60)
                     text: "C " + modelData.cpu.toFixed(1) + "%"
                     role: "mono"; size: Theme.sizeTiny - 2
                     color: Theme.text

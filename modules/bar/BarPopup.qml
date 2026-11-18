@@ -37,19 +37,19 @@ PanelWindow {
 
     readonly property int panelWidth: {
         switch (root.kind) {
-        case "user": return Theme.px(320);
-        case "calendar": return Theme.px(334);
-        case "media": return Theme.px(404);
-        case "network": return Theme.px(376);
-        case "bluetooth": return Theme.px(360);
-        case "stats": return Theme.px(384);
-        default: return Theme.px(320);
+        case "user": return Theme.fpx(320);
+        case "calendar": return Theme.fpx(334);
+        case "media": return Theme.fpx(404);
+        case "network": return Theme.fpx(376);
+        case "bluetooth": return Theme.fpx(360);
+        case "stats": return Theme.fpx(384);
+        default: return Theme.fpx(320);
         }
     }
 
     function clampedX(w) {
         var x = ShellState.popupAnchorX - w / 2;
-        return Math.max(Theme.px(12), Math.min(root.width - w - Theme.px(12), x));
+        return Math.max(Theme.fpx(12), Math.min(root.width - w - Theme.fpx(12), x));
     }
 
     // 点击外部关闭
@@ -70,13 +70,13 @@ PanelWindow {
     GfFrame {
         id: panel
         x: root.clampedX(root.panelWidth)
-        y: root.atTop ? root.barThickness + Theme.px(8)
-            : root.height - root.barThickness - Theme.px(8) - height
+        y: root.atTop ? root.barThickness + Theme.fpx(8)
+            : root.height - root.barThickness - Theme.fpx(8) - height
         width: root.panelWidth
-        height: content.implicitHeight + Theme.px(26)
+        height: content.implicitHeight + Theme.fpx(26)
         fill: Theme.alpha(Theme.bg1, 0.985)
         borderColor: Theme.alpha(Theme.accent, 0.75)
-        chamfer: Theme.px(6)
+        chamfer: Theme.fpx(6)
         padding: 0
 
         // 顶部金线 + 指示三角
@@ -90,7 +90,7 @@ PanelWindow {
 
         Item {
             width: parent.width
-            height: Theme.px(6)
+            height: Theme.fpx(6)
 
             Rectangle {
                 x: Math.max(10, Math.min(parent.width - 22, ShellState.popupAnchorX - panel.x - 5))
@@ -108,16 +108,16 @@ PanelWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            anchors.topMargin: Theme.px(10)
-            anchors.margins: Theme.px(14)
-            anchors.leftMargin: Theme.px(14)
-            anchors.rightMargin: Theme.px(14)
+            anchors.topMargin: Theme.fpx(10)
+            anchors.margins: Theme.fpx(14)
+            anchors.leftMargin: Theme.fpx(14)
+            anchors.rightMargin: Theme.fpx(14)
             height: content.implicitHeight
 
             Column {
                 id: content
                 width: parent.width
-                spacing: Theme.px(10)
+                spacing: Theme.fpx(10)
 
                 // 标题行
                 Row {

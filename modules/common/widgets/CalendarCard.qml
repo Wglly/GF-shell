@@ -11,7 +11,7 @@ Item {
     property int viewYear: new Date().getFullYear()
     property int viewMonth: new Date().getMonth()
     property bool showHeader: true
-    property int cellHeight: Theme.px(26)
+    property int cellHeight: Theme.fpx(26)
 
     implicitHeight: layout.implicitHeight
 
@@ -63,13 +63,13 @@ Item {
     Column {
         id: layout
         width: root.width
-        spacing: Theme.px(6)
+        spacing: Theme.fpx(6)
 
         // 标题
         Item {
             visible: root.showHeader
             width: parent.width
-            height: Theme.px(26)
+            height: Theme.fpx(26)
 
             Column {
                 anchors.left: parent.left
@@ -95,18 +95,18 @@ Item {
             Row {
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.px(2)
+                spacing: Theme.fpx(2)
 
                 GfIconButton {
                     icon: "chevron_left"
-                    glyphSize: Theme.px(13)
-                    buttonSize: Theme.px(20)
+                    glyphSize: Theme.fpx(13)
+                    buttonSize: Theme.fpx(20)
                     onClicked: root.shiftMonth(-1)
                 }
                 GfIconButton {
                     icon: "chevron_right"
-                    glyphSize: Theme.px(13)
-                    buttonSize: Theme.px(20)
+                    glyphSize: Theme.fpx(13)
+                    buttonSize: Theme.fpx(20)
                     onClicked: root.shiftMonth(1)
                 }
             }
@@ -158,7 +158,7 @@ Item {
         Grid {
             width: parent.width
             columns: 7
-            rowSpacing: Theme.px(1)
+            rowSpacing: Theme.fpx(1)
 
             Repeater {
                 model: root.days

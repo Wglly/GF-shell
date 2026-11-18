@@ -24,6 +24,11 @@ QtObject {
     function px(v) {
         return Math.max(1, Math.round(v * theme.uiScale));
     }
+    // Layout metrics that follow the font scale (for popups / cards).
+    function fpx(v) {
+        return Math.max(1, Math.round(v * theme.uiScale * theme.fontScale));
+    }
+
     function fs(v) {
         return Math.max(6, Math.round(v * theme.uiScale * theme.fontScale * 10) / 10);
     }

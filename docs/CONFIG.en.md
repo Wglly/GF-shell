@@ -220,7 +220,8 @@ All three surfaces share these fields:
 
 - With windows open the dock collapses to a 6 px gold line; it expands when the pointer reaches the bottom hot zone.
 - While expanded, `exclusiveZone` equals the dock height, so the compositor pushes windows up.
-- `dock.pinned` is an array of desktop file names; the dock shows pinned entries in order and appends running apps that are not pinned.
+- `dock.pinned` is an array of desktop file names; the dock shows pinned entries in order and appends running apps that are not pinned, up to `dock.maxItems` (default 12).
+- Settings → Dock → “PIN AN APP” lets you type an app name and press Enter to pin it.
 - Right-click a dock icon to pin/unpin it, open a new window or close it; the pin state is written back to `dock.pinned`.
 - `dock.trigger` (4–48 px) is the hot-zone height while hidden; larger is easier to hit. While hidden the zone is transparent, the panel is fully hidden (only a 2 px indicator line remains) and the exclusive zone is 0.
 - With `dock.avoid = false` the dock stays fully visible; `dock.autoHide` only applies while avoidance is on.
@@ -268,7 +269,7 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 ## Theme modes, scaling and the settings surface
 
 - `theme.mode`: `dark` / `light` / `custom`; presets (including `light`) set it automatically.
-- `theme.fontScale` (0.8–1.4) scales text only; `theme.scale` (0.8–1.3) scales the whole shell
+- `theme.fontScale` (0.8–1.4) scales text and popup/card layout; `theme.scale` (0.8–1.3) scales the whole shell
   (spacing, panels, icons and text).
 - `theme.settingsOpacity` (0.5–1.0) and `theme.settingsGray` (0–1) control the **settings window's**
   translucent gray-white veil; the black rail and header stay opaque.
