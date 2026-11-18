@@ -54,85 +54,182 @@ PanelWindow {
 
     // ---------------------------------------------------------------- 应用列表
     readonly property var pinnedIds: Settings.get("dock.pinned", [])
+    property string menuKey: ""
+    readonly property var menuTarget: root.menuKey === "" ? null : root.entryByKey(root.menuKey)
 
-    function resolvePinned() {
+    function appById(id) {
+        var want = ("" + id).toLowerCase();
+        for (var i = 0; i < Apps.apps.length; i++) {
+            var base = Apps.apps[i].path.split("/").pop().toLowerCase();
+            if (base === want)
+                return Apps.apps[i];
+        }
+        return null;
+    }
+
+    function appDesktopId(app) {
+        return app ? app.path.split("/").pop() : "";
+    }
+
+    function windowApp(w) {
+        return w && w.appId ? Apps.findByClass(w.appId) : null;
+    }
+
+    function classBase(cls) {
+        return ("" + cls).toLowerCase().replace(/\s+/g, "");
+    }
+
+    function windowDesktopId(w) {
+        var app = root.windowApp(w);
+        return app ? root.appDesktopId(app) : "";
+    }
+
+    function windowsForPinned(app, id) {
         var out = [];
-        var ids = root.pinnedIds;
-        for (var i = 0; i < ids.length; i++) {
-            var app = null;
-            for (var j = 0; j < Apps.apps.length; j++) {
-                if (Apps.apps[j].path.split("/").pop() === ids[i]) {
-                    app = Apps.apps[j];
-                    break;
-                }
+        var want = ("" + id).replace(/\.desktop$/, "").toLowerCase();
+        for (var i = 0; i < Compositor.windows.length; i++) {
+            var w = Compositor.windows[i];
+            var wa = root.windowApp(w);
+            if (app && wa && wa.path === app.path) {
+                out.push(w);
+            } else if (!wa && want !== "" && root.classBase(w.appId) === want) {
+                out.push(w);
             }
-            if (app)
-                out.push({ name: app.name, icon: app.icon, exec: app.exec, path: app.path, app: app, pinned: true });
         }
         return out;
     }
 
-    function resolveRunning() {
+    function resolvePinned() {
         var out = [];
-        var seen = {};
-        var list = Compositor.windows;
-        for (var i = 0; i < list.length; i++) {
-            var cls = list[i].appId;
-            if (!cls)
+        var ids = root.pinnedIds || [];
+        for (var i = 0; i < ids.length; i++) {
+            var id = "" + ids[i];
+            var app = root.appById(id);
+            if (!app)
                 continue;
-            var key = ("" + cls).toLowerCase();
-            if (seen[key])
-                continue;
-            seen[key] = true;
-            var app = Apps.findByClass(cls);
+            var wins = root.windowsForPinned(app, id);
             out.push({
-                name: app ? app.name : cls,
-                icon: app ? app.icon : "",
-                exec: app ? app.exec : "",
-                path: app ? app.path : "",
+                key: "pin:" + id,
+                desktopId: id,
+                className: id.replace(/\.desktop$/, ""),
+                name: app.name,
+                icon: app.icon,
+                exec: app.exec,
                 app: app,
-                pinned: false
+                pinned: true,
+                windows: wins,
+                running: wins.length > 0
             });
         }
         return out;
     }
 
-    readonly property var entries: {
+    function resolveRunning() {
+        var claimed = {};
         var pinned = root.resolvePinned();
-        var running = root.resolveRunning();
-        var out = pinned.slice();
-        var names = {};
-        for (var i = 0; i < out.length; i++)
-            names[("" + out[i].name).toLowerCase()] = true;
-        for (var j = 0; j < running.length; j++) {
-            if (!names[("" + running[j].name).toLowerCase()])
-                out.push(running[j]);
+        for (var i = 0; i < pinned.length; i++) {
+            for (var j = 0; j < pinned[i].windows.length; j++)
+                claimed["" + pinned[i].windows[j].id] = true;
         }
-        return out.slice(0, root.maxItems);
+        var map = {};
+        var order = [];
+        for (var k = 0; k < Compositor.windows.length; k++) {
+            var w = Compositor.windows[k];
+            if (claimed["" + w.id])
+                continue;
+            var did = root.windowDesktopId(w);
+            var cls = root.classBase(w.appId);
+            if (cls === "")
+                continue;
+            var key = did !== "" ? "run:" + did.toLowerCase() : "run:class:" + cls;
+            var app = root.windowApp(w);
+            if (!map[key]) {
+                map[key] = {
+                    key: key,
+                    desktopId: did,
+                    className: "" + w.appId,
+                    name: app ? app.name : ("" + w.appId || "UNIT"),
+                    icon: app ? app.icon : ("" + w.appId),
+                    exec: app ? app.exec : "",
+                    app: app,
+                    pinned: false,
+                    windows: [],
+                    running: true
+                };
+                order.push(map[key]);
+            }
+            map[key].windows.push(w);
+        }
+        return order;
     }
 
-    function windowFor(entry) {
-        var list = Compositor.windows;
-        var key = ("" + entry.name).toLowerCase();
-        for (var i = 0; i < list.length; i++) {
-            var cls = ("" + list[i].appId).toLowerCase();
-            if (cls === key)
-                return list[i];
-            var app = Apps.findByClass(list[i].appId);
-            if (app && ("" + app.name).toLowerCase() === key)
-                return list[i];
+    readonly property var entries: {
+        var all = root.resolvePinned().concat(root.resolveRunning());
+        return all.slice(0, root.maxItems);
+    }
+
+    function entryByKey(key) {
+        for (var i = 0; i < root.entries.length; i++) {
+            if (root.entries[i].key === key)
+                return root.entries[i];
         }
         return null;
     }
 
+    function primaryWindow(entry) {
+        return entry && entry.windows && entry.windows.length > 0 ? entry.windows[0] : null;
+    }
+
     function activate(entry) {
-        var win = root.windowFor(entry);
+        root.menuKey = "";
+        var win = root.primaryWindow(entry);
         if (win) {
             Compositor.focusWindow(win.id);
             return;
         }
         if (entry.app)
             Apps.launch(entry.app);
+    }
+
+    function canPin(entry) {
+        if (!entry)
+            return false;
+        return entry.pinned || entry.desktopId !== "" || entry.app !== null;
+    }
+
+    function togglePin(entry) {
+        if (!entry || !root.canPin(entry))
+            return;
+        var id = entry.desktopId || (entry.app ? root.appDesktopId(entry.app) : "");
+        if (id === "")
+            return;
+        var ids = (Settings.get("dock.pinned", []) || []).slice();
+        var found = -1;
+        for (var i = 0; i < ids.length; i++) {
+            if (("" + ids[i]).toLowerCase() === id.toLowerCase()) {
+                found = i;
+                break;
+            }
+        }
+        if (found >= 0)
+            ids.splice(found, 1);
+        else
+            ids.push(id);
+        Settings.set("dock.pinned", ids);
+        root.menuKey = "";
+    }
+
+    function newWindow(entry) {
+        if (entry && entry.app)
+            Apps.launch(entry.app);
+    }
+
+    function closeEntry(entry) {
+        if (!entry)
+            return;
+        for (var i = 0; i < entry.windows.length; i++)
+            Compositor.closeWindow(entry.windows[i].id);
+        root.menuKey = "";
     }
 
     // 避让：有窗口时收起；进入底部热区展开并把窗口推开（exclusive zone）
@@ -145,6 +242,7 @@ PanelWindow {
                 hideTimer.stop();
             } else {
                 hideTimer.restart();
+                root.menuKey = "";
             }
         }
     }
@@ -243,7 +341,7 @@ PanelWindow {
                     required property var modelData
                     required property int index
 
-                    readonly property bool isRunning: root.windowFor(modelData) !== null
+                    readonly property bool isRunning: modelData.running === true
                     readonly property bool hovered: slotMouse.containsMouse
                     readonly property bool showSeparator: index > 0 && modelData.pinned === false
                         && root.entries[index - 1].pinned === true
@@ -319,7 +417,7 @@ PanelWindow {
 
                     // 名称提示
                     GfFrame {
-                        visible: slot.hovered
+                        visible: slot.hovered && root.menuKey === ""
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.bottom: parent.top
                         anchors.bottomMargin: Theme.px(4)
@@ -347,11 +445,15 @@ PanelWindow {
                         id: slotMouse
                         anchors.fill: parent
                         hoverEnabled: true
-                        acceptedButtons: Qt.LeftButton | Qt.MiddleButton
+                        acceptedButtons: Qt.LeftButton | Qt.MiddleButton | Qt.RightButton
                         cursorShape: Qt.PointingHandCursor
                         onClicked: mouse => {
-                            if (mouse.button === Qt.MiddleButton && slot.modelData.app) {
-                                Quickshell.execDetached(["/bin/sh", "-c", slot.modelData.exec]);
+                            if (mouse.button === Qt.RightButton) {
+                                root.menuKey = slot.modelData.key;
+                                return;
+                            }
+                            if (mouse.button === Qt.MiddleButton) {
+                                root.newWindow(slot.modelData);
                                 return;
                             }
                             root.activate(slot.modelData);
@@ -387,6 +489,76 @@ PanelWindow {
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
                     onClicked: ShellState.toggle("launcher")
+                }
+            }
+        }
+
+        // 右键菜单：固定/取消固定、开新窗口、关闭
+        Item {
+            id: contextBar
+            anchors.fill: parent
+            z: 30
+            visible: root.menuTarget !== null
+
+            Rectangle {
+                anchors.fill: parent
+                color: Theme.alpha(Theme.bg0, 0.97)
+                border.width: 1
+                border.color: Theme.alpha(Theme.accent, 0.5)
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: root.menuKey = ""
+            }
+
+            Row {
+                anchors.fill: parent
+                anchors.leftMargin: Theme.px(10)
+                anchors.rightMargin: Theme.px(10)
+                spacing: Theme.px(6)
+
+                GfText {
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: Theme.px(110)
+                    text: root.menuTarget ? root.menuTarget.name.toUpperCase() : ""
+                    role: "mono"
+                    size: Theme.sizeTiny - 1
+                    color: Theme.accent
+                    elide: Text.ElideRight
+                }
+                GfButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: Theme.px(28)
+                    compact: true
+                    text: root.menuTarget && root.menuTarget.pinned ? I18n.t("dock.unpin") : I18n.t("dock.pin")
+                    enabled: root.canPin(root.menuTarget)
+                    onClicked: root.togglePin(root.menuTarget)
+                }
+                GfButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: Theme.px(28)
+                    compact: true
+                    visible: root.menuTarget && root.menuTarget.app
+                    text: I18n.t("dock.newWindow")
+                    onClicked: root.newWindow(root.menuTarget)
+                }
+                GfButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: Theme.px(28)
+                    compact: true
+                    visible: root.menuTarget && root.menuTarget.windows.length > 0
+                    danger: true
+                    text: I18n.t("dock.closeWindow")
+                    onClicked: root.closeEntry(root.menuTarget)
+                }
+                GfButton {
+                    anchors.verticalCenter: parent.verticalCenter
+                    height: Theme.px(28)
+                    compact: true
+                    square: true
+                    text: "X"
+                    onClicked: root.menuKey = ""
                 }
             }
         }

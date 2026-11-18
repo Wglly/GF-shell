@@ -240,6 +240,8 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
 - 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
 - 滑出後自動收起，視窗恢復原位。
+- `dock.pinned` 是桌面文件名数组；Dock 按顺序显示固定项目，并把正在运行但未固定的应用接在后面。
+- 右键点击 Dock 图标可固定/取消固定、开新窗口或关闭；固定状态写回 `dock.pinned`。
 - `dock.trigger`（4–48px）是 Dock 收起时的热区高度；越大越容易滑出。收起时热区透明、面板完全隐藏，仅留 2px 指示线；`exclusiveZone` 为 0，不推开窗口。
 - `dock.avoid = false` 时 Dock 始终完整显示；`dock.autoHide` 只在避让开启时生效。
 - Dock 与状态栏同边时，热区与指示线画在状态栏边缘，Dock 本体贴住状态栏内侧；`mask` 只保留 Dock/热区输入，状态栏其余部分仍可点。

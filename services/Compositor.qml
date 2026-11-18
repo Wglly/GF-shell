@@ -189,6 +189,27 @@ QtObject {
         }
     }
 
+    function closeWindow(windowId) {
+        if (root.backend === "hyprland") {
+            if (root.hyprLua)
+                Hyprland.dispatch("hl.dsp.window.close({window=hl.get_window(\"address:"
+                    + root.hyprAddr(windowId) + "\")})");
+            else
+                Hyprland.dispatch("closewindow address:" + root.hyprAddr(windowId));
+            return;
+        }
+        if (root.backend === "niri") {
+            closer.command = ["niri", "msg", "action", "close-window", "--id", "" + windowId];
+            if (!closer.running)
+                closer.running = true;
+        }
+    }
+
+    property Process closer: Process {
+        command: ["true"]
+        onExited: root.scheduleRefresh()
+    }
+
     property Process mover: Process {
         command: ["true"]
         onExited: root.scheduleRefresh()
