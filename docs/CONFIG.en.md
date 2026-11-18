@@ -221,6 +221,7 @@ All three surfaces share these fields:
 - While expanded, `exclusiveZone` equals the dock height, so the compositor pushes windows up.
 - `dock.trigger` (4–48 px) is the hot-zone height while hidden; larger is easier to hit. While hidden the zone is transparent, the panel is fully hidden (only a 2 px indicator line remains) and the exclusive zone is 0.
 - With `dock.avoid = false` the dock stays fully visible; `dock.autoHide` only applies while avoidance is on.
+- When the dock shares an edge with the bar, the hot zone/indicator are drawn on the bar edge and the dock body attaches to the bar's inner edge; the input `mask` only keeps the dock and hot-zone regions, so the rest of the bar remains clickable.
 - Controlled by `dock.avoid` (default true) and `dock.autoHide` (default false).
 ### Sidebar components
 

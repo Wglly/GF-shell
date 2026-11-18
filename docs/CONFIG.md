@@ -242,6 +242,7 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 滑出後自動收起，視窗恢復原位。
 - `dock.trigger`（4–48px）是 Dock 收起時的熱區高度；越大越容易滑出。收起時熱區透明、面板完全隱藏，僅留 2px 指示線；`exclusiveZone` 為 0，不推開視窗。
 - `dock.avoid = false` 時 Dock 始終完整顯示；`dock.autoHide` 只在避讓開啟時生效。
+- Dock 與狀態列同邊時，熱區與指示線畫在狀態列邊緣，Dock 本體貼住狀態列內側；`mask` 只保留 Dock/熱區輸入，狀態列其餘部分仍可點。
 
 
 ### 側邊欄組件

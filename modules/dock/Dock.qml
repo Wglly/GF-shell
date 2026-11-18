@@ -22,13 +22,14 @@ PanelWindow {
     // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
     readonly property bool shouldHide: root.avoid && (root.autoHide || root.hasWindows)
     property bool hovered: false
-    readonly property bool revealed: !root.shouldHide || root.hovered
+    readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch
     // 收起时露出的热区高度（用户可调）
     readonly property int trigger: Theme.px(Settings.get("dock.trigger", 24))
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
         && ((root.atTop && Settings.get("bar.position", "top") === "top")
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
-    readonly property int edgeInset: root.barOnSameEdge ? Theme.px(Settings.get("bar.thickness", 38)) : 0
+    readonly property int barInset: root.barOnSameEdge ? Theme.px(Settings.get("bar.thickness", 38)) : 0
+    property bool hoverLatch: false
 
     visible: root.enabled && entries.length > 0
     color: "transparent"
@@ -36,11 +37,9 @@ PanelWindow {
     anchors.top: root.atTop
     anchors.left: true
     anchors.right: true
-    margins.top: root.atTop ? root.edgeInset : 0
-    margins.bottom: !root.atTop ? root.edgeInset : 0
-    implicitHeight: root.revealed ? Theme.px(76) : root.trigger
+    implicitHeight: root.revealed ? root.barInset + Theme.px(76) : root.trigger
     exclusionMode: ExclusionMode.Normal
-    // 收起时不占位，避免窗口/工作区被 24px 热区顶开
+    // 收起时不占位；展开时只保留 Dock 本身的高度
     exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
     Behavior on implicitHeight {
         enabled: Theme.animations
@@ -136,26 +135,60 @@ PanelWindow {
     // 避让：有窗口时收起；进入底部热区展开并把窗口推开（exclusive zone）
     HoverHandler {
         id: hover
-        onHoveredChanged: root.hovered = hovered
+        onHoveredChanged: {
+            root.hovered = hovered;
+            if (hovered) {
+                root.hoverLatch = true;
+                hideTimer.stop();
+            } else {
+                hideTimer.restart();
+            }
+        }
+    }
+
+    Timer {
+        id: hideTimer
+        interval: 280
+        onTriggered: root.hoverLatch = false
+    }
+
+    // 只让 Dock 本体和屏幕边缘热区接收输入；中间的状态栏区域保持可点
+    mask: Region {
+        Region { item: root.revealed ? dock : null }
+        Region { item: root.shouldHide ? triggerArea : null }
     }
 
     // ---------------------------------------------------------------- 底板
-    // 收起时露出的金色细线 + 加宽热区提示
-    Rectangle {
-        visible: !root.revealed
-        anchors.left: parent.left
-        anchors.right: parent.right
-        y: root.atTop ? 0 : parent.height - 2
-        height: 2
-        color: Theme.alpha(Theme.accent, 0.22)
-    }
-    Rectangle {
-        visible: !root.revealed
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: root.atTop ? 0 : parent.height - 3
-        width: Theme.px(56)
-        height: 3
-        color: Theme.alpha(Theme.accent, 0.8)
+    // 屏幕边缘热区：位于状态栏之上，收起时只显示一条细线
+    Item {
+        id: triggerArea
+        // 与状态列同边时只占中间一段，避免挡住整条状态列的点击
+        width: root.barOnSameEdge ? Theme.px(96) : parent.width
+        anchors.horizontalCenter: root.barOnSameEdge ? parent.horizontalCenter : undefined
+        anchors.left: !root.barOnSameEdge ? parent.left : undefined
+        anchors.right: !root.barOnSameEdge ? parent.right : undefined
+        anchors.top: root.atTop ? parent.top : undefined
+        anchors.bottom: !root.atTop ? parent.bottom : undefined
+        height: root.trigger
+
+        Rectangle {
+            visible: !root.revealed
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: root.atTop ? parent.top : undefined
+            anchors.bottom: !root.atTop ? parent.bottom : undefined
+            height: 2
+            color: Theme.alpha(Theme.accent, 0.22)
+        }
+        Rectangle {
+            visible: !root.revealed
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: root.atTop ? parent.top : undefined
+            anchors.bottom: !root.atTop ? parent.bottom : undefined
+            width: Theme.px(56)
+            height: 3
+            color: Theme.alpha(Theme.accent, 0.8)
+        }
     }
 
     GfFrame {
@@ -164,8 +197,8 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: !root.atTop ? parent.bottom : undefined
         anchors.top: root.atTop ? parent.top : undefined
-        anchors.bottomMargin: Theme.px(6)
-        anchors.topMargin: Theme.px(6)
+        anchors.bottomMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
+        anchors.topMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
         width: contentRow.implicitWidth + Theme.px(26)
         height: Theme.px(58)
         fill: Theme.alpha(Theme.bg0, 0.0)

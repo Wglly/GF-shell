@@ -221,6 +221,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - 展開中は `exclusiveZone` が Dock の高さになり、ウィンドウが押し上げられます。
 - `dock.trigger`（4–48px）は非表示時のホットゾーン高さ。非表示時はホットゾーンが透明でパネルは完全に隠れ、2px の線だけ残ります。`exclusiveZone` は 0 です。
 - `dock.avoid = false` なら Dock は常に表示。`dock.autoHide` は回避が有効なときだけ作用します。
+- バーと同じ辺にある場合、ホットゾーンと線はバー端に描画され、Dock 本体はバーの内側に密着します。`mask` は Dock とホットゾーンだけを入力対象にするため、バーの他の部分はクリックできます。
 - `dock.avoid`（既定 true）/ `dock.autoHide`（既定 false）で調整できます。
 
 ### サイドバーコンポーネント
