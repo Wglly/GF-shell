@@ -29,7 +29,7 @@ Item {
         text: root.text
         color: Sg.ink
         font.family: Theme.fontMono
-        font.pixelSize: Theme.px(10)
+        font.pixelSize: Theme.fs(10)
         verticalAlignment: TextInput.AlignVCenter
         selectByMouse: true
         clip: true
@@ -43,7 +43,7 @@ Item {
             text: root.placeholder
             color: Sg.mute
             font.family: Theme.fontUI
-            font.pixelSize: Theme.px(10)
+            font.pixelSize: Theme.fs(10)
         }
     }
 

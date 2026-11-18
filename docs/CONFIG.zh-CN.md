@@ -69,6 +69,18 @@
   },
   "theme": {
     "preset": "gfl",
+    "mode": "dark",
+    "bg0": "#070708",
+    "bg1": "#0d0d0f",
+    "bg": "#0a0a0c",
+    "textFaint": "#7d7668",
+    "textGhost": "#4a463d",
+    "ink": "#12100c",
+    "accentHi": "#ffd977",
+    "accentDim": "#7d6428",
+    "fontScale": 1.0,
+    "settingsOpacity": 0.9,
+    "settingsGray": 0.22,
     "accent": "#e8bd4f",
     "accent2": "#6f9bc4",
     "panel": "#141416",
@@ -92,6 +104,7 @@
     "color": "#080b0e"
   },
   "widgets": {
+    "grid": 48,
     "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
@@ -142,6 +155,7 @@
 | `sangvis` | 铁血：近黑 + 警戒红 | `#d34a34` |
 | `neural` | 神经网络：深蓝 + 冰青 | `#7eb2d6` |
 | `arctic` | 极地：冷灰 + 淡金 | `#cbb98a` |
+| `light` | 日照：纸白底 + 深金（亮色） | `#b07d18` |
 
 预设会写入整个 `theme.*` 色板，包括 `panel`、`line`、`text`…，所以切换后 UI 会立刻整体变化。
 自定义 `accent` 会把 `preset` 设为 `custom`。
@@ -240,6 +254,23 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 `bar.left` / `bar.center` / `bar.right` 为区块 id 数组；在「设置 → 状态栏 → 组件」中可逐项设为
 OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
+
+
+### 桌面布局编辑
+
+- 在「设置 → 桌面组件 → 布局」按 **编辑桌面布局**，或按 `SUPER+SHIFT+W`，或执行
+  `qs -c gf-shell ipc call shell widgets`。
+- 编辑模式叠加网格；拖动框线移动组件，松手吸附到 `widgets.grid` 像素网格。
+- 每个框右上角有 ON/OFF，可直接开关组件；编辑时组件会变暗且不可交互。
+- 位置保存为 `widgets.<name>.x/y`（屏幕比例）；`grid` 可设 16–96px。
+- `完成` 或 `Esc` 退出；`重置` 恢复默认位置。
+
+## 主题模式、缩放与设置表面
+
+- `theme.mode`：`dark` / `light` / `custom`；预设（含 `light`）会自动设置。
+- `theme.fontScale`（0.8–1.4）只缩放文字；`theme.scale`（0.8–1.3）缩放整个 shell。
+- `theme.settingsOpacity`（0.5–1.0）与 `theme.settingsGray`（0–1）控制设置窗口的灰白半透明遮罩。
+- 自定义 `bg0/bg1/panel/text/accent` 会把 `mode` 设为 `custom`；壁纸会按 `bg0` 亮度加纸白洗色。
 
 ## 壁纸
 

@@ -59,7 +59,19 @@ QtObject {
                 height: 640
             },
             theme: {
-                preset: "gfl",           // gfl | sangvis | neural | arctic
+                preset: "gfl",           // gfl | sangvis | neural | arctic | light
+                mode: "dark",            // dark | light | custom
+                bg0: "#070708",
+                bg1: "#0d0d0f",
+                bg: "#0a0a0c",
+                textFaint: "#7d7668",
+                textGhost: "#4a463d",
+                ink: "#12100c",
+                accentHi: "#ffd977",
+                accentDim: "#7d6428",
+                fontScale: 1.0,
+                settingsOpacity: 0.9,
+                settingsGray: 0.22,
                 accent: "#e8bd4f",
                 accent2: "#6f9bc4",
                 panel: "#141416",
@@ -83,6 +95,7 @@ QtObject {
                 color: "#080b0e"
             },
             widgets: {
+                grid: 48,
                 clock: { enabled: true, x: 0.045, y: 0.10, showDate: true, showSeconds: true },
                 stats: { enabled: true, x: 0.045, y: 0.42 },
                 media: { enabled: true, x: 0.72, y: 0.10 },
@@ -174,6 +187,18 @@ QtObject {
             text: "#e9eef4", textDim: "#9fb0bf",
             scanlines: false, brackets: true
         },
+        light: {
+            name: "DAYLIGHT OPS",
+            mode: "light",
+            accent: "#b07d18", accent2: "#4f7fa3",
+            accentHi: "#d9a62a", accentDim: "#7a5a12",
+            bg0: "#f3f0e7", bg1: "#eae6db", bg: "#efebe2",
+            panel: "#fbf9f3", panelAlt: "#f2efe7", panelHi: "#e4dfd2",
+            line: "#c9c1af", lineBright: "#a8842f",
+            text: "#1b1813", textDim: "#5c5648", textFaint: "#8b8373", textGhost: "#b2ab9c",
+            ink: "#15120c",
+            scanlines: false, brackets: true
+        },
         arctic: {
             name: "ARCTIC OPS",
             accent: "#cbb98a", accent2: "#9cb6c8",
@@ -259,14 +284,17 @@ QtObject {
         var p = root.presets[name];
         if (!p)
             return;
+        var base = root.defaults().theme;
+        var keys = ["accent", "accent2", "accentHi", "accentDim",
+            "bg0", "bg1", "bg", "panel", "panelAlt", "panelHi",
+            "line", "lineBright", "text", "textDim", "textFaint", "textGhost", "ink",
+            "scanlines", "brackets"];
         root.set("theme.preset", name);
-        for (var key in p) {
-            if (key === "name")
-                continue;
-            root.set("theme." + key, p[key]);
+        for (var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            root.set("theme." + k, p[k] !== undefined ? p[k] : base[k]);
         }
-        root.set("theme.accent", p.accent);
-        root.set("theme.accent2", p.accent2);
+        root.set("theme.mode", p.mode !== undefined ? p.mode : base.mode);
     }
 
     function merge(base, incoming) {

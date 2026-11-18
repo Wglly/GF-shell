@@ -48,9 +48,18 @@ ShellRoot {
     Binding { target: Theme; property: "brackets"; value: Settings.get("theme.brackets", true) }
     Binding { target: Theme; property: "panelOpacity"; value: Settings.get("theme.panelOpacity", 0.94) }
     Binding { target: Theme; property: "uiScale"; value: Settings.get("theme.scale", 1.0) }
+    Binding { target: Theme; property: "fontScale"; value: Settings.get("theme.fontScale", 1.0) }
     Binding { target: Theme; property: "animations"; value: Settings.get("theme.animations", true) }
 
     // 主题预设写入的完整色板
+    Binding { target: Theme; property: "bg0"; value: Settings.get("theme.bg0", "#070708") }
+    Binding { target: Theme; property: "bg1"; value: Settings.get("theme.bg1", "#0d0d0f") }
+    Binding { target: Theme; property: "bg"; value: Settings.get("theme.bg", "#0a0a0c") }
+    Binding { target: Theme; property: "textFaint"; value: Settings.get("theme.textFaint", "#7d7668") }
+    Binding { target: Theme; property: "textGhost"; value: Settings.get("theme.textGhost", "#4a463d") }
+    Binding { target: Theme; property: "ink"; value: Settings.get("theme.ink", "#12100c") }
+    Binding { target: Theme; property: "accentHi"; value: Settings.get("theme.accentHi", "#ffd977") }
+    Binding { target: Theme; property: "accentDim"; value: Settings.get("theme.accentDim", "#7d6428") }
     Binding { target: Theme; property: "panel"; value: Settings.get("theme.panel", "#141416") }
     Binding { target: Theme; property: "panelAlt"; value: Settings.get("theme.panelAlt", "#1a1a1d") }
     Binding { target: Theme; property: "panelHi"; value: Settings.get("theme.panelHi", "#24242a") }
@@ -86,6 +95,13 @@ ShellRoot {
         name: "power"
         description: "GF-shell: 系统停机菜单"
         onPressedChanged: if (pressed) ShellState.toggle("power")
+    }
+
+    GlobalShortcut {
+        appid: "gf-shell"
+        name: "widgets"
+        description: "GF-shell: 桌面组件布局编辑"
+        onPressedChanged: if (pressed) ShellState.toggleWidgetsEditing()
     }
 
     GlobalShortcut {
@@ -172,6 +188,10 @@ ShellRoot {
             ShellState.close();
         }
 
+        function widgets(): void {
+            ShellState.toggleWidgetsEditing();
+        }
+
         function status(): string {
             return "overlay=" + ShellState.overlay + " backend=" + Compositor.backend
                 + " workspaces=" + Compositor.workspaces.length;
@@ -228,6 +248,12 @@ ShellRoot {
             ShellState.sidebarLeft = true;
         else if (dbg === "sidebar-right")
             ShellState.sidebarRight = true;
+        else if (dbg === "light")
+            Settings.applyPreset("light");
+        else if (dbg === "dark")
+            Settings.applyPreset("gfl");
+        else if (dbg === "widgets")
+            ShellState.widgetsEditing = true;
         else if (dbg === "osd-bright") {
             ShellState.osdKind = "brightness";
             ShellState.osdValue = 0.78;

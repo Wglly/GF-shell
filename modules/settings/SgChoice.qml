@@ -34,7 +34,7 @@ Row {
                 anchors.centerIn: parent
                 text: modelData.label
                 font.family: Theme.fontUI
-                font.pixelSize: Theme.px(10)
+                font.pixelSize: Theme.fs(10)
                 font.letterSpacing: Theme.px(1)
                 font.bold: true
                 color: parent.active || mouse.containsMouse ? Sg.ink : "#f4f1e8"

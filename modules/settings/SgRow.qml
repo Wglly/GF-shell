@@ -24,7 +24,7 @@ Item {
         Text {
             text: root.label
             font.family: Theme.fontUI
-            font.pixelSize: Theme.px(13)
+            font.pixelSize: Theme.fs(13)
             font.bold: true
             color: Sg.ink
         }
@@ -32,7 +32,7 @@ Item {
             width: parent.width
             text: root.desc
             font.family: Theme.fontUI
-            font.pixelSize: Theme.px(9)
+            font.pixelSize: Theme.fs(9)
             color: Sg.mute
             elide: Text.ElideRight
         }

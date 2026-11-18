@@ -23,6 +23,7 @@ PanelWindow {
     exclusionMode: ExclusionMode.Ignore
     WlrLayershell.layer: WlrLayer.Bottom
     WlrLayershell.namespace: "gf-shell-desktop-hud"
+    WlrLayershell.keyboardFocus: ShellState.widgetsEditing ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     property date now: new Date()
 
@@ -50,6 +51,8 @@ PanelWindow {
     Item {
         id: clockWidget
         visible: root.clockOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.clock.x", 0.045))
         y: root.fracY(Settings.get("widgets.clock.y", 0.10))
         width: Theme.px(360)
@@ -142,6 +145,8 @@ PanelWindow {
     Item {
         id: statsWidget
         visible: root.statsOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.stats.x", 0.045))
         y: root.fracY(Settings.get("widgets.stats.y", 0.42))
         width: Theme.px(282)
@@ -252,6 +257,8 @@ PanelWindow {
     Item {
         id: mediaWidget
         visible: root.mediaOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.media.x", 0.72))
         y: root.fracY(Settings.get("widgets.media.y", 0.10))
         width: Theme.px(312)
@@ -398,6 +405,8 @@ PanelWindow {
     Item {
         id: missionWidget
         visible: root.missionOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.mission.x", 0.72))
         y: root.fracY(Settings.get("widgets.mission.y", 0.78))
         width: Theme.px(312)
@@ -505,6 +514,8 @@ PanelWindow {
     Item {
         id: weatherWidget
         visible: root.weatherOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.weather.x", 0.045))
         y: root.fracY(Settings.get("widgets.weather.y", 0.72))
         width: Theme.px(282)
@@ -614,6 +625,8 @@ PanelWindow {
     Item {
         id: visWidget
         visible: root.visOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.visualizer.x", 0.72))
         y: root.fracY(Settings.get("widgets.visualizer.y", 0.42))
         width: Theme.px(312)
@@ -676,6 +689,8 @@ PanelWindow {
     Item {
         id: userWidget
         visible: root.userOn && root.hudVisible
+        enabled: !ShellState.widgetsEditing
+        opacity: ShellState.widgetsEditing ? 0.55 : 1
         x: root.fracX(Settings.get("widgets.user.x", 0.72))
         y: root.fracY(Settings.get("widgets.user.y", 0.60))
         width: Theme.px(312)
@@ -717,6 +732,266 @@ PanelWindow {
                 anchors.topMargin: Theme.px(32)
                 compact: true
                 showActions: true
+            }
+        }
+    }
+
+
+    // ------------------------------------------------------ 桌面布局编辑
+    readonly property var widgetDefs: [
+        { key: "clock",      x: 0.045, y: 0.10, w: 360, h: 168 },
+        { key: "stats",      x: 0.045, y: 0.42, w: 282, h: 184 },
+        { key: "media",      x: 0.72,  y: 0.10, w: 312, h: 132 },
+        { key: "weather",    x: 0.045, y: 0.72, w: 282, h: 150 },
+        { key: "visualizer", x: 0.72,  y: 0.42, w: 312, h: 104 },
+        { key: "user",       x: 0.72,  y: 0.60, w: 312, h: 232 },
+        { key: "mission",    x: 0.72,  y: 0.87, w: 312, h: 128 }
+    ]
+
+    function resetWidgetLayout() {
+        for (var i = 0; i < root.widgetDefs.length; i++) {
+            var d = root.widgetDefs[i];
+            Settings.set("widgets." + d.key + ".x", d.x);
+            Settings.set("widgets." + d.key + ".y", d.y);
+        }
+    }
+
+    Item {
+        id: editLayer
+        anchors.fill: parent
+        z: 1000
+        visible: ShellState.widgetsEditing
+        focus: visible
+
+        Rectangle {
+            anchors.fill: parent
+            color: Theme.alpha(Theme.bg0, 0.42)
+        }
+
+        Canvas {
+            id: gridCanvas
+            anchors.fill: parent
+            property int grid: Math.max(8, Settings.get("widgets.grid", 48))
+            onGridChanged: requestPaint()
+            onWidthChanged: requestPaint()
+            onHeightChanged: requestPaint()
+            Component.onCompleted: requestPaint()
+
+            onPaint: {
+                var ctx = getContext("2d");
+                ctx.reset();
+                var g = grid;
+                if (g < 8)
+                    return;
+                ctx.lineWidth = 1;
+                for (var x = 0; x <= width; x += g) {
+                    ctx.strokeStyle = (Math.round(x / g) % 4 === 0)
+                        ? "rgba(232,189,79,0.16)" : "rgba(232,189,79,0.07)";
+                    ctx.beginPath();
+                    ctx.moveTo(x + 0.5, 0);
+                    ctx.lineTo(x + 0.5, height);
+                    ctx.stroke();
+                }
+                for (var y = 0; y <= height; y += g) {
+                    ctx.strokeStyle = (Math.round(y / g) % 4 === 0)
+                        ? "rgba(232,189,79,0.16)" : "rgba(232,189,79,0.07)";
+                    ctx.beginPath();
+                    ctx.moveTo(0, y + 0.5);
+                    ctx.lineTo(width, y + 0.5);
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // 顶部工具条
+        GfFrame {
+            id: editToolbar
+            z: 5
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: Settings.get("bar.position", "top") !== "bottom"
+                ? Settings.get("bar.thickness", 38) + Theme.px(12) : Theme.px(12)
+            width: Math.min(Theme.px(760), parent.width - Theme.px(40))
+            height: Theme.px(62)
+            fill: Theme.alpha(Theme.bg0, 0.94)
+            borderColor: Theme.alpha(Theme.accent, 0.8)
+            chamfer: Theme.px(6)
+            padding: 0
+            innerLine: true
+
+            Row {
+                anchors.left: parent.left
+                anchors.leftMargin: Theme.px(14)
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: Theme.px(10)
+
+                Rectangle {
+                    width: Theme.px(4)
+                    height: Theme.px(34)
+                    color: Theme.accent
+                }
+                Column {
+                    spacing: -2
+                    GfText {
+                        text: I18n.t("widget.editMode")
+                        role: "display"; size: Theme.sizeMedium + 1
+                        tracking: 2.4; bold: true
+                    }
+                    GfText {
+                        text: I18n.t("widget.dragHint")
+                        role: "ui"; size: Theme.sizeTiny - 1
+                        tone: "faint"
+                    }
+                }
+            }
+
+            Row {
+                anchors.right: parent.right
+                anchors.rightMargin: Theme.px(12)
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: Theme.px(8)
+
+                GfText {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: "GRID " + Settings.get("widgets.grid", 48)
+                    role: "mono"; size: Theme.sizeTiny - 1
+                    color: Theme.alpha(Theme.accent, 0.8)
+                }
+                GfButton {
+                    height: Theme.px(30)
+                    text: I18n.t("widget.reset")
+                    onClicked: root.resetWidgetLayout()
+                }
+                GfButton {
+                    height: Theme.px(30)
+                    text: I18n.t("widget.done")
+                    checked: true
+                    onClicked: ShellState.widgetsEditing = false
+                }
+            }
+        }
+
+        // 每个组件的拖动框
+        Repeater {
+            model: root.widgetDefs
+
+            delegate: Item {
+                id: ghost
+                required property var modelData
+                readonly property string key: modelData.key
+                readonly property int grid: Math.max(8, Settings.get("widgets.grid", 48))
+                readonly property bool on: Settings.get("widgets." + key + ".enabled", false)
+                property bool dragging: false
+
+                width: Theme.px(modelData.w)
+                height: Theme.px(modelData.h)
+
+                Binding {
+                    target: ghost
+                    property: "x"
+                    when: !ghost.dragging
+                    value: root.fracX(Settings.get("widgets." + ghost.key + ".x", ghost.modelData.x))
+                    restoreMode: Binding.RestoreBindingOrValue
+                }
+                Binding {
+                    target: ghost
+                    property: "y"
+                    when: !ghost.dragging
+                    value: root.fracY(Settings.get("widgets." + ghost.key + ".y", ghost.modelData.y))
+                    restoreMode: Binding.RestoreBindingOrValue
+                }
+
+                Rectangle {
+                    anchors.fill: parent
+                    color: ghost.on ? Theme.alpha(Theme.bg0, 0.42) : Theme.alpha(Theme.bg0, 0.22)
+                    border.width: ghost.on ? 2 : 1
+                    border.color: ghost.on ? Theme.accent : Theme.alpha(Theme.accent, 0.35)
+                }
+
+                // 拖动层（在标题/按钮之下）
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.SizeAllCursor
+                    drag.target: ghost
+                    drag.axis: Drag.XAndYAxis
+                    onPressed: ghost.dragging = true
+                    onReleased: {
+                        var g = ghost.grid;
+                        var nx = Math.max(0, Math.min(root.width - ghost.width, Math.round(ghost.x / g) * g));
+                        var ny = Math.max(0, Math.min(root.height - ghost.height, Math.round(ghost.y / g) * g));
+                        ghost.x = nx;
+                        ghost.y = ny;
+                        Settings.set("widgets." + ghost.key + ".x", nx / Math.max(1, root.width));
+                        Settings.set("widgets." + ghost.key + ".y", ny / Math.max(1, root.height));
+                        ghost.dragging = false;
+                    }
+                }
+
+                // 标题条
+                Rectangle {
+                    x: 1
+                    y: 1
+                    width: parent.width - 2
+                    height: Theme.px(26)
+                    color: Theme.alpha(Theme.bg0, 0.85)
+
+                    GfText {
+                        anchors.left: parent.left
+                        anchors.leftMargin: Theme.px(8)
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: I18n.t("set.widgets." + ghost.key)
+                        role: "mono"; size: Theme.sizeTiny
+                        color: ghost.on ? Theme.accent : Theme.textFaint
+                    }
+                }
+
+                // 开关
+                Rectangle {
+                    id: power
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.px(4)
+                    anchors.top: parent.top
+                    anchors.topMargin: Theme.px(4)
+                    width: Theme.px(42)
+                    height: Theme.px(18)
+                    color: ghost.on ? Theme.accent : "transparent"
+                    border.width: 1
+                    border.color: ghost.on ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5)
+
+                    GfText {
+                        anchors.centerIn: parent
+                        text: ghost.on ? I18n.t("common.on") : I18n.t("common.off")
+                        role: "mono"; size: Theme.sizeTiny - 3
+                        color: ghost.on ? Theme.ink : Theme.textFaint
+                    }
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: Settings.toggle("widgets." + ghost.key + ".enabled")
+                    }
+                }
+
+                GfText {
+                    anchors.centerIn: parent
+                    width: parent.width - Theme.px(20)
+                    text: ghost.on ? I18n.t("widget.dragHint") : I18n.t("widget.offHint")
+                    role: "ui"; size: Theme.sizeTiny
+                    color: Theme.alpha(Theme.text, 0.5)
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.Wrap
+                }
+            }
+        }
+
+        // Esc 退出
+        Item {
+            anchors.fill: parent
+            focus: editLayer.visible
+            Keys.onPressed: event => {
+                if (event.key === Qt.Key_Escape) {
+                    ShellState.widgetsEditing = false;
+                    event.accepted = true;
+                }
             }
         }
     }

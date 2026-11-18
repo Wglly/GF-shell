@@ -42,18 +42,19 @@ GF-shell 是一个从零编写的 Quickshell（Qt Quick）桌面外壳，视觉�
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。 |
 | **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口。 |
 | **系统停机 (Power)** | 锁定/休眠/重启/关机/登出；危险操作需二次确认（ENTER 两次），ESC 取消。 |
-| **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。 |
+| **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、每个组件可单独 ON/OFF。 |
 | **梯队 (Dock)** | 有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调。 |
 | **通知** | 右上角“通讯”弹窗（滑入、7 秒自动回收、点击关闭）＋控制中心内的历史记录。 |
 | **OSD** | 音量/亮度 HUD，分段仪表 + 大号数字。 |
 | **日历** | 点时钟下拉的行程面板：月份切换、今日高亮、周数。 |
-| **副官设置** | 少前式黑白设置：纸白底 + 黑线、黑灰按钮、黄色悬停/选中；8 个分页（外观/状态栏/梯队/侧边栏/桌面组件/壁纸/系统/关于），所有更改即时写入配置文件。 |
+| **副官设置** | 少前式黑白设置：纸白底 + 黑线、黑灰按钮、黄色悬停/选中；背景为 **可调灰白透明**（透明度/灰度）。8 个分页（外观/状态栏/梯队/侧边栏/桌面组件/壁纸/系统/关于）；支持 **亮色 / 暗色 / 自定义配色**、**整体缩放**与**字体缩放**，所有更改即时写入。 |
 | **侧边栏 (Sidebars)** | 左：操作员档案、月历、梯队名册；右：媒体 + 歌词 + cava 频谱 + 通讯记录。滑到屏幕边缘热区展开、移出延迟收起；每个组件可在「设置 → 侧边栏 → 组件」分配到左/右或关闭，面板高度（40–100%）与上/中/下对齐可调。 |
 | **状态栏弹出** | 点击操作员、时钟、媒体，详细栏锚定在该组件下方独立展开（用户/日历/媒体分开）。 |
 
 其他：
 
-- 四套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**，可即时切换。
+- 五套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（亮色）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。
+- 全局缩放：`SHELL SCALE`（整体）与 `FONT SCALE`（仅文字）分开调整；设置背景的灰白遮罩可调透明度与灰度。
 - 统一图标字体（Material Symbols 子集，改名为 *GF Tactical Icons*，约 1 MB，避免与系统字体撞名）、四种附带字体（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 界面支持四种语言：**繁體中文 / 简体中文 / English / 日本語**；在「副官设置 → 系统 → 语言」即时切换（设置页本身也会跟着切换）。
 - 壁纸支持内置四张 + 任意本地图片，可调压暗。
@@ -90,9 +91,13 @@ GF-shell 是一个从零编写的 Quickshell（Qt Quick）桌面外壳，视觉�
 | --- | --- | --- |
 | ![English](docs/screenshots/15-settings-en.png) | ![Japanese](docs/screenshots/16-settings-ja.png) | ![Japanese sidebar](docs/screenshots/17-sidebar-ja.png) |
 
-| 组件编辑：状态栏 | 组件编辑：侧边栏 |
-| --- | --- |
-| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) |
+| 组件编辑：状态栏 | 侧边栏组件 | 桌面网格布局 |
+| --- | --- | --- |
+| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) | ![Widget editor](docs/screenshots/20-widget-editor.png) |
+
+| 亮色主题：桌面 | 亮色主题：部署终端 | 设置：缩放与表面 |
+| --- | --- | --- |
+| ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
 
 同一套外壳跑在 **niri** 上（嵌套于 Hyprland 测试的窗口）：
 
@@ -188,6 +193,7 @@ bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER, Tab, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
+bind = SUPER SHIFT, W, global, gf-shell:widgets
 bind = , Print, global, gf-shell:screenshot
 ```
 
@@ -196,6 +202,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 
 IPC 接口（`IpcHandler`，target `shell`）：
@@ -204,6 +211,7 @@ IPC 接口（`IpcHandler`，target `shell`）：
 qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overview|power|settings|calendar
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
+qs -c gf-shell ipc call shell widgets   # 桌面组件布局编辑
 qs -c gf-shell ipc call shell status
 ```
 
@@ -229,10 +237,10 @@ qs -c gf-shell ipc call shell status
 | --- | --- |
 | `bar` | `position`、`thickness`、`opacity`、`gray`、`blur`、`clock24h`、`showSeconds`、`left` / `center` / `right`（组件顺序；可在设置里设 OFF/LEFT/CENTER/RIGHT） |
 | `sidebar` | `left` / `right` 的 `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
-| `theme` | `preset` (`gfl`/`sangvis`/`neural`/`arctic`)、`accent`、`accent2`、`scanlines`、`brackets`、`animations`、`scale` |
+| `theme` | `preset`（含 `light`）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` 或空＝内置）、`fillMode`、`dim` |
 | `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 与 `x`、`y` |
+| `widgets` | `grid`（吸附像素）、`clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 与 `x`、`y` |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

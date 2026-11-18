@@ -69,6 +69,18 @@ Config file: `~/.config/gf-shell/config.json`
   },
   "theme": {
     "preset": "gfl",
+    "mode": "dark",
+    "bg0": "#070708",
+    "bg1": "#0d0d0f",
+    "bg": "#0a0a0c",
+    "textFaint": "#7d7668",
+    "textGhost": "#4a463d",
+    "ink": "#12100c",
+    "accentHi": "#ffd977",
+    "accentDim": "#7d6428",
+    "fontScale": 1.0,
+    "settingsOpacity": 0.9,
+    "settingsGray": 0.22,
     "accent": "#e8bd4f",
     "accent2": "#6f9bc4",
     "panel": "#141416",
@@ -92,6 +104,7 @@ Config file: `~/.config/gf-shell/config.json`
     "color": "#080b0e"
   },
   "widgets": {
+    "grid": 48,
     "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
@@ -141,6 +154,7 @@ Auto-hide order on narrow screens: `title` → `media` → `stats` → `tray` �
 | `sangvis` | Sangvis Ferri: near-black + alert red | `#d34a34` |
 | `neural` | Neural Cloud: deep blue + ice cyan | `#7eb2d6` |
 | `arctic` | Arctic: cool grey + pale gold | `#cbb98a` |
+| `light` | Daylight: paper white + deep gold (light) | `#b07d18` |
 
 A preset writes the whole `theme.*` palette, including `panel`, `line`, `text`…, so switching repaints
 the entire UI immediately. Setting a custom `accent` changes `preset` to `custom`.
@@ -231,6 +245,29 @@ panel height and vertical placement; the panel scrolls when its components do no
 
 `bar.left`, `bar.center`, `bar.right` are arrays of block ids. In Settings → Status bar → Components, every
 block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these arrays. OFF removes the block.
+
+
+### Desktop layout editor
+
+- Open Settings → Widgets → Layout, press **EDIT DESKTOP LAYOUT**, hit `SUPER+SHIFT+W`, or run
+  `qs -c gf-shell ipc call shell widgets`.
+- The editor overlays a grid; drag a frame to move the widget, release to snap to the `widgets.grid`
+  pixel grid.
+- Each frame has an ON/OFF button in its top-right corner; widgets are dimmed and non-interactive
+  while editing.
+- Positions are stored as `widgets.<name>.x/y` screen fractions; `grid` accepts 16–96 px.
+- `DONE` or `Esc` exits; `RESET` restores default positions.
+
+## Theme modes, scaling and the settings surface
+
+- `theme.mode`: `dark` / `light` / `custom`; presets (including `light`) set it automatically.
+- `theme.fontScale` (0.8–1.4) scales text only; `theme.scale` (0.8–1.3) scales the whole shell
+  (spacing, panels, icons and text).
+- `theme.settingsOpacity` (0.5–1.0) and `theme.settingsGray` (0–1) control the **settings window's**
+  translucent gray-white veil; the black rail and header stay opaque.
+- Setting custom `bg0/bg1/bg/panel/text/accent/...` switches `mode` to `custom`. The wallpaper is
+  washed toward paper white based on `bg0` luminance so dark text stays readable in light themes.
+- Presets write the full palette; `scale`, `fontScale`, `settingsOpacity` are not overwritten.
 
 ## Wallpaper
 

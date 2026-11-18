@@ -144,8 +144,8 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: !root.atTop ? parent.bottom : undefined
         anchors.top: root.atTop ? parent.top : undefined
-        anchors.bottomMargin: Settings.get("bar.position", "top") === "bottom" ? Settings.get("bar.thickness", 38) + Theme.px(6) : Theme.px(6)
-        anchors.topMargin: Settings.get("bar.position", "bottom") === "bottom" ? Settings.get("bar.thickness", 38) + Theme.px(6) : Theme.px(6)
+        anchors.bottomMargin: Settings.get("bar.position", "top") === "bottom" ? Theme.px(Settings.get("bar.thickness", 38)) + Theme.px(6) : Theme.px(6)
+        anchors.topMargin: Settings.get("bar.position", "bottom") === "bottom" ? Theme.px(Settings.get("bar.thickness", 38)) + Theme.px(6) : Theme.px(6)
         width: contentRow.implicitWidth + Theme.px(26)
         height: Theme.px(58)
         fill: Theme.alpha(Theme.bg0, 0.0)

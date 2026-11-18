@@ -30,13 +30,13 @@ Rectangle {
         Text {
             text: root.number
             font.family: Theme.fontMono
-            font.pixelSize: Theme.px(10)
+            font.pixelSize: Theme.fs(10)
             color: Sg.yellow
         }
         Text {
             text: root.title
             font.family: Theme.fontUI
-            font.pixelSize: Theme.px(11)
+            font.pixelSize: Theme.fs(11)
             font.letterSpacing: Theme.px(2)
             font.bold: true
             color: Sg.paper
@@ -49,7 +49,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         text: root.note
         font.family: Theme.fontMono
-        font.pixelSize: Theme.px(9)
+        font.pixelSize: Theme.fs(9)
         color: "#b9b2a4"
     }
 }

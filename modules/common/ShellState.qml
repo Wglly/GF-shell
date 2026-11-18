@@ -19,6 +19,7 @@ QtObject {
         state.popupKind = "";
         state.sidebarLeft = false;
         state.sidebarRight = false;
+        state.widgetsEditing = false;
         var prev = state.overlay;
         state.overlay = name;
         if (prev !== "none")
@@ -43,6 +44,13 @@ QtObject {
 
     // 桌面小工具是否可见
     property bool widgetsVisible: true
+    // 桌面组件布局编辑模式（网格拖动）
+    property bool widgetsEditing: false
+
+    function toggleWidgetsEditing() {
+        state.closePopup();
+        state.widgetsEditing = !state.widgetsEditing;
+    }
 
     // 相册/壁纸选择器
     property string wallpaperScope: "local"

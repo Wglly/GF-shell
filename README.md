@@ -42,18 +42,19 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | **戰術控制 (Control Center)** | 鏈路（Wi-Fi/藍牙）、音量/亮度分段滑條、模組開關、CPU/MEM/BAT 分段儀表、通訊紀錄、隨媒體控制。 |
 | **作戰地圖 (Overview)** | 每個工作區一張「扇區」卡，列出其中單位；點扇區切換工作區、點單位聚焦視窗。 |
 | **系統停機 (Power)** | 鎖定/休眠/重啟/關機/登出；危險操作需二次確認（ENTER 兩次），ESC 取消。 |
-| **HUD 小工具** | 大時鐘、系統生命徵象、通訊（含歌詞）、天氣、cava 音樂頻譜、操作員卡、當前任務；逐項開關。 |
+| **HUD 小工具** | 大時鐘、系統生命徵象、通訊（含歌詞）、天氣、cava 音樂頻譜、操作員卡、當前任務；逐項開關。另有 **桌面佈局編輯模式**：疊加網格、拖動吸附、每個組件可單獨 ON/OFF。 |
 | **梯隊 (Dock)** | 有視窗時自動收起；滑到底部熱區才展開，並用 exclusive zone 把視窗推開。圖示尺寸/透明度/灰度/模糊可調。 |
 | **通知** | 右上角「通訊」彈窗（滑入、7 秒自動回收、點擊關閉）＋控制中心內的歷史紀錄。 |
 | **OSD** | 音量/亮度 HUD，分段儀表 + 大號數字。 |
 | **日曆** | 點時鐘下拉的行程面板：月份切換、今日高亮、週數。 |
-| **副官設置** | 少前式黑白設定：紙白底 + 黑線、黑灰按鈕、黃色懸停/選中；8 個分頁（外觀/狀態列/梯隊/側邊欄/桌面組件/壁紙/系統/關於），所有變更即時寫入設定檔。 |
+| **副官設置** | 少前式黑白設定：紙白底 + 黑線、黑灰按鈕、黃色懸停/選中；背景為 **可調灰白透明**（透明度/灰度）。8 個分頁（外觀/狀態列/梯隊/側邊欄/桌面組件/壁紙/系統/關於）；支援 **亮色 / 暗色 / 自訂配色**、**整體縮放**與**字體縮放**，所有變更即時寫入。 |
 | **側邊欄 (Sidebars)** | 左：操作員檔案、月曆、梯隊名冊；右：媒體 + 歌詞 + cava 頻譜 + 通訊紀錄。滑到螢幕邊緣熱區展開、移出延遲收起；每個組件可在「設定 → 側邊欄 → 組件」分配到左/右或關閉，面板高度（40–100%）與上/中/下對齊可調。 |
 | **狀態列彈出** | 點擊操作員、時鐘、媒體，詳細欄錨定在該元件下方獨立展開，互不干擾（使用者/日曆/媒體分開）。 |
 
 其他：
 
-- 四套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**，可即時切換。
+- 五套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（亮色）；亦可選 DARK / LIGHT / CUSTOM，自訂 BG0/BG1/PANEL/TEXT/ACCENT 十六進位色。
+- 全域縮放：`SHELL SCALE`（整體）與 `FONT SCALE`（只縮放文字）分開調整；設定背景的灰白遮罩可調透明度與灰度。
 - 統一圖示字型（Material Symbols 子集，改名為 *GF Tactical Icons*，約 1 MB，避免與系統字型撞名）、四種隨附字型（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 介面支援四種語言：**繁體中文 / 简体中文 / English / 日本語**；在「副官設置 → 系統 → 語言」即時切換（設定頁本身也會跟著換）。
 - 壁紙支援內建四張 + 任意本機圖片，可調壓暗。
@@ -90,9 +91,13 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | --- | --- | --- |
 | ![English](docs/screenshots/15-settings-en.png) | ![Japanese](docs/screenshots/16-settings-ja.png) | ![Japanese sidebar](docs/screenshots/17-sidebar-ja.png) |
 
-| 組件編輯：狀態列 | 組件編輯：側邊欄 |
-| --- | --- |
-| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) |
+| 組件編輯：狀態列 | 側邊欄組件 | 桌面網格佈局 |
+| --- | --- | --- |
+| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) | ![Widget editor](docs/screenshots/20-widget-editor.png) |
+
+| 亮色主題：桌面 | 亮色主題：部署終端 | 設定：縮放與表面 |
+| --- | --- | --- |
+| ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
 
 同一套外殼跑在 **niri** 上（嵌套於 Hyprland 測試的視窗）：
 
@@ -178,7 +183,8 @@ hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description
 hl.bind("SUPER + Tab",        hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作戰地圖" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: 戰術控制" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: 系統停機" })
-hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: 截圖" })
+hl.bind("SUPER + SHIFT + W",  hl.dsp.global("gf-shell:widgets"),   { description = "GF-shell: widget layout" })
+hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: screenshot" })
 ```
 
 傳統設定：
@@ -188,6 +194,7 @@ bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER, Tab, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
+bind = SUPER SHIFT, W, global, gf-shell:widgets
 bind = , Print, global, gf-shell:screenshot
 ```
 
@@ -196,6 +203,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 
 IPC 介面（`IpcHandler`，target `shell`）：
@@ -204,6 +212,7 @@ IPC 介面（`IpcHandler`，target `shell`）：
 qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overview|power|settings|calendar
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
+qs -c gf-shell ipc call shell widgets   # 桌面組件佈局編輯
 qs -c gf-shell ipc call shell status
 ```
 
@@ -229,10 +238,10 @@ qs -c gf-shell ipc call shell status
 | --- | --- |
 | `bar` | `position`、`thickness`、`opacity`、`gray`、`blur`、`clock24h`、`showSeconds`、`left` / `center` / `right`（組件順序；可在設定裡設 OFF/LEFT/CENTER/RIGHT） |
 | `sidebar` | `left` / `right` 的 `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
-| `theme` | `preset` (`gfl`/`sangvis`/`neural`/`arctic`)、`accent`、`accent2`、`scanlines`、`brackets`、`animations`、`scale` |
+| `theme` | `preset`（含 `light`）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` 或空＝內建）、`fillMode`、`dim` |
 | `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 與 `x`、`y` |
+| `widgets` | `grid`（吸附像素）、`clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 與 `x`、`y` |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

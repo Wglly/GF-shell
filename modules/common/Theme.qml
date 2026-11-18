@@ -18,13 +18,14 @@ QtObject {
 
     // ------------------------------------------------------------------ 缩放
     property real uiScale: 1.0
+    property real fontScale: 1.0
     property real widgetScale: 1.0
 
     function px(v) {
         return Math.max(1, Math.round(v * theme.uiScale));
     }
     function fs(v) {
-        return Math.max(6, Math.round(v * theme.uiScale * 10) / 10);
+        return Math.max(6, Math.round(v * theme.uiScale * theme.fontScale * 10) / 10);
     }
 
     property int sizeTiny: fs(9)

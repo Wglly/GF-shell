@@ -96,7 +96,7 @@ Item {
         anchors.verticalCenter: parent.verticalCenter
         text: (root.decimals > 0 ? root.value.toFixed(root.decimals) : Math.round(root.value)) + root.suffix
         font.family: Theme.fontMono
-        font.pixelSize: Theme.px(11)
+        font.pixelSize: Theme.fs(11)
         color: Sg.ink
         width: Theme.px(50)
         horizontalAlignment: Text.AlignRight

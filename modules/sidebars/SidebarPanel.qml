@@ -14,12 +14,12 @@ PanelWindow {
 
     screen: modelData
     readonly property var cfg: Settings.get("sidebar." + root.side, ({}))
-    readonly property int panelWidth: root.cfg.width !== undefined ? root.cfg.width : Theme.px(356)
+    readonly property int panelWidth: Theme.px(root.cfg.width !== undefined ? root.cfg.width : 356)
     readonly property real ratio: root.cfg.height !== undefined ? root.cfg.height : 0.92
     readonly property string align: root.cfg.align !== undefined ? root.cfg.align : "top"
     readonly property int screenH: root.modelData.height
     readonly property int panelH: Math.max(Theme.px(320), Math.round(root.screenH * Math.max(0.4, Math.min(1.0, root.ratio))))
-    readonly property int barThickness: Settings.get("bar.thickness", 38)
+    readonly property int barThickness: Theme.px(Settings.get("bar.thickness", 38))
     readonly property bool barAtTop: Settings.get("bar.position", "top") !== "bottom"
     readonly property bool barVisible: Settings.get("bar.visible", true)
     readonly property int topOffset: {

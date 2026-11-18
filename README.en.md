@@ -44,18 +44,19 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 | **Tactical control (Control Center)** | Link status (Wi-Fi/Bluetooth), segmented volume/brightness sliders, module switches, CPU/MEM/BAT segmented gauges, notification history and media controls. |
 | **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window. |
 | **System halt (Power)** | Lock / suspend / restart / shut down / log out. Dangerous actions need a second confirmation (ENTER twice); ESC cancels. |
-| **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. |
+| **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. A **desktop layout editor** overlays a snap grid, lets you drag widgets and toggle each one ON/OFF. |
 | **Echelon (Dock)** | Pinned and running units. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable. |
 | **Notifications** | "Incoming transmission" toasts in the top-right (slide in, auto-dismiss after 7 s, click to dismiss) plus history in the control centre. |
 | **OSD** | Volume/brightness HUD with a segmented meter and a large readout. |
 | **Calendar** | Schedule panel dropped from the clock: month navigation, today highlight, week number. |
-| **Adjutant config (Settings)** | A GFL-style black-and-white panel: paper background, black rules, charcoal buttons that turn yellow on hover/selection. Eight tabs (appearance/bar/dock/sidebars/widgets/wallpaper/system/about); every change is written immediately. |
+| **Adjutant config (Settings)** | A GFL-style black-and-white panel: paper background, black rules, charcoal buttons that turn yellow on hover/selection. The background is a **translucent gray-white veil** with adjustable opacity/gray. Eight tabs (appearance/bar/dock/sidebars/widgets/wallpaper/system/about), **dark / light / custom palettes**, **shell scale** and **font scale**; every change is written immediately. |
 | **Sidebars** | Left: operator file, calendar, squad roster. Right: media + lyrics + cava spectrum + notification log. Open from screen-edge hot zones, close after the pointer leaves. Every component can be assigned left / right / off in Settings → Sidebars → Components; height (40–100%) and top / centre / bottom alignment are adjustable. |
 | **Bar popups** | Clicking the operator, clock or media block opens an anchored detail panel at that block (user / calendar / media are separate). |
 
 Also:
 
-- Four theme presets: **G&K STANDARD**, **SANGVIS FERRI**, **NEURAL CLOUD**, **ARCTIC OPS** — switchable live.
+- Five theme presets: **G&K STANDARD**, **SANGVIS FERRI**, **NEURAL CLOUD**, **ARCTIC OPS**, **DAYLIGHT OPS** (light); or choose DARK / LIGHT / CUSTOM and set BG0/BG1/PANEL/TEXT/ACCENT hex colours.
+- Global scaling is split into `SHELL SCALE` (everything) and `FONT SCALE` (text only); the settings veil has adjustable opacity and gray.
 - One icon font (a Material Symbols subset renamed *GF Tactical Icons*, ~1 MB, so it never collides with a system font) and four bundled text fonts (Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono).
 - Four interface languages: **Traditional Chinese / Simplified Chinese / English / Japanese**; switch live in Settings → System → Language (the settings window itself is translated too).
 - Four built-in wallpapers plus any local image, with adjustable dimming.
@@ -92,9 +93,13 @@ Also:
 | --- | --- | --- |
 | ![English](docs/screenshots/15-settings-en.png) | ![Japanese](docs/screenshots/16-settings-ja.png) | ![Japanese sidebar](docs/screenshots/17-sidebar-ja.png) |
 
-| Bar component editor | Sidebar component editor |
-| --- | --- |
-| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) |
+| Bar component editor | Sidebar component editor | Desktop grid layout |
+| --- | --- | --- |
+| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) | ![Widget editor](docs/screenshots/20-widget-editor.png) |
+
+| Light theme: desktop | Light theme: launcher | Settings: scale & surface |
+| --- | --- | --- |
+| ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
 
 The same shell running on **niri** (nested inside Hyprland for testing):
 
@@ -192,6 +197,7 @@ bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER, Tab, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
+bind = SUPER SHIFT, W, global, gf-shell:widgets
 bind = , Print, global, gf-shell:screenshot
 ```
 
@@ -200,6 +206,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 
 IPC surface (`IpcHandler`, target `shell`):
@@ -208,6 +215,7 @@ IPC surface (`IpcHandler`, target `shell`):
 qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overview|power|settings|calendar
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
+qs -c gf-shell ipc call shell widgets   # desktop widget layout editor
 qs -c gf-shell ipc call shell status
 ```
 
@@ -234,10 +242,10 @@ Config file: `~/.config/gf-shell/config.json` (created on first start).
 | --- | --- |
 | `bar` | `position`, `thickness`, `opacity`, `gray`, `blur`, `clock24h`, `showSeconds`, `left` / `center` / `right` (block order; OFF/LEFT/CENTER/RIGHT in Settings) |
 | `sidebar` | `left`/`right`: `width`, `height` (0.4–1.0), `align` (top/center/bottom), `opacity`, `gray`, `blur`, `assign.<id>` (left/right/off) |
-| `theme` | `preset` (`gfl`/`sangvis`/`neural`/`arctic`), `accent`, `accent2`, `scanlines`, `brackets`, `animations`, `scale` |
+| `theme` | `preset` (incl. `light`), `mode` (dark/light/custom), `accent`, `accent2`, `bg0`, `bg1`, `panel`, `text`, `fontScale`, `settingsOpacity`, `settingsGray`, `scale`, `animations` |
 | `wallpaper` | `enabled`, `path` (`file://` or empty = built-in), `fillMode`, `dim` |
 | `dock` | `enabled`, `autoHide`, `avoid`, `iconSize`, `opacity`, `gray`, `blur`, `maxItems`, `pinned` |
-| `widgets` | per-widget `enabled` plus `x`, `y` for `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` |
+| `widgets` | `grid` (snap pixels) plus per-widget `enabled`, `x`, `y` for `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` |
 | `overview` | `columns`, `desktops`, `backdrop` |
 | `notifications` | `dnd`, `toasts`, `maxToasts` |
 | `osd` | `enabled` |

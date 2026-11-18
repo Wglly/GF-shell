@@ -32,7 +32,7 @@ PanelWindow {
 
     readonly property string kind: ShellState.popupKind
     readonly property bool atTop: Settings.get("bar.position", "top") !== "bottom"
-    readonly property int barThickness: Settings.get("bar.thickness", 38)
+    readonly property int barThickness: Theme.px(Settings.get("bar.thickness", 38))
 
     readonly property int panelWidth: {
         switch (root.kind) {

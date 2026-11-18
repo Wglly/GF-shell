@@ -69,6 +69,18 @@
   },
   "theme": {
     "preset": "gfl",
+    "mode": "dark",
+    "bg0": "#070708",
+    "bg1": "#0d0d0f",
+    "bg": "#0a0a0c",
+    "textFaint": "#7d7668",
+    "textGhost": "#4a463d",
+    "ink": "#12100c",
+    "accentHi": "#ffd977",
+    "accentDim": "#7d6428",
+    "fontScale": 1.0,
+    "settingsOpacity": 0.9,
+    "settingsGray": 0.22,
     "accent": "#e8bd4f",
     "accent2": "#6f9bc4",
     "panel": "#141416",
@@ -92,6 +104,7 @@
     "color": "#080b0e"
   },
   "widgets": {
+    "grid": 48,
     "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
@@ -142,6 +155,7 @@
 | `sangvis` | サングヴィス・フェリ：ほぼ黒 + 警告の赤 | `#d34a34` |
 | `neural` | ニューラルクラウド：深い青 + アイスシアン | `#7eb2d6` |
 | `arctic` | アークティック：冷たいグレー + 淡い金 | `#cbb98a` |
+| `light` | デイライト：紙白＋深い金（ライト） | `#b07d18` |
 
 プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が
 即座に変わります。`accent` を個別に指定すると `preset` は `custom` になります。
@@ -219,6 +233,24 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 `bar.left` / `bar.center` / `bar.right` はブロック id の配列です。設定 → ステータスバー → コンポーネント
 で各ブロックを OFF / LEFT / CENTER / RIGHT に変更でき、OFF はバーから削除されます。
+
+
+### デスクトップレイアウト編集
+
+- 設定 → ウィジェット → レイアウト の **デスクトップレイアウトを編集**、`SUPER+SHIFT+W`、または
+  `qs -c gf-shell ipc call shell widgets` で開きます。
+- グリッドが重なり、枠をドラッグして移動、離すと `widgets.grid` のピクセルグリッドに吸着します。
+- 各枠の右上の ON/OFF で個別に表示／非表示を切替できます。編集中はウィジェットが暗くなり操作できません。
+- 位置は `widgets.<name>.x/y`（画面比率）に保存。`grid` は 16–96px。
+- `完了` または `Esc` で終了、`リセット` で既定位置に戻ります。
+
+## テーマモード・スケール・設定画面の表面
+
+- `theme.mode`：`dark` / `light` / `custom`。プリセット（`light` を含む）が自動設定します。
+- `theme.fontScale`（0.8–1.4）は文字のみ、`theme.scale`（0.8–1.3）はシェル全体を拡大します。
+- `theme.settingsOpacity`（0.5–1.0）と `theme.settingsGray`（0–1）で設定画面のグレーホワイト半透明を調整。
+- `bg0/bg1/panel/text/accent` を変えると `mode` は `custom` になります。壁紙は `bg0` の明るさに応じて
+  紙白に洗われ、ライトテーマでも濃い文字が読めます。
 
 ## 壁紙
 

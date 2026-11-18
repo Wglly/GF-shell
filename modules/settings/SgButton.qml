@@ -42,7 +42,7 @@ Item {
             id: label
             text: root.text
             font.family: Theme.fontUI
-            font.pixelSize: Theme.px(root.compact ? 10 : 11)
+            font.pixelSize: Theme.fs(root.compact ? 10 : 11)
             font.letterSpacing: Theme.px(1.2)
             font.bold: true
             color: root.active || root.hovered ? Sg.ink : "#f4f1e8"

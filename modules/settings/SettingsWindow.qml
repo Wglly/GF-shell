@@ -35,6 +35,10 @@ PanelWindow {
     WlrLayershell.namespace: "gf-shell-settings"
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
+    readonly property color settingsVeil: Theme.mix("#f4f1e9", "#8d897f",
+        Settings.get("theme.settingsGray", 0.22))
+    readonly property real settingsVeilAlpha: Settings.get("theme.settingsOpacity", 0.9)
+
     property int tab: ShellState.settingsTab
     onTabChanged: ShellState.settingsTab = root.tab
 
@@ -102,6 +106,15 @@ PanelWindow {
         Settings.set("sidebar.assign." + id, side);
     }
 
+    function setHex(key, value) {
+        var v = ("" + value).trim();
+        if (!/^#[0-9a-fA-F]{6}([0-9a-fA-F]{2})?$/.test(v))
+            return;
+        Settings.set("theme." + key, v);
+        Settings.set("theme.mode", "custom");
+        Settings.set("theme.preset", "custom");
+    }
+
     readonly property var tabs: [
         { key: "appearance", label: "APPEARANCE", zh: "外觀" },
         { key: "bar", label: "STATUS BAR", zh: "狀態列" },
@@ -116,7 +129,7 @@ PanelWindow {
     // ---------------------------------------------------------------- 背景
     Rectangle {
         anchors.fill: parent
-        color: Sg.paper
+        color: Theme.alpha(root.settingsVeil, root.settingsVeilAlpha)
     }
 
     Canvas {
@@ -200,7 +213,7 @@ PanelWindow {
                 Text {
                     text: "ADJUTANT CONFIG"
                     font.family: Theme.fontDisplay
-                    font.pixelSize: Theme.px(24)
+                    font.pixelSize: Theme.fs(24)
                     font.letterSpacing: Theme.px(6)
                     font.bold: true
                     color: Sg.paper
@@ -211,7 +224,7 @@ PanelWindow {
                     Text {
                         text: "副官設置   //   GF-SHELL CONFIGURATION"
                         font.family: Theme.fontUI
-                        font.pixelSize: Theme.px(9)
+                        font.pixelSize: Theme.fs(9)
                         font.letterSpacing: Theme.px(2)
                         color: "#b8b1a3"
                     }
@@ -228,7 +241,7 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "CONFIG v" + Settings.get("version", 2) + "   ·   AUTO-SAVE"
                     font.family: Theme.fontMono
-                    font.pixelSize: Theme.px(9)
+                    font.pixelSize: Theme.fs(9)
                     color: "#9c9587"
                 }
 
@@ -247,7 +260,7 @@ PanelWindow {
                     Text {
                         anchors.centerIn: parent
                         text: "✕"
-                        font.pixelSize: Theme.px(14)
+                        font.pixelSize: Theme.fs(14)
                         color: closeMouse.containsMouse ? Sg.ink : Sg.paper
                     }
                     MouseArea {
@@ -278,7 +291,7 @@ PanelWindow {
                 Text {
                     text: I18n.t("set.footer.autoSave")
                     font.family: Theme.fontUI
-                    font.pixelSize: Theme.px(9)
+                    font.pixelSize: Theme.fs(9)
                     color: "#b8b1a3"
                 }
             }
@@ -289,7 +302,7 @@ PanelWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 text: "GF-SHELL  ·  " + Compositor.backend.toUpperCase() + "  ·  QUICKSHELL 0.3"
                 font.family: Theme.fontMono
-                font.pixelSize: Theme.px(9)
+                font.pixelSize: Theme.fs(9)
                 color: "#9c9587"
             }
         }
@@ -319,7 +332,7 @@ PanelWindow {
                         x: Theme.px(8)
                         text: "SECTIONS"
                         font.family: Theme.fontMono
-                        font.pixelSize: Theme.px(9)
+                        font.pixelSize: Theme.fs(9)
                         color: "#8c8679"
                         font.letterSpacing: Theme.px(2)
                     }
@@ -357,7 +370,7 @@ PanelWindow {
                                 Text {
                                     text: "0" + (index + 1)
                                     font.family: Theme.fontMono
-                                    font.pixelSize: Theme.px(9)
+                                    font.pixelSize: Theme.fs(9)
                                     color: active ? Sg.ink : "#7d7668"
                                 }
                                 Column {
@@ -365,7 +378,7 @@ PanelWindow {
                                     Text {
                                         text: modelData.label
                                         font.family: Theme.fontUI
-                                        font.pixelSize: Theme.px(12)
+                                        font.pixelSize: Theme.fs(12)
                                         font.letterSpacing: Theme.px(1.6)
                                         font.bold: true
                                         color: active ? Sg.ink : Sg.paper
@@ -373,7 +386,7 @@ PanelWindow {
                                     Text {
                                         text: I18n.t("set.tab." + modelData.key)
                                         font.family: Theme.fontUI
-                                        font.pixelSize: Theme.px(8)
+                                        font.pixelSize: Theme.fs(8)
                                         color: active ? "#4a463d" : "#8c8679"
                                     }
                                 }
@@ -398,16 +411,16 @@ PanelWindow {
                         spacing: Theme.px(4)
                         Text {
                             x: Theme.px(8); text: "OPERATOR"
-                            font.family: Theme.fontMono; font.pixelSize: Theme.px(8); color: "#8c8679"
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#8c8679"
                         }
                         Text {
                             x: Theme.px(8); text: User.displayName + "  //  " + User.opNumber
-                            font.family: Theme.fontMono; font.pixelSize: Theme.px(9); color: Sg.paper
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Sg.paper
                         }
                         Text {
                             x: Theme.px(8)
                             text: User.session + "  ·  " + User.host
-                            font.family: Theme.fontMono; font.pixelSize: Theme.px(8); color: "#9c9587"
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#9c9587"
                             elide: Text.ElideRight
                             width: parent.width - Theme.px(16)
                         }
@@ -437,7 +450,7 @@ PanelWindow {
                         Text {
                             text: root.tabs[root.tab].label
                             font.family: Theme.fontDisplay
-                            font.pixelSize: Theme.px(26)
+                            font.pixelSize: Theme.fs(26)
                             font.letterSpacing: Theme.px(4)
                             font.bold: true
                             color: Sg.ink
@@ -445,7 +458,7 @@ PanelWindow {
                         Text {
                             text: I18n.t("set.page." + root.tabs[root.tab].key)
                             font.family: Theme.fontUI
-                            font.pixelSize: Theme.px(9)
+                            font.pixelSize: Theme.fs(9)
                             font.letterSpacing: Theme.px(2)
                             color: Sg.mute
                         }
@@ -461,7 +474,7 @@ PanelWindow {
                             anchors.centerIn: parent
                             text: "SECTION 0" + (root.tab + 1)
                             font.family: Theme.fontMono
-                            font.pixelSize: Theme.px(9)
+                            font.pixelSize: Theme.fs(9)
                             color: Sg.yellow
                         }
                     }
@@ -519,10 +532,33 @@ PanelWindow {
                                         { value: "gfl", label: "G&K" },
                                         { value: "sangvis", label: "SANGVIS" },
                                         { value: "neural", label: "NEURAL" },
-                                        { value: "arctic", label: "ARCTIC" }
+                                        { value: "arctic", label: "ARCTIC" },
+                                        { value: "light", label: "DAYLIGHT" }
                                     ]
                                     current: Settings.get("theme.preset", "gfl")
                                     onSelected: value => Settings.applyPreset(value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.mode"); desc: I18n.t("set.mode.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "dark", label: "DARK" },
+                                        { value: "light", label: "LIGHT" },
+                                        { value: "custom", label: "CUSTOM" }
+                                    ]
+                                    current: Settings.get("theme.mode", "dark")
+                                    onSelected: value => {
+                                        if (value === "dark")
+                                            Settings.applyPreset("gfl");
+                                        else if (value === "light")
+                                            Settings.applyPreset("light");
+                                        else {
+                                            Settings.set("theme.mode", "custom");
+                                            Settings.set("theme.preset", "custom");
+                                        }
+                                    }
                                 }
                             }
                             SgRow {
@@ -551,6 +587,15 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.fontScale"); desc: I18n.t("set.fontScale.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(200); from: 0.8; to: 1.4; step: 0.05; decimals: 2
+                                    value: Settings.get("theme.fontScale", 1.0)
+                                    onMoved: v => Settings.set("theme.fontScale", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; label: I18n.t("set.panelOpacity"); desc: I18n.t("set.panelOpacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
@@ -576,11 +621,78 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; last: true; label: I18n.t("set.scanlines"); desc: I18n.t("set.scanlines.desc")
+                                width: parent.width; label: I18n.t("set.scanlines"); desc: I18n.t("set.scanlines.desc")
                                 SgToggle {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     checked: Settings.get("theme.scanlines", false)
                                     onToggled: Settings.toggle("theme.scanlines")
+                                }
+                            }
+
+                            SgSection { width: parent.width; number: "03"; title: "SETTINGS SURFACE"; note: I18n.t("set.settingsSurface") }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.settingsOpacity"); desc: I18n.t("set.settingsOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(200); from: 0.5; to: 1.0; step: 0.01; decimals: 2
+                                    value: Settings.get("theme.settingsOpacity", 0.9)
+                                    onMoved: v => Settings.set("theme.settingsOpacity", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: I18n.t("set.settingsGray"); desc: I18n.t("set.settingsGray.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    value: Settings.get("theme.settingsGray", 0.22)
+                                    onMoved: v => Settings.set("theme.settingsGray", v)
+                                }
+                            }
+
+                            SgSection { width: parent.width; number: "04"; title: "CUSTOM COLORS"; note: I18n.t("set.customColors") }
+                            SgRow {
+                                width: parent.width; label: "BG0"; desc: I18n.t("set.hex.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(180)
+                                    text: Settings.get("theme.bg0", "#070708")
+                                    onAccepted: value => root.setHex("bg0", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: "BG1"; desc: I18n.t("set.hex.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(180)
+                                    text: Settings.get("theme.bg1", "#0d0d0f")
+                                    onAccepted: value => root.setHex("bg1", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: "PANEL"; desc: I18n.t("set.hex.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(180)
+                                    text: Settings.get("theme.panel", "#141416")
+                                    onAccepted: value => root.setHex("panel", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: "TEXT"; desc: I18n.t("set.hex.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(180)
+                                    text: Settings.get("theme.text", "#f2eee3")
+                                    onAccepted: value => root.setHex("text", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: "ACCENT"; desc: I18n.t("set.hex.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(180)
+                                    text: Settings.get("theme.accent", "#e8bd4f")
+                                    onAccepted: value => root.setHex("accent", value)
                                 }
                             }
 
@@ -1014,11 +1126,36 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; last: true; label: I18n.t("set.resetLayout"); desc: I18n.t("set.resetLayout.desc")
+                                width: parent.width; label: I18n.t("set.resetLayout"); desc: I18n.t("set.resetLayout.desc")
                                 SgButton {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: I18n.t("set.reset")
                                     onClicked: Settings.set("widgets", Settings.defaults().widgets)
+                                }
+                            }
+
+                            SgSection { width: parent.width; number: "03"; title: "LAYOUT"; note: I18n.t("widget.layout") }
+                            SgRow {
+                                width: parent.width; label: I18n.t("widget.grid"); desc: I18n.t("widget.grid.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(200); from: 16; to: 96; step: 8
+                                    value: Settings.get("widgets.grid", 48)
+                                    onMoved: v => Settings.set("widgets.grid", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true
+                                label: I18n.t("widget.editLayout")
+                                desc: I18n.t("widget.editLayout.desc")
+                                SgButton {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    text: I18n.t("widget.editLayout")
+                                    active: true
+                                    onClicked: {
+                                        ShellState.close();
+                                        ShellState.widgetsEditing = true;
+                                    }
                                 }
                             }
                         }
@@ -1070,7 +1207,7 @@ PanelWindow {
                                             anchors.bottomMargin: 4
                                             text: modelData.name
                                             font.family: Theme.fontMono
-                                            font.pixelSize: Theme.px(8)
+                                            font.pixelSize: Theme.fs(8)
                                             color: active ? Sg.yellow : Sg.paper
                                         }
                                         MouseArea {
@@ -1188,7 +1325,8 @@ PanelWindow {
                                     { k: "LAUNCHER", v: "SUPER + SPACE" },
                                     { k: "OVERVIEW", v: "SUPER + TAB" },
                                     { k: "CONTROL", v: "SUPER + SHIFT + C" },
-                                    { k: "POWER", v: "SUPER + SHIFT + Q" }
+                                    { k: "POWER", v: "SUPER + SHIFT + Q" },
+                                    { k: "WIDGETS", v: "SUPER + SHIFT + W" }
                                 ]
                                 delegate: SgRow {
                                     required property var modelData
@@ -1201,7 +1339,7 @@ PanelWindow {
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: modelData.v
                                         font.family: Theme.fontMono
-                                        font.pixelSize: Theme.px(10)
+                                        font.pixelSize: Theme.fs(10)
                                         color: Sg.ink
                                     }
                                 }
@@ -1221,7 +1359,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: "v1.0  //  MIT"
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.px(10); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Sg.ink
                                 }
                             }
                             SgRow {
@@ -1230,7 +1368,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Compositor.backend.toUpperCase() + "  ·  " + User.session
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.px(10); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Sg.ink
                                 }
                             }
                             SgRow {
@@ -1239,7 +1377,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Settings.path
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.px(9); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Sg.ink
                                     elide: Text.ElideLeft
                                     width: parent.width
                                     horizontalAlignment: Text.AlignRight
@@ -1252,7 +1390,7 @@ PanelWindow {
                                 wrapMode: Text.Wrap
                                 text: I18n.t("set.license")
                                 font.family: Theme.fontUI
-                                font.pixelSize: Theme.px(10)
+                                font.pixelSize: Theme.fs(10)
                                 color: Sg.inkSoft
                                 lineHeight: 1.4
                             }

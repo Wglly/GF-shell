@@ -11,7 +11,7 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 
 | Module | Status | Notes |
 | --- | --- | --- |
-| Theme & panels | ✅ | Warm charcoal + matte gold, double gold/white frames, angled tabs, ribbons, halftone |
+| Theme & panels | ✅ | Warm charcoal + matte gold; **dark / light / custom** palettes; font and shell scaling; double frames, angled tabs, ribbons, halftone |
 | Status bar | ✅ | Per-block OFF / LEFT / CENTER / RIGHT; opacity / grayscale / blur / height / position |
 | Bar popups | ✅ | Operator / calendar / media detail panels anchored to the clicked block |
 | Launcher | ✅ | Categories, search, keyboard navigation, dossier, combat power |
@@ -20,8 +20,8 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | System halt | ✅ | Lock / suspend / restart / shutdown / logout + confirmation |
 | Dock | ✅ | Hides with windows, expands on hot zone, exclusive zone pushes windows |
 | Sidebars | ✅ | **11 swappable components**, left/right/off assignment, height 40–100%, top/center/bottom, scrolling |
-| Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission |
-| Settings | ✅ | GFL-style paper/black-lines/charcoal buttons/yellow hover; 8 tabs; live save |
+| Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission; **grid layout editor with drag-snap and per-widget ON/OFF** |
+| Settings | ✅ | Paper/black rules/charcoal buttons/yellow hover; **translucent gray-white background with adjustable opacity/gray**; 8 tabs; live save |
 | Languages | ✅ | 繁中 / 简中 / English / 日本語; `auto` follows the system; live switch |
 | Lyrics | ✅ | lrclib.net synced lyrics shared by media card / sidebar / popup |
 | Weather | ✅ | wttr.in, 20-minute polling, optional city |
@@ -42,6 +42,8 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
   states go through `I18n.t()`.
 - **Media buttons**: hand-drawn play/pause glyphs, independent of icon-font coverage.
 - **Settings window** now follows the focused monitor, so it no longer opens on the wrong output.
+- **Desktop layout editor**: `SUPER+SHIFT+W`, Settings → Layout, or IPC `shell widgets`; grid overlay, drag-to-snap and a per-widget ON/OFF button.
+- **Themes & scaling**: new `DAYLIGHT OPS` light preset, DARK/LIGHT/CUSTOM modes, custom BG0/BG1/PANEL/TEXT/ACCENT colours; separate `SHELL SCALE` and `FONT SCALE`; the settings veil has adjustable opacity/gray.
 
 ## Screenshots
 
@@ -76,6 +78,16 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | Bar component editor | Sidebar components / height |
 | --- | --- |
 | ![Bar components](screenshots/18-settings-bar.png) | ![Sidebar components](screenshots/19-settings-sidebar.png) |
+
+| Desktop grid layout editor |
+| --- |
+| ![Widget layout editor](screenshots/20-widget-editor.png) |
+
+### Theme & scaling
+
+| Light theme: desktop | Light theme: launcher | Settings: scale & surface |
+| --- | --- | --- |
+| ![Light desktop](screenshots/21-light-desktop.png) | ![Light launcher](screenshots/22-light-launcher.png) | ![Scale and surface](screenshots/23-settings-appearance.png) |
 
 ### Languages
 

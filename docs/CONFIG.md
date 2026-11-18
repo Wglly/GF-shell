@@ -69,6 +69,18 @@
   },
   "theme": {
     "preset": "gfl",
+    "mode": "dark",
+    "bg0": "#070708",
+    "bg1": "#0d0d0f",
+    "bg": "#0a0a0c",
+    "textFaint": "#7d7668",
+    "textGhost": "#4a463d",
+    "ink": "#12100c",
+    "accentHi": "#ffd977",
+    "accentDim": "#7d6428",
+    "fontScale": 1.0,
+    "settingsOpacity": 0.9,
+    "settingsGray": 0.22,
     "accent": "#e8bd4f",
     "accent2": "#6f9bc4",
     "panel": "#141416",
@@ -92,6 +104,7 @@
     "color": "#080b0e"
   },
   "widgets": {
+    "grid": 48,
     "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
@@ -142,6 +155,7 @@
 | `sangvis` | 鐵血：近黑 + 警戒紅 | `#d34a34` |
 | `neural` | 神經網絡：深藍 + 冰青 | `#7eb2d6` |
 | `arctic` | 極地：冷灰 + 淡金 | `#cbb98a` |
+| `light` | 日照：紙白底 + 深金（亮色） | `#b07d18` |
 
 預設只會寫入 `theme.*` 的色票，其餘 token（`panel`、`line`、`text`…）也會一起被覆寫，
 所以切換後 UI 會立刻整體變化。自訂 `accent` 會把 `preset` 設為 `custom`。
@@ -252,6 +266,26 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 `bar.left`、`bar.center`、`bar.right` 是區塊 id 陣列。在「設定 → 狀態列 → 組件」可把每個區塊設為
 OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從狀態列移除。
+
+
+### 桌面佈局編輯
+
+- 在「設定 → 桌面組件 → LAYOUT」按 **EDIT DESKTOP LAYOUT**，或按 `SUPER+SHIFT+W`，或
+  `qs -c gf-shell ipc call shell widgets`。
+- 編輯模式會疊加網格；拖動框線即可移動組件，鬆手後吸附到 `widgets.grid` 像素網格。
+- 每個框右上角有 ON/OFF，可直接開關該組件；桌面組件在編輯時會變暗且不可互動。
+- 位置存回 `widgets.<name>.x/y`（螢幕比例）；`grid` 可設 16–96px。
+- `DONE` 或 `Esc` 退出；`RESET` 回復預設位置。
+
+## 主題模式、縮放與設定表面
+
+- `theme.mode`：`dark` / `light` / `custom`；也可直接套用 `preset`（含 `light`）。
+- `theme.fontScale`（0.8–1.4）只縮放文字；`theme.scale`（0.8–1.3）縮放整個 shell（間距、面板、圖示與文字）。
+- `theme.settingsOpacity`（0.5–1.0）與 `theme.settingsGray`（0–1）控制 **設定介面** 的灰白透明遮罩；
+  黑色導航列與頁首保持不透明。
+- 自訂 `bg0/bg1/bg/panel/text/accent/...` 會把 `mode` 設為 `custom`；壁紙會依 `bg0` 亮度自動加上
+  紙白洗色，讓深色文字在亮色主題下仍可讀。
+- 主題預設寫入完整色盤；`scale`、`fontScale`、`settingsOpacity` 不會被預設覆蓋。
 
 ## 壁紙
 

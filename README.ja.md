@@ -45,18 +45,19 @@ GF-shell は Quickshell（Qt Quick）で一から書かれたデスクトップ�
 | **戦術コントロール (Control Center)** | リンク状態（Wi-Fi／Bluetooth）、音量・亮度のセグメントスライダー、モジュールスイッチ、CPU／MEM／BAT のセグメントゲージ、通知履歴、メディア操作。 |
 | **作戦マップ (Overview)** | ワークスペースごとに 1 枚の「セクター」カードを表示し、その中のユニットを一覧。セクターをクリックでワークスペース移動、ユニットをクリックでそのウィンドウにフォーカス。 |
 | **システム停止 (Power)** | ロック／サスペンド／再起動／シャットダウン／ログアウト。危険な操作は 2 回目の確認が必要（ENTER 2 回）、ESC でキャンセル。 |
-| **HUD ウィジェット** | 大型時計、システムバイタル、通信（歌詞つき）、天気、cava オーディオスペクトル、オペレーターカード、現在の任務。個別にオン／オフ可能。 |
+| **HUD ウィジェット** | 大型時計、システムバイタル、通信（歌詞つき）、天気、cava オーディオスペクトル、オペレーターカード、現在の任務。個別にオン／オフ可能。**デスクトップレイアウト編集**ではグリッドを重ね、ドラッグで吸着配置できます。 |
 | **エシュロン (Dock)** | ウィンドウがあると自動的に隠れ、下部のホットゾーンにポインタが来ると展開して exclusive zone でウィンドウを押し出します。アイコンサイズ／透明度／グレースケール／ブラーを調整可能。 |
 | **通知** | 右上の「通信」トースト（スライドイン、7 秒で自動消去、クリックで閉じる）と、コントロールセンター内の履歴。 |
 | **OSD** | 音量／亮度の HUD。セグメントゲージと大きな数値表示。 |
 | **カレンダー** | 時計をクリックすると開くスケジュールパネル。月移動、今日のハイライト、週番号。 |
-| **副官設定 (Settings)** | 少女前線風のモノクロ設定画面：紙白の背景＋黒線、チャコールのボタン、ホバー／選択で黄色。8 つのタブ（外観／ステータスバー／エシュロン／サイドバー／ウィジェット／壁紙／システム／情報）。変更は即座に保存されます。 |
+| **副官設定 (Settings)** | 少女前線風のモノクロ設定画面：紙白の背景＋黒線、チャコールのボタン、ホバー／選択で黄色。背景は **透明度・グレーを調整できるグレーホワイトの半透明**。8 つのタブ（外観／ステータスバー／エシュロン／サイドバー／ウィジェット／壁紙／システム／情報）。**ダーク／ライト／カスタム配色**、**全体スケール**と**フォントスケール**に対応。 |
 | **サイドバー** | 左：オペレーター情報、カレンダー、分隊名簿。右：メディア＋歌詞＋cava スペクトル＋通知ログ。画面端のホットゾーンで開き、ポインタが離れると遅延して閉じます。幅／透明度／グレースケール／ブラーを調整可能。各コンポーネントは「設定 → サイドバー → コンポーネント」で左／右／OFF に割り当てられ、高さ（40–100%）と上下中央の整列も調整できます。 |
 | **バーポップアップ** | オペレーター・時計・メディアをクリックすると、そのブロックの位置に詳細パネルが開きます（ユーザー／カレンダー／メディアは独立）。 |
 
 その他：
 
-- 4 つのテーマプリセット：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**（即時切替）。
+- 5 つのテーマプリセット：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（ライト）。DARK / LIGHT / CUSTOM を選び、BG0/BG1/PANEL/TEXT/ACCENT を 16 進カラーで指定できます。
+- 全体スケールは `SHELL SCALE`（全体）と `FONT SCALE`（文字のみ）に分離。設定画面のベールは透明度とグレーを調整できます。
 - アイコンフォントを 1 つに統一（Material Symbols のサブセットを *GF Tactical Icons* に改名、約 1 MB、システムフォントとの衝突を回避）。テキストフォント 4 種を同梱（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - UI は **繁體中文 / 简体中文 / English / 日本語** の 4 言語対応。設定 → システム → 言語で即時切替できます（設定画面自体も翻訳されます）。
 - 壁紙は内蔵 4 枚＋任意のローカル画像に対応。暗さ（dim）も調整可能。
@@ -93,9 +94,13 @@ GF-shell は Quickshell（Qt Quick）で一から書かれたデスクトップ�
 | --- | --- | --- |
 | ![English](docs/screenshots/15-settings-en.png) | ![Japanese](docs/screenshots/16-settings-ja.png) | ![Japanese sidebar](docs/screenshots/17-sidebar-ja.png) |
 
-| バーコンポーネント編集 | サイドバーコンポーネント編集 |
-| --- | --- |
-| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) |
+| バーコンポーネント編集 | サイドバーコンポーネント編集 | デスクトップグリッド |
+| --- | --- | --- |
+| ![Bar components](docs/screenshots/18-settings-bar.png) | ![Sidebar components](docs/screenshots/19-settings-sidebar.png) | ![Widget editor](docs/screenshots/20-widget-editor.png) |
+
+| ライトテーマ：デスクトップ | ライトテーマ：ランチャー | 設定：スケールと表面 |
+| --- | --- | --- |
+| ![Light desktop](docs/screenshots/21-light-desktop.png) | ![Light launcher](docs/screenshots/22-light-launcher.png) | ![Scale and surface](docs/screenshots/23-settings-appearance.png) |
 
 同じシェルを **niri** 上で実行した様子（Hyprland 内にネストしたウィンドウ）：
 
@@ -193,6 +198,7 @@ bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER, Tab, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
+bind = SUPER SHIFT, W, global, gf-shell:widgets
 bind = , Print, global, gf-shell:screenshot
 ```
 
@@ -201,6 +207,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 
 IPC インターフェース（`IpcHandler`、ターゲット `shell`）：
@@ -209,6 +216,7 @@ IPC インターフェース（`IpcHandler`、ターゲット `shell`）：
 qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overview|power|settings|calendar
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
+qs -c gf-shell ipc call shell widgets   # デスクトップレイアウト編集
 qs -c gf-shell ipc call shell status
 ```
 
@@ -234,10 +242,10 @@ qs -c gf-shell ipc call shell status
 | --- | --- |
 | `bar` | `position`、`thickness`、`opacity`、`gray`、`blur`、`clock24h`、`showSeconds`、`left` / `center` / `right`（ブロック順。設定で OFF/LEFT/CENTER/RIGHT） |
 | `sidebar` | `left`/`right` の `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
-| `theme` | `preset`（`gfl`/`sangvis`/`neural`/`arctic`）、`accent`、`accent2`、`scanlines`、`brackets`、`animations`、`scale` |
+| `theme` | `preset`（`light` を含む）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` または空＝内蔵）、`fillMode`、`dim` |
 | `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` の `enabled` と `x`、`y` |
+| `widgets` | `grid`（吸着ピクセル）と `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` の `enabled`・`x`・`y` |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

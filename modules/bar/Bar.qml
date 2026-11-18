@@ -15,7 +15,7 @@ PanelWindow {
 
     readonly property string pos: Settings.get("bar.position", "top")
     readonly property bool atTop: root.pos !== "bottom"
-    readonly property int thickness: Settings.get("bar.thickness", 38)
+    readonly property int thickness: Theme.px(Settings.get("bar.thickness", 38))
     readonly property bool autoHide: Settings.get("bar.autoHide", false)
 
     property bool hovered: false
