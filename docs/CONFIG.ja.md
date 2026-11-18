@@ -219,7 +219,8 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 - ウィンドウがあると Dock は 6px の金線まで縮み、下端のホットゾーンで展開します。
 - 展開中は `exclusiveZone` が Dock の高さになり、ウィンドウが押し上げられます。
-- `dock.trigger`（4–48px）は非表示時のホットゾーン高さ。大きいほど出しやすい反面、画面端を多く占有します。
+- `dock.trigger`（4–48px）は非表示時のホットゾーン高さ。非表示時はホットゾーンが透明でパネルは完全に隠れ、2px の線だけ残ります。`exclusiveZone` は 0 です。
+- `dock.avoid = false` なら Dock は常に表示。`dock.autoHide` は回避が有効なときだけ作用します。
 - `dock.avoid`（既定 true）/ `dock.autoHide`（既定 false）で調整できます。
 
 ### サイドバーコンポーネント

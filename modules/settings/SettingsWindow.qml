@@ -827,14 +827,21 @@ PanelWindow {
                                 SgToggle {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     checked: Settings.get("dock.avoid", true)
-                                    onToggled: Settings.toggle("dock.avoid")
+                                    onToggled: {
+                                        Settings.toggle("dock.avoid");
+                                        if (!Settings.get("dock.avoid", true))
+                                            Settings.set("dock.autoHide", false);
+                                    }
                                 }
                             }
                             SgRow {
-                                width: parent.width; label: I18n.t("set.autoHide"); desc: I18n.t("set.autoHide.desc")
+                                width: parent.width; label: I18n.t("set.autoHide")
+                                desc: I18n.t("set.autoHide.desc")
+                                enabled: Settings.get("dock.avoid", true)
+                                opacity: enabled ? 1 : 0.45
                                 SgToggle {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    checked: Settings.get("dock.autoHide", true)
+                                    checked: Settings.get("dock.avoid", true) && Settings.get("dock.autoHide", false)
                                     onToggled: Settings.toggle("dock.autoHide")
                                 }
                             }

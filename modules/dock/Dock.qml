@@ -13,13 +13,14 @@ PanelWindow {
     screen: modelData
 
     readonly property bool enabled: Settings.get("dock.enabled", true)
-    readonly property bool autoHide: Settings.get("dock.autoHide", true)
+    readonly property bool autoHide: Settings.get("dock.autoHide", false)
     readonly property bool avoid: Settings.get("dock.avoid", true)
     readonly property int iconSize: Math.round(Settings.get("dock.iconSize", 42) * Theme.uiScale)
     readonly property int maxItems: Settings.get("dock.maxItems", 9)
     readonly property bool atTop: Settings.get("dock.position", "bottom") === "top"
     readonly property bool hasWindows: Compositor.windows.length > 0
-    readonly property bool shouldHide: (root.avoid && root.hasWindows) || root.autoHide
+    // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
+    readonly property bool shouldHide: root.avoid && (root.autoHide || root.hasWindows)
     property bool hovered: false
     readonly property bool revealed: !root.shouldHide || root.hovered
     // 收起时露出的热区高度（用户可调）
@@ -39,7 +40,8 @@ PanelWindow {
     margins.bottom: !root.atTop ? root.edgeInset : 0
     implicitHeight: root.revealed ? Theme.px(76) : root.trigger
     exclusionMode: ExclusionMode.Normal
-    exclusiveZone: root.visible ? root.implicitHeight : 0
+    // 收起时不占位，避免窗口/工作区被 24px 热区顶开
+    exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
     Behavior on implicitHeight {
         enabled: Theme.animations
         NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
@@ -140,22 +142,25 @@ PanelWindow {
     // ---------------------------------------------------------------- 底板
     // 收起时露出的金色细线 + 加宽热区提示
     Rectangle {
+        visible: !root.revealed
         anchors.left: parent.left
         anchors.right: parent.right
         y: root.atTop ? 0 : parent.height - 2
         height: 2
-        color: Theme.alpha(Theme.accent, 0.35)
+        color: Theme.alpha(Theme.accent, 0.22)
     }
     Rectangle {
+        visible: !root.revealed
         anchors.horizontalCenter: parent.horizontalCenter
         y: root.atTop ? 0 : parent.height - 3
-        width: Theme.px(72)
+        width: Theme.px(56)
         height: 3
-        color: Theme.accent
+        color: Theme.alpha(Theme.accent, 0.8)
     }
 
     GfFrame {
         id: dock
+        visible: root.revealed
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: !root.atTop ? parent.bottom : undefined
         anchors.top: root.atTop ? parent.top : undefined
