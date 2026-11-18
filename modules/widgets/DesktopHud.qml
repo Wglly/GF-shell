@@ -85,7 +85,7 @@ PanelWindow {
                 GfText {
                     text: Util.clockText(root.now, false, true).replace(/ (AM|PM)$/, "")
                     role: "display"
-                    size: Theme.fs(76)
+                    size: Math.min(Theme.fs(118), Math.max(Theme.fs(76), clockWidget.width * 0.20))
                     tracking: 2
                     bold: true
                     color: Theme.text
@@ -122,7 +122,7 @@ PanelWindow {
 
         Row {
             x: Theme.px(18)
-            y: Theme.px(146)
+            y: clockWidget.height - Theme.px(24)
             spacing: Theme.px(10)
 
             Rectangle {

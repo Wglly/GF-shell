@@ -223,7 +223,7 @@ PanelWindow {
                 GfKeyCap { label: "CLICK"; visible: !root.compact }
                 GfText {
                     visible: !root.compact
-                    text: "SECTOR → WORKSPACE   ·   UNIT → FOCUS"
+                    text: "SECTOR → WORKSPACE   ·   UNIT → FOCUS   ·   DRAG UNIT → SECTOR TO MOVE"
                     role: "mono"; size: Theme.sizeTiny - 1; tone: "faint"
                 }
 
@@ -273,6 +273,33 @@ PanelWindow {
             onClicked: {
                 Compositor.focusWorkspace(card.ws !== null ? card.ws.id : card.sectorNumber);
                 ShellState.close();
+            }
+        }
+
+        // 拖放目标：把单位拖到本扇区
+        DropArea {
+            id: dropZone
+            anchors.fill: parent
+            z: 20
+            keys: ["application/x-gf-window"]
+
+            Rectangle {
+                anchors.fill: parent
+                visible: dropZone.containsDrag
+                color: Theme.alpha(Theme.accent, 0.14)
+                border.width: 2
+                border.color: Theme.accentHi
+            }
+
+            onDropped: drop => {
+                var raw = drop.getData("application/x-gf-window");
+                if (!raw || raw === "")
+                    raw = drop.text;
+                var id = parseInt(raw);
+                if (!isNaN(id) && id > 0) {
+                    Compositor.moveWindow(id, card.wsId);
+                    drop.acceptProposedAction();
+                }
             }
         }
 
@@ -349,9 +376,23 @@ PanelWindow {
                 model: card.wins.slice(0, 5)
 
                 delegate: Item {
+                    id: winRow
                     required property var modelData
                     width: parent.width
                     height: Theme.px(24)
+
+                    Drag.active: winMouse.drag.active
+                    Drag.hotSpot.x: Theme.px(12)
+                    Drag.hotSpot.y: Theme.px(12)
+                    Drag.keys: ["application/x-gf-window"]
+                    Drag.mimeData: ({ "application/x-gf-window": "" + modelData.id })
+
+                    Item {
+                        id: dragProxy
+                        width: 1
+                        height: 1
+                        visible: false
+                    }
 
                     Rectangle {
                         anchors.fill: parent
@@ -395,7 +436,11 @@ PanelWindow {
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
+                        drag.target: dragProxy
+                        drag.threshold: Theme.px(8)
                         onClicked: {
+                            if (winMouse.drag.active)
+                                return;
                             Compositor.focusWindow(modelData.id);
                             ShellState.close();
                         }
