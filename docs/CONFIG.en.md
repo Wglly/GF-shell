@@ -37,7 +37,7 @@ Config file: `~/.config/gf-shell/config.json`
     "position": "bottom",
     "autoHide": false,
     "avoid": true,
-    "trigger": 8,
+    "trigger": 24,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -105,7 +105,7 @@ Config file: `~/.config/gf-shell/config.json`
   },
   "widgets": {
     "grid": 48,
-    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "width": 360, "height": 168, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
     "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
@@ -219,6 +219,7 @@ All three surfaces share these fields:
 
 - With windows open the dock collapses to a 6 px gold line; it expands when the pointer reaches the bottom hot zone.
 - While expanded, `exclusiveZone` equals the dock height, so the compositor pushes windows up.
+- `dock.trigger` (4–48 px) is the hot-zone height while hidden; larger is easier to hit but reserves more edge space.
 - Controlled by `dock.avoid` (default true) and `dock.autoHide` (default false).
 ### Sidebar components
 
@@ -256,7 +257,8 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 - Each frame has an ON/OFF button in its top-right corner; widgets are dimmed and non-interactive
   while editing.
 - Positions are stored as `widgets.<name>.x/y` screen fractions; `grid` accepts 16–96 px.
-- `DONE` or `Esc` exits; `RESET` restores default positions.
+- Drag the bottom-right corner to resize; sizes are stored as `widgets.<name>.width/height`.
+- `DONE` or `Esc` exits; `RESET` restores default positions and sizes.
 
 ## Theme modes, scaling and the settings surface
 

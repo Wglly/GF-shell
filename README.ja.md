@@ -45,8 +45,8 @@ GF-shell は Quickshell（Qt Quick）で一から書かれたデスクトップ�
 | **戦術コントロール (Control Center)** | リンク状態（Wi-Fi／Bluetooth）、音量・亮度のセグメントスライダー、モジュールスイッチ、CPU／MEM／BAT のセグメントゲージ、通知履歴、メディア操作。 |
 | **作戦マップ (Overview)** | ワークスペースごとに 1 枚の「セクター」カードを表示し、その中のユニットを一覧。セクターをクリックでワークスペース移動、ユニットをクリックでそのウィンドウにフォーカス。 |
 | **システム停止 (Power)** | ロック／サスペンド／再起動／シャットダウン／ログアウト。危険な操作は 2 回目の確認が必要（ENTER 2 回）、ESC でキャンセル。 |
-| **HUD ウィジェット** | 大型時計、システムバイタル、通信（歌詞つき）、天気、cava オーディオスペクトル、オペレーターカード、現在の任務。個別にオン／オフ可能。**デスクトップレイアウト編集**ではグリッドを重ね、ドラッグで吸着配置できます。 |
-| **エシュロン (Dock)** | ウィンドウがあると自動的に隠れ、下部のホットゾーンにポインタが来ると展開して exclusive zone でウィンドウを押し出します。アイコンサイズ／透明度／グレースケール／ブラーを調整可能。 |
+| **HUD ウィジェット** | 大型時計、システムバイタル、通信（歌詞つき）、天気、cava オーディオスペクトル、オペレーターカード、現在の任務。個別にオン／オフ可能。**デスクトップレイアウト編集**ではグリッドを重ね、ドラッグで移動、右下角でリサイズできます。 |
+| **エシュロン (Dock)** | ウィンドウがあると自動的に隠れ、下部のホットゾーンにポインタが来ると展開して exclusive zone でウィンドウを押し出します。アイコンサイズ／透明度／グレースケール／ブラーに加え、非表示時の **トリガー領域（4–48px）** も調整できます。 |
 | **通知** | 右上の「通信」トースト（スライドイン、7 秒で自動消去、クリックで閉じる）と、コントロールセンター内の履歴。 |
 | **OSD** | 音量／亮度の HUD。セグメントゲージと大きな数値表示。 |
 | **カレンダー** | 時計をクリックすると開くスケジュールパネル。月移動、今日のハイライト、週番号。 |
@@ -244,8 +244,8 @@ qs -c gf-shell ipc call shell status
 | `sidebar` | `left`/`right` の `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
 | `theme` | `preset`（`light` を含む）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` または空＝内蔵）、`fillMode`、`dim` |
-| `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `grid`（吸着ピクセル）と `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` の `enabled`・`x`・`y` |
+| `dock` | `enabled`、`autoHide`、`avoid`、`trigger`（ホットゾーン 4–48px）、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
+| `widgets` | `grid`（吸着ピクセル）と各ウィジェットの `enabled`・`x`・`y`・`width`・`height`（レイアウト編集の右下でリサイズ） |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

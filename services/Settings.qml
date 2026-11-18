@@ -46,7 +46,7 @@ QtObject {
                 blur: 0.0,
                 size: 1.0,
                 avoid: true,
-                trigger: 8,
+                trigger: 24,
                 maxItems: 9,
                 pinned: ["firefox.desktop", "kitty.desktop", "foot.desktop",
                          "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]

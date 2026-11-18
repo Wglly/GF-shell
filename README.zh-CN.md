@@ -42,8 +42,8 @@ GF-shell 是一个从零编写的 Quickshell（Qt Quick）桌面外壳，视觉�
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。 |
 | **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口。 |
 | **系统停机 (Power)** | 锁定/休眠/重启/关机/登出；危险操作需二次确认（ENTER 两次），ESC 取消。 |
-| **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、每个组件可单独 ON/OFF。 |
-| **梯队 (Dock)** | 有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调。 |
+| **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、右下角自由缩放、每个组件可单独 ON/OFF。 |
+| **梯队 (Dock)** | 有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；收起时的 **触发面积 4–48px** 也可调。 |
 | **通知** | 右上角“通讯”弹窗（滑入、7 秒自动回收、点击关闭）＋控制中心内的历史记录。 |
 | **OSD** | 音量/亮度 HUD，分段仪表 + 大号数字。 |
 | **日历** | 点时钟下拉的行程面板：月份切换、今日高亮、周数。 |
@@ -239,8 +239,8 @@ qs -c gf-shell ipc call shell status
 | `sidebar` | `left` / `right` 的 `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
 | `theme` | `preset`（含 `light`）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` 或空＝内置）、`fillMode`、`dim` |
-| `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `grid`（吸附像素）、`clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 与 `x`、`y` |
+| `dock` | `enabled`、`autoHide`、`avoid`、`trigger`（热区 4–48px）、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
+| `widgets` | `grid`（吸附像素）、各组件的 `enabled`、`x`、`y`、`width`、`height`（布局编辑器右下角缩放） |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

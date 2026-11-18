@@ -37,7 +37,7 @@
     "position": "bottom",
     "autoHide": false,
     "avoid": true,
-    "trigger": 8,
+    "trigger": 24,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -105,7 +105,7 @@
   },
   "widgets": {
     "grid": 48,
-    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "width": 360, "height": 168, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
     "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
@@ -240,6 +240,8 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
 - 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
 - 滑出後自動收起，視窗恢復原位。
+- `dock.trigger`（4–48px）是 Dock 收起时的热区高度；越大越容易滑出，但也会保留更多边缘区域。
+
 
 ### 侧边栏组件
 
@@ -263,7 +265,8 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 - 编辑模式叠加网格；拖动框线移动组件，松手吸附到 `widgets.grid` 像素网格。
 - 每个框右上角有 ON/OFF，可直接开关组件；编辑时组件会变暗且不可交互。
 - 位置保存为 `widgets.<name>.x/y`（屏幕比例）；`grid` 可设 16–96px。
-- `完成` 或 `Esc` 退出；`重置` 恢复默认位置。
+- 每个框右下角可拖动缩放；尺寸保存为 `widgets.<name>.width/height`。
+- `完成` 或 `Esc` 退出；`重置` 恢复默认位置与尺寸。
 
 ## 主题模式、缩放与设置表面
 

@@ -37,7 +37,7 @@
     "position": "bottom",
     "autoHide": false,
     "avoid": true,
-    "trigger": 8,
+    "trigger": 24,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -105,7 +105,7 @@
   },
   "widgets": {
     "grid": 48,
-    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "width": 360, "height": 168, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
     "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
@@ -240,6 +240,8 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
 - 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
 - 滑出後自動收起，視窗恢復原位。
+- `dock.trigger`（4–48px）是 Dock 收起時的熱區高度；越大越容易滑出，但也會在螢幕邊緣保留更多不可點擊區域。
+
 
 ### 側邊欄組件
 
@@ -275,7 +277,8 @@ OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從�
 - 編輯模式會疊加網格；拖動框線即可移動組件，鬆手後吸附到 `widgets.grid` 像素網格。
 - 每個框右上角有 ON/OFF，可直接開關該組件；桌面組件在編輯時會變暗且不可互動。
 - 位置存回 `widgets.<name>.x/y`（螢幕比例）；`grid` 可設 16–96px。
-- `DONE` 或 `Esc` 退出；`RESET` 回復預設位置。
+- 每個框右下角可拖動縮放；尺寸存為 `widgets.<name>.width/height`。
+- `DONE` 或 `Esc` 退出；`RESET` 回復預設位置與尺寸。
 
 ## 主題模式、縮放與設定表面
 

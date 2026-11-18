@@ -44,8 +44,8 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 | **Tactical control (Control Center)** | Link status (Wi-Fi/Bluetooth), segmented volume/brightness sliders, module switches, CPU/MEM/BAT segmented gauges, notification history and media controls. |
 | **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window. |
 | **System halt (Power)** | Lock / suspend / restart / shut down / log out. Dangerous actions need a second confirmation (ENTER twice); ESC cancels. |
-| **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. A **desktop layout editor** overlays a snap grid, lets you drag widgets and toggle each one ON/OFF. |
-| **Echelon (Dock)** | Pinned and running units. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable. |
+| **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. A **desktop layout editor** overlays a snap grid; drag widgets, resize from the bottom-right corner, and toggle each one ON/OFF. |
+| **Echelon (Dock)** | Pinned and running units. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable, and the hidden **trigger area is configurable (4–48 px)**. |
 | **Notifications** | "Incoming transmission" toasts in the top-right (slide in, auto-dismiss after 7 s, click to dismiss) plus history in the control centre. |
 | **OSD** | Volume/brightness HUD with a segmented meter and a large readout. |
 | **Calendar** | Schedule panel dropped from the clock: month navigation, today highlight, week number. |
@@ -244,8 +244,8 @@ Config file: `~/.config/gf-shell/config.json` (created on first start).
 | `sidebar` | `left`/`right`: `width`, `height` (0.4–1.0), `align` (top/center/bottom), `opacity`, `gray`, `blur`, `assign.<id>` (left/right/off) |
 | `theme` | `preset` (incl. `light`), `mode` (dark/light/custom), `accent`, `accent2`, `bg0`, `bg1`, `panel`, `text`, `fontScale`, `settingsOpacity`, `settingsGray`, `scale`, `animations` |
 | `wallpaper` | `enabled`, `path` (`file://` or empty = built-in), `fillMode`, `dim` |
-| `dock` | `enabled`, `autoHide`, `avoid`, `iconSize`, `opacity`, `gray`, `blur`, `maxItems`, `pinned` |
-| `widgets` | `grid` (snap pixels) plus per-widget `enabled`, `x`, `y` for `clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` |
+| `dock` | `enabled`, `autoHide`, `avoid`, `trigger` (4–48 px hot zone), `iconSize`, `opacity`, `gray`, `blur`, `maxItems`, `pinned` |
+| `widgets` | `grid` (snap pixels) plus per-widget `enabled`, `x`, `y`, `width`, `height` (drag the bottom-right corner in the layout editor) |
 | `overview` | `columns`, `desktops`, `backdrop` |
 | `notifications` | `dnd`, `toasts`, `maxToasts` |
 | `osd` | `enabled` |

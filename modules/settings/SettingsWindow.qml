@@ -839,6 +839,15 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.trigger"); desc: I18n.t("set.trigger.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.px(200); from: 4; to: 48; step: 1
+                                    value: Settings.get("dock.trigger", 8)
+                                    onMoved: v => Settings.set("dock.trigger", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; label: I18n.t("set.position"); desc: I18n.t("set.position.desc")
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter

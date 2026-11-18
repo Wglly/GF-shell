@@ -37,7 +37,7 @@
     "position": "bottom",
     "autoHide": false,
     "avoid": true,
-    "trigger": 8,
+    "trigger": 24,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -105,7 +105,7 @@
   },
   "widgets": {
     "grid": 48,
-    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "width": 360, "height": 168, "showDate": true, "showSeconds": true },
     "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
     "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
     "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
@@ -219,6 +219,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 - ウィンドウがあると Dock は 6px の金線まで縮み、下端のホットゾーンで展開します。
 - 展開中は `exclusiveZone` が Dock の高さになり、ウィンドウが押し上げられます。
+- `dock.trigger`（4–48px）は非表示時のホットゾーン高さ。大きいほど出しやすい反面、画面端を多く占有します。
 - `dock.avoid`（既定 true）/ `dock.autoHide`（既定 false）で調整できます。
 
 ### サイドバーコンポーネント
@@ -242,7 +243,8 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - グリッドが重なり、枠をドラッグして移動、離すと `widgets.grid` のピクセルグリッドに吸着します。
 - 各枠の右上の ON/OFF で個別に表示／非表示を切替できます。編集中はウィジェットが暗くなり操作できません。
 - 位置は `widgets.<name>.x/y`（画面比率）に保存。`grid` は 16–96px。
-- `完了` または `Esc` で終了、`リセット` で既定位置に戻ります。
+- 各枠の右下角をドラッグしてリサイズ。サイズは `widgets.<name>.width/height` に保存されます。
+- `完了` または `Esc` で終了、`リセット` で既定位置とサイズに戻ります。
 
 ## テーマモード・スケール・設定画面の表面
 

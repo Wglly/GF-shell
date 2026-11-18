@@ -22,6 +22,12 @@ PanelWindow {
     readonly property bool shouldHide: (root.avoid && root.hasWindows) || root.autoHide
     property bool hovered: false
     readonly property bool revealed: !root.shouldHide || root.hovered
+    // 收起时露出的热区高度（用户可调）
+    readonly property int trigger: Theme.px(Settings.get("dock.trigger", 8))
+    readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
+        && ((root.atTop && Settings.get("bar.position", "top") === "top")
+            || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
+    readonly property int edgeInset: root.barOnSameEdge ? Theme.px(Settings.get("bar.thickness", 38)) : 0
 
     visible: root.enabled && entries.length > 0
     color: "transparent"
@@ -29,7 +35,9 @@ PanelWindow {
     anchors.top: root.atTop
     anchors.left: true
     anchors.right: true
-    implicitHeight: root.revealed ? Theme.px(76) : Theme.px(6)
+    margins.top: root.atTop ? root.edgeInset : 0
+    margins.bottom: !root.atTop ? root.edgeInset : 0
+    implicitHeight: root.revealed ? Theme.px(76) : root.trigger
     exclusionMode: ExclusionMode.Normal
     exclusiveZone: root.visible ? root.implicitHeight : 0
     Behavior on implicitHeight {
@@ -130,13 +138,20 @@ PanelWindow {
     }
 
     // ---------------------------------------------------------------- 底板
-    // 收起时露出的金色细线
+    // 收起时露出的金色细线 + 加宽热区提示
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
         y: root.atTop ? 0 : parent.height - 2
         height: 2
-        color: Theme.alpha(Theme.accent, 0.6)
+        color: Theme.alpha(Theme.accent, 0.35)
+    }
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: root.atTop ? 0 : parent.height - 3
+        width: Theme.px(72)
+        height: 3
+        color: Theme.accent
     }
 
     GfFrame {
@@ -144,8 +159,8 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.bottom: !root.atTop ? parent.bottom : undefined
         anchors.top: root.atTop ? parent.top : undefined
-        anchors.bottomMargin: Settings.get("bar.position", "top") === "bottom" ? Theme.px(Settings.get("bar.thickness", 38)) + Theme.px(6) : Theme.px(6)
-        anchors.topMargin: Settings.get("bar.position", "bottom") === "bottom" ? Theme.px(Settings.get("bar.thickness", 38)) + Theme.px(6) : Theme.px(6)
+        anchors.bottomMargin: Theme.px(6)
+        anchors.topMargin: Theme.px(6)
         width: contentRow.implicitWidth + Theme.px(26)
         height: Theme.px(58)
         fill: Theme.alpha(Theme.bg0, 0.0)

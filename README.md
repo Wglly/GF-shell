@@ -42,8 +42,8 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | **戰術控制 (Control Center)** | 鏈路（Wi-Fi/藍牙）、音量/亮度分段滑條、模組開關、CPU/MEM/BAT 分段儀表、通訊紀錄、隨媒體控制。 |
 | **作戰地圖 (Overview)** | 每個工作區一張「扇區」卡，列出其中單位；點扇區切換工作區、點單位聚焦視窗。 |
 | **系統停機 (Power)** | 鎖定/休眠/重啟/關機/登出；危險操作需二次確認（ENTER 兩次），ESC 取消。 |
-| **HUD 小工具** | 大時鐘、系統生命徵象、通訊（含歌詞）、天氣、cava 音樂頻譜、操作員卡、當前任務；逐項開關。另有 **桌面佈局編輯模式**：疊加網格、拖動吸附、每個組件可單獨 ON/OFF。 |
-| **梯隊 (Dock)** | 有視窗時自動收起；滑到底部熱區才展開，並用 exclusive zone 把視窗推開。圖示尺寸/透明度/灰度/模糊可調。 |
+| **HUD 小工具** | 大時鐘、系統生命徵象、通訊（含歌詞）、天氣、cava 音樂頻譜、操作員卡、當前任務；逐項開關。另有 **桌面佈局編輯模式**：疊加網格、拖動吸附、右下角自由縮放、每個組件可單獨 ON/OFF。 |
+| **梯隊 (Dock)** | 有視窗時自動收起；滑到底部熱區才展開，並用 exclusive zone 把視窗推開。圖示尺寸/透明度/灰度/模糊可調；收起時的 **觸發面積 4–48px** 也可調。 |
 | **通知** | 右上角「通訊」彈窗（滑入、7 秒自動回收、點擊關閉）＋控制中心內的歷史紀錄。 |
 | **OSD** | 音量/亮度 HUD，分段儀表 + 大號數字。 |
 | **日曆** | 點時鐘下拉的行程面板：月份切換、今日高亮、週數。 |
@@ -240,8 +240,8 @@ qs -c gf-shell ipc call shell status
 | `sidebar` | `left` / `right` 的 `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
 | `theme` | `preset`（含 `light`）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` 或空＝內建）、`fillMode`、`dim` |
-| `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
-| `widgets` | `grid`（吸附像素）、`clock` / `stats` / `media` / `weather` / `visualizer` / `user` / `mission` 的 `enabled` 與 `x`、`y` |
+| `dock` | `enabled`、`autoHide`、`avoid`、`trigger`（熱區 4–48px）、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
+| `widgets` | `grid`（吸附像素）、各組件的 `enabled`、`x`、`y`、`width`、`height`（可在佈局編輯器拖右下角縮放） |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |
 | `osd` | `enabled` |

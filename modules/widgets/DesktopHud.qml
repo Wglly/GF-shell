@@ -53,10 +53,11 @@ PanelWindow {
         visible: root.clockOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.clock.x", 0.045))
         y: root.fracY(Settings.get("widgets.clock.y", 0.10))
-        width: Theme.px(360)
-        height: Theme.px(168)
+        width: Theme.px(Math.max(160, Settings.get("widgets.clock.width", 360)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.clock.height", 168)))
 
         // 左侧金色竖条 + 细线
         Rectangle {
@@ -147,10 +148,11 @@ PanelWindow {
         visible: root.statsOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.stats.x", 0.045))
         y: root.fracY(Settings.get("widgets.stats.y", 0.42))
-        width: Theme.px(282)
-        height: Theme.px(184)
+        width: Theme.px(Math.max(160, Settings.get("widgets.stats.width", 282)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.stats.height", 184)))
 
         GfFrame {
             anchors.fill: parent
@@ -259,10 +261,11 @@ PanelWindow {
         visible: root.mediaOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.media.x", 0.72))
         y: root.fracY(Settings.get("widgets.media.y", 0.10))
-        width: Theme.px(312)
-        height: Theme.px(132)
+        width: Theme.px(Math.max(160, Settings.get("widgets.media.width", 312)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.media.height", 132)))
 
         GfFrame {
             anchors.fill: parent
@@ -407,10 +410,11 @@ PanelWindow {
         visible: root.missionOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.mission.x", 0.72))
-        y: root.fracY(Settings.get("widgets.mission.y", 0.78))
-        width: Theme.px(312)
-        height: Theme.px(128)
+        y: root.fracY(Settings.get("widgets.mission.y", 0.87))
+        width: Theme.px(Math.max(160, Settings.get("widgets.mission.width", 312)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.mission.height", 128)))
 
         GfFrame {
             anchors.fill: parent
@@ -516,10 +520,11 @@ PanelWindow {
         visible: root.weatherOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.weather.x", 0.045))
         y: root.fracY(Settings.get("widgets.weather.y", 0.72))
-        width: Theme.px(282)
-        height: Theme.px(150)
+        width: Theme.px(Math.max(160, Settings.get("widgets.weather.width", 282)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.weather.height", 150)))
 
         GfFrame {
             anchors.fill: parent
@@ -627,10 +632,11 @@ PanelWindow {
         visible: root.visOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.visualizer.x", 0.72))
         y: root.fracY(Settings.get("widgets.visualizer.y", 0.42))
-        width: Theme.px(312)
-        height: Theme.px(104)
+        width: Theme.px(Math.max(160, Settings.get("widgets.visualizer.width", 312)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.visualizer.height", 104)))
 
         GfFrame {
             anchors.fill: parent
@@ -691,10 +697,11 @@ PanelWindow {
         visible: root.userOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
         opacity: ShellState.widgetsEditing ? 0.55 : 1
+        clip: true
         x: root.fracX(Settings.get("widgets.user.x", 0.72))
         y: root.fracY(Settings.get("widgets.user.y", 0.60))
-        width: Theme.px(312)
-        height: Theme.px(232)
+        width: Theme.px(Math.max(160, Settings.get("widgets.user.width", 312)))
+        height: Theme.px(Math.max(80, Settings.get("widgets.user.height", 232)))
 
         GfFrame {
             anchors.fill: parent
@@ -739,13 +746,13 @@ PanelWindow {
 
     // ------------------------------------------------------ 桌面布局编辑
     readonly property var widgetDefs: [
-        { key: "clock",      x: 0.045, y: 0.10, w: 360, h: 168 },
-        { key: "stats",      x: 0.045, y: 0.42, w: 282, h: 184 },
-        { key: "media",      x: 0.72,  y: 0.10, w: 312, h: 132 },
-        { key: "weather",    x: 0.045, y: 0.72, w: 282, h: 150 },
-        { key: "visualizer", x: 0.72,  y: 0.42, w: 312, h: 104 },
-        { key: "user",       x: 0.72,  y: 0.60, w: 312, h: 232 },
-        { key: "mission",    x: 0.72,  y: 0.87, w: 312, h: 128 }
+        { key: "clock",      x: 0.045, y: 0.10, w: 360, h: 168, minW: 260, minH: 110 },
+        { key: "stats",      x: 0.045, y: 0.42, w: 282, h: 184, minW: 220, minH: 130 },
+        { key: "media",      x: 0.72,  y: 0.10, w: 312, h: 132, minW: 260, minH: 120 },
+        { key: "weather",    x: 0.045, y: 0.72, w: 282, h: 150, minW: 220, minH: 120 },
+        { key: "visualizer", x: 0.72,  y: 0.42, w: 312, h: 104, minW: 220, minH: 80 },
+        { key: "user",       x: 0.72,  y: 0.60, w: 312, h: 232, minW: 260, minH: 170 },
+        { key: "mission",    x: 0.72,  y: 0.87, w: 312, h: 128, minW: 260, minH: 120 }
     ]
 
     function resetWidgetLayout() {
@@ -753,6 +760,8 @@ PanelWindow {
             var d = root.widgetDefs[i];
             Settings.set("widgets." + d.key + ".x", d.x);
             Settings.set("widgets." + d.key + ".y", d.y);
+            Settings.set("widgets." + d.key + ".width", d.w);
+            Settings.set("widgets." + d.key + ".height", d.h);
         }
     }
 
@@ -881,10 +890,25 @@ PanelWindow {
                 readonly property string key: modelData.key
                 readonly property int grid: Math.max(8, Settings.get("widgets.grid", 48))
                 readonly property bool on: Settings.get("widgets." + key + ".enabled", false)
+                readonly property int minW: Theme.px(modelData.minW !== undefined ? modelData.minW : 160)
+                readonly property int minH: Theme.px(modelData.minH !== undefined ? modelData.minH : 80)
                 property bool dragging: false
+                property bool resizing: false
 
-                width: Theme.px(modelData.w)
-                height: Theme.px(modelData.h)
+                Binding {
+                    target: ghost
+                    property: "width"
+                    when: !ghost.dragging && !ghost.resizing
+                    value: Theme.px(Settings.get("widgets." + ghost.key + ".width", ghost.modelData.w))
+                    restoreMode: Binding.RestoreBindingOrValue
+                }
+                Binding {
+                    target: ghost
+                    property: "height"
+                    when: !ghost.dragging && !ghost.resizing
+                    value: Theme.px(Settings.get("widgets." + ghost.key + ".height", ghost.modelData.h))
+                    restoreMode: Binding.RestoreBindingOrValue
+                }
 
                 Binding {
                     target: ghost
@@ -979,6 +1003,72 @@ PanelWindow {
                     color: Theme.alpha(Theme.text, 0.5)
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.Wrap
+                }
+
+                // 右下角缩放手柄
+                Item {
+                    id: resizeHandle
+                    width: Theme.px(22)
+                    height: Theme.px(22)
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: Theme.alpha(Theme.bg0, 0.85)
+                        border.width: 1
+                        border.color: Theme.accent
+                    }
+                    Rectangle {
+                        x: Theme.px(5); y: Theme.px(13)
+                        width: Theme.px(12); height: 1
+                        color: Theme.accent
+                    }
+                    Rectangle {
+                        x: Theme.px(9); y: Theme.px(9)
+                        width: Theme.px(8); height: 1
+                        color: Theme.alpha(Theme.accent, 0.7)
+                    }
+                    Rectangle {
+                        x: Theme.px(13); y: Theme.px(5)
+                        width: Theme.px(4); height: 1
+                        color: Theme.alpha(Theme.accent, 0.5)
+                    }
+
+                    property real startW: 0
+                    property real startH: 0
+                    property real startSceneX: 0
+                    property real startSceneY: 0
+
+                    MouseArea {
+                        anchors.fill: parent
+                        cursorShape: Qt.SizeFDiagCursor
+                        onPressed: {
+                            ghost.resizing = true;
+                            resizeHandle.startW = ghost.width;
+                            resizeHandle.startH = ghost.height;
+                            var p = mapToItem(null, mouse.x, mouse.y);
+                            resizeHandle.startSceneX = p.x;
+                            resizeHandle.startSceneY = p.y;
+                        }
+                        onPositionChanged: {
+                            if (!pressed)
+                                return;
+                            var p = mapToItem(null, mouse.x, mouse.y);
+                            ghost.width = Math.max(ghost.minW, resizeHandle.startW + (p.x - resizeHandle.startSceneX));
+                            ghost.height = Math.max(ghost.minH, resizeHandle.startH + (p.y - resizeHandle.startSceneY));
+                        }
+                        onReleased: {
+                            var g = Math.max(8, ghost.grid);
+                            var w = Math.max(ghost.minW, Math.round(ghost.width / g) * g);
+                            var h = Math.max(ghost.minH, Math.round(ghost.height / g) * g);
+                            ghost.width = w;
+                            ghost.height = h;
+                            Settings.set("widgets." + ghost.key + ".width", w / Math.max(0.1, Theme.uiScale));
+                            Settings.set("widgets." + ghost.key + ".height", h / Math.max(0.1, Theme.uiScale));
+                            ghost.resizing = false;
+                        }
+                    }
                 }
             }
         }

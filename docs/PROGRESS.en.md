@@ -18,9 +18,9 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | Control centre | ✅ | Links, volume/brightness, modules, vitals, comms |
 | Operation map | ✅ | Sector cards, unit lists, click to switch/focus |
 | System halt | ✅ | Lock / suspend / restart / shutdown / logout + confirmation |
-| Dock | ✅ | Hides with windows, expands on hot zone, exclusive zone pushes windows |
+| Dock | ✅ | Hides with windows, expands on hot zone (**hot-zone height 4–48 px**), exclusive zone pushes windows |
 | Sidebars | ✅ | **11 swappable components**, left/right/off assignment, height 40–100%, top/center/bottom, scrolling |
-| Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission; **grid layout editor with drag-snap and per-widget ON/OFF** |
+| Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission; **grid editor with drag-snap, bottom-right resizing and per-widget ON/OFF** |
 | Settings | ✅ | Paper/black rules/charcoal buttons/yellow hover; **translucent gray-white background with adjustable opacity/gray**; 8 tabs; live save |
 | Languages | ✅ | 繁中 / 简中 / English / 日本語; `auto` follows the system; live switch |
 | Lyrics | ✅ | lrclib.net synced lyrics shared by media card / sidebar / popup |
@@ -42,7 +42,9 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
   states go through `I18n.t()`.
 - **Media buttons**: hand-drawn play/pause glyphs, independent of icon-font coverage.
 - **Settings window** now follows the focused monitor, so it no longer opens on the wrong output.
-- **Desktop layout editor**: `SUPER+SHIFT+W`, Settings → Layout, or IPC `shell widgets`; grid overlay, drag-to-snap and a per-widget ON/OFF button.
+- **Desktop layout editor**: `SUPER+SHIFT+W`, Settings → Layout, or IPC `shell widgets`; grid overlay, drag-to-snap, bottom-right resizing and a per-widget ON/OFF button.
+- **Dock hot zone**: `dock.trigger` 4–48 px, adjustable in Settings → Dock; a wider gold handle marks the hidden area.
+- **Widget sizes**: `widgets.<name>.width/height` resize freely and snap to the grid.
 - **Themes & scaling**: new `DAYLIGHT OPS` light preset, DARK/LIGHT/CUSTOM modes, custom BG0/BG1/PANEL/TEXT/ACCENT colours; separate `SHELL SCALE` and `FONT SCALE`; the settings veil has adjustable opacity/gray.
 
 ## Screenshots
