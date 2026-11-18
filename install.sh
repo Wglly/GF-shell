@@ -6,14 +6,16 @@ set -euo pipefail
 SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DEST="${XDG_CONFIG_HOME:-$HOME/.config}/quickshell/gf-shell"
 MODE="copy"
+SKIP_QS_CHECK=0
 
 usage() {
     cat <<'EOF'
-usage: ./install.sh [--link] [--dest PATH] [--yes]
+usage: ./install.sh [--link] [--dest PATH] [--yes] [--skip-qs-check]
 
   --link        symlink the repo instead of copying (development)
   --dest PATH   install to PATH (default: ~/.config/quickshell/gf-shell)
   --yes         do not ask before replacing an existing install
+  --skip-qs-check  skip the Quickshell >= 0.3 version check (distro installers)
   -h, --help    show this help
 
 After installing, start the shell with:
@@ -27,6 +29,7 @@ while [[ $# -gt 0 ]]; do
         --link) MODE="link" ;;
         --dest) DEST="${2:?--dest needs a path}"; shift ;;
         --yes) ASSUME_YES=1 ;;
+        --skip-qs-check) SKIP_QS_CHECK=1 ;;
         -h|--help) usage; exit 0 ;;
         *) echo "unknown option: $1" >&2; usage; exit 1 ;;
     esac
@@ -35,8 +38,21 @@ done
 
 if ! command -v qs >/dev/null 2>&1; then
     echo "error: quickshell (qs) was not found in PATH" >&2
-    echo "       install it first: sudo pacman -S quickshell" >&2
+    echo "  Fedora:  ./scripts/install-fedora.sh" >&2
+    echo "  Debian:  ./scripts/install-debian.sh" >&2
+    echo "  Arch:    sudo pacman -S quickshell" >&2
+    echo "  Or build Quickshell >= 0.3: docs/INSTALL.md" >&2
     exit 1
+fi
+
+if [[ "$SKIP_QS_CHECK" != "1" ]]; then
+    QS_VER="$(qs --version 2>/dev/null | sed -n 's/.*Quickshell[[:space:]]\+\([0-9][0-9.]*\).*/\1/p' | head -n1)"
+    if [[ -n "$QS_VER" ]] && ! { [ "$(printf '%s\n0.3\n' "$QS_VER" | sort -V | head -n1)" = "0.3" ]; }; then
+        echo "error: Quickshell $QS_VER is too old; GF-shell needs >= 0.3 (0.3.2 recommended)" >&2
+        echo "  Fedora:  ./scripts/install-fedora.sh   (uses the quickshell COPR)" >&2
+        echo "  Debian:  ./scripts/install-debian.sh   (trixie-backports or --build-quickshell)" >&2
+        exit 1
+    fi
 fi
 
 mkdir -p "$(dirname "$DEST")"
@@ -71,7 +87,7 @@ echo " Config file:     ${XDG_CONFIG_HOME:-$HOME/.config}/gf-shell/config.json"
 echo
 echo " Compositor keybinds (add to your config):"
 echo "   Hyprland (lua):  hl.bind(\"SUPER + Space\", hl.dsp.global(\"gf-shell:launcher\"))"
-echo "                    hl.bind(\"SUPER + Tab\",   hl.dsp.global(\"gf-shell:overview\"))"
+echo "                    hl.bind(\"SUPER + ALT + TAB\", hl.dsp.global(\"gf-shell:overview\"))"
 echo "   niri:            Mod+Space { spawn \"qs\" \"-c\" \"gf-shell\" \"ipc\" \"call\" \"shell\" \"toggle\" \"launcher\"; }"
 echo
 echo " Autostart: add \`exec-once = qs -c gf-shell\` (Hyprland) or"

@@ -115,7 +115,7 @@ IPC](#快捷键与-ipc)
 
 ## 需求
 
-- **Quickshell ≥ 0.3**（Arch: `quickshell`）
+- **Quickshell ≥ 0.3**（Arch: `quickshell`；Fedora: COPR；Debian 13: `trixie-backports`）
 - Qt 6：`qt6-declarative`、`qt6-svg`、`qt6-wayland`、`qt6-base`
 - Wayland 合成器：**Hyprland** 或 **niri**（皆已测试）
 - 建议工具（缺少时对应功能自动禁用）：
@@ -128,7 +128,7 @@ IPC](#快捷键与-ipc)
   - `curl`：天气（wttr.in）与歌词（lrclib.net）
   - `grim` / `slurp` / `wf-recorder`：截图与录屏
   - `wl-clipboard`：截图复制
-- 字体：全部附带（`assets/fonts/`），不需要安装到系统。
+- 字体：西文与图标附带（`assets/fonts/`）；CJK 使用系统 `Noto Sans CJK`。
 
 ---
 
@@ -137,6 +137,14 @@ IPC](#快捷键与-ipc)
 ```bash
 git clone <repo> GF-shell           # 或直接使用本目录
 cd GF-shell
+
+# Fedora / Nobara / RHEL 系（自动 COPR + 依赖）
+./scripts/install-fedora.sh
+
+# Debian / Ubuntu（Debian 13 自动 backports；无包时加 --build-quickshell）
+./scripts/install-debian.sh
+
+# Arch / 通用
 ./install.sh                        # 复制到 ~/.config/quickshell/gf-shell
 # 或开发用：
 ./install.sh --link                 # 符号链接，改文件即生效
@@ -276,6 +284,8 @@ launcher | emblem | user | workspaces | title | clock | media | stats | net | bl
 GF-shell/
 ├── shell.qml                    # 入口：字体、主题绑定、快捷键、每屏幕窗口、IPC
 ├── install.sh
+├── scripts/install-fedora.sh    # Fedora 安装脚本
+├── scripts/install-debian.sh    # Debian / Ubuntu 安装脚本
 ├── scripts/gen_assets.py        # 壁纸 / 徽章 / 纹理生成器（Pillow + numpy）
 ├── assets/
 │   ├── fonts/                   # Chakra Petch、Saira Condensed、Rajdhani、Share Tech Mono、GFTacticalIcons

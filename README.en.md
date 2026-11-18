@@ -113,7 +113,7 @@ The same shell running on **niri** (nested inside Hyprland for testing):
 
 ## Requirements
 
-- **Quickshell ≥ 0.3** (Arch: `quickshell`)
+- **Quickshell ≥ 0.3** (Arch: `quickshell`; Fedora: COPR; Debian 13: `trixie-backports`)
 - Qt 6: `qt6-declarative`, `qt6-svg`, `qt6-wayland`, `qt6-base`
 - Wayland compositor: **Hyprland** or **niri** (both tested)
 - Suggested tools (the matching feature disables itself when missing):
@@ -126,7 +126,7 @@ The same shell running on **niri** (nested inside Hyprland for testing):
   - `curl`: weather (wttr.in) and lyrics (lrclib.net)
   - `grim` / `slurp` / `wf-recorder`: screenshots and recording
   - `wl-clipboard`: copy screenshots
-- Fonts: all bundled in `assets/fonts/`, no system installation required.
+- Fonts: Latin/icon fonts are bundled in `assets/fonts/`; CJK uses the system `Noto Sans CJK`.
 
 ---
 
@@ -135,6 +135,14 @@ The same shell running on **niri** (nested inside Hyprland for testing):
 ```bash
 git clone <repo> GF-shell           # or use this directory as-is
 cd GF-shell
+
+# Fedora / Nobara / RHEL family (deps + COPR)
+./scripts/install-fedora.sh
+
+# Debian / Ubuntu (trixie-backports; use --build-quickshell if apt has no package)
+./scripts/install-debian.sh
+
+# Arch / generic
 ./install.sh                        # copies to ~/.config/quickshell/gf-shell
 # for development:
 ./install.sh --link                 # symlink; edits take effect immediately
@@ -281,6 +289,8 @@ Everything can be changed from the Adjutant config window; the file is written b
 GF-shell/
 ├── shell.qml                    # entry point: fonts, theme bindings, shortcuts, per-screen windows, IPC
 ├── install.sh
+├── scripts/install-fedora.sh    # Fedora installer
+├── scripts/install-debian.sh    # Debian / Ubuntu installer
 ├── scripts/gen_assets.py        # wallpaper / emblem / texture generator (Pillow + numpy)
 ├── assets/
 │   ├── fonts/                   # Chakra Petch, Saira Condensed, Rajdhani, Share Tech Mono, GFTacticalIcons

@@ -9,11 +9,24 @@
 sudo pacman -S quickshell qt6-declarative qt6-svg qt6-wayland \
                pipewire wireplumber upower networkmanager bluez \
                brightnessctl grim slurp wl-clipboard wf-recorder
+
+# Fedora 44+ (official quickshell may still be 0.2.x; prefer scripts/install-fedora.sh)
+sudo dnf install qt6-qtbase qt6-qtdeclarative qt6-qtsvg qt6-qtwayland \
+                 pipewire wireplumber upower NetworkManager bluez \
+                 brightnessctl grim slurp wl-clipboard google-noto-sans-cjk-fonts
+
+# Debian 13 / Ubuntu (Debian 13 ships quickshell in trixie-backports)
+sudo apt install qml6-module-qtquick qml6-module-qtquick-window \
+                 qml6-module-qtquick-controls qml6-module-qtquick-layouts \
+                 qml6-module-qtquick-shapes qml6-module-qtquick-templates \
+                 qml6-module-qtquick-effects qml6-module-qtqml-workerscript \
+                 pipewire wireplumber upower network-manager bluez \
+                 brightnessctl grim slurp wl-clipboard fonts-noto-cjk
 ```
 
 | Feature | Needs |
 | --- | --- |
-| The shell itself | `quickshell` ≥ 0.3 |
+| The shell itself | `quickshell` ≥ 0.3 (0.3.2 recommended; Fedora COPR / Debian trixie-backports) |
 | Volume | PipeWire + WirePlumber (`Quickshell.Services.Pipewire`) |
 | Battery | UPower |
 | Network | NetworkManager (`Quickshell.Networking`) |
@@ -31,7 +44,36 @@ cp assets/fonts/*.ttf ~/.local/share/fonts/
 fc-cache -f
 ```
 
-## 2. Install
+## 2. Distribution installers (Fedora / Debian)
+
+Use these when you do not want to resolve package names and Quickshell versions by hand.
+
+### Fedora / Nobara / RHEL family
+
+```bash
+./scripts/install-fedora.sh
+```
+
+- Installs dnf dependencies and enables the `errornointernet/quickshell` COPR for 0.3.x by default.
+- Fedora's official package may be 0.2.1, which is too old for GF-shell.
+- `--no-copr` skips the COPR; `--build-quickshell` builds 0.3.2 from source.
+- `--dry-run` only prints commands.
+
+### Debian / Ubuntu
+
+```bash
+./scripts/install-debian.sh
+```
+
+- Debian 13 (trixie) adds `trixie-backports` automatically to get Quickshell 0.3.
+- On Debian 12 / Ubuntu without an apt package, use `--build-quickshell`.
+- `--no-backports` skips backports; `--dry-run` only prints commands.
+
+Both scripts accept `--link`, `--dest PATH` and `--yes`, then call `install.sh`.
+Run them as your desktop user, not root; they use `sudo` internally.
+Autostart and keybinds still need the next sections.
+
+## 3. Install
 
 ```bash
 ./install.sh                 # copy to ~/.config/quickshell/gf-shell
@@ -48,7 +90,7 @@ qs -p "$PWD"
 > Quickshell recognises named configurations at `~/.config/quickshell/<name>/shell.qml`.
 > `qs -c gf-shell` therefore reads `~/.config/quickshell/gf-shell/`.
 
-## 3. Autostart
+## 4. Autostart
 
 ### Hyprland 0.5x (Lua config)
 
@@ -83,13 +125,14 @@ autostart first.
 pgrep -af quickshell
 ```
 
-## 4. Keybinds
+## 5. Keybinds
 
 ### Hyprland (Lua)
 
 ```lua
 hl.bind("SUPER + Space",     hl.dsp.global("gf-shell:launcher"))
-hl.bind("SUPER + Tab",       hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.global("gf-shell:overview"))
 hl.bind("SUPER + SHIFT + C", hl.dsp.global("gf-shell:control"))
 hl.bind("SUPER + SHIFT + P", hl.dsp.global("gf-shell:power"))
 hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
@@ -99,7 +142,8 @@ hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
+bind = SUPER SHIFT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = , Print, global, gf-shell:screenshot
@@ -111,7 +155,8 @@ niri does not implement `hyprland_global_shortcuts_v1`; use IPC instead:
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Alt+C { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "control"; }
 Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
 ```
@@ -119,7 +164,7 @@ Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
 > `qs` IPC requires a running instance; if the shell has not loaded yet the command reports
 > "no running instance" (safe to ignore).
 
-## 5. Displays / scaling
+## 6. Displays / scaling
 
 - The status bar, desktop HUD and dock are created **once per screen** (`Variants` + `Quickshell.screens`).
 - Full-screen overlays are created on the currently focused screen (`Compositor.outputName`).
@@ -127,7 +172,7 @@ Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
   not Qt's global scaling.
 - Bar height: Settings → Bar → `THICKNESS` (30–58 px).
 
-## 6. Troubleshooting
+## 7. Troubleshooting
 
 | Symptom | Fix |
 | --- | --- |

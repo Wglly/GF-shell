@@ -111,7 +111,7 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 
 ## 需求
 
-- **Quickshell ≥ 0.3**（Arch: `quickshell`）
+- **Quickshell ≥ 0.3**（Arch: `quickshell`；Fedora: COPR；Debian 13: `trixie-backports`）
 - Qt 6：`qt6-declarative`、`qt6-svg`、`qt6-wayland`、`qt6-base`
 - Wayland 合成器：**Hyprland** 或 **niri**（皆已測試）
 - 建議工具（缺少時對應功能自動停用）：
@@ -124,7 +124,7 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
   - `curl`：天氣（wttr.in）與歌詞（lrclib.net）
   - `grim` / `slurp` / `wf-recorder`：截圖與錄影
   - `wl-clipboard`：截圖複製
-- 字型：全部隨附（`assets/fonts/`），不需要系統安裝。
+- 字型：西文與圖示隨附（`assets/fonts/`）；CJK 使用系統 `Noto Sans CJK`。
 
 ---
 
@@ -133,6 +133,14 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 ```bash
 git clone <repo> GF-shell           # 或直接使用本目錄
 cd GF-shell
+
+# Fedora / Nobara / RHEL 系（自動 COPR + 依賴）
+./scripts/install-fedora.sh
+
+# Debian / Ubuntu（Debian 13 自動 backports；沒套件時加 --build-quickshell）
+./scripts/install-debian.sh
+
+# Arch / 通用
 ./install.sh                        # 複製到 ~/.config/quickshell/gf-shell
 # 或開發用：
 ./install.sh --link                 # 符號連結，改檔案即生效
@@ -277,6 +285,8 @@ launcher | emblem | user | workspaces | title | clock | media | stats | net | bl
 GF-shell/
 ├── shell.qml                    # 入口：字型、主題綁定、快捷鍵、每螢幕視窗、IPC
 ├── install.sh
+├── scripts/install-fedora.sh    # Fedora 安裝腳本
+├── scripts/install-debian.sh    # Debian / Ubuntu 安裝腳本
 ├── scripts/gen_assets.py        # 壁紙 / 徽章 / 紋理產生器（Pillow + numpy）
 ├── assets/
 │   ├── fonts/                   # Chakra Petch、Saira Condensed、Rajdhani、Share Tech Mono、GFTacticalIcons

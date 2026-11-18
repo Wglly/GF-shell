@@ -118,7 +118,7 @@ IPC](#キーバインドと-ipc)
 
 ## 必要環境
 
-- **Quickshell ≥ 0.3**（Arch: `quickshell`）
+- **Quickshell ≥ 0.3**（Arch: `quickshell`、Fedora: COPR、Debian 13: `trixie-backports`）
 - Qt 6：`qt6-declarative`、`qt6-svg`、`qt6-wayland`、`qt6-base`
 - Wayland コンポジタ：**Hyprland** または **niri**（両方で動作確認済み）
 - 推奨ツール（無い場合、対応機能は自動的に無効になります）：
@@ -131,7 +131,7 @@ IPC](#キーバインドと-ipc)
   - `curl`：天気（wttr.in）と歌詞（lrclib.net）
   - `grim` / `slurp` / `wf-recorder`：スクリーンショットと録画
   - `wl-clipboard`：スクリーンショットのコピー
-- フォント：すべて同梱（`assets/fonts/`）。システムへのインストールは不要です。
+- フォント：ラテン文字・アイコンは同梱（`assets/fonts/`）。CJK はシステムの `Noto Sans CJK` を使用。
 
 ---
 
@@ -140,6 +140,14 @@ IPC](#キーバインドと-ipc)
 ```bash
 git clone <repo> GF-shell           # またはこのディレクトリをそのまま使用
 cd GF-shell
+
+# Fedora / Nobara / RHEL 系（依存関係 + COPR）
+./scripts/install-fedora.sh
+
+# Debian / Ubuntu（Debian 13 は backports。apt に無ければ --build-quickshell）
+./scripts/install-debian.sh
+
+# Arch / 汎用
 ./install.sh                        # ~/.config/quickshell/gf-shell にコピー
 # 開発用：
 ./install.sh --link                 # シンボリックリンク（編集が即反映）

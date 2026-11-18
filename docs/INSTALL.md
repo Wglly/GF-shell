@@ -9,11 +9,24 @@
 sudo pacman -S quickshell qt6-declarative qt6-svg qt6-wayland \
                pipewire wireplumber upower networkmanager bluez \
                brightnessctl grim slurp wl-clipboard wf-recorder
+
+# Fedora 44+（官方 quickshell 可能仍是 0.2.x；請優先用 scripts/install-fedora.sh）
+sudo dnf install qt6-qtbase qt6-qtdeclarative qt6-qtsvg qt6-qtwayland \
+                 pipewire wireplumber upower NetworkManager bluez \
+                 brightnessctl grim slurp wl-clipboard google-noto-sans-cjk-fonts
+
+# Debian 13 / Ubuntu（Debian 13 的 quickshell 在 trixie-backports）
+sudo apt install qml6-module-qtquick qml6-module-qtquick-window \
+                 qml6-module-qtquick-controls qml6-module-qtquick-layouts \
+                 qml6-module-qtquick-shapes qml6-module-qtquick-templates \
+                 qml6-module-qtquick-effects qml6-module-qtqml-workerscript \
+                 pipewire wireplumber upower network-manager bluez \
+                 brightnessctl grim slurp wl-clipboard fonts-noto-cjk
 ```
 
 | 功能 | 需要 |
 | --- | --- |
-| 外殼本體 | `quickshell` ≥ 0.3 |
+| 外殼本體 | `quickshell` ≥ 0.3（0.3.2 建議；Fedora COPR / Debian 13 backports） |
 | 音量 | PipeWire + WirePlumber（`Quickshell.Services.Pipewire`） |
 | 電池 | UPower |
 | 網路 | NetworkManager（`Quickshell.Networking`） |
@@ -23,7 +36,7 @@ sudo pacman -S quickshell qt6-declarative qt6-svg qt6-wayland \
 
 缺少可選工具時，對應的滑條/開關會自動隱藏或停用，不會報錯。
 
-字型全部隨附，**不需要**安裝到系統。若想讓其他程式也用：
+西文與圖示字型全部隨附，不需要安裝到系統；CJK 使用系統 Noto Sans CJK（上面的套件已包含）。若想讓其他程式也用隨附字型：
 
 ```bash
 mkdir -p ~/.local/share/fonts
@@ -31,7 +44,37 @@ cp assets/fonts/*.ttf ~/.local/share/fonts/
 fc-cache -f
 ```
 
-## 2. 安裝
+## 2. 發行版安裝腳本（Fedora / Debian）
+
+不想手動處理套件名稱與 Quickshell 版本時，直接用對應腳本：
+
+### Fedora / Nobara / RHEL 系
+
+```bash
+./scripts/install-fedora.sh
+```
+
+- 安裝 dnf 依賴，並預設啟用 `errornointernet/quickshell` COPR，取得 0.3.x。
+- Fedora 官方套件目前可能是 0.2.1，低於 GF-shell 需求。
+- `--no-copr`：不啟用 COPR；`--build-quickshell`：從原始碼建 0.3.2。
+- `--dry-run` 只印出指令，不改系統。
+
+### Debian / Ubuntu
+
+```bash
+./scripts/install-debian.sh
+```
+
+- Debian 13（trixie）會自動加入 `trixie-backports` 取得 Quickshell 0.3。
+- Debian 12 / Ubuntu 若 apt 沒有 Quickshell，使用 `--build-quickshell` 從原始碼建置。
+- `--no-backports`：不自動加入 backports。
+- `--dry-run` 只印出指令，不改系統。
+
+兩個腳本都支援 `--link`、`--dest PATH`、`--yes`，並在最後呼叫 `install.sh`。
+請以桌面使用者執行，不要用 root；腳本內部會用 `sudo` 安裝套件。
+安裝完成後仍需依下一節設定開機自啟與快捷鍵。
+
+## 3. 安裝
 
 ```bash
 ./install.sh                 # 複製到 ~/.config/quickshell/gf-shell
@@ -48,7 +91,7 @@ qs -p "$PWD"
 > Quickshell 以 `~/.config/quickshell/<name>/shell.qml` 辨識具名設定，
 > `qs -c gf-shell` 就是讀取 `~/.config/quickshell/gf-shell/`。
 
-## 3. 開機自啟
+## 4. 開機自啟
 
 ### Hyprland 0.5x（Lua 設定）
 
@@ -82,13 +125,14 @@ GF-shell 會建立自己的狀態列（exclusive zone）。若同時跑 end4-pC 
 pgrep -af quickshell
 ```
 
-## 4. 快捷鍵
+## 5. 快捷鍵
 
 ### Hyprland（Lua）
 
 ```lua
 hl.bind("SUPER + Space",     hl.dsp.global("gf-shell:launcher"))
-hl.bind("SUPER + Tab",       hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.global("gf-shell:overview"))
 hl.bind("SUPER + SHIFT + C", hl.dsp.global("gf-shell:control"))
 hl.bind("SUPER + SHIFT + P", hl.dsp.global("gf-shell:power"))
 hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
@@ -98,7 +142,8 @@ hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
+bind = SUPER SHIFT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = , Print, global, gf-shell:screenshot
@@ -110,14 +155,15 @@ niri 不支援 `hyprland_global_shortcuts_v1`，請用 IPC：
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Alt+C { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "control"; }
 Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
 ```
 
 > `qs` 的 IPC 需要實例已啟動；若外殼尚未載入，指令會回報 no running instance（可忽略）。
 
-## 5. 螢幕 / 縮放
+## 6. 螢幕 / 縮放
 
 - 狀態列、桌面 HUD、梯隊會為**每個螢幕**各建一份（`Variants` + `Quickshell.screens`）。
 - 全螢幕覆蓋層建立在目前聚焦的螢幕（`Compositor.outputName`）。
@@ -125,7 +171,7 @@ Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
   只影響本外殼，不影響 Qt 全域 scaling。
 - bar 高度：設置 → 狀態列 → `THICKNESS`（30–58 px）。
 
-## 6. 疑難排解
+## 7. 疑難排解
 
 | 症狀 | 處理 |
 | --- | --- |

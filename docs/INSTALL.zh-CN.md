@@ -9,11 +9,24 @@
 sudo pacman -S quickshell qt6-declarative qt6-svg qt6-wayland \
                pipewire wireplumber upower networkmanager bluez \
                brightnessctl grim slurp wl-clipboard wf-recorder
+
+# Fedora 44+（官方 quickshell 可能仍是 0.2.x；请优先用 scripts/install-fedora.sh）
+sudo dnf install qt6-qtbase qt6-qtdeclarative qt6-qtsvg qt6-qtwayland \
+                 pipewire wireplumber upower NetworkManager bluez \
+                 brightnessctl grim slurp wl-clipboard google-noto-sans-cjk-fonts
+
+# Debian 13 / Ubuntu（Debian 13 的 quickshell 在 trixie-backports）
+sudo apt install qml6-module-qtquick qml6-module-qtquick-window \
+                 qml6-module-qtquick-controls qml6-module-qtquick-layouts \
+                 qml6-module-qtquick-shapes qml6-module-qtquick-templates \
+                 qml6-module-qtquick-effects qml6-module-qtqml-workerscript \
+                 pipewire wireplumber upower network-manager bluez \
+                 brightnessctl grim slurp wl-clipboard fonts-noto-cjk
 ```
 
 | 功能 | 需要 |
 | --- | --- |
-| 外壳本体 | `quickshell` ≥ 0.3 |
+| 外壳本体 | `quickshell` ≥ 0.3（建议 0.3.2；Fedora COPR / Debian trixie-backports） |
 | 音量 | PipeWire + WirePlumber（`Quickshell.Services.Pipewire`） |
 | 电池 | UPower |
 | 网络 | NetworkManager（`Quickshell.Networking`） |
@@ -31,7 +44,36 @@ cp assets/fonts/*.ttf ~/.local/share/fonts/
 fc-cache -f
 ```
 
-## 2. 安装
+## 2. 发行版安装脚本（Fedora / Debian）
+
+不想手动处理包名和 Quickshell 版本时，直接使用对应脚本。
+
+### Fedora / Nobara / RHEL 系
+
+```bash
+./scripts/install-fedora.sh
+```
+
+- 安装 dnf 依赖，默认启用 `errornointernet/quickshell` COPR 获取 0.3.x。
+- Fedora 官方包可能仍是 0.2.1，低于 GF-shell 要求。
+- `--no-copr` 不启用 COPR；`--build-quickshell` 从源码构建 0.3.2。
+- `--dry-run` 只打印命令。
+
+### Debian / Ubuntu
+
+```bash
+./scripts/install-debian.sh
+```
+
+- Debian 13（trixie）自动加入 `trixie-backports` 获取 Quickshell 0.3。
+- Debian 12 / Ubuntu 若 apt 没有 Quickshell，使用 `--build-quickshell`。
+- `--no-backports` 不添加 backports；`--dry-run` 只打印命令。
+
+两个脚本都支持 `--link`、`--dest PATH`、`--yes`，最后调用 `install.sh`。
+请用桌面用户运行，不要用 root；脚本内部使用 `sudo`。
+安装完成后仍需按后续章节配置自启与快捷键。
+
+## 3. 安装
 
 ```bash
 ./install.sh                 # 复制到 ~/.config/quickshell/gf-shell
@@ -48,7 +90,7 @@ qs -p "$PWD"
 > Quickshell 以 `~/.config/quickshell/<name>/shell.qml` 识别具名配置，
 > `qs -c gf-shell` 就是读取 `~/.config/quickshell/gf-shell/`。
 
-## 3. 开机自启
+## 4. 开机自启
 
 ### Hyprland 0.5x（Lua 配置）
 
@@ -82,13 +124,14 @@ GF-shell 会建立自己的状态栏（exclusive zone）。若同时运行 end4-
 pgrep -af quickshell
 ```
 
-## 4. 快捷键
+## 5. 快捷键
 
 ### Hyprland（Lua）
 
 ```lua
 hl.bind("SUPER + Space",     hl.dsp.global("gf-shell:launcher"))
-hl.bind("SUPER + Tab",       hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"))
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.global("gf-shell:overview"))
 hl.bind("SUPER + SHIFT + C", hl.dsp.global("gf-shell:control"))
 hl.bind("SUPER + SHIFT + P", hl.dsp.global("gf-shell:power"))
 hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
@@ -98,7 +141,8 @@ hl.bind("PRINT",             hl.dsp.global("gf-shell:screenshot"))
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
+bind = SUPER SHIFT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = , Print, global, gf-shell:screenshot
@@ -110,14 +154,15 @@ niri 不支持 `hyprland_global_shortcuts_v1`，请用 IPC：
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Alt+C { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "control"; }
 Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
 ```
 
 > `qs` 的 IPC 需要实例已启动；若外壳尚未加载，命令会回报 no running instance（可忽略）。
 
-## 5. 屏幕 / 缩放
+## 6. 屏幕 / 缩放
 
 - 状态栏、桌面 HUD、梯队会为**每个屏幕**各建一份（`Variants` + `Quickshell.screens`）。
 - 全屏覆盖层建立在当前聚焦的屏幕（`Compositor.outputName`）。
@@ -125,7 +170,7 @@ Mod+Alt+P { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "power"; }
   只影响本外壳，不影响 Qt 全局 scaling。
 - bar 高度：设置 → 状态栏 → `THICKNESS`（30–58 px）。
 
-## 6. 疑难解答
+## 7. 疑难解答
 
 | 症状 | 处理 |
 | --- | --- |
