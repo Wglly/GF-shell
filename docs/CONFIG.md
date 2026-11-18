@@ -118,7 +118,7 @@
   "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
   "power":  { "confirm": true },
   "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
-  "hotkeys": { "launcher": "SUPER+Space", "overview": "Super+Tab", "control": "SUPER+Shift+C" },
+  "hotkeys": { "launcher": "SUPER+Space", "overview": "SUPER+ALT+Tab", "control": "SUPER+Shift+C" },
   "shell":  { "keepAwake": false }
 }
 ```

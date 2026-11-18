@@ -218,7 +218,7 @@ PanelWindow {
 
                 GfKeyCap { label: "ESC" }
                 GfText { visible: !root.compact; text: "CLOSE MAP"; role: "mono"; size: Theme.sizeTiny - 1; tone: "faint" }
-                GfKeyCap { visible: !root.compact; label: "SUPER+TAB" }
+                GfKeyCap { visible: !root.compact; label: "SUPER+ALT+TAB" }
                 GfText { visible: !root.compact; text: "TOGGLE"; role: "mono"; size: Theme.sizeTiny - 1; tone: "faint" }
                 GfKeyCap { label: "CLICK"; visible: !root.compact }
                 GfText {

@@ -1332,7 +1332,7 @@ PanelWindow {
                             Repeater {
                                 model: [
                                     { k: "LAUNCHER", v: "SUPER + SPACE" },
-                                    { k: "OVERVIEW", v: "SUPER + TAB" },
+                                    { k: "OVERVIEW", v: "SUPER + ALT + TAB" },
                                     { k: "CONTROL", v: "SUPER + SHIFT + C" },
                                     { k: "POWER", v: "SUPER + SHIFT + Q" },
                                     { k: "WIDGETS", v: "SUPER + SHIFT + W" }

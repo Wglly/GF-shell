@@ -22,7 +22,11 @@ GF-shell 是一个从零编写的 Quickshell（Qt Quick）桌面外壳，视觉�
 - [安装](#安装)
 - [安装](#安装)
 - [开机自启](#开机自启)
-- [快捷键与 IPC](#快捷键与-ipc)
+- [快捷键与 > 注意：`SUPER+Tab` 可能被其他 shell（例如 MC-shell）占用；本项目使用 `SUPER+ALT+Tab`。
+> 若快捷键无作用，先确认 `hyprctl globalshortcuts | grep gf-shell` 含 `gf-shell:overview`，
+> 并确认同一组键没有重复绑定（重复会打开又立刻关闭）。
+
+IPC](#快捷键与-ipc)
 - [配置](#配置)
 - [目录结构](#目录结构)
 - [自定义与换肤](#自定义与换肤)
@@ -180,7 +184,7 @@ spawn-at-startup "qs" "-c" "gf-shell"
 ```lua
 -- Hyprland 0.57 的 Lua 配置
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: 部署终端" })
-hl.bind("SUPER + Tab",        hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作战地图" })
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作战地图" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: 战术控制" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: 系统停机" })
 hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: 截图" })
@@ -190,7 +194,7 @@ hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -201,7 +205,7 @@ bind = , Print, global, gf-shell:screenshot
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 

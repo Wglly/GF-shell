@@ -184,7 +184,7 @@ Hyprland configuration:
 ```lua
 -- Hyprland 0.57 Lua config
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: deployment terminal" })
-hl.bind("SUPER + Tab",        hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: operation map" })
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: operation map" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: tactical control" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: system halt" })
 hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: screenshot" })
@@ -194,7 +194,7 @@ Classic configuration:
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -205,9 +205,13 @@ bind = , Print, global, gf-shell:screenshot
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
+
+> Note: `SUPER+Tab` may be taken by another shell (e.g. MC-shell); this project uses `SUPER+ALT+Tab`.
+> If the shortcut does nothing, check `hyprctl globalshortcuts | grep gf-shell` for `gf-shell:overview`
+> and make sure the same key is not bound twice (a duplicate toggles it open and closed).
 
 IPC surface (`IpcHandler`, target `shell`):
 

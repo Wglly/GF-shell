@@ -180,7 +180,7 @@ spawn-at-startup "qs" "-c" "gf-shell"
 ```lua
 -- Hyprland 0.57 的 Lua 設定
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: 部署終端" })
-hl.bind("SUPER + Tab",        hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作戰地圖" })
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作戰地圖" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: 戰術控制" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: 系統停機" })
 hl.bind("SUPER + SHIFT + W",  hl.dsp.global("gf-shell:widgets"),   { description = "GF-shell: widget layout" })
@@ -191,7 +191,7 @@ hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -202,9 +202,13 @@ bind = , Print, global, gf-shell:screenshot
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
+
+> 注意：`SUPER+Tab` 可能被其他 shell（例如 MC-shell）占用；本專案使用 `SUPER+ALT+Tab`。
+> 若快捷鍵無作用，先確認 `hyprctl globalshortcuts | grep gf-shell` 含 `gf-shell:overview`，
+> 並確認同一組鍵沒有重複綁定（重複會開啟又立刻關閉）。
 
 IPC 介面（`IpcHandler`，target `shell`）：
 

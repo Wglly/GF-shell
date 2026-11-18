@@ -25,7 +25,11 @@ GF-shell は Quickshell（Qt Quick）で一から書かれたデスクトップ�
 - [インストール](#インストール)
 - [インストール](#インストール)
 - [自動起動](#自動起動)
-- [キーバインドと IPC](#キーバインドと-ipc)
+- [キーバインドと > 注意：`SUPER+Tab` は他のシェル（MC-shell など）が使用している場合があります。本プロジェクトは `SUPER+ALT+Tab` を使います。
+> 効かない場合は `hyprctl globalshortcuts | grep gf-shell` に `gf-shell:overview` があるか、
+> 同じキーを二重にバインドしていないか確認してください（二重だと開いてすぐ閉じます）。
+
+IPC](#キーバインドと-ipc)
 - [設定](#設定)
 - [ディレクトリ構成](#ディレクトリ構成)
 - [カスタマイズとテーマ](#カスタマイズとテーマ)
@@ -185,7 +189,7 @@ spawn-at-startup "qs" "-c" "gf-shell"
 ```lua
 -- Hyprland 0.57 の Lua 設定
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: デプロイ端末" })
-hl.bind("SUPER + Tab",        hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作戦マップ" })
+hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作戦マップ" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: 戦術コントロール" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: システム停止" })
 hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: スクリーンショット" })
@@ -195,7 +199,7 @@ hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description
 
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
-bind = SUPER, Tab, global, gf-shell:overview
+bind = SUPER ALT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -206,7 +210,7 @@ bind = , Print, global, gf-shell:screenshot
 
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
-Mod+Tab   { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 
