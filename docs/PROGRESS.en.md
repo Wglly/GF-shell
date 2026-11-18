@@ -45,6 +45,7 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 - **Desktop layout editor**: `SUPER+SHIFT+W`, Settings → Layout, or IPC `shell widgets`; grid overlay, drag-to-snap, bottom-right resizing and a per-widget ON/OFF button.
 - **Dock hot zone**: `dock.trigger` 4–48 px, adjustable in Settings → Dock; a wider gold handle marks the hidden area.
 - **Overview move**: drag a unit row onto another sector; `Compositor.moveWindow()` moves the window there on Hyprland and niri.
+- **Volume**: the default sink is now read/written through `wpctl`, fixing empty Quickshell `channelVolumes` on some WirePlumber setups; IPC `volume` / `mute` added.
 - **Widget sizes**: `widgets.<name>.width/height` resize freely and snap to the grid.
 - **Themes & scaling**: new `DAYLIGHT OPS` light preset, DARK/LIGHT/CUSTOM modes, custom BG0/BG1/PANEL/TEXT/ACCENT colours; separate `SHELL SCALE` and `FONT SCALE`; the settings veil has adjustable opacity/gray.
 

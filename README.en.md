@@ -220,6 +220,8 @@ qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overvie
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
 qs -c gf-shell ipc call shell widgets   # desktop widget layout editor
+qs -c gf-shell ipc call shell volume 0.7   # set volume
+qs -c gf-shell ipc call shell mute         # toggle mute
 qs -c gf-shell ipc call shell status
 ```
 

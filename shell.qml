@@ -192,6 +192,15 @@ ShellRoot {
             ShellState.toggleWidgetsEditing();
         }
 
+        function volume(v: real): void {
+            Audio.setVolume(v);
+        }
+
+        function mute(): void {
+            Audio.toggleMute();
+        }
+
+
         function status(): string {
             return "overlay=" + ShellState.overlay + " backend=" + Compositor.backend
                 + " workspaces=" + Compositor.workspaces.length;

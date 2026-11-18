@@ -216,6 +216,8 @@ qs -c gf-shell ipc call shell toggle launcher    # none|launcher|control|overvie
 qs -c gf-shell ipc call shell open overview
 qs -c gf-shell ipc call shell close
 qs -c gf-shell ipc call shell widgets   # 桌面组件布局编辑
+qs -c gf-shell ipc call shell volume 0.7   # 设置音量
+qs -c gf-shell ipc call shell mute         # 切换静音
 qs -c gf-shell ipc call shell status
 ```
 

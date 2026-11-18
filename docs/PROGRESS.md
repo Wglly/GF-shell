@@ -43,6 +43,7 @@
 - **桌面佈局編輯**：`SUPER+SHIFT+W` / 設定 → LAYOUT / IPC `shell widgets`；疊加網格、拖動吸附、右下角縮放、每個組件右上角 ON/OFF。
 - **Dock 熱區**：`dock.trigger` 4–48px，設定 → Dock 可調；收起時顯示加寬金色把手。
 - **作戰地圖移動**：把單位條目拖到另一扇區，呼叫 `Compositor.moveWindow()` 將視窗移到該工作區（Hyprland / niri）。
+- **音量控制**：改用 `wpctl` 讀寫預設 sink，修正某些 WirePlumber 設定下 Quickshell `channelVolumes` 為空、滑桿無作用的問題；新增 IPC `volume` / `mute`。
 - **組件尺寸**：`widgets.<name>.width/height` 可自由縮放並吸附網格。
 - **主題與縮放**：新增 `DAYLIGHT OPS` 亮色預設、DARK/LIGHT/CUSTOM 模式、BG0/BG1/PANEL/TEXT/ACCENT 自訂色；`SHELL SCALE` 與 `FONT SCALE` 分離；設定背景灰白遮罩可調透明度/灰度。
 
