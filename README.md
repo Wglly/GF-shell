@@ -1,10 +1,28 @@
-# GF-shell
+<p align="center">
+  <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/github/license/Wglly/GF-shell?style=flat-square&amp;labelColor=070708&amp;color=e8bd4f"></a>
+  <img alt="Quickshell 0.3+" src="https://img.shields.io/badge/Quickshell-0.3%2B-e8bd4f?style=flat-square&amp;labelColor=070708">
+  <img alt="Hyprland and niri" src="https://img.shields.io/badge/Compositors-Hyprland%20%7C%20niri-c9a24a?style=flat-square&amp;labelColor=070708">
+  <img alt="Qt 6 on Wayland" src="https://img.shields.io/badge/Stack-Qt%206%20%7C%20Wayland-6f9bc4?style=flat-square&amp;labelColor=070708">
+  <img alt="Arch, Fedora, Debian" src="https://img.shields.io/badge/Distros-Arch%20%7C%20Fedora%20%7C%20Debian-8fc08a?style=flat-square&amp;labelColor=070708">
+  <img alt="Four UI languages" src="https://img.shields.io/badge/Languages-4-d34a34?style=flat-square&amp;labelColor=070708">
+  <a href="https://github.com/Wglly/GF-shell/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/Wglly/GF-shell?style=flat-square&amp;labelColor=070708&amp;color=e8bd4f&amp;logo=github"></a>
+  <a href="https://github.com/Wglly/GF-shell/commits/main"><img alt="Last commit" src="https://img.shields.io/github/last-commit/Wglly/GF-shell?style=flat-square&amp;labelColor=070708&amp;color=c9a24a"></a>
+</p>
 
-**《少女前線》風格的 Quickshell 桌面外殼** · 面向 **Hyprland** 與 **niri** · Wayland
+<p align="center">
+  <img src="docs/screenshots/banner.png" alt="GF-shell — tactical desktop shell" width="100%">
+</p>
+
+<h1 align="center">GF-shell</h1>
+
+<p align="center"><b>《少女前線》風格的 Quickshell 桌面外殼 · 面向 Hyprland 與 niri · Wayland</b></p>
+
+<p align="center">
+  <a href="README.md">繁體中文</a> · <a href="README.zh-CN.md">简体中文</a> · <a href="README.en.md">English</a> · <a href="README.ja.md">日本語</a>
+</p>
 
 ![Desktop](docs/screenshots/01-desktop.png)
 
-**繁體中文** · [简体中文](README.zh-CN.md) · [English](README.en.md) · [日本語](README.ja.md)
 
 GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語言取自《少女前線》公開的戰術介面：
 暖炭黑底、啞光金強調色、45° 小切角、金線 + 內側細白線的雙層框、斜切標籤緞帶、半調網點、分段式儀表與等寬數據字。
