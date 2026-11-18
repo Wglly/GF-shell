@@ -42,7 +42,7 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 | **Status bar** | G&K emblem block, operator entry, echelon/workspace numbers, active window title, centred clock, media, CPU/memory, network, Bluetooth, volume, battery, system tray, and entries for the operation map, tactical control and system halt. Secondary blocks are hidden automatically on narrow screens. Each block can be switched off and moved between left / centre / right in Settings → Status bar → Components. Network, Bluetooth and performance are independent blocks; click them for details, and the network panel lists nearby Wi-Fi networks. |
 | **Deployment terminal (Launcher)** | Full-screen unit list with categories (all/recent/network/development/media/office/combat/system), fuzzy search, keyboard navigation, a unit dossier on the right (CLASS/STATUS/SOURCE/EXEC) and a DEPLOY button. |
 | **Tactical control (Control Center)** | Link status (Wi-Fi/Bluetooth), segmented volume/brightness sliders, module switches, CPU/MEM/BAT segmented gauges, notification history and media controls. |
-| **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window; drag a unit onto another sector to move that window. |
+| **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window; drag a unit onto another sector, or right-click a unit and click the target sector, to move that window. |
 | **System halt (Power)** | Lock / suspend / restart / shut down / log out. Dangerous actions need a second confirmation (ENTER twice); ESC cancels. |
 | **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. A **desktop layout editor** overlays a snap grid; drag widgets, resize from the bottom-right corner, and toggle each one ON/OFF. |
 | **Echelon (Dock)** | Pinned and running units (up to 12), with running apps appended automatically; pin more by typing an app name in Settings → Dock. Right-click a unit to pin/unpin it, open a new window or close it. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable, and the hidden **trigger area is configurable (4–48 px)**. With **Avoid windows** off the dock stays fully visible; when hidden, only an invisible hot zone and a thin line remain, and the panel appears only on expansion. When the dock shares an edge with the bar, the hot zone/indicator sit on the bar and the dock body attaches to its inner edge instead of floating. |
@@ -189,6 +189,7 @@ Hyprland configuration:
 -- Hyprland 0.57 Lua config
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: deployment terminal" })
 hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: operation map" })
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.global("gf-shell:overview"), { description = "GF-shell: overview (alt)" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: tactical control" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: system halt" })
 hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: screenshot" })
@@ -199,6 +200,7 @@ Classic configuration:
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER ALT, TAB, global, gf-shell:overview
+bind = SUPER SHIFT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -210,6 +212,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 

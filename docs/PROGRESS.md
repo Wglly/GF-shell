@@ -44,7 +44,7 @@
 - **Dock 熱區**：`dock.trigger` 4–48px，設定 → Dock 可調；收起時顯示加寬金色把手。
 - **Dock 應用**：執行中的應用自動接在固定項目後；右鍵開啟固定/取消固定、新視窗、關閉選單，固定狀態寫回 `dock.pinned`。
 - **狀態列詳情**：網路改為可點擊詳情並列出附近可連接 Wi-Fi（點擊開放網路直接連線，WPA 網路輸入密碼）；藍牙獨立組件與詳情；CPU/MEM 統計點擊展開性能詳情。
-- **作戰地圖移動**：把單位條目拖到另一扇區，呼叫 `Compositor.moveWindow()` 將視窗移到該工作區（Hyprland / niri）。
+- **作戰地圖移動**：把單位條目拖到另一扇區（或右鍵選取後點扇區），呼叫 `Compositor.moveWindow()`；快捷鍵提供 `SUPER+ALT+Tab` 與 `SUPER+SHIFT+Tab` 兩組。
 - **音量控制**：改用 `wpctl` 讀寫預設 sink，修正某些 WirePlumber 設定下 Quickshell `channelVolumes` 為空、滑桿無作用的問題；新增 IPC `volume` / `mute`。
 - **組件尺寸**：`widgets.<name>.width/height` 可自由縮放並吸附網格。
 - **主題與縮放**：新增 `DAYLIGHT OPS` 亮色預設、DARK/LIGHT/CUSTOM 模式、BG0/BG1/PANEL/TEXT/ACCENT 自訂色；`SHELL SCALE` 與 `FONT SCALE` 分離；設定背景灰白遮罩可調透明度/灰度。

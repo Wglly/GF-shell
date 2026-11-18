@@ -46,7 +46,7 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 - **Dock hot zone**: `dock.trigger` 4–48 px, adjustable in Settings → Dock; a wider gold handle marks the hidden area.
 - **Dock apps**: running apps are appended after pinned entries; right-click offers pin/unpin, new window and close, with the pinned list saved to `dock.pinned`.
 - **Status bar details**: the network block opens link details and nearby connectable Wi-Fi (open networks connect directly, WPA asks for a password); Bluetooth is a separate block with details; CPU/MEM stats open a performance panel.
-- **Overview move**: drag a unit row onto another sector; `Compositor.moveWindow()` moves the window there on Hyprland and niri.
+- **Overview move**: drag a unit row onto another sector (or right-click then click a sector); `Compositor.moveWindow()` moves it. Two shortcuts: `SUPER+ALT+Tab` and `SUPER+SHIFT+Tab`.
 - **Volume**: the default sink is now read/written through `wpctl`, fixing empty Quickshell `channelVolumes` on some WirePlumber setups; IPC `volume` / `mute` added.
 - **Widget sizes**: `widgets.<name>.width/height` resize freely and snap to the grid.
 - **Themes & scaling**: new `DAYLIGHT OPS` light preset, DARK/LIGHT/CUSTOM modes, custom BG0/BG1/PANEL/TEXT/ACCENT colours; separate `SHELL SCALE` and `FONT SCALE`; the settings veil has adjustable opacity/gray.

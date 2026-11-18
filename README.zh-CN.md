@@ -44,7 +44,7 @@ IPC](#快捷键与-ipc)
 | **状态栏 (Bar)** | G&K 识别块、操作员入口、梯队/工作区编号、当前单位（窗口）标题、中央时钟、通讯/CPU/内存/网络/蓝牙/音量/电池/托盘、作战地图、战术控制、系统停机。窄屏幕会自动隐藏次要区块；组件可在「设置 → 状态栏 → 组件」逐项开关，并指定左/中/右。网络、蓝牙、性能监控为独立组件，点击展开详情；网络详情会列出附近可连接的 Wi-Fi。 |
 | **部署终端 (Launcher)** | 全屏单位清单：分类（全部/最近/通讯/开发/媒体/文书/作战/系统）、模糊搜索、键盘导航、右侧单位档案（CLASS/STATUS/SOURCE/EXEC）与 DEPLOY。 |
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。 |
-| **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口；把单位拖到另一个扇区即可移动窗口。 |
+| **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口；把单位拖到另一个扇区，或右键单位后点击目标扇区，即可移动窗口。 |
 | **系统停机 (Power)** | 锁定/休眠/重启/关机/登出；危险操作需二次确认（ENTER 两次），ESC 取消。 |
 | **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、右下角自由缩放、每个组件可单独 ON/OFF。 |
 | **梯队 (Dock)** | 固定与运行中的单位依序显示（上限 12）；右键单位可固定/取消固定、开新窗口或关闭；设置 → Dock 可输入应用名称直接固定。有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；收起时的 **触发面积 4–48px** 也可调。关闭“避让窗口”后 Dock 始终完整显示；收起时只保留不可见热区和细线，展开才显示面板。与状态栏同边时，热区和指示线落在状态栏上，Dock 本体贴住状态栏内侧，不再浮空。 |
@@ -189,6 +189,7 @@ spawn-at-startup "qs" "-c" "gf-shell"
 -- Hyprland 0.57 的 Lua 配置
 hl.bind("SUPER + Space",      hl.dsp.global("gf-shell:launcher"),  { description = "GF-shell: 部署终端" })
 hl.bind("SUPER + ALT + TAB",  hl.dsp.global("gf-shell:overview"),  { description = "GF-shell: 作战地图" })
+hl.bind("SUPER + SHIFT + TAB", hl.dsp.global("gf-shell:overview"), { description = "GF-shell: overview (alt)" })
 hl.bind("SUPER + SHIFT + C",  hl.dsp.global("gf-shell:control"),   { description = "GF-shell: 战术控制" })
 hl.bind("SUPER + SHIFT + P",  hl.dsp.global("gf-shell:power"),     { description = "GF-shell: 系统停机" })
 hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description = "GF-shell: 截图" })
@@ -199,6 +200,7 @@ hl.bind("PRINT",              hl.dsp.global("gf-shell:screenshot"),{ description
 ```ini
 bind = SUPER, Space, global, gf-shell:launcher
 bind = SUPER ALT, TAB, global, gf-shell:overview
+bind = SUPER SHIFT, TAB, global, gf-shell:overview
 bind = SUPER SHIFT, C, global, gf-shell:control
 bind = SUPER SHIFT, P, global, gf-shell:power
 bind = SUPER SHIFT, W, global, gf-shell:widgets
@@ -210,6 +212,7 @@ bind = , Print, global, gf-shell:screenshot
 ```kdl
 Mod+Space { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "launcher"; }
 Mod+Alt+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
+Mod+Shift+Tab { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "toggle" "overview"; }
 Mod+Shift+W { spawn "qs" "-c" "gf-shell" "ipc" "call" "shell" "widgets"; }
 ```
 

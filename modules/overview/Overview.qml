@@ -25,6 +25,7 @@ PanelWindow {
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     property date now: new Date()
+    property int moveId: -1
 
     readonly property bool compact: root.width < Theme.px(1000)
     readonly property int columns: root.compact ? 2
@@ -223,7 +224,9 @@ PanelWindow {
                 GfKeyCap { label: "CLICK"; visible: !root.compact }
                 GfText {
                     visible: !root.compact
-                    text: "SECTOR → WORKSPACE   ·   UNIT → FOCUS   ·   DRAG UNIT → SECTOR TO MOVE"
+                    text: root.moveId > 0
+                        ? "MOVE MODE   ·   CLICK A SECTOR TO MOVE   ·   ESC CANCEL"
+                        : "SECTOR → WORKSPACE   ·   UNIT → FOCUS   ·   DRAG / RIGHT-CLICK UNIT TO MOVE"
                     role: "mono"; size: Theme.sizeTiny - 1; tone: "faint"
                 }
 
@@ -271,6 +274,11 @@ PanelWindow {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.PointingHandCursor
             onClicked: {
+                if (root.moveId > 0) {
+                    Compositor.moveWindow(root.moveId, card.wsId);
+                    root.moveId = -1;
+                    return;
+                }
                 Compositor.focusWorkspace(card.ws !== null ? card.ws.id : card.sectorNumber);
                 ShellState.close();
             }
@@ -280,7 +288,7 @@ PanelWindow {
         DropArea {
             id: dropZone
             anchors.fill: parent
-            z: 20
+            z: 2
             keys: ["application/x-gf-window"]
 
             Rectangle {
@@ -379,7 +387,8 @@ PanelWindow {
                     id: winRow
                     required property var modelData
                     width: parent.width
-                    height: Theme.px(24)
+                    height: Theme.px(28)
+                    z: 10
 
                     Drag.active: winMouse.drag.active
                     Drag.hotSpot.x: Theme.px(12)
@@ -396,7 +405,8 @@ PanelWindow {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: winMouse.containsMouse ? Theme.alpha(Theme.accent, 0.15) : "transparent"
+                        color: root.moveId === modelData.id ? Theme.alpha(Theme.accentHi, 0.22)
+                            : (winMouse.containsMouse ? Theme.alpha(Theme.accent, 0.15) : "transparent")
                     }
                     Rectangle {
                         x: 0
