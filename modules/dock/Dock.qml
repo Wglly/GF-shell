@@ -300,8 +300,13 @@ PanelWindow {
         anchors.top: root.atTop ? parent.top : undefined
         anchors.bottomMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
         anchors.topMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
-        width: contentRow.implicitWidth + Theme.px(26)
+        width: Math.max(contentRow.implicitWidth + Theme.px(26),
+            root.menuTarget !== null ? Theme.px(430) : 0)
         height: Theme.px(58)
+        Behavior on width {
+            enabled: Theme.animations
+            NumberAnimation { duration: Theme.durFast; easing.type: Easing.OutCubic }
+        }
         fill: Theme.alpha(Theme.bg0, 0.0)
         borderColor: Theme.alpha(Theme.accent, 0.55)
         chamfer: Theme.px(8)
