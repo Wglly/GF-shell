@@ -37,6 +37,9 @@ PanelWindow {
     anchors.top: root.atTop
     anchors.left: true
     anchors.right: true
+    // 负 margin 让热区真正贴到屏幕边缘（状态栏上）；内容再用 barInset 让出状态栏
+    margins.top: root.atTop ? -root.barInset : 0
+    margins.bottom: !root.atTop ? -root.barInset : 0
     implicitHeight: root.revealed ? root.barInset + Theme.px(76) : root.trigger
     exclusionMode: ExclusionMode.Normal
     // 收起时不占位；展开时只保留 Dock 本身的高度
