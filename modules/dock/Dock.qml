@@ -23,7 +23,7 @@ PanelWindow {
     property bool hovered: false
     readonly property bool revealed: !root.shouldHide || root.hovered
     // 收起时露出的热区高度（用户可调）
-    readonly property int trigger: Theme.px(Settings.get("dock.trigger", 8))
+    readonly property int trigger: Theme.px(Settings.get("dock.trigger", 24))
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
         && ((root.atTop && Settings.get("bar.position", "top") === "top")
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))

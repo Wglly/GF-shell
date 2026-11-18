@@ -843,7 +843,7 @@ PanelWindow {
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.px(200); from: 4; to: 48; step: 1
-                                    value: Settings.get("dock.trigger", 8)
+                                    value: Settings.get("dock.trigger", 24)
                                     onMoved: v => Settings.set("dock.trigger", v)
                                 }
                             }
