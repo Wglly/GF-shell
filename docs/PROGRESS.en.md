@@ -1,0 +1,107 @@
+# Progress & screenshots
+
+[繁體中文](PROGRESS.md)
+
+Last updated: 2026-11-18 · config v5 · Quickshell 0.3 / Qt 6
+
+This is the single entry point for "what the shell looks like now, what is done, what is missing".
+Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened from here.
+
+## Status
+
+| Module | Status | Notes |
+| --- | --- | --- |
+| Theme & panels | ✅ | Warm charcoal + matte gold, double gold/white frames, angled tabs, ribbons, halftone |
+| Status bar | ✅ | Per-block OFF / LEFT / CENTER / RIGHT; opacity / grayscale / blur / height / position |
+| Bar popups | ✅ | Operator / calendar / media detail panels anchored to the clicked block |
+| Launcher | ✅ | Categories, search, keyboard navigation, dossier, combat power |
+| Control centre | ✅ | Links, volume/brightness, modules, vitals, comms |
+| Operation map | ✅ | Sector cards, unit lists, click to switch/focus |
+| System halt | ✅ | Lock / suspend / restart / shutdown / logout + confirmation |
+| Dock | ✅ | Hides with windows, expands on hot zone, exclusive zone pushes windows |
+| Sidebars | ✅ | **11 swappable components**, left/right/off assignment, height 40–100%, top/center/bottom, scrolling |
+| Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission |
+| Settings | ✅ | GFL-style paper/black-lines/charcoal buttons/yellow hover; 8 tabs; live save |
+| Languages | ✅ | 繁中 / 简中 / English / 日本語; `auto` follows the system; live switch |
+| Lyrics | ✅ | lrclib.net synced lyrics shared by media card / sidebar / popup |
+| Weather | ✅ | wttr.in, 20-minute polling, optional city |
+| Spectrum | ✅ | cava (shows NO AUDIO when unavailable) |
+| Compositors | ✅ | Tested on Hyprland and niri |
+| Official art | ⛔ | Not bundled; point `wallpaper.path` at your own copy |
+
+## Recent work
+
+- **Sidebar components**: operator, calendar, roster, quick actions, vitals, weather, clock,
+  media, visualizer, comms, mission — 11 components, each assignable to left / right / off in
+  Settings → Sidebars → Components.
+- **Sidebar height & alignment**: `sidebar.<side>.height` (0.4–1.0) and `align`
+  (top/center/bottom); the panel scrolls when the components do not fit, with a pinned scrollbar.
+- **Bar component editor**: every block can be OFF / LEFT / CENTER / RIGHT; the editor rewrites
+  `bar.left` / `bar.center` / `bar.right`.
+- **Four UI languages**: all new settings pages, sidebars, popups, HUD, media cards and lyric
+  states go through `I18n.t()`.
+- **Media buttons**: hand-drawn play/pause glyphs, independent of icon-font coverage.
+- **Settings window** now follows the focused monitor, so it no longer opens on the wrong output.
+
+## Screenshots
+
+### Desktop & main surfaces
+
+| Desktop | Launcher |
+| --- | --- |
+| ![Desktop](screenshots/01-desktop.png) | ![Launcher](screenshots/02-launcher.png) |
+
+| Control centre | Operation map |
+| --- | --- |
+| ![Control](screenshots/03-control-center.png) | ![Overview](screenshots/04-overview.png) |
+
+| System halt | Settings (appearance) |
+| --- | --- |
+| ![Power](screenshots/05-power.png) | ![Settings](screenshots/06-settings.png) |
+
+| Settings (wallpaper) | Calendar popup |
+| --- | --- |
+| ![Wallpaper](screenshots/07-settings-wallpaper.png) | ![Calendar](screenshots/14-bar-popup.png) |
+
+| OSD | Notifications |
+| --- | --- |
+| ![OSD](screenshots/09-osd.png) | ![Toast](screenshots/10-toast.png) |
+
+### Sidebars & component editors
+
+| Left sidebar (default components) | Right sidebar (media / spectrum / comms) |
+| --- | --- |
+| ![Sidebar left](screenshots/12-sidebar-left.png) | ![Sidebar right](screenshots/13-sidebar-right.png) |
+
+| Bar component editor | Sidebar components / height |
+| --- | --- |
+| ![Bar components](screenshots/18-settings-bar.png) | ![Sidebar components](screenshots/19-settings-sidebar.png) |
+
+### Languages
+
+| English | Japanese |
+| --- | --- |
+| ![English settings](screenshots/15-settings-en.png) | ![Japanese settings](screenshots/16-settings-ja.png) |
+
+| Japanese sidebar | niri |
+| --- | --- |
+| ![Japanese sidebar](screenshots/17-sidebar-ja.png) | ![niri](screenshots/11-niri.png) |
+
+## Verification
+
+- **Hyprland 0.57**: headless 1920×1080 load and capture; `Configuration Loaded`, no QML errors.
+- **niri**: nested window (~648×501), backend reports `NIRI`, operation map switches to 2 columns.
+- **Languages**: English / Japanese / Simplified Chinese / Traditional Chinese launched separately;
+  settings and sidebar strings switch correctly.
+- **Sidebar sizes**: 0.55 (center), 0.72 (center), 0.82/0.88 (top); scrolling and alignment work.
+- **Bar**: clock left, workspaces centre, media/volume/power right; reordering takes effect immediately.
+
+## Known limitations
+
+- Lyrics and weather need network access and `curl`; missing data shows `NO DATA` / `NO LINK`.
+- The spectrum needs `cava` and a working PipeWire source.
+- "Blur" is a wallpaper-sampling shader inside the panel, not compositor-level blur; it also works on niri.
+- Notification forwarding depends on `org.freedesktop.Notifications`; if another daemon owns it, that
+  daemon handles notifications.
+- Official promotional art, game art and paid asset packs are not distributed; point `wallpaper.path`
+  at your own copy.

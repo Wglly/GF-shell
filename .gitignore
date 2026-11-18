@@ -1,0 +1,8 @@
+# runtime / build leftovers
+*.qslog
+build/
+node_modules/
+
+# generated caches
+__pycache__/
+*.pyc

@@ -1,0 +1,228 @@
+# 設定リファレンス
+
+[繁體中文](CONFIG.md) · [简体中文](CONFIG.zh-CN.md) · [English](CONFIG.en.md) · **日本語** · [Index](i18n.md)
+
+設定ファイル：`~/.config/gf-shell/config.json`
+（`XDG_CONFIG_HOME` が設定されている場合はそちらが優先されます。）
+
+- 初回起動時に完全なデフォルト値が生成されます。
+- 「副官設定」での操作はすべて即座に書き込まれます（250 ms デバウンス）。
+- 手動で編集した場合は、シェルを再起動すると反映されます（一部の値は即時再バインド）。
+
+## 全体構造
+
+```json
+{
+  "version": 4,
+  "language": "auto",
+  "bar": {
+    "position": "top",
+    "visible": true,
+    "thickness": 38,
+    "size": 1.0,
+    "autoHide": false,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "clock24h": true,
+    "showSeconds": false,
+    "titleMode": "window",
+    "left": ["launcher", "user", "workspaces", "title"],
+    "center": ["clock"],
+    "right": ["media", "stats", "net", "volume", "battery", "tray",
+              "overview", "control", "power"]
+  },
+  "dock": {
+    "enabled": true,
+    "position": "bottom",
+    "autoHide": false,
+    "avoid": true,
+    "trigger": 8,
+    "iconSize": 44,
+    "size": 1.0,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "maxItems": 9,
+    "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
+               "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
+  },
+  "sidebar": {
+    "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "assign": {
+      "user": "left", "calendar": "left", "roster": "left", "actions": "left",
+      "weather": "left", "stats": "right", "mission": "right",
+      "media": "right", "visualizer": "right", "comms": "right", "clock": "off"
+    }
+  },
+  "launcher": {
+    "columns": 6,
+    "showCategories": true,
+    "showDetail": true,
+    "width": 1040,
+    "height": 640
+  },
+  "theme": {
+    "preset": "gfl",
+    "accent": "#e8bd4f",
+    "accent2": "#6f9bc4",
+    "panel": "#141416",
+    "panelAlt": "#1a1a1d",
+    "panelHi": "#24242a",
+    "line": "#403a2e",
+    "lineBright": "#c9a24a",
+    "text": "#f2eee3",
+    "textDim": "#b9b1a1",
+    "scanlines": false,
+    "brackets": true,
+    "panelOpacity": 0.95,
+    "scale": 1.0,
+    "animations": true
+  },
+  "wallpaper": {
+    "enabled": true,
+    "path": "",
+    "fillMode": "fill",
+    "dim": 0.06,
+    "color": "#080b0e"
+  },
+  "widgets": {
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
+    "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
+    "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "weather":    { "enabled": true,  "x": 0.045, "y": 0.72 },
+    "visualizer": { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "user":       { "enabled": true,  "x": 0.72,  "y": 0.60 },
+    "mission":    { "enabled": true,  "x": 0.72,  "y": 0.87 }
+  },
+  "osd":    { "enabled": true, "position": "center" },
+  "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
+  "power":  { "confirm": true },
+  "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
+  "hotkeys": { "launcher": "SUPER+Space", "overview": "Super+Tab", "control": "SUPER+Shift+C" },
+  "shell":  { "keepAwake": false }
+}
+```
+
+## 言語
+
+`language`：`auto`（`$LANG` に従う）、`zh_TW`、`zh_CN`、`en`、`ja`。
+設定 → システム → 言語 で即時切替できます。
+
+## ステータスバーのブロック
+
+| 値 | 内容 |
+| --- | --- |
+| `launcher` / `emblem` | G&K エンブレム（クリックでデプロイ端末を開く） |
+| `user` | オペレーター入口。クリックでプロフィールを表示 |
+| `workspaces` | エシュロン／ワークスペース番号。スクロールで切替、クリックで移動 |
+| `title` | アクティブウィンドウの appId + タイトル |
+| `clock` | 中央時計 + 日付 + AM/PM（または H24）。クリックでカレンダー |
+| `media` | 再生中の通信 + 再生／一時停止 |
+| `stats` | CPU / MEM のセグメント表示 |
+| `net` | Wi-Fi / 有線 + 4 本の信号バー + SSID |
+| `volume` | 音量。左クリックでミュート、右クリックでコントロールセンター、スクロールで調整 |
+| `battery` | 残量／充電。低下すると赤色 |
+| `tray` | StatusNotifierItem アイコン |
+| `overview` / `control` / `power` | 3 つの入口ボタン |
+
+狭い画面での自動非表示順：`title` → `media` → `stats` → `tray` → `net`。
+
+## テーマプリセット
+
+| preset | 説明 | アクセント |
+| --- | --- | --- |
+| `gfl` | G&K 標準：ウォームチャコール + マットゴールド | `#e8bd4f` |
+| `sangvis` | サングヴィス・フェリ：ほぼ黒 + 警告の赤 | `#d34a34` |
+| `neural` | ニューラルクラウド：深い青 + アイスシアン | `#7eb2d6` |
+| `arctic` | アークティック：冷たいグレー + 淡い金 | `#cbb98a` |
+
+プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が
+即座に変わります。`accent` を個別に指定すると `preset` は `custom` になります。
+
+## デザイントークン（`modules/common/Theme.qml`）
+
+```qml
+// フォント
+fontUI      = "Chakra Petch"        // 通常の UI
+fontDisplay = "Saira Condensed"     // 大きな見出し / 数字
+fontMono    = "Share Tech Mono"     // データ、ID
+fontLabel   = "Rajdhani"            // 小さな大文字ラベル
+
+// 主要カラー
+bg0  #06090c      panel      #0f161d      accent   #f0a43c
+bg1  #0b1015      panelAlt   #131d26      accent2  #69c9bd
+line #283844      panelHi    #1a2733      red      #d6513c
+text #eae6dc      lineBright #4a6273      ok       #79c08a
+
+// ジオメトリ
+chamfer = 9px     border = 1px     barHeight = 38px
+gap = 8px         pad = 12px       radius = 0
+```
+
+UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を導出し、
+`Theme.px()` / `Theme.fs()` でスケーリングします。
+
+## デスクトップウィジェットの位置
+
+`widgets.<name>.x` / `y` は**画面に対する比率**（0–1）で、原点は左上です。例：
+
+```json
+"clock":  { "x": 0.045, "y": 0.10 },
+"stats":  { "x": 0.045, "y": 0.42 },
+"media":  { "x": 0.70,  "y": 0.10 },
+"mission":{ "x": 0.70,  "y": 0.78 }
+```
+
+オーバーレイが開いている間、デスクトップ HUD は自動的にフェードアウトします
+（`ShellState.overlay !== "none"`）。
+
+
+## 質感と位置（バー / Dock / サイドバー）
+
+| フィールド | 範囲 | 内容 |
+| --- | --- | --- |
+| `opacity` | 0.3–1.0 | 背景の不透明度 |
+| `gray` | 0–1 | 壁紙サンプリング層の彩度（1 でグレースケール） |
+| `blur` | 0–1 | 壁紙サンプリング層のブラー半径（自前シェーダー、コンポジタ不要） |
+| `width` / `iconSize` / `thickness` | — | サイズ（サイドバー幅 / Dock アイコン / バー高さ） |
+| `position` | top / bottom | バーと Dock の上下位置 |
+
+## サイドバーとバーポップアップ
+
+- `sidebar.left`: オペレーター、カレンダー、分隊名簿。
+- `sidebar.right`: メディア＋歌詞（lrclib.net）＋cava スペクトル＋通知ログ。
+- 画面端の `trigger`（既定 6px）にポインタが入ると開き、`delay`（既定 650ms）後に閉じます。
+- バーの `user` / `clock` / `media` をクリックすると、その位置にユーザー／カレンダー／メディアの詳細パネルが開きます。
+
+## Dock の回避動作
+
+- ウィンドウがあると Dock は 6px の金線まで縮み、下端のホットゾーンで展開します。
+- 展開中は `exclusiveZone` が Dock の高さになり、ウィンドウが押し上げられます。
+- `dock.avoid`（既定 true）/ `dock.autoHide`（既定 false）で調整できます。
+
+### サイドバーコンポーネント
+
+`sidebar.assign.<id>`（`left` / `right` / `off`）で各コンポーネントの配置を決めます。
+`user` / `calendar` / `roster` / `actions` / `stats` / `weather` / `clock` / `media` /
+`visualizer` / `comms` / `mission` に対応。
+
+`sidebar.<side>.height`（0.4–1.0）と `align`（top / center / bottom）で高さと縦位置を調整できます。
+
+### バーコンポーネント
+
+`bar.left` / `bar.center` / `bar.right` はブロック id の配列です。設定 → ステータスバー → コンポーネント
+で各ブロックを OFF / LEFT / CENTER / RIGHT に変更でき、OFF はバーから削除されます。
+
+## 壁紙
+
+- 内蔵：`assets/wallpapers/gfl-ops.png`、`gfl-sangvis`、`gfl-neural`、`gfl-dusk`。
+- `path` が空の場合は最初の内蔵壁紙を使用。`file:///home/user/wall.png` や絶対パスも指定できます。
+- `dim`（0–0.6）で暗さを調整。`fillMode`：`fill`（切り抜いて埋める）、`fit`、`stretch`。
+- 内蔵壁紙の再生成：`python3 scripts/gen_assets.py`。

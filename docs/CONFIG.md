@@ -1,0 +1,261 @@
+# 設定參考
+
+**繁體中文** · [简体中文](CONFIG.zh-CN.md) · [English](CONFIG.en.md) · [日本語](CONFIG.ja.md) · [Index](i18n.md)
+
+設定檔：`~/.config/gf-shell/config.json`
+（`XDG_CONFIG_HOME` 有設定時以此為準。）
+
+- 首次啟動自動生成完整預設值。
+- 「副官設置」的所有操作都會即時寫入（250 ms 防抖）。
+- 手動編輯後重啟外殼即可生效（部分項目會即時重新綁定）。
+
+## 完整結構
+
+```json
+{
+  "version": 4,
+  "language": "auto",
+  "bar": {
+    "position": "top",
+    "visible": true,
+    "thickness": 38,
+    "size": 1.0,
+    "autoHide": false,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "clock24h": true,
+    "showSeconds": false,
+    "titleMode": "window",
+    "left": ["launcher", "user", "workspaces", "title"],
+    "center": ["clock"],
+    "right": ["media", "stats", "net", "volume", "battery", "tray",
+              "overview", "control", "power"]
+  },
+  "dock": {
+    "enabled": true,
+    "position": "bottom",
+    "autoHide": false,
+    "avoid": true,
+    "trigger": 8,
+    "iconSize": 44,
+    "size": 1.0,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "maxItems": 9,
+    "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
+               "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
+  },
+  "sidebar": {
+    "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "assign": {
+      "user": "left", "calendar": "left", "roster": "left", "actions": "left",
+      "weather": "left", "stats": "right", "mission": "right",
+      "media": "right", "visualizer": "right", "comms": "right", "clock": "off"
+    }
+  },
+  "launcher": {
+    "columns": 6,
+    "showCategories": true,
+    "showDetail": true,
+    "width": 1040,
+    "height": 640
+  },
+  "theme": {
+    "preset": "gfl",
+    "accent": "#e8bd4f",
+    "accent2": "#6f9bc4",
+    "panel": "#141416",
+    "panelAlt": "#1a1a1d",
+    "panelHi": "#24242a",
+    "line": "#403a2e",
+    "lineBright": "#c9a24a",
+    "text": "#f2eee3",
+    "textDim": "#b9b1a1",
+    "scanlines": false,
+    "brackets": true,
+    "panelOpacity": 0.95,
+    "scale": 1.0,
+    "animations": true
+  },
+  "wallpaper": {
+    "enabled": true,
+    "path": "",
+    "fillMode": "fill",
+    "dim": 0.06,
+    "color": "#080b0e"
+  },
+  "widgets": {
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
+    "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
+    "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "weather":    { "enabled": true,  "x": 0.045, "y": 0.72 },
+    "visualizer": { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "user":       { "enabled": true,  "x": 0.72,  "y": 0.60 },
+    "mission":    { "enabled": true,  "x": 0.72,  "y": 0.87 }
+  },
+  "osd":    { "enabled": true, "position": "center" },
+  "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
+  "power":  { "confirm": true },
+  "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
+  "hotkeys": { "launcher": "SUPER+Space", "overview": "Super+Tab", "control": "SUPER+Shift+C" },
+  "shell":  { "keepAwake": false }
+}
+```
+
+## 語言
+
+`language`：`auto`（跟隨 `$LANG`）、`zh_TW`、`zh_CN`、`en`、`ja`。
+設定視窗的「系統 → 語言」可即時切換，所有以 `I18n.t()` 綁定的文字會立即更新。
+
+## 狀態列區塊
+
+| 值 | 內容 |
+| --- | --- |
+| `launcher` / `emblem` | G&K 識別塊（點擊開部署終端） |
+| `user` | 操作員入口，點擊展開使用者檔案 |
+| `workspaces` | 梯隊/工作區編號，滾輪切換，點擊切換 |
+| `title` | 當前單位（視窗）appId + 標題 |
+| `clock` | 中央時鐘 + 日期 + AM/PM（或 H24），點擊在該處展開月曆 |
+| `media` | 正在播放的通訊；點擊展開媒體 + 歌詞彈出欄 |
+| `stats` | CPU / MEM 分段讀數 |
+| `net` | Wi-Fi / 有線 + 四段信號柱 + SSID |
+| `volume` | 音量，左鍵靜音、右鍵控制中心、滾輪調整 |
+| `battery` | 電量 / 充電，低電變紅 |
+| `tray` | StatusNotifierItem 圖示 |
+| `overview` / `control` / `power` | 三個入口按鈕 |
+
+窄螢幕自動隱藏順序：`title` → `media` → `stats` → `tray` → `net`。
+
+## 主題預設
+
+| preset | 說明 | 主色 |
+| --- | --- | --- |
+| `gfl` | G&K 標準：暖炭底 + 啞光金 | `#e8bd4f` |
+| `sangvis` | 鐵血：近黑 + 警戒紅 | `#d34a34` |
+| `neural` | 神經網絡：深藍 + 冰青 | `#7eb2d6` |
+| `arctic` | 極地：冷灰 + 淡金 | `#cbb98a` |
+
+預設只會寫入 `theme.*` 的色票，其餘 token（`panel`、`line`、`text`…）也會一起被覆寫，
+所以切換後 UI 會立刻整體變化。自訂 `accent` 會把 `preset` 設為 `custom`。
+
+## 設計 token（`modules/common/Theme.qml`）
+
+```qml
+// 字型
+fontUI      = "Chakra Petch"        // 常規介面
+fontDisplay = "Saira Condensed"     // 大標題 / 數字
+fontMono    = "Share Tech Mono"     // 數據、編號
+fontLabel   = "Rajdhani"            // 小號大寫標籤
+
+// 主要色（黑金）
+bg0  #070708      panel      #141416      accent   #e8bd4f   (gold)
+bg1  #0d0d0f      panelAlt   #1a1a1d      accent2  #6f9bc4   (steel)
+line #403a2e      panelHi    #24242a      red      #d34a34
+text #f2eee3      lineBright #c9a24a      ok       #8fc08a
+
+// 幾何
+chamfer = 6px     border = 1px     barHeight = 38px
+gap = 8px         pad = 12px       radius = 0
+```
+
+UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色，
+`Theme.px()` / `Theme.fs()` 做縮放。
+
+## 桌面小工具位置
+
+`widgets.<name>.x` / `y` 是**螢幕比例**（0–1），原點在左上角。例如：
+
+```json
+"clock":  { "x": 0.045, "y": 0.10 },
+"stats":  { "x": 0.045, "y": 0.42 },
+"media":  { "x": 0.72,  "y": 0.10 },
+"weather":{ "x": 0.045, "y": 0.72 },
+"user":   { "x": 0.72,  "y": 0.60 },
+"mission":{ "x": 0.72,  "y": 0.87 }
+```
+
+覆蓋層打開時，桌面 HUD 會自動淡出（`ShellState.overlay !== "none"`）。
+
+
+## 質感與位置（狀態列 / Dock / 側邊欄）
+
+三個表面都吃同一組欄位：
+
+| 欄位 | 範圍 | 說明 |
+| --- | --- | --- |
+| `opacity` | 0.3–1.0 | 背景不透明度 |
+| `gray` | 0–1 | 壁紙採樣層去飽和（0 = 彩色，1 = 灰階） |
+| `blur` | 0–1 | 壁紙採樣層模糊半徑（自繪 shader，不需合成器 blur） |
+| `width` / `iconSize` / `thickness` | — | 尺寸（側邊欄寬度 / Dock 圖示 / 狀態列高度） |
+| `position` | top / bottom | 狀態列與 Dock 貼齊上緣或下緣 |
+
+## 側邊欄與狀態列彈出
+
+`sidebar.left` / `sidebar.right`：
+
+| 欄位 | 預設 | 說明 |
+| --- | --- | --- |
+| `enabled` | true | 是否啟用該側邊欄 |
+| `width` | 356 / 372 | 面板寬度 |
+| `opacity` / `gray` / `blur` | 0.96 / 0 / 0 | 同上面的表面質感 |
+| `delay` | 650 | 滑出後自動收起延遲（ms） |
+| `trigger` | 6 | 螢幕邊緣熱區寬度（px） |
+
+- 左側：操作員檔案、月曆、梯隊名冊、DEPLOY。
+- 右側：媒體 + 歌詞（lrclib.net）+ cava 頻譜 + 通知紀錄。
+- 狀態列點擊 `user` / `clock` / `media` 會分別在該元件下方打開使用者 / 日曆 / 媒體彈出欄。
+
+## 天氣與歌詞
+
+- 天氣：`widgets.weather.city` 留空時由 wttr.in 依 IP 定位；20 分鐘輪詢。
+- 歌詞：透過 lrclib.net 查詢，按 `artist + title` 快取；同步歌詞優先，其次純文字。
+- 兩者都需要 `curl`；沒有網路時顯示 `NO DATA` / `AWAITING TRANSMISSION`。
+
+## Dock 避讓
+
+`dock.avoid`（預設 true）與 `dock.autoHide`（預設 false）控制避讓：
+
+- 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
+- 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
+- 滑出後自動收起，視窗恢復原位。
+
+### 側邊欄組件
+
+用 `sidebar.assign.<id>`（`left` / `right` / `off`）把每個組件分配到左或右，或關閉：
+
+| id | 內容 |
+| --- | --- |
+| `user` | 操作員卡 |
+| `calendar` | 月曆 |
+| `roster` | 梯隊名冊 |
+| `actions` | 部署 / 戰術 / 設定 / 停機 |
+| `stats` | CPU / MEM / NET / DISK |
+| `weather` | wttr.in 天氣 |
+| `clock` | 大時計與日期 |
+| `media` | 播放器 + 歌詞 + 頻譜 |
+| `visualizer` | cava 頻譜 |
+| `comms` | 最近通知 |
+| `mission` | 當前任務 |
+
+`sidebar.<side>.height`（0.4–1.0）與 `sidebar.<side>.align`（`top` / `center` / `bottom`）控制面板高度與垂直位置；
+內容放不下時面板可滾動。
+
+### 狀態列組件
+
+`bar.left`、`bar.center`、`bar.right` 是區塊 id 陣列。在「設定 → 狀態列 → 組件」可把每個區塊設為
+OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從狀態列移除。
+
+## 壁紙
+
+- 內建：`assets/wallpapers/gfl-ops.png`、`gfl-sangvis`、`gfl-neural`、`gfl-dusk`。
+- `path` 留空會用第一張內建壁紙；也可填 `file:///home/user/wall.png` 或絕對路徑。
+- `dim`（0–0.6）控制壓暗；`fillMode`：`fill`（裁切填滿）、`fit`、`stretch`。
+- 重新生成內建壁紙：`python3 scripts/gen_assets.py`。

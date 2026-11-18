@@ -1,0 +1,249 @@
+# 配置参考
+
+[繁體中文](CONFIG.md) · **简体中文** · [English](CONFIG.en.md) · [日本語](CONFIG.ja.md) · [Index](i18n.md)
+
+配置文件：`~/.config/gf-shell/config.json`
+（设置了 `XDG_CONFIG_HOME` 时以此为准。）
+
+- 首次启动自动生成完整预设值。
+- 「副官设置」的所有操作都会即时写入（250 ms 防抖）。
+- 手动编辑后重启外壳即可生效（部分项目会即时重新绑定）。
+
+## 完整结构
+
+```json
+{
+  "version": 4,
+  "language": "auto",
+  "bar": {
+    "position": "top",
+    "visible": true,
+    "thickness": 38,
+    "size": 1.0,
+    "autoHide": false,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "clock24h": true,
+    "showSeconds": false,
+    "titleMode": "window",
+    "left": ["launcher", "user", "workspaces", "title"],
+    "center": ["clock"],
+    "right": ["media", "stats", "net", "volume", "battery", "tray",
+              "overview", "control", "power"]
+  },
+  "dock": {
+    "enabled": true,
+    "position": "bottom",
+    "autoHide": false,
+    "avoid": true,
+    "trigger": 8,
+    "iconSize": 44,
+    "size": 1.0,
+    "opacity": 0.94,
+    "gray": 0.0,
+    "blur": 0.0,
+    "maxItems": 9,
+    "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
+               "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
+  },
+  "sidebar": {
+    "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
+               "opacity": 0.96, "gray": 0.0, "blur": 0.0,
+               "autoHide": true, "delay": 650, "trigger": 6 },
+    "assign": {
+      "user": "left", "calendar": "left", "roster": "left", "actions": "left",
+      "weather": "left", "stats": "right", "mission": "right",
+      "media": "right", "visualizer": "right", "comms": "right", "clock": "off"
+    }
+  },
+  "launcher": {
+    "columns": 6,
+    "showCategories": true,
+    "showDetail": true,
+    "width": 1040,
+    "height": 640
+  },
+  "theme": {
+    "preset": "gfl",
+    "accent": "#e8bd4f",
+    "accent2": "#6f9bc4",
+    "panel": "#141416",
+    "panelAlt": "#1a1a1d",
+    "panelHi": "#24242a",
+    "line": "#403a2e",
+    "lineBright": "#c9a24a",
+    "text": "#f2eee3",
+    "textDim": "#b9b1a1",
+    "scanlines": false,
+    "brackets": true,
+    "panelOpacity": 0.95,
+    "scale": 1.0,
+    "animations": true
+  },
+  "wallpaper": {
+    "enabled": true,
+    "path": "",
+    "fillMode": "fill",
+    "dim": 0.06,
+    "color": "#080b0e"
+  },
+  "widgets": {
+    "clock":      { "enabled": true,  "x": 0.045, "y": 0.10, "showDate": true, "showSeconds": true },
+    "stats":      { "enabled": true,  "x": 0.045, "y": 0.42 },
+    "media":      { "enabled": true,  "x": 0.72,  "y": 0.10 },
+    "calendar":   { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "weather":    { "enabled": true,  "x": 0.045, "y": 0.72 },
+    "visualizer": { "enabled": false, "x": 0.72,  "y": 0.42 },
+    "user":       { "enabled": true,  "x": 0.72,  "y": 0.60 },
+    "mission":    { "enabled": true,  "x": 0.72,  "y": 0.87 }
+  },
+  "osd":    { "enabled": true, "position": "center" },
+  "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
+  "power":  { "confirm": true },
+  "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
+  "hotkeys": { "launcher": "SUPER+Space", "overview": "Super+Tab", "control": "SUPER+Shift+C" },
+  "shell":  { "keepAwake": false }
+}
+```
+
+## 语言
+
+`language`：`auto`（跟随 `$LANG`）、`zh_TW`、`zh_CN`、`en`、`ja`。
+设置窗口的「系统 → 语言」可即时切换。
+
+## 状态栏区块
+
+| 值 | 内容 |
+| --- | --- |
+| `launcher` / `emblem` | G&K 识别块（点击打开部署终端） |
+| `user` | 操作员入口，点击展开用户档案 |
+| `workspaces` | 梯队/工作区编号，滚轮切换，点击切换 |
+| `title` | 当前单位（窗口）appId + 标题 |
+| `clock` | 中央时钟 + 日期 + AM/PM（或 H24），点击打开日历 |
+| `media` | 正在播放的通讯；点击展开媒体 + 歌词弹出栏 |
+| `stats` | CPU / MEM 分段读数 |
+| `net` | Wi-Fi / 有线 + 四段信号柱 + SSID |
+| `volume` | 音量，左键静音、右键控制中心、滚轮调整 |
+| `battery` | 电量 / 充电，低电变红 |
+| `tray` | StatusNotifierItem 图标 |
+| `overview` / `control` / `power` | 三个入口按钮 |
+
+窄屏幕自动隐藏顺序：`title` → `media` → `stats` → `tray` → `net`。
+
+## 主题预设
+
+| preset | 说明 | 主色 |
+| --- | --- | --- |
+| `gfl` | G&K 标准：暖炭底 + 哑光金 | `#e8bd4f` |
+| `sangvis` | 铁血：近黑 + 警戒红 | `#d34a34` |
+| `neural` | 神经网络：深蓝 + 冰青 | `#7eb2d6` |
+| `arctic` | 极地：冷灰 + 淡金 | `#cbb98a` |
+
+预设会写入整个 `theme.*` 色板，包括 `panel`、`line`、`text`…，所以切换后 UI 会立刻整体变化。
+自定义 `accent` 会把 `preset` 设为 `custom`。
+
+## 设计 token（`modules/common/Theme.qml`）
+
+```qml
+// 字体
+fontUI      = "Chakra Petch"        // 常规界面
+fontDisplay = "Saira Condensed"     // 大标题 / 数字
+fontMono    = "Share Tech Mono"     // 数据、编号
+fontLabel   = "Rajdhani"            // 小号大写标签
+
+// 主色
+bg0  #06090c      panel      #0f161d      accent   #f0a43c
+bg1  #0b1015      panelAlt   #131d26      accent2  #69c9bd
+line #283844      panelHi    #1a2733      red      #d6513c
+text #eae6dc      lineBright #4a6273      ok       #79c08a
+
+// 几何
+chamfer = 9px     border = 1px     barHeight = 38px
+gap = 8px         pad = 12px       radius = 0
+```
+
+UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色，
+`Theme.px()` / `Theme.fs()` 做缩放。
+
+## 桌面小工具位置
+
+`widgets.<name>.x` / `y` 是**屏幕比例**（0–1），原点在左上角。例如：
+
+```json
+"clock":  { "x": 0.045, "y": 0.10 },
+"stats":  { "x": 0.045, "y": 0.42 },
+"media":  { "x": 0.72,  "y": 0.10 },
+"weather":{ "x": 0.045, "y": 0.72 },
+"user":   { "x": 0.72,  "y": 0.60 },
+"mission":{ "x": 0.72,  "y": 0.87 }
+```
+
+覆盖层打开时，桌面 HUD 会自动淡出（`ShellState.overlay !== "none"`）。
+
+
+## 質感與位置（狀態列 / Dock / 側邊欄）
+
+三個表面都吃同一組欄位：
+
+| 欄位 | 範圍 | 說明 |
+| --- | --- | --- |
+| `opacity` | 0.3–1.0 | 背景不透明度 |
+| `gray` | 0–1 | 壁紙採樣層去飽和（0 = 彩色，1 = 灰階） |
+| `blur` | 0–1 | 壁紙採樣層模糊半徑（自繪 shader，不需合成器 blur） |
+| `width` / `iconSize` / `thickness` | — | 尺寸（側邊欄寬度 / Dock 圖示 / 狀態列高度） |
+| `position` | top / bottom | 狀態列與 Dock 貼齊上緣或下緣 |
+
+## 側邊欄與狀態列彈出
+
+`sidebar.left` / `sidebar.right`：
+
+| 欄位 | 預設 | 說明 |
+| --- | --- | --- |
+| `enabled` | true | 是否啟用該側邊欄 |
+| `width` | 356 / 372 | 面板寬度 |
+| `opacity` / `gray` / `blur` | 0.96 / 0 / 0 | 同上面的表面質感 |
+| `delay` | 650 | 滑出後自動收起延遲（ms） |
+| `trigger` | 6 | 螢幕邊緣熱區寬度（px） |
+
+- 左側：操作員檔案、月曆、梯隊名冊、DEPLOY。
+- 右側：媒體 + 歌詞（lrclib.net）+ cava 頻譜 + 通知紀錄。
+- 狀態列點擊 `user` / `clock` / `media` 會分別在該元件下方打開使用者 / 日曆 / 媒體彈出欄。
+
+## 天氣與歌詞
+
+- 天氣：`widgets.weather.city` 留空時由 wttr.in 依 IP 定位；20 分鐘輪詢。
+- 歌詞：透過 lrclib.net 查詢，按 `artist + title` 快取；同步歌詞優先，其次純文字。
+- 兩者都需要 `curl`；沒有網路時顯示 `NO DATA` / `AWAITING TRANSMISSION`。
+
+## Dock 避讓
+
+`dock.avoid`（預設 true）與 `dock.autoHide`（預設 false）控制避讓：
+
+- 有視窗時 Dock 收起成 6px 金線；滑到下緣熱區才展開。
+- 展開時 `exclusiveZone` 變成 Dock 高度，合成器會把視窗往上推（應用避讓）。
+- 滑出後自動收起，視窗恢復原位。
+
+### 侧边栏组件
+
+`sidebar.assign.<id>`（`left` / `right` / `off`）决定组件在左侧、右侧或关闭；组件包括
+`user`（操作员）、`calendar`（月历）、`roster`（梯队名册）、`actions`（快捷操作）、
+`stats`（系统状态）、`weather`（天气）、`clock`（时钟）、`media`（媒体+歌词）、
+`visualizer`（频谱）、`comms`（通知）、`mission`（任务）。
+
+`sidebar.<side>.height`（0.4–1.0）与 `align`（top / center / bottom）控制高度与垂直位置。
+
+### 状态栏组件
+
+`bar.left` / `bar.center` / `bar.right` 为区块 id 数组；在「设置 → 状态栏 → 组件」中可逐项设为
+OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
+
+## 壁纸
+
+- 内置：`assets/wallpapers/gfl-ops.png`、`gfl-sangvis`、`gfl-neural`、`gfl-dusk`。
+- `path` 留空会使用第一张内置壁纸；也可填 `file:///home/user/wall.png` 或绝对路径。
+- `dim`（0–0.6）控制压暗；`fillMode`：`fill`（裁切填满）、`fit`、`stretch`。
+- 重新生成内置壁纸：`python3 scripts/gen_assets.py`。
