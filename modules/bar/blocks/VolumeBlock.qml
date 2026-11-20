@@ -39,8 +39,10 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         cursorShape: Qt.PointingHandCursor
         onClicked: mouse => {
-            if (mouse.button === Qt.RightButton)
-                ShellState.toggle("control");
+            if (mouse.button === Qt.RightButton) {
+                var p = root.mapToItem(null, root.width / 2, root.height);
+                ShellState.togglePopup("control", p.x, p.y, "");
+            }
             else
                 Audio.toggleMute();
         }

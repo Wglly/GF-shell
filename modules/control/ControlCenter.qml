@@ -10,7 +10,7 @@ import qs.services
 PanelWindow {
     id: root
 
-    readonly property bool open: ShellState.overlay === "control"
+    readonly property bool open: ShellState.popupKind === "control"
     visible: root.open
     color: "transparent"
     anchors {
@@ -32,7 +32,7 @@ PanelWindow {
         focus: root.open
         Keys.onPressed: event => {
             if (event.key === Qt.Key_Escape) {
-                ShellState.close();
+                ShellState.closePopup();
                 event.accepted = true;
             }
         }
@@ -44,7 +44,7 @@ PanelWindow {
 
         MouseArea {
             anchors.fill: parent
-            onClicked: ShellState.close()
+            onClicked: ShellState.closePopup()
         }
     }
 
@@ -118,7 +118,7 @@ PanelWindow {
                         glyphSize: Theme.px(13)
                         buttonSize: Theme.px(20)
                         danger: true
-                        onClicked: ShellState.close()
+                        onClicked: ShellState.closePopup()
                     }
                 }
             }

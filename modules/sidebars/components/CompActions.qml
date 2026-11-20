@@ -30,7 +30,7 @@ Column {
             width: (parent.width - Theme.px(4)) / 2
             height: Theme.px(30)
             text: I18n.t("user.tact")
-            onClicked: { ShellState.closeSidebars(); ShellState.open("control") }
+            onClicked: { ShellState.closeSidebars(); ShellState.openPopup("control", 0, 0, "") }
         }
         GfButton {
             width: (parent.width - Theme.px(4)) / 2

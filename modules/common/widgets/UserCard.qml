@@ -167,7 +167,7 @@ Column {
             onClicked: {
                 ShellState.closePopup();
                 ShellState.closeSidebars();
-                ShellState.open("control");
+                ShellState.openPopup("control", 0, 0, "");
             }
         }
         GfButton {

@@ -36,6 +36,9 @@ Item {
     MouseArea {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
-        onClicked: ShellState.toggle("control")
+        onClicked: {
+            var p = root.mapToItem(null, root.width / 2, root.height);
+            ShellState.togglePopup("control", p.x, p.y, "");
+        }
     }
 }

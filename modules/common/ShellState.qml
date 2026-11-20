@@ -14,6 +14,12 @@ QtObject {
     signal closed(string name)
 
     function open(name) {
+        if (name === "control") {
+            if (state.overlay !== "none")
+                state.open("none");
+            state.openPopup("control", 0, 0, "");
+            return;
+        }
         if (state.overlay === name)
             return;
         state.popupKind = "";
@@ -56,6 +62,13 @@ QtObject {
     }
 
     function toggle(name) {
+        if (name === "control") {
+            if (state.popupKind === "control")
+                state.closePopup();
+            else
+                state.open("control");
+            return;
+        }
         state.open(state.overlay === name ? "none" : name);
     }
 

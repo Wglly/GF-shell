@@ -14,6 +14,7 @@ PanelWindow {
     screen: modelData
 
     readonly property bool open: ShellState.popupKind !== ""
+        && ShellState.popupKind !== "control"
         && (ShellState.popupScreen === "" || ShellState.popupScreen === modelData.name)
     visible: root.open
     color: "transparent"
