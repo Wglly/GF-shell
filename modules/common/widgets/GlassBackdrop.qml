@@ -11,6 +11,13 @@ Item {
     property real gray: 0          // 0..1
     property real strength: 1.0    // 壁纸在面板中的可见度
 
+    // 亮色主题使用稳定亮灰底层，避免壁纸采样把面板压暗。
+    Rectangle {
+        anchors.fill: parent
+        visible: Theme.light
+        color: Theme.alpha(Theme.bg0, 0.94)
+    }
+
     Image {
         id: img
         anchors.fill: parent
@@ -32,7 +39,7 @@ Item {
 
     ShaderEffect {
         anchors.fill: parent
-        visible: root.blur > 0.01 || root.gray > 0.01
+        visible: !Theme.light && (root.blur > 0.01 || root.gray > 0.01)
         property variant tex: sourceTex
         property real radius: root.blur * 20
         property real grayAmt: root.gray

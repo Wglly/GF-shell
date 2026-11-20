@@ -96,6 +96,7 @@ QtObject {
 
     // ------------------------------------------------------------------ 特效
     property string preset: "gfl"
+    property bool light: false
     property int bf1Radius: 12
     readonly property bool arknights: preset === "arknights"
     readonly property bool bf4: preset === "bf4"

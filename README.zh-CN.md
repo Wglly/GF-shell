@@ -77,7 +77,7 @@ IPC](#快捷键与-ipc)
 
 其他：
 
-- 八套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。三个游戏主题只在该主题下加入自己的背景签名、Bar/Dock 细节、仪表盘与命令轮盘外观，不影响其他主题；BF1 圆角半径（0–28px）、全局动画速度（0.5×–2.0×）与全局线条透明度（0–1）可在设置 → 外观 → 表面调整。
+- 八套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色，中性亮灰底）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。三个游戏主题只在该主题下加入自己的背景签名、Bar/Dock 细节、仪表盘与命令轮盘外观，不影响其他主题；BF1 圆角半径（0–28px）、全局动画速度（0.5×–2.0×）与全局线条透明度（0–1）可在设置 → 外观 → 表面调整。
 - 全局缩放：`SHELL SCALE`（整体）与 `FONT SCALE`（文字、展开栏与卡片布局）分开调整；设置背景的灰白遮罩可调透明度与灰度。
 - 统一图标字体（Material Symbols 子集，改名为 *GF Tactical Icons*，约 1 MB，避免与系统字体撞名）、四种附带字体（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 界面支持四种语言：**繁體中文 / 简体中文 / English / 日本語**；在「副官设置 → 系统 → 语言」即时切换（设置页本身也会跟着切换）。

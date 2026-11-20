@@ -206,13 +206,13 @@ QtObject {
         light: {
             name: "DAYLIGHT OPS",
             mode: "light",
-            accent: "#b07d18", accent2: "#4f7fa3",
-            accentHi: "#d9a62a", accentDim: "#7a5a12",
-            bg0: "#f3f0e7", bg1: "#eae6db", bg: "#efebe2",
-            panel: "#fbf9f3", panelAlt: "#f2efe7", panelHi: "#e4dfd2",
-            line: "#c9c1af", lineBright: "#a8842f",
-            text: "#1b1813", textDim: "#5c5648", textFaint: "#8b8373", textGhost: "#b2ab9c",
-            ink: "#15120c",
+            accent: "#a97b18", accent2: "#587489",
+            accentHi: "#cf9c22", accentDim: "#70540f",
+            bg0: "#e7e7e7", bg1: "#f1f1f1", bg: "#ebebeb",
+            panel: "#f6f6f6", panelAlt: "#e6e6e6", panelHi: "#d8d8d8",
+            line: "#bcbcbc", lineBright: "#8d8d8d",
+            text: "#1e1e1e", textDim: "#555555", textFaint: "#777777", textGhost: "#a3a3a3",
+            ink: "#111111",
             scanlines: false, brackets: true
         },
         arctic: {

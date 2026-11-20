@@ -174,7 +174,7 @@ Auto-hide order on narrow screens: `title` → `media` → `stats` → `tray` �
 | `arknights` | Rhodes Island: near-black + industrial cyan + white | `#3fd4e6` |
 | `bf4` | Battlefield 4: deep blue + scanlines + orange | `#2a8fb0` |
 | `bf1` | Battlefield 1: aged paper + brass + dark red | `#c9a05a` |
-| `light` | Daylight: paper white + deep gold (light) | `#b07d18` |
+| `light` | Daylight: neutral light grey + deep gold (light) | `#a97b18` |
 
 A preset writes the whole `theme.*` palette, including `panel`, `line`, `text`…, so switching repaints
 the entire UI immediately. Setting a custom `accent` changes `preset` to `custom`.
