@@ -434,9 +434,9 @@ PanelWindow {
         fill: Theme.alpha(Theme.bg0, 0.0)
         borderColor: Theme.arknights ? Theme.alpha(Theme.text, 0.72)
             : (Theme.bf4 ? Theme.alpha(Theme.accent2, 0.8)
-            : (Theme.bf1 ? Theme.alpha(Theme.accent, 0.72)
+            : (Theme.bf1 ? "transparent"
             : Theme.alpha(Theme.accent, 0.55)))
-        chamfer: Theme.arknights || Theme.bf4 ? Theme.px(2) : (Theme.bf1 ? Theme.px(4) : Theme.px(8))
+        chamfer: Theme.arknights || Theme.bf4 ? Theme.px(2) : (Theme.bf1 ? 0 : Theme.px(8))
         innerLine: true
         padding: 0
         cutBottomLeft: true
@@ -482,6 +482,16 @@ PanelWindow {
             anchors.fill: parent
             anchors.margins: 2
             color: Theme.alpha(Theme.bg0, Settings.get("dock.opacity", 0.94))
+        }
+
+        Rectangle {
+            visible: Theme.bf1
+            anchors.fill: parent
+            anchors.margins: Theme.px(1)
+            radius: Theme.px(12)
+            color: "transparent"
+            border.width: 2
+            border.color: Theme.alpha(Theme.accent, 0.6)
         }
 
         Rectangle {

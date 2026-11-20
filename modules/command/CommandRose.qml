@@ -84,94 +84,6 @@ PanelWindow {
         onClicked: ShellState.closeCommandRose()
     }
 
-    // 背景：每个主题不一样
-    Item {
-        anchors.fill: parent
-        visible: root.arknights
-        Rectangle {
-            anchors.fill: parent
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: Theme.alpha("#000000", 0.55) }
-                GradientStop { position: 1.0; color: Theme.alpha(Theme.bg0, 0.82) }
-            }
-        }
-        Repeater {
-            model: 18
-            Rectangle {
-                required property int index
-                x: root.width * index / 18
-                y: 0; width: 1; height: root.height
-                color: Theme.alpha(Theme.text, 0.045)
-            }
-        }
-        Repeater {
-            model: 10
-            Rectangle {
-                required property int index
-                x: 0; y: root.height * index / 10
-                width: root.width; height: 1
-                color: Theme.alpha(Theme.text, 0.035)
-            }
-        }
-    }
-
-    Item {
-        anchors.fill: parent
-        visible: root.bf4
-        Rectangle {
-            anchors.fill: parent
-            color: Theme.alpha("#02080d", 0.72)
-        }
-        Repeater {
-            model: 14
-            Rectangle {
-                required property int index
-                x: 0; y: root.height * index / 14
-                width: root.width; height: 1
-                color: Theme.alpha(Theme.accent, index % 3 === 0 ? 0.13 : 0.035)
-            }
-        }
-        Rectangle {
-            anchors.fill: parent
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: Theme.alpha(Theme.accent, 0.06) }
-                GradientStop { position: 1.0; color: "transparent" }
-            }
-        }
-    }
-
-    Item {
-        anchors.fill: parent
-        visible: root.bf1
-        Rectangle {
-            anchors.fill: parent
-            gradient: Gradient {
-                GradientStop { position: 0.0; color: Theme.alpha("#2a2115", 0.55) }
-                GradientStop { position: 0.6; color: Theme.alpha("#120d08", 0.75) }
-                GradientStop { position: 1.0; color: Theme.alpha("#1b130b", 0.9) }
-            }
-        }
-        Repeater {
-            model: 7
-            Rectangle {
-                required property int index
-                x: root.width * (0.1 + index * 0.13)
-                y: root.height * (0.22 + (index % 3) * 0.2)
-                width: root.width * (0.1 + (index % 2) * 0.06)
-                height: width
-                radius: width / 2
-                color: Theme.alpha("#d8c39a", 0.022)
-            }
-        }
-    }
-
-    // 通用暗底（GFL）
-    Rectangle {
-        anchors.fill: parent
-        visible: !root.arknights && !root.bf4 && !root.bf1
-        color: Theme.alpha(Theme.bg0, 0.76)
-    }
-
     // 环 / 辐条 / 中心
     Item {
         x: root.cx; y: root.cy
@@ -280,11 +192,20 @@ PanelWindow {
             anchors.centerIn: parent
             width: Theme.px(194)
             height: Theme.px(82)
-            fill: Theme.alpha(Theme.bg0, 0.92)
-            borderColor: Theme.alpha(Theme.accent, 0.8)
-            chamfer: root.arknights || root.bf4 ? Theme.px(2) : Theme.px(6)
-            innerLine: true
+            fill: root.bf1 ? "transparent" : Theme.alpha(Theme.bg0, 0.92)
+            borderColor: root.bf1 ? "transparent" : Theme.alpha(Theme.accent, 0.8)
+            chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? Theme.px(2) : Theme.px(6))
+            innerLine: !root.bf1
             padding: 0
+
+            Rectangle {
+                visible: root.bf1
+                anchors.fill: parent
+                radius: Theme.px(12)
+                color: Theme.alpha(Theme.bg0, 0.95)
+                border.width: 1
+                border.color: Theme.alpha(Theme.accent, 0.7)
+            }
 
             Column {
                 anchors.centerIn: parent
@@ -330,11 +251,22 @@ PanelWindow {
 
             GfFrame {
                 anchors.fill: parent
-                fill: optionMouse.containsMouse ? Theme.alpha(Theme.accent, 0.2) : Theme.alpha(Theme.bg1, 0.92)
-                borderColor: optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.45)
-                chamfer: root.arknights || root.bf4 ? Theme.px(1) : Theme.px(4)
+                fill: root.bf1 ? "transparent"
+                    : (optionMouse.containsMouse ? Theme.alpha(Theme.accent, 0.2) : Theme.alpha(Theme.bg1, 0.92))
+                borderColor: root.bf1 ? "transparent"
+                    : (optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.45))
+                chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? Theme.px(1) : Theme.px(4))
                 innerLine: false
                 padding: 0
+            }
+
+            Rectangle {
+                visible: root.bf1
+                anchors.fill: parent
+                radius: Theme.px(8)
+                color: optionMouse.containsMouse ? Theme.alpha(Theme.accent, 0.2) : Theme.alpha(Theme.bg1, 0.94)
+                border.width: 1
+                border.color: optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5)
             }
 
             Row {
@@ -392,7 +324,9 @@ PanelWindow {
         font.family: Theme.fontDisplay
         font.pixelSize: Theme.fs(18)
         font.letterSpacing: 2.4
-        color: Theme.alpha(Theme.accentHi, 0.85)
+        color: Theme.alpha(Theme.accentHi, 0.95)
+        style: Text.Outline
+        styleColor: Theme.alpha(Theme.bg0, 0.9)
     }
 
     Text {
@@ -404,5 +338,7 @@ PanelWindow {
         font.pixelSize: Theme.fs(8)
         font.letterSpacing: 1.4
         color: Theme.textFaint
+        style: Text.Outline
+        styleColor: Theme.alpha(Theme.bg0, 0.85)
     }
 }

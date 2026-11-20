@@ -161,7 +161,7 @@ Auto-hide order on narrow screens: `title` → `media` → `stats` → `tray` �
 | `neural` | Neural Cloud: deep blue + ice cyan | `#7eb2d6` |
 | `arctic` | Arctic: cool grey + pale gold | `#cbb98a` |
 | `arknights` | Rhodes Island: near-black + industrial cyan + white | `#3fd4e6` |
-| `bf4` | Battlefield 4: deep blue + scanlines + orange | `#35c7ff` |
+| `bf4` | Battlefield 4: deep blue + scanlines + orange | `#2a8fb0` |
 | `bf1` | Battlefield 1: aged paper + brass + dark red | `#c9a05a` |
 | `light` | Daylight: paper white + deep gold (light) | `#b07d18` |
 
@@ -240,7 +240,7 @@ All three surfaces share these fields:
 
 ### Desktop command rose
 
-Right-click empty desktop to open a seven-action command rose at the pointer (Settings, Wallpaper, Widget Layout, Deploy Terminal, Network, Terminal, Dashboard). Press 1–7 to select; left-click desktop or Esc closes. The four game themes have their own centre, rings and backdrop. `ThemeSignature`, `BarThemeAccent`, `CommandRose` and `Dashboard` extra styling is visible only for the matching preset.
+Right-click empty desktop to open a seven-action command rose at the pointer (Settings, Wallpaper, Widget Layout, Deploy Terminal, Network, Terminal, Dashboard). Press 1–7 to select; left-click desktop or Esc closes. The four game themes have their own centre, rings and decoration, with **no full-screen dim layer**. `ThemeSignature`, `BarThemeAccent`, `CommandRose` and `Dashboard` extra styling is visible only for the matching preset.
 - Controlled by `dock.avoid` (default true) and `dock.autoHide` (default false).
 ### Sidebar components
 

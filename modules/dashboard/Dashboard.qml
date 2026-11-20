@@ -78,15 +78,27 @@ PanelWindow {
             anchors.fill: parent
             anchors.margins: Theme.px(28)
             z: 2
-            fill: Theme.alpha(Theme.bg0, 0.88)
-            borderColor: root.arknights ? Theme.alpha(Theme.text, 0.7)
-                : (root.bf4 ? Theme.alpha(Theme.accent2, 0.75)
-                : (root.bf1 ? Theme.alpha(Theme.accent, 0.75) : Theme.alpha(Theme.accent, 0.55)))
-            chamfer: root.arknights || root.bf4 ? Theme.px(2) : Theme.px(6)
-            innerLine: true
+            fill: root.bf1 ? "transparent" : Theme.alpha(Theme.bg0, 0.88)
+            borderColor: root.bf1 ? "transparent"
+                : (root.arknights ? Theme.alpha(Theme.text, 0.7)
+                : (root.bf4 ? Theme.alpha(Theme.accent2, 0.75) : Theme.alpha(Theme.accent, 0.55)))
+            chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? Theme.px(2) : Theme.px(6))
+            innerLine: !root.bf1
             padding: 0
 
+            // BF1：旧纸圆角面板
+            Rectangle {
+                visible: root.bf1
+                anchors.fill: parent
+                anchors.margins: Theme.px(1)
+                radius: Theme.px(16)
+                color: Theme.alpha(Theme.bg0, 0.97)
+                border.width: 2
+                border.color: Theme.alpha(Theme.accent, 0.5)
+            }
+
             GlassBackdrop {
+                visible: !root.bf1
                 anchors.fill: parent
                 anchors.margins: 2
                 source: Wallpapers.source
@@ -95,9 +107,10 @@ PanelWindow {
                 strength: 0.35
             }
             Rectangle {
+                visible: !root.bf1
                 anchors.fill: parent
                 anchors.margins: 2
-                color: Theme.alpha(Theme.bg0, root.bf1 ? 0.72 : 0.6)
+                color: Theme.alpha(Theme.bg0, 0.6)
             }
 
             Column {
@@ -194,11 +207,20 @@ PanelWindow {
                             required property var modelData
                             width: (parent.width - Theme.px(24)) / 4
                             height: parent.height
-                            fill: Theme.alpha(Theme.panel, 0.55)
-                            borderColor: Theme.alpha(Theme.accent, 0.28)
-                            chamfer: root.arknights || root.bf4 ? 2 : Theme.px(4)
+                            fill: root.bf1 ? "transparent" : Theme.alpha(Theme.panel, 0.55)
+                            borderColor: root.bf1 ? "transparent" : Theme.alpha(Theme.accent, 0.28)
+                            chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? 2 : Theme.px(4))
                             innerLine: false
                             padding: Theme.px(10)
+
+                            Rectangle {
+                                visible: root.bf1
+                                anchors.fill: parent
+                                radius: Theme.px(10)
+                                color: Theme.alpha(Theme.panel, 0.94)
+                                border.width: 1
+                                border.color: Theme.alpha(Theme.accent, 0.32)
+                            }
 
                             Column {
                                 width: parent.width
@@ -302,7 +324,9 @@ PanelWindow {
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    color: cellMouse.containsMouse ? Theme.alpha(Theme.accent, 0.16) : Theme.alpha(Theme.panel, 0.35)
+                                    radius: root.bf1 ? Theme.px(9) : 0
+                                    color: cellMouse.containsMouse ? Theme.alpha(Theme.accent, 0.16)
+                                        : Theme.alpha(Theme.panel, root.bf1 ? 0.9 : 0.35)
                                     border.width: 1
                                     border.color: cellMouse.containsMouse ? Theme.accent : Theme.alpha(Theme.accent, 0.18)
                                 }

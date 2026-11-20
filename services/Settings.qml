@@ -224,13 +224,13 @@ QtObject {
         },
         bf4: {
             name: "BATTLEFIELD 4",
-            accent: "#35c7ff", accentHi: "#a9ecff", accentDim: "#1c637e",
-            accent2: "#ff8a1e",
-            bg0: "#05090e", bg1: "#0b151f", bg: "#071019",
-            panel: "#0b1824", panelAlt: "#102332", panelHi: "#183548",
-            line: "#21445b", lineBright: "#3b7e9f",
-            text: "#e7f7ff", textDim: "#9bbdcc", textFaint: "#688896", textGhost: "#3c5662",
-            ink: "#031018",
+            accent: "#2a8fb0", accentHi: "#73c9df", accentDim: "#145064",
+            accent2: "#e06b1f",
+            bg0: "#020509", bg1: "#071019", bg: "#04090e",
+            panel: "#07131c", panelAlt: "#0b1e2b", panelHi: "#122c3d",
+            line: "#173446", lineBright: "#2b6178",
+            text: "#d9edf5", textDim: "#89a8b5", textFaint: "#5f7f8c", textGhost: "#354d58",
+            ink: "#020c12",
             scanlines: true, brackets: false
         },
         bf1: {
