@@ -18,7 +18,7 @@ Item {
         anchors.fill: parent
         color: root.checked ? Theme.alpha(root.accentColor, 0.85) : Theme.alpha(Theme.bg0, 0.6)
         border.width: 1
-        border.color: root.checked ? Theme.accentHi : Theme.alpha(root.accentColor, 0.55)
+        border.color: Theme.lineColor(root.checked ? Theme.accentHi : Theme.alpha(root.accentColor, 0.55))
         opacity: root.enabledState ? 1 : 0.45
         Behavior on color {
             enabled: Theme.animations

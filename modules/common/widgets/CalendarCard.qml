@@ -179,7 +179,7 @@ Item {
                         color: parent.isToday ? Theme.alpha(Theme.accent, 0.22)
                             : (dayMouse.containsMouse && !modelData.other ? Theme.alpha(Theme.panelHi, 0.8) : "transparent")
                         border.width: parent.isToday ? 1 : 0
-                        border.color: Theme.accent
+                        border.color: Theme.lineColor(Theme.accent)
                     }
 
                     GfText {

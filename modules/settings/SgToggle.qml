@@ -17,7 +17,7 @@ Item {
         anchors.fill: parent
         color: root.checked ? Sg.yellow : (root.hovered ? Sg.grayHi : Sg.gray)
         border.width: 1
-        border.color: root.checked ? Sg.ink : Sg.ink
+        border.color: Theme.lineColor(root.checked ? Sg.ink : Sg.ink)
         radius: Theme.bf1 ? height / 2 : 0
     }
 
@@ -28,7 +28,7 @@ Item {
         height: width
         color: root.checked ? Sg.ink : "#e9e5da"
         radius: Theme.bf1 ? width / 2 : 0
-        Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }
+        Behavior on x { NumberAnimation { duration: Theme.dur(120); easing.type: Easing.OutCubic } }
     }
 
     MouseArea {

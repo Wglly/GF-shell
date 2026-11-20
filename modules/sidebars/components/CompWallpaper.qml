@@ -22,7 +22,7 @@ Column {
         height: Theme.fpx(86)
         color: Theme.alpha(Theme.bg0, 0.5)
         border.width: 1
-        border.color: Theme.alpha(Theme.accent, 0.5)
+        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
 
         Image {
             anchors.fill: parent

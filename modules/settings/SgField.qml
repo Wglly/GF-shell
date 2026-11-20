@@ -18,7 +18,7 @@ Item {
         anchors.fill: parent
         color: Sg.paper
         border.width: 1
-        border.color: root.focused ? Sg.yellow : Sg.ink
+        border.color: Theme.lineColor(root.focused ? Sg.yellow : Sg.ink)
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
     }
 

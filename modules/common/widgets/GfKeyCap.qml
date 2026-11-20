@@ -14,7 +14,7 @@ Item {
         anchors.fill: parent
         color: Theme.alpha(Theme.bg0, 0.75)
         border.width: 1
-        border.color: Theme.alpha(Theme.accent, 0.45)
+        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.45))
     }
 
     GfText {

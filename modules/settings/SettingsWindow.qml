@@ -304,7 +304,7 @@ PanelWindow {
                         anchors.fill: parent
                         color: closeMouse.containsMouse ? Sg.yellow : "transparent"
                         border.width: 1
-                        border.color: closeMouse.containsMouse ? Sg.yellow : "#5a5a5a"
+                        border.color: Theme.lineColor(closeMouse.containsMouse ? Sg.yellow : "#5a5a5a")
                     }
                     Text {
                         anchors.centerIn: parent
@@ -583,7 +583,7 @@ PanelWindow {
                                     width: Theme.fpx(84); height: Theme.fpx(84)
                                     color: Sg.ink
                                     border.width: 1
-                                    border.color: Sg.yellow
+                                    border.color: Theme.lineColor(Sg.yellow)
                                     Image {
                                         anchors.fill: parent; anchors.margins: 2
                                         source: User.avatar
@@ -764,6 +764,24 @@ PanelWindow {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     checked: Settings.get("theme.animations", true)
                                     onToggled: Settings.toggle("theme.animations")
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.animSpeed"); desc: I18n.t("set.animSpeed.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0.5; to: 2.0; step: 0.05; decimals: 2
+                                    value: Settings.get("theme.animSpeed", 1.0)
+                                    onMoved: v => Settings.set("theme.animSpeed", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.lineOpacity"); desc: I18n.t("set.lineOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0.0; to: 1.0; step: 0.05; decimals: 2
+                                    value: Settings.get("theme.lineOpacity", 1.0)
+                                    onMoved: v => Settings.set("theme.lineOpacity", v)
                                 }
                             }
                             SgRow {

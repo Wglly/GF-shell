@@ -88,7 +88,7 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         color: Theme.alpha(Theme.panelHi, 0.8)
                         border.width: 1
-                        border.color: Theme.alpha(Theme.line, 0.9)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.line, 0.9))
 
                         Image {
                             anchors.fill: parent

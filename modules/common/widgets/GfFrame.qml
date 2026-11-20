@@ -60,7 +60,7 @@ Item {
         radius: root.cornerRadius
         color: root.fill
         border.width: root.strokeWidth
-        border.color: root.hovered ? Theme.accentHi : root.borderColor
+        border.color: Theme.lineColor(root.hovered ? Theme.accentHi : root.borderColor)
     }
     Rectangle {
         visible: root.cornerRadius > Theme.px(6) && root.innerLine
@@ -69,7 +69,7 @@ Item {
         radius: Math.max(0, root.cornerRadius - Theme.px(4))
         color: "transparent"
         border.width: 1
-        border.color: root.hovered ? Theme.alpha(root.accentColor, 0.24) : root.innerBorderColor
+        border.color: Theme.lineColor(root.hovered ? Theme.alpha(root.accentColor, 0.24) : root.innerBorderColor)
     }
 
     Shape {
@@ -79,7 +79,7 @@ Item {
 
         ShapePath {
             strokeWidth: root.strokeWidth
-            strokeColor: root.hovered ? Theme.accentHi : root.borderColor
+            strokeColor: Theme.lineColor(root.hovered ? Theme.accentHi : root.borderColor)
             fillColor: root.fill
             PathPolyline { path: root.points }
             Behavior on strokeColor { ColorAnimation { duration: Theme.durFast } }
@@ -95,7 +95,7 @@ Item {
 
         ShapePath {
             strokeWidth: 1
-            strokeColor: root.hovered ? Theme.alpha(root.accentColor, 0.28) : root.innerBorderColor
+            strokeColor: Theme.lineColor(root.hovered ? Theme.alpha(root.accentColor, 0.28) : root.innerBorderColor)
             fillColor: "transparent"
             PathPolyline { path: root.innerPoints }
         }
@@ -126,7 +126,7 @@ Item {
         y: 0
         width: Math.max(0, root.width - x - (root.cutTopRight ? root.chamfer + 4 : 0))
         height: 1
-        color: Theme.alpha(root.accentColor, 0.9)
+        color: Theme.lineColor(Theme.alpha(root.accentColor, 0.9))
     }
 
     // 左侧金色刻度块
@@ -136,13 +136,13 @@ Item {
         y: root.cutTopLeft ? root.chamfer + 4 : 0
         width: 2
         height: Math.max(0, root.height - y - (root.cutBottomLeft ? root.chamfer + 4 : 0))
-        color: root.accentColor
+        color: Theme.lineColor(root.accentColor)
     }
 
     GfCorners {
         anchors.fill: parent
         visible: root.brackets && root.cornerRadius <= 0
-        color: Theme.alpha(root.accentColor, 0.7)
+        color: Theme.lineColor(Theme.alpha(root.accentColor, 0.7))
         size: Theme.px(9)
     }
 

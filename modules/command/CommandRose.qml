@@ -33,7 +33,7 @@ PanelWindow {
 
     Behavior on reveal {
         enabled: Theme.animations
-        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+        NumberAnimation { duration: Theme.dur(220); easing.type: Easing.OutCubic }
     }
 
     readonly property var actions: [
@@ -113,7 +113,7 @@ PanelWindow {
             radius: width / 2
             color: "transparent"
             border.width: 1
-            border.color: Theme.alpha(Theme.accent, root.bf1 ? 0.32 : 0.24)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, root.bf1 ? 0.32 : 0.24))
         }
         Rectangle {
             visible: !root.arknights
@@ -123,7 +123,7 @@ PanelWindow {
             radius: width / 2
             color: "transparent"
             border.width: 1
-            border.color: Theme.alpha(Theme.accent, 0.12)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.12))
         }
 
         // Arknights：菱形指挥框
@@ -138,7 +138,7 @@ PanelWindow {
                 rotation: 45
                 color: "transparent"
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent, 0.45)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.45))
             }
             Rectangle {
                 anchors.centerIn: parent
@@ -146,7 +146,7 @@ PanelWindow {
                 rotation: 45
                 color: "transparent"
                 border.width: 1
-                border.color: Theme.alpha(Theme.text, 0.18)
+                border.color: Theme.lineColor(Theme.alpha(Theme.text, 0.18))
             }
         }
 
@@ -161,7 +161,7 @@ PanelWindow {
                     y: -0.5
                     width: index % 3 === 0 ? Theme.px(9) : Theme.px(4)
                     height: 1
-                    color: Theme.alpha(Theme.accent, index % 3 === 0 ? 0.65 : 0.3)
+                    color: Theme.lineColor(Theme.alpha(Theme.accent, index % 3 === 0 ? 0.65 : 0.3))
                 }
             }
         }
@@ -177,7 +177,7 @@ PanelWindow {
                 radius: width / 2
                 color: "transparent"
                 border.width: 2
-                border.color: Theme.alpha(Theme.accent2, 0.35)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent2, 0.35))
             }
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -198,7 +198,7 @@ PanelWindow {
                     y: -0.5
                     width: root.radius * 0.73
                     height: 1
-                    color: Theme.alpha(Theme.accent, 0.22)
+                    color: Theme.lineColor(Theme.alpha(Theme.accent, 0.22))
                 }
             }
         }
@@ -220,7 +220,7 @@ PanelWindow {
                 radius: Theme.px(Theme.bf1Radius)
                 color: Theme.alpha(Theme.bg0, 0.95)
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent, 0.7)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.7))
             }
 
             Column {
@@ -283,7 +283,7 @@ PanelWindow {
                 radius: Theme.bf1Radius > 0 ? Theme.px(Math.max(2, Theme.bf1Radius - 2)) : 0
                 color: optionMouse.containsMouse ? Theme.alpha(Theme.accent, 0.2) : Theme.alpha(Theme.bg1, 0.94)
                 border.width: 1
-                border.color: optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5)
+                border.color: Theme.lineColor(optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5))
             }
 
             Row {

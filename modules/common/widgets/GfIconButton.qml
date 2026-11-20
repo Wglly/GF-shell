@@ -26,7 +26,7 @@ Item {
         color: root.checked ? root.accentColor
             : (root.hovered ? Theme.alpha(root.accentColor, 0.16) : "transparent")
         border.width: (root.hovered || root.checked) ? 1 : 0
-        border.color: root.checked ? Theme.accentHi : Theme.alpha(root.accentColor, 0.6)
+        border.color: Theme.lineColor(root.checked ? Theme.accentHi : Theme.alpha(root.accentColor, 0.6))
         Behavior on color {
             enabled: Theme.animations
             ColorAnimation { duration: Theme.durFast }
@@ -60,7 +60,7 @@ Item {
         height: 10
         color: Theme.red
         border.width: 1
-        border.color: Theme.alpha(Theme.red, 0.6)
+        border.color: Theme.lineColor(Theme.alpha(Theme.red, 0.6))
 
         GfText {
             id: badgeText

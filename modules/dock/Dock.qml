@@ -479,7 +479,7 @@ PanelWindow {
             radius: Theme.px(Theme.bf1Radius)
             color: "transparent"
             border.width: 2
-            border.color: Theme.alpha(Theme.accent, 0.6)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.6))
         }
 
         Rectangle {
@@ -539,7 +539,7 @@ PanelWindow {
                         height: Theme.px(42)
                         color: slot.hovered ? Theme.alpha(Theme.accent, 0.16) : Theme.alpha(Theme.bg0, 0.55)
                         border.width: (slot.hovered || slot.isRunning) ? 1 : 0
-                        border.color: Theme.alpha(Theme.accent, slot.hovered ? 0.9 : 0.5)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, slot.hovered ? 0.9 : 0.5))
 
                         Behavior on color {
                             enabled: Theme.animations
@@ -647,7 +647,7 @@ PanelWindow {
                     height: Theme.px(40)
                     color: deployMouse.containsMouse ? Theme.accent : Theme.alpha(Theme.bg0, 0.6)
                     border.width: 1
-                    border.color: Theme.alpha(Theme.accent, 0.8)
+                    border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.8))
 
                     GfIcon {
                         anchors.centerIn: parent
@@ -678,7 +678,7 @@ PanelWindow {
                 anchors.fill: parent
                 color: Theme.alpha(Theme.bg0, 0.97)
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent, 0.5)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
             }
 
             MouseArea {
@@ -800,8 +800,8 @@ PanelWindow {
                         color: deployMouse2.containsMouse || root.deployMode === modelData.key
                             ? Theme.alpha(Theme.accent, 0.15) : "transparent"
                         border.width: 1
-                        border.color: root.deployMode === modelData.key
-                            ? Theme.alpha(Theme.accent, 0.65) : "transparent"
+                        border.color: Theme.lineColor(root.deployMode === modelData.key
+                            ? Theme.alpha(Theme.accent, 0.65) : "transparent")
                     }
                     Row {
                         anchors.left: parent.left

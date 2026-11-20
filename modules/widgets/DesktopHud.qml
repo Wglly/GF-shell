@@ -343,7 +343,7 @@ PanelWindow {
                         height: Theme.px(52)
                         color: Theme.alpha(Theme.panelAlt, 0.8)
                         border.width: 1
-                        border.color: Theme.alpha(Theme.accent, 0.5)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
 
                         Image {
                             anchors.fill: parent
@@ -945,7 +945,7 @@ PanelWindow {
                     anchors.fill: parent
                     color: ghost.on ? Theme.alpha(Theme.bg0, 0.42) : Theme.alpha(Theme.bg0, 0.22)
                     border.width: ghost.on ? 2 : 1
-                    border.color: ghost.on ? Theme.accent : Theme.alpha(Theme.accent, 0.35)
+                    border.color: Theme.lineColor(ghost.on ? Theme.accent : Theme.alpha(Theme.accent, 0.35))
                 }
 
                 // 拖动层（在标题/按钮之下）
@@ -996,7 +996,7 @@ PanelWindow {
                     height: Theme.px(18)
                     color: ghost.on ? Theme.accent : "transparent"
                     border.width: 1
-                    border.color: ghost.on ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5)
+                    border.color: Theme.lineColor(ghost.on ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5))
 
                     GfText {
                         anchors.centerIn: parent
@@ -1033,7 +1033,7 @@ PanelWindow {
                         anchors.fill: parent
                         color: Theme.alpha(Theme.bg0, 0.85)
                         border.width: 1
-                        border.color: Theme.accent
+                        border.color: Theme.lineColor(Theme.accent)
                     }
                     Rectangle {
                         x: Theme.px(5); y: Theme.px(13)

@@ -94,7 +94,7 @@ PanelWindow {
                 radius: Theme.bf1Radius > 0 ? Theme.px(Theme.bf1Radius + 4) : 0
                 color: Theme.alpha(Theme.bg0, 0.97)
                 border.width: 2
-                border.color: Theme.alpha(Theme.accent, 0.5)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
             }
 
             GlassBackdrop {
@@ -219,7 +219,7 @@ PanelWindow {
                                 radius: Theme.px(Theme.bf1Radius)
                                 color: Theme.alpha(Theme.panel, 0.94)
                                 border.width: 1
-                                border.color: Theme.alpha(Theme.accent, 0.32)
+                                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.32))
                             }
 
                             Column {
@@ -262,7 +262,7 @@ PanelWindow {
                         anchors.fill: parent
                         color: Theme.alpha(Theme.bg1, 0.8)
                         border.width: 1
-                        border.color: Theme.alpha(Theme.accent, 0.3)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.3))
                     }
                     TextInput {
                         id: search
@@ -328,7 +328,7 @@ PanelWindow {
                                     color: cellMouse.containsMouse ? Theme.alpha(Theme.accent, 0.16)
                                         : Theme.alpha(Theme.panel, root.bf1 ? 0.9 : 0.35)
                                     border.width: 1
-                                    border.color: cellMouse.containsMouse ? Theme.accent : Theme.alpha(Theme.accent, 0.18)
+                                    border.color: Theme.lineColor(cellMouse.containsMouse ? Theme.accent : Theme.alpha(Theme.accent, 0.18))
                                 }
                                 Image {
                                     id: dashIcon

@@ -77,7 +77,7 @@ Item {
             rotation: 45
             color: root.hovered ? Sg.yellow : Sg.ink
             border.width: 1
-            border.color: Sg.ink
+            border.color: Theme.lineColor(Sg.ink)
         }
 
         MouseArea {

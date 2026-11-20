@@ -177,6 +177,9 @@ QtObject {
         "set.hex.desc": "Hex colour, e.g. #141416",
 
         "set.animations": "ANIMATIONS", "set.animations.desc": "Slide and fade transitions",
+        "set.animSpeed": "ANIMATION SPEED", "set.animSpeed.desc": "Global speed multiplier (0.5×–2.0×; higher is faster)",
+        "set.lineOpacity": "LINE OPACITY", "set.lineOpacity.desc": "Global opacity of outlines, borders and rules (0–1)",
+
         "set.brackets": "CORNER BRACKETS", "set.brackets.desc": "Tactical corner brackets on panels",
         "set.scanlines": "SCANLINES", "set.scanlines.desc": "CRT scanline texture (off by default)",
         "set.bf1Radius": "BF1 CORNER RADIUS", "set.bf1Radius.desc": "Rounded corners for every BF1 panel (0–28 px)",
@@ -324,6 +327,9 @@ QtObject {
         "set.hex.desc": "十六進位色值，例如 #141416",
 
         "set.animations": "動效", "set.animations.desc": "滑入 / 淡入等過場",
+        "set.animSpeed": "動畫速度", "set.animSpeed.desc": "全域速度倍率（0.5×–2.0×，數值越大越快）",
+        "set.lineOpacity": "線條透明度", "set.lineOpacity.desc": "全域輪廓線、邊框與分隔線的不透明度（0–1）",
+
         "set.brackets": "四角括標", "set.brackets.desc": "面板四角的戰術括標",
         "set.scanlines": "掃描線", "set.scanlines.desc": "CRT 掃描線紋理（預設關閉）",
         "set.bf1Radius": "BF1 圓角", "set.bf1Radius.desc": "所有 BF1 面板的圓角半徑（0–28 px）",
@@ -580,6 +586,10 @@ QtObject {
         "set.hex.desc": "十六进位色值，例如 #141416",
         "set.animations": "动效",
         "set.animations.desc": "滑入 / 淡入等过场",
+        "set.animSpeed": "动画速度",
+        "set.animSpeed.desc": "全域速度倍率（0.5×–2.0×，数值越大越快）",
+        "set.lineOpacity": "线条透明度",
+        "set.lineOpacity.desc": "全域轮廓线、边框与分隔线的不透明度（0–1）",
         "set.brackets": "四角括标",
         "set.brackets.desc": "面板四角的战术括标",
         "set.scanlines": "扫描线",
@@ -901,6 +911,9 @@ QtObject {
         "set.hex.desc": "16 進カラー例: #141416",
 
         "set.animations": "アニメーション", "set.animations.desc": "スライド／フェード",
+        "set.animSpeed": "アニメーション速度", "set.animSpeed.desc": "全体の速度倍率（0.5×〜2.0×、大きいほど速い）",
+        "set.lineOpacity": "ライン透明度", "set.lineOpacity.desc": "輪郭・枠線・区切り線の全体不透明度（0〜1）",
+
         "set.brackets": "コーナーブラケット", "set.brackets.desc": "四隅のタクティカル括標",
         "set.scanlines": "スキャンライン", "set.scanlines.desc": "CRT テクスチャ（既定オフ）",
         "set.bf1Radius": "BF1 コーナー半径", "set.bf1Radius.desc": "すべての BF1 パネルの角丸半径（0–28 px）",

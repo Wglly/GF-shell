@@ -72,6 +72,8 @@ QtObject {
                 accentDim: "#7d6428",
                 fontScale: 1.0,
                 bf1Radius: 12,
+                animSpeed: 1.0,
+                lineOpacity: 1.0,
                 settingsOpacity: 0.9,
                 settingsGray: 0.22,
                 accent: "#e8bd4f",

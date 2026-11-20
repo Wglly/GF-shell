@@ -103,7 +103,7 @@ PanelWindow {
         x: root.open ? 0 : (root.side === "left" ? -width : width)
         Behavior on x {
             enabled: Theme.animations
-            NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+            NumberAnimation { duration: Theme.dur(220); easing.type: Easing.OutCubic }
         }
 
         GfFrame {

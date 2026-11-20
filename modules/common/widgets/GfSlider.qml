@@ -69,7 +69,7 @@ Item {
         rotation: 45
         color: root.fillColor
         border.width: 1
-        border.color: Theme.alpha(Theme.bg0, 0.8)
+        border.color: Theme.lineColor(Theme.alpha(Theme.bg0, 0.8))
     }
 
     GfText {

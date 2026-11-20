@@ -67,7 +67,7 @@ PanelWindow {
                     anchors.fill: parent
                     color: "#121a22"
                     border.width: 1
-                    border.color: "#283844"
+                    border.color: Theme.lineColor("#283844")
                 }
 
                 GfIcon {

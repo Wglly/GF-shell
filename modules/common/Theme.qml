@@ -109,14 +109,24 @@ QtObject {
     property bool grain: true
     property bool brackets: true
     property bool animations: true
+    property real animSpeed: 1.0
+    property real lineOpacity: 1.0
 
-    property int durFast: 100
-    property int durNormal: 170
-    property int durSlow: 300
+    function dur(ms) {
+        return Math.max(1, Math.round(ms / Math.max(0.1, theme.animSpeed)));
+    }
+
+    readonly property int durFast: dur(100)
+    readonly property int durNormal: dur(170)
+    readonly property int durSlow: dur(300)
 
     // ------------------------------------------------------------- 调色助手
     function alpha(c, a) {
         return Qt.rgba(c.r, c.g, c.b, a);
+    }
+
+    function lineColor(c) {
+        return Qt.rgba(c.r, c.g, c.b, c.a * theme.lineOpacity);
     }
 
     function mix(a, b, t) {

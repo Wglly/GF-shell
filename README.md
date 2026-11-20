@@ -73,7 +73,7 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 
 其他：
 
-- 八套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色）；亦可選 DARK / LIGHT / CUSTOM，自訂 BG0/BG1/PANEL/TEXT/ACCENT 十六進位色。三個遊戲主題只在該主題下加入自己的背景簽名、Bar/Dock 細節、儀表盤與命令輪盤外觀，不影響其他主題；BF1 的圓角半徑（0–28px）可在設定 → 外觀 → 表面調整。
+- 八套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色）；亦可選 DARK / LIGHT / CUSTOM，自訂 BG0/BG1/PANEL/TEXT/ACCENT 十六進位色。三個遊戲主題只在該主題下加入自己的背景簽名、Bar/Dock 細節、儀表盤與命令輪盤外觀，不影響其他主題；BF1 的圓角半徑（0–28px）、全域動畫速度（0.5×–2.0×）與全域線條透明度（0–1）可在設定 → 外觀 → 表面調整。
 - 全域縮放：`SHELL SCALE`（整體）與 `FONT SCALE`（文字、展開欄與卡片佈局）分開調整；設定背景的灰白遮罩可調透明度與灰度。
 - 統一圖示字型（Material Symbols 子集，改名為 *GF Tactical Icons*，約 1 MB，避免與系統字型撞名）、四種隨附字型（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 介面支援四種語言：**繁體中文 / 简体中文 / English / 日本語**；在「副官設置 → 系統 → 語言」即時切換（設定頁本身也會跟著換）。

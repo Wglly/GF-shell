@@ -214,8 +214,8 @@ PanelWindow {
                                 : (row.selected ? Theme.accent
                                     : (rowMouse.containsMouse ? Theme.alpha(Theme.accent, 0.12) : Theme.alpha(Theme.bg0, 0.55)))
                             border.width: 1
-                            border.color: row.isArmed ? Theme.red
-                                : (row.selected ? Theme.accentHi : Theme.alpha(Theme.accent, 0.35))
+                            border.color: Theme.lineColor(row.isArmed ? Theme.red
+                                : (row.selected ? Theme.accentHi : Theme.alpha(Theme.accent, 0.35)))
                             Behavior on color {
                                 enabled: Theme.animations
                                 ColorAnimation { duration: Theme.durFast }

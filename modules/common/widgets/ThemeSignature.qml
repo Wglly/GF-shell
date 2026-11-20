@@ -76,7 +76,7 @@ Item {
                 rotation: 45
                 color: "transparent"
                 border.width: 1
-                border.color: Theme.accent
+                border.color: Theme.lineColor(Theme.accent)
             }
             Rectangle {
                 anchors.centerIn: parent
@@ -142,7 +142,7 @@ Item {
                 radius: width / 2
                 color: "transparent"
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent, 0.42)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.42))
             }
             Rectangle {
                 anchors.centerIn: parent
@@ -150,7 +150,7 @@ Item {
                 radius: width / 2
                 color: "transparent"
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent2, 0.42)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent2, 0.42))
             }
             Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -206,13 +206,13 @@ Item {
             anchors.fill: parent; anchors.margins: Theme.px(24)
             color: "transparent"
             border.width: 1
-            border.color: Theme.alpha(Theme.accent, 0.24)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.24))
         }
         Rectangle {
             anchors.fill: parent; anchors.margins: Theme.px(30)
             color: "transparent"
             border.width: 1
-            border.color: Theme.alpha(Theme.accent, 0.12)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.12))
         }
 
     }

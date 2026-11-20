@@ -77,7 +77,7 @@ Item {
             height: Theme.px(18)
             color: "transparent"
             border.width: 1
-            border.color: Theme.alpha(root.accentColor, 0.7)
+            border.color: Theme.lineColor(Theme.alpha(root.accentColor, 0.7))
 
             GfText {
                 id: codeText

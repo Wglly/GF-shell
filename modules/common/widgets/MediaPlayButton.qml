@@ -17,7 +17,7 @@ Item {
         anchors.fill: parent
         color: playing || hover.containsMouse ? Theme.accent : "transparent"
         border.width: 1
-        border.color: Theme.alpha(Theme.accent, hover.containsMouse ? 0.9 : 0.55)
+        border.color: Theme.lineColor(Theme.alpha(Theme.accent, hover.containsMouse ? 0.9 : 0.55))
     }
 
     PlayGlyph {

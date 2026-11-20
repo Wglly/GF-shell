@@ -28,7 +28,7 @@ Column {
                 anchors.fill: parent
                 color: Theme.alpha(Theme.panelAlt, 0.9)
                 border.width: 1
-                border.color: Theme.alpha(Theme.accent, 0.5)
+                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
             }
 
             Image {

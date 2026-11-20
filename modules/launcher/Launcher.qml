@@ -345,7 +345,7 @@ PanelWindow {
                         height: Theme.px(22)
                         color: "transparent"
                         border.width: 1
-                        border.color: Theme.alpha(Theme.accent, 0.6)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.6))
 
                         GfText {
                             anchors.centerIn: parent
@@ -449,7 +449,7 @@ PanelWindow {
                             color: rt.checked ? Theme.accent
                                 : (rt.containsMouse ? Theme.alpha(Theme.accent, 0.14) : Theme.alpha(Theme.bg0, 0.55))
                             border.width: 1
-                            border.color: rt.checked ? Theme.accentHi : Theme.alpha(Theme.accent, rt.containsMouse ? 0.8 : 0.3)
+                            border.color: Theme.lineColor(rt.checked ? Theme.accentHi : Theme.alpha(Theme.accent, rt.containsMouse ? 0.8 : 0.3))
                         }
 
                         Shape {
@@ -458,7 +458,7 @@ PanelWindow {
                             preferredRendererType: Shape.CurveRenderer
                             ShapePath {
                                 strokeWidth: 1
-                                strokeColor: rt.checked ? Theme.accentHi : Theme.alpha(Theme.accent, rt.containsMouse ? 0.8 : 0.3)
+                                strokeColor: Theme.lineColor(rt.checked ? Theme.accentHi : Theme.alpha(Theme.accent, rt.containsMouse ? 0.8 : 0.3))
                                 fillColor: rt.checked ? Theme.accent
                                     : (rt.containsMouse ? Theme.alpha(Theme.accent, 0.14) : Theme.alpha(Theme.bg0, 0.55))
                                 PathPolyline {
@@ -805,7 +805,7 @@ PanelWindow {
                                 anchors.fill: parent
                                 color: Theme.alpha(Theme.panel, 0.9)
                                 border.width: 1
-                                border.color: Theme.alpha(Theme.accent, 0.55)
+                                border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.55))
                             }
 
                             Image {

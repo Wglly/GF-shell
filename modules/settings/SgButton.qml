@@ -23,7 +23,7 @@ Item {
         color: root.active || root.hovered ? Sg.yellow
             : (root.danger ? Sg.red : Sg.gray)
         border.width: 1
-        border.color: root.active ? Sg.yellowHi : (root.danger ? "#5d1c14" : Sg.ink)
+        border.color: Theme.lineColor(root.active ? Sg.yellowHi : (root.danger ? "#5d1c14" : Sg.ink))
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
     }
 
@@ -58,5 +58,5 @@ Item {
         onClicked: root.clicked()
     }
 
-    Behavior on implicitWidth { NumberAnimation { duration: 100 } }
+    Behavior on implicitWidth { NumberAnimation { duration: Theme.dur(100) } }
 }

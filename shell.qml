@@ -54,6 +54,8 @@ ShellRoot {
     Binding { target: Theme; property: "uiScale"; value: Settings.get("theme.scale", 1.0) }
     Binding { target: Theme; property: "fontScale"; value: Settings.get("theme.fontScale", 1.0) }
     Binding { target: Theme; property: "animations"; value: Settings.get("theme.animations", true) }
+    Binding { target: Theme; property: "animSpeed"; value: Settings.get("theme.animSpeed", 1.0) }
+    Binding { target: Theme; property: "lineOpacity"; value: Settings.get("theme.lineOpacity", 1.0) }
 
     // 主题预设写入的完整色板
     Binding { target: Theme; property: "bg0"; value: Settings.get("theme.bg0", "#070708") }

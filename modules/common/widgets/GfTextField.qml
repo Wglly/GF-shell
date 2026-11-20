@@ -32,7 +32,7 @@ Item {
         color: Theme.alpha(Theme.bg0, 0.75)
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         border.width: 1
-        border.color: root.focused ? Theme.alpha(root.accentColor, 0.85) : Theme.alpha(root.accentColor, 0.35)
+        border.color: Theme.lineColor(root.focused ? Theme.alpha(root.accentColor, 0.85) : Theme.alpha(root.accentColor, 0.35))
         Behavior on border.color {
             enabled: Theme.animations
             ColorAnimation { duration: Theme.durFast }
@@ -44,7 +44,7 @@ Item {
         anchors.bottom: parent.bottom
         width: root.focused ? parent.width : Theme.px(40)
         height: 1
-        color: root.accentColor
+        color: Theme.lineColor(root.accentColor)
         Behavior on width {
             enabled: Theme.animations
             NumberAnimation { duration: Theme.durNormal; easing.type: Easing.OutCubic }

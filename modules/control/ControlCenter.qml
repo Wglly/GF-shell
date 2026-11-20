@@ -102,7 +102,7 @@ PanelWindow {
                         height: Theme.px(16)
                         color: "transparent"
                         border.width: 1
-                        border.color: Theme.alpha(Theme.accent, 0.5)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.5))
 
                         GfText {
                             anchors.centerIn: parent
@@ -600,7 +600,7 @@ PanelWindow {
             height: Theme.px(40)
             color: Theme.alpha(Theme.panelHi, 0.6)
             border.width: 1
-            border.color: Theme.alpha(Theme.accent, 0.45)
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.45))
 
             GfIcon {
                 anchors.centerIn: parent

@@ -22,7 +22,7 @@ Item {
         color: root.active ? Theme.accent
             : (root.hovered ? Theme.alpha(Theme.accent, 0.16) : Theme.alpha(Theme.bg0, 0.65))
         border.width: 1
-        border.color: root.active ? Theme.accentHi : Theme.alpha(Theme.accent, 0.4)
+        border.color: Theme.lineColor(root.active ? Theme.accentHi : Theme.alpha(Theme.accent, 0.4))
         Behavior on color {
             enabled: Theme.animations
             ColorAnimation { duration: Theme.durFast }

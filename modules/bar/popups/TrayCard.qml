@@ -140,7 +140,7 @@ Item {
                         anchors.fill: parent
                         color: Theme.alpha(Theme.bg0, 0.35)
                         border.width: 1
-                        border.color: Theme.alpha(Theme.accent, 0.15)
+                        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.15))
                     }
 
                     Column {

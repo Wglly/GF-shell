@@ -204,7 +204,7 @@ PanelWindow {
         radius: Theme.px(Theme.bf1Radius)
         color: "transparent"
         border.width: 1
-        border.color: Theme.alpha(Theme.accent, 0.35)
+        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.35))
         z: 19
     }
 
