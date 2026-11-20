@@ -90,33 +90,6 @@ Item {
             }
         }
 
-        Text {
-            x: Theme.px(42); y: Theme.px(36)
-            text: "RHODES ISLAND  //  LOGISTICS DIVISION"
-            font.family: Theme.fontMono
-            font.pixelSize: Theme.fs(10)
-            font.letterSpacing: 2
-            color: Theme.accent
-            opacity: 0.78
-        }
-        Text {
-            x: Theme.px(42); y: Theme.px(52)
-            text: "ORIGINIUM CONTAINMENT  ·  SECTOR 09  ·  LINK STABLE"
-            font.family: Theme.fontMono
-            font.pixelSize: Theme.fs(8)
-            color: Theme.textDim
-            opacity: 0.55
-        }
-        Text {
-            anchors.right: parent.right; anchors.rightMargin: Theme.px(46)
-            anchors.bottom: parent.bottom; anchors.bottomMargin: Theme.px(62)
-            text: "//  KEEP MOVING FORWARD"
-            font.family: Theme.fontDisplay
-            font.pixelSize: Theme.fs(30)
-            font.letterSpacing: 3
-            color: Theme.text
-            opacity: 0.11
-        }
     }
 
     // ---------------------------------------------------------------- BF4
@@ -193,45 +166,6 @@ Item {
             }
         }
 
-        // 顶部行动信息
-        Row {
-            x: Theme.px(42); y: Theme.px(36)
-            spacing: Theme.px(14)
-            Rectangle { width: Theme.px(4); height: Theme.px(30); color: Theme.accent2 }
-            Column {
-                spacing: 1
-                Text {
-                    text: "US // COMBINED ARMS  ·  DEPLOYMENT UPLINK"
-                    font.family: Theme.fontDisplay
-                    font.pixelSize: Theme.fs(18)
-                    font.letterSpacing: 2.4
-                    color: Theme.text
-                }
-                Text {
-                    text: "SECTOR 09   ·   SIEGE OF SHANGHAI   ·   CHANNEL 4"
-                    font.family: Theme.fontMono
-                    font.pixelSize: Theme.fs(8)
-                    color: Theme.accent
-                }
-            }
-        }
-        Text {
-            anchors.right: parent.right; anchors.rightMargin: Theme.px(44)
-            anchors.top: parent.top; anchors.topMargin: Theme.px(38)
-            text: "M-COM  //  A  B  C"
-            font.family: Theme.fontMono
-            font.pixelSize: Theme.fs(9)
-            color: Theme.alpha(Theme.accent2, 0.8)
-        }
-        Text {
-            anchors.centerIn: parent
-            anchors.verticalCenterOffset: Theme.px(220)
-            text: "SPAWN  BEACON  ACTIVE"
-            font.family: Theme.fontMono
-            font.pixelSize: Theme.fs(9)
-            font.letterSpacing: 1.8
-            color: Theme.alpha(Theme.accent, 0.45)
-        }
     }
 
     // ---------------------------------------------------------------- BF1
@@ -281,30 +215,5 @@ Item {
             border.color: Theme.alpha(Theme.accent, 0.12)
         }
 
-        Text {
-            x: Theme.px(44); y: Theme.px(38)
-            text: "THE GREAT WAR  //  1918"
-            font.family: Theme.fontDisplay
-            font.pixelSize: Theme.fs(23)
-            font.letterSpacing: 4
-            color: Theme.alpha(Theme.accentHi, 0.8)
-        }
-        Text {
-            x: Theme.px(46); y: Theme.px(68)
-            text: "FIELD ORDER  ·  WESTERN FRONT  ·  ARTILLERY SUPPORT"
-            font.family: Theme.fontMono
-            font.pixelSize: Theme.fs(8)
-            color: Theme.textDim
-            opacity: 0.55
-        }
-        Text {
-            anchors.right: parent.right; anchors.rightMargin: Theme.px(46)
-            anchors.bottom: parent.bottom; anchors.bottomMargin: Theme.px(48)
-            text: "//  OVER THE TOP"
-            font.family: Theme.fontDisplay
-            font.pixelSize: Theme.fs(36)
-            font.letterSpacing: 5
-            color: Theme.alpha(Theme.accentHi, 0.1)
-        }
     }
 }
