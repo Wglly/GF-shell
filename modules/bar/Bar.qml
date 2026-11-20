@@ -197,4 +197,9 @@ PanelWindow {
             }
         }
     }
+
+    BarThemeAccent {
+        anchors.fill: parent
+        z: 20
+    }
 }

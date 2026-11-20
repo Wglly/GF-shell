@@ -36,6 +36,7 @@ Config file: `~/.config/gf-shell/config.json`
     "enabled": true,
     "position": "bottom",
     "align": "center",
+    "deployMode": "launcher",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -97,6 +98,7 @@ Config file: `~/.config/gf-shell/config.json`
     "scale": 1.0,
     "animations": true
   },
+  "terminal": { "command": "" },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -158,6 +160,9 @@ Auto-hide order on narrow screens: `title` → `media` → `stats` → `tray` �
 | `sangvis` | Sangvis Ferri: near-black + alert red | `#d34a34` |
 | `neural` | Neural Cloud: deep blue + ice cyan | `#7eb2d6` |
 | `arctic` | Arctic: cool grey + pale gold | `#cbb98a` |
+| `arknights` | Rhodes Island: near-black + industrial cyan + white | `#3fd4e6` |
+| `bf4` | Battlefield 4: deep blue + scanlines + orange | `#35c7ff` |
+| `bf1` | Battlefield 1: aged paper + brass + dark red | `#c9a05a` |
 | `light` | Daylight: paper white + deep gold (light) | `#b07d18` |
 
 A preset writes the whole `theme.*` palette, including `panel`, `line`, `text`…, so switching repaints
@@ -229,6 +234,13 @@ All three surfaces share these fields:
 - `dock.trigger` (4–48 px) is the hot-zone height while hidden; larger is easier to hit. While hidden the zone is transparent, the panel is fully hidden (only a 2 px indicator line remains) and the exclusive zone is 0.
 - With `dock.avoid = false` the dock stays fully visible; `dock.autoHide` only applies while avoidance is on.
 - When the dock shares an edge with the bar, the hot zone/indicator are drawn on the bar edge and the dock body attaches to the bar's inner edge; the input `mask` only keeps the dock and hot-zone regions, so the rest of the bar remains clickable.
+- `dock.position`: `top` / `bottom` / `left` / `right`; left/right are vertical side docks and `dock.align` becomes `top` / `center` / `bottom`.
+- `dock.deployMode`: `launcher` / `dashboard`; default/checked option in the deploy button chooser.
+- `terminal.command`: command used by the rose Terminal action; empty tries kitty/foot/alacritty/wezterm in order.
+
+### Desktop command rose
+
+Right-click empty desktop to open a seven-action command rose at the pointer (Settings, Wallpaper, Widget Layout, Deploy Terminal, Network, Terminal, Dashboard). Press 1–7 to select; left-click desktop or Esc closes. The four game themes have their own centre, rings and backdrop. `ThemeSignature`, `BarThemeAccent`, `CommandRose` and `Dashboard` extra styling is visible only for the matching preset.
 - Controlled by `dock.avoid` (default true) and `dock.autoHide` (default false).
 ### Sidebar components
 

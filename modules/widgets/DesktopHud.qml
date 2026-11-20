@@ -47,6 +47,22 @@ PanelWindow {
     readonly property bool userOn: Settings.get("widgets.user.enabled", true)
     readonly property bool hudVisible: ShellState.widgetsVisible && ShellState.overlay === "none"
 
+    // 桌面右键：召唤命令轮盘；命令轮盘开启时左键桌面关闭。
+    MouseArea {
+        anchors.fill: parent
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        z: -1
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton) {
+                if (ShellState.overlay === "none")
+                    ShellState.openCommandRose(mouse.x, mouse.y, root.modelData.name);
+                return;
+            }
+            if (ShellState.commandRose)
+                ShellState.closeCommandRose();
+        }
+    }
+
     // ------------------------------------------------------------------ 时钟
     Item {
         id: clockWidget

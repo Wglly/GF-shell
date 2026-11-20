@@ -11,14 +11,14 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 
 | Module | Status | Notes |
 | --- | --- | --- |
-| Theme & panels | ✅ | Warm charcoal + matte gold; **dark / light / custom** palettes; font and shell scaling; double frames, angled tabs, ribbons, halftone |
+| Theme & panels | ✅ | G&K black-gold; **Arknights / BF4 / BF1** theme-only signature layers; dark / light / custom; font and shell scaling |
 | Status bar | ✅ | Per-block OFF / LEFT / CENTER / RIGHT; opacity / grayscale / blur / height / position |
 | Bar popups | ✅ | Operator / calendar / media detail panels anchored to the clicked block |
 | Launcher | ✅ | Categories, search, keyboard navigation, dossier, combat power |
 | Control centre | ✅ | Links, volume/brightness, modules, vitals, comms |
 | Operation map | ✅ | Sector cards, unit lists, click to switch/focus |
 | System halt | ✅ | Lock / suspend / restart / shutdown / logout + confirmation |
-| Dock | ✅ | Pinned + running, right-click pin/unpin/close, top/bottom/left/right position (vertical side dock), hot zone 4–48 px |
+| Dock | ✅ | Pinned + running, right-click pin/unpin/close, top/bottom/left/right position (vertical side dock), deploy chooser, hot zone 4–48 px |
 | Sidebars | ✅ | **11 swappable components**, left/right/off assignment, height 40–100%, top/center/bottom, scrolling |
 | Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission; **grid editor with drag-snap, bottom-right resizing and per-widget ON/OFF** |
 | Settings | ✅ | Paper UI; **HOME page with avatar upload, user/system info**; translucent veil; rows scale with fonts |
@@ -49,6 +49,9 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 - **Wallpaper library**: import a directory with automatic image detection; bar/sidebar wallpaper components list every image; light themes no longer tint the wallpaper.
 - **Settings home**: avatar upload, user/system information and quick actions; settings rows/sections scale with fonts to avoid overlap.
 - **Interaction fixes**: launcher mouse-wheel/drag scrolling; overview uses string window IDs for manual drag and right-click move; control center and bar popups no longer dim the whole desktop; sidebar triggers sit at the top/bottom corners with adjustable width/position.
+- **Dashboard**: macOS-Launchpad-style full-screen app overview with themed title, four status cards, search, app grid and shortcuts; the dock deploy button expands into a Deploy Terminal / Dashboard chooser.
+- **Desktop command rose**: right-click desktop to open seven commands at the pointer (Settings, Wallpaper, Widget Layout, Deploy Terminal, Network, Terminal, Dashboard), keys 1–7 select, left-click desktop / Esc closes; each theme has its own centre, rings and backdrop.
+- **Game themes**: Arknights, BF4 and BF1 add backdrop signatures, bar/dock details, dashboard and command-rose skins only inside their own preset.
 - **Overview move**: drag a unit row onto another sector (or right-click then click a sector); `Compositor.moveWindow()` moves it. Two shortcuts: `SUPER+ALT+Tab` and `SUPER+SHIFT+Tab`.
 - **Volume**: the default sink is now read/written through `wpctl`, fixing empty Quickshell `channelVolumes` on some WirePlumber setups; IPC `volume` / `mute` added.
 - **Cross-distro install**: `scripts/install-fedora.sh` (dnf, COPR, optional source build) and `scripts/install-debian.sh` (apt, trixie-backports, optional source build), with `--dry-run`/`--link`/`--dest`/`--yes`.
@@ -130,6 +133,20 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | Settings home / avatar | Wallpaper library | Expandable tray |
 | --- | --- | --- |
 | ![Settings home](screenshots/27-settings-home.png) | ![Wallpaper library](screenshots/28-wallpaper-library.png) | ![Tray](screenshots/29-tray.png) |
+
+### Dashboard, command rose and game themes
+
+| GFL dashboard | GFL command rose | BF4 command rose |
+| --- | --- | --- |
+| ![Dashboard](screenshots/31-dashboard-gfl.png) | ![Command rose GFL](screenshots/32-command-rose-gfl.png) | ![Command rose BF4](screenshots/33-command-rose-bf4.png) |
+
+| Arknights command rose | BF1 command rose | Vertical dock |
+| --- | --- | --- |
+| ![Command rose Arknights](screenshots/34-command-rose-arknights.png) | ![Command rose BF1](screenshots/35-command-rose-bf1.png) | ![Vertical dock](screenshots/30-dock-vertical.png) |
+
+| Dock deploy chooser | | |
+| --- | --- | --- |
+| ![Deploy chooser](screenshots/36-dock-deploy.png) | | |
 
 ## Verification
 

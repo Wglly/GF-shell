@@ -195,6 +195,13 @@ QtObject {
         "set.trigger": "TRIGGER AREA", "set.trigger.desc": "Hot-zone height when the dock is hidden (4 – 48 px)",
 
         "set.maxItems": "MAX ITEMS", "set.maxItems.desc": "Number of apps shown (5 – 12)",
+        "set.deployMode": "DEPLOY BUTTON", "set.deployMode.desc": "Choose the deploy button action or use its popup",
+        "dock.deployTerminal": "DEPLOY TERMINAL", "dock.deployTerminal.desc": "Full-screen unit launcher",
+        "dock.deployDashboard.desc": "Operational dashboard and app grid",
+        "rose.settings": "SETTINGS", "rose.wallpaper": "WALLPAPER", "rose.widgets": "WIDGET LAYOUT",
+        "rose.launcher": "DEPLOY TERMINAL", "rose.network": "NETWORK", "rose.terminal": "TERMINAL",
+        "rose.dashboard": "DASHBOARD", "rose.hint": "HOTKEY",
+
 
         "set.addPinned": "PIN AN APP", "set.addPinned.desc": "Type an app name and press Enter",
         "set.iconSize": "ICON SIZE", "set.iconSize.desc": "Icon size in pixels (32 – 64)",
@@ -333,6 +340,13 @@ QtObject {
         "set.trigger": "觸發面積", "set.trigger.desc": "Dock 收起時的热區高度（4 – 48px）",
 
         "set.maxItems": "最大數量", "set.maxItems.desc": "顯示的應用數量（5 – 12）",
+        "set.deployMode": "部署按鈕", "set.deployMode.desc": "選擇部署按鈕的動作，或使用它的彈出選單",
+        "dock.deployTerminal": "部署終端", "dock.deployTerminal.desc": "全螢幕單位啟動器",
+        "dock.deployDashboard.desc": "作戰儀表盤與應用網格",
+        "rose.settings": "設定", "rose.wallpaper": "壁紙", "rose.widgets": "桌面組件佈局",
+        "rose.launcher": "部署終端", "rose.network": "網路", "rose.terminal": "終端",
+        "rose.dashboard": "儀表盤", "rose.hint": "快捷鍵",
+
 
         "set.addPinned": "固定應用", "set.addPinned.desc": "輸入應用名稱後按 Enter",
         "set.iconSize": "圖示尺寸", "set.iconSize.desc": "像素（32 – 64）",
@@ -593,6 +607,19 @@ QtObject {
         "set.trigger.desc": "Dock 收起时的热区高度（4 – 48px）",
         "set.maxItems": "最大数量",
         "set.maxItems.desc": "显示的应用数量（5 – 12）",
+        "set.deployMode": "部署按钮",
+        "set.deployMode.desc": "选择部署按钮的动作，或使用它的弹出选单",
+        "dock.deployTerminal": "部署终端",
+        "dock.deployTerminal.desc": "全萤幕单位启动器",
+        "dock.deployDashboard.desc": "作战仪表盘与应用网格",
+        "rose.settings": "设定",
+        "rose.wallpaper": "壁纸",
+        "rose.widgets": "桌面组件布局",
+        "rose.launcher": "部署终端",
+        "rose.network": "网路",
+        "rose.terminal": "终端",
+        "rose.dashboard": "仪表盘",
+        "rose.hint": "快捷键",
         "set.addPinned": "固定应用",
         "set.addPinned.desc": "输入应用名称后按 Enter",
         "set.iconSize": "图示尺寸",
@@ -886,6 +913,13 @@ QtObject {
         "set.trigger": "トリガー領域", "set.trigger.desc": "Dock 非表示時のホットゾーン高さ（4 – 48px）",
 
         "set.maxItems": "最大項目", "set.maxItems.desc": "表示するアプリ数（5 – 12）",
+        "set.deployMode": "デプロイボタン", "set.deployMode.desc": "デプロイボタンの動作、またはポップアップメニュー",
+        "dock.deployTerminal": "デプロイ端末", "dock.deployTerminal.desc": "全画面ユニットランチャー",
+        "dock.deployDashboard.desc": "作戦ダッシュボードとアプリグリッド",
+        "rose.settings": "設定", "rose.wallpaper": "壁紙", "rose.widgets": "ウィジェット配置",
+        "rose.launcher": "デプロイ端末", "rose.network": "ネットワーク", "rose.terminal": "ターミナル",
+        "rose.dashboard": "ダッシュボード", "rose.hint": "ホットキー",
+
         "set.iconSize": "アイコンサイズ", "set.iconSize.desc": "ピクセル（32 – 64）",
         "set.width": "幅", "set.width.desc": "パネル幅（280 – 460）",
         "set.delay": "閉じる遅延", "set.delay.desc": "ポインタが離れてから閉じるまで（ms）",

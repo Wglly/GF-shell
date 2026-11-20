@@ -19,6 +19,7 @@ QtObject {
         state.popupKind = "";
         state.sidebarLeft = false;
         state.sidebarRight = false;
+        state.commandRose = false;
         state.widgetsEditing = false;
         var prev = state.overlay;
         state.overlay = name;
@@ -30,7 +31,28 @@ QtObject {
 
     function close() {
         state.popupKind = "";
+        state.commandRose = false;
         state.open("none");
+    }
+
+    // 桌面右键命令轮盘（不占用 overlay，保持桌面组件可见）
+    property bool commandRose: false
+    property real roseX: 0
+    property real roseY: 0
+    property string roseScreen: ""
+
+    function openCommandRose(x, y, screenName) {
+        state.closePopup();
+        state.sidebarLeft = false;
+        state.sidebarRight = false;
+        state.roseX = x;
+        state.roseY = y;
+        state.roseScreen = screenName || state.roseScreen;
+        state.commandRose = true;
+    }
+
+    function closeCommandRose() {
+        state.commandRose = false;
     }
 
     function toggle(name) {
@@ -50,6 +72,7 @@ QtObject {
 
     function toggleWidgetsEditing() {
         state.closePopup();
+        state.commandRose = false;
         state.widgetsEditing = !state.widgetsEditing;
     }
 
@@ -87,6 +110,7 @@ QtObject {
     property string popupScreen: ""
 
     function openPopup(kind, x, y, screenName) {
+        state.commandRose = false;
         state.popupScreen = screenName || state.popupScreen;
         state.popupAnchorX = x;
         state.popupAnchorY = y;

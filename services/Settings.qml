@@ -136,6 +136,9 @@ QtObject {
             power: {
                 confirm: true
             },
+            terminal: {
+                command: ""
+            },
             notifications: {
                 dnd: false,
                 toasts: true,
@@ -207,6 +210,39 @@ QtObject {
             line: "#3a3f45", lineBright: "#6e7d88",
             text: "#f0f2f4", textDim: "#aab4bc",
             scanlines: false, brackets: false
+        },
+        arknights: {
+            name: "RHODES ISLAND",
+            accent: "#3fd4e6", accentHi: "#a9f7ff", accentDim: "#1d6d78",
+            accent2: "#e7e9e6",
+            bg0: "#080b0c", bg1: "#101516", bg: "#0b1011",
+            panel: "#11191b", panelAlt: "#172225", panelHi: "#223236",
+            line: "#2c4146", lineBright: "#4b858e",
+            text: "#f1f6f6", textDim: "#a7b8ba", textFaint: "#718486", textGhost: "#435354",
+            ink: "#061012",
+            scanlines: false, brackets: true
+        },
+        bf4: {
+            name: "BATTLEFIELD 4",
+            accent: "#35c7ff", accentHi: "#a9ecff", accentDim: "#1c637e",
+            accent2: "#ff8a1e",
+            bg0: "#05090e", bg1: "#0b151f", bg: "#071019",
+            panel: "#0b1824", panelAlt: "#102332", panelHi: "#183548",
+            line: "#21445b", lineBright: "#3b7e9f",
+            text: "#e7f7ff", textDim: "#9bbdcc", textFaint: "#688896", textGhost: "#3c5662",
+            ink: "#031018",
+            scanlines: true, brackets: false
+        },
+        bf1: {
+            name: "BATTLEFIELD 1",
+            accent: "#c9a05a", accentHi: "#efd19a", accentDim: "#6e552e",
+            accent2: "#9b3a2a",
+            bg0: "#12100b", bg1: "#1b1710", bg: "#16120c",
+            panel: "#1e1810", panelAlt: "#272015", panelHi: "#34291b",
+            line: "#4c3f2b", lineBright: "#a9874e",
+            text: "#f1e6cf", textDim: "#c5b392", textFaint: "#8f7c5d", textGhost: "#5f513c",
+            ink: "#140f08",
+            scanlines: false, brackets: true
         }
     })
 

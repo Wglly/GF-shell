@@ -177,6 +177,12 @@ PanelWindow {
         }
     }
 
+    ThemeSignature {
+        anchors.fill: parent
+        z: 0
+        opacity: 0.55
+    }
+
     // 左侧斜切金带
     Rectangle {
         x: -parent.width * 0.08
@@ -260,7 +266,9 @@ PanelWindow {
                         spacing: -Theme.px(4)
 
                         GfText {
-                            text: "DEPLOYMENT"
+                            text: Theme.arknights ? "RHODES DEPLOYMENT"
+                                : (Theme.bf4 ? "DEPLOYMENT OVERVIEW"
+                                : (Theme.bf1 ? "FIELD DEPLOYMENT" : "DEPLOYMENT"))
                             role: "display"
                             size: Theme.sizeDisplay
                             tracking: 7

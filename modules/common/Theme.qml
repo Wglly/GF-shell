@@ -95,6 +95,15 @@ QtObject {
     property int iconSize: px(16)
 
     // ------------------------------------------------------------------ 特效
+    property string preset: "gfl"
+    readonly property bool arknights: preset === "arknights"
+    readonly property bool bf4: preset === "bf4"
+    readonly property bool bf1: preset === "bf1"
+    readonly property bool battle: bf4 || bf1
+    readonly property string themeTitle: arknights ? "RHODES ISLAND"
+        : (bf4 ? "BATTLEFIELD 4" : (bf1 ? "BATTLEFIELD 1" : "GRIFFIN & KRYUGER"))
+    readonly property string dashboardTitle: arknights ? "RHODES DASHBOARD"
+        : (bf4 ? "COMMANDER DASHBOARD" : (bf1 ? "FIELD DASHBOARD" : "TACTICAL DASHBOARD"))
     property bool scanlines: false          // 少前没有 CRT 扫描线，默认关
     property bool grain: true
     property bool brackets: true

@@ -46,6 +46,26 @@ PanelWindow {
         opacity: Settings.get("wallpaper.enabled", true) ? 0 : 1
     }
 
+    ThemeSignature {
+        anchors.fill: parent
+        z: 2
+    }
+
+    // 桌面右键兜底：桌面 HUD 未接收时仍能召唤命令轮盘。
+    MouseArea {
+        anchors.fill: parent
+        z: 3
+        acceptedButtons: Qt.LeftButton | Qt.RightButton
+        onClicked: mouse => {
+            if (mouse.button === Qt.RightButton) {
+                if (ShellState.overlay === "none")
+                    ShellState.openCommandRose(mouse.x, mouse.y, root.modelData.name);
+            } else if (ShellState.commandRose) {
+                ShellState.closeCommandRose();
+            }
+        }
+    }
+
     readonly property bool darkSurfaces: (Theme.bg0.r * 0.299 + Theme.bg0.g * 0.587 + Theme.bg0.b * 0.114) <= 0.55
 
     // 压暗（暖黑；亮色主题不染色）

@@ -15,6 +15,8 @@ import qs.modules.bar
 import qs.modules.launcher
 import qs.modules.control
 import qs.modules.overview
+import qs.modules.dashboard
+import qs.modules.command
 import qs.modules.power
 import qs.modules.osd
 import qs.modules.notifications
@@ -42,6 +44,7 @@ ShellRoot {
     FontLoader { id: fontIcons; source: Qt.resolvedUrl("assets/fonts/GFTacticalIcons.ttf") }
 
     // --------------------------------------------------------- 主题令牌绑定
+    Binding { target: Theme; property: "preset"; value: Settings.get("theme.preset", "gfl") }
     Binding { target: Theme; property: "accent"; value: Settings.get("theme.accent", "#e8bd4f") }
     Binding { target: Theme; property: "accent2"; value: Settings.get("theme.accent2", "#6f9bc4") }
     Binding { target: Theme; property: "scanlines"; value: Settings.get("theme.scanlines", true) }
@@ -133,6 +136,12 @@ ShellRoot {
     Variants {
         model: Quickshell.screens
 
+        delegate: CommandRose {}
+    }
+
+    Variants {
+        model: Quickshell.screens
+
         delegate: Dock {}
     }
 
@@ -162,6 +171,7 @@ ShellRoot {
     Launcher {}
     ControlCenter {}
     Overview {}
+    Dashboard {}
     PowerMenu {}
     Osd {}
     Toasts {}
@@ -189,6 +199,8 @@ ShellRoot {
         function close(): void {
             ShellState.close();
         }
+
+
 
 
 

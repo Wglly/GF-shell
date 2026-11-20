@@ -61,11 +61,13 @@ IPC](#快捷键与-ipc)
 | --- | --- |
 | **状态栏 (Bar)** | G&K 识别块、操作员入口、梯队/工作区编号、当前单位（窗口）标题、中央时钟、通讯/CPU/内存/网络/蓝牙/音量/电池/可展开托盘（图标＋最近消息）、壁纸库、作战地图、战术控制、系统停机。窄屏幕会自动隐藏次要区块；组件可在「设置 → 状态栏 → 组件」逐项开关，并指定左/中/右。网络、蓝牙、性能监控为独立组件，点击展开详情；网络详情会列出附近可连接的 Wi-Fi。 |
 | **部署终端 (Launcher)** | 全屏单位清单：分类（全部/最近/通讯/开发/媒体/文书/作战/系统）、模糊搜索、键盘导航、右侧单位档案（CLASS/STATUS/SOURCE/EXEC）与 DEPLOY；支持鼠标滚轮与拖动滚动。 |
+| **仪表盘 (Dashboard)** | macOS Launchpad 式全屏总览：顶部主题化标题、系统/电力/链路/媒体四张状态卡、单位搜索、应用网格与 SETTINGS/CONTROL/MAP/LAUNCHER 快捷键；GFL、Arknights、BF4、BF1 各有不同标题、背景与卡片轮廓。 |
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。 |
 | **作战地图 (Overview)** | 每个工作区一张“扇区”卡，列出其中的单位；点扇区切换工作区、点单位聚焦窗口；把单位拖到另一个扇区，或右键单位后点击目标扇区，即可移动窗口。 |
+| **命令轮盘 (Command Rose)** | **桌面右键**在鼠标位置展开《战地》Q 命令式轮盘：设置、壁纸、桌面组件布局、部署终端、网络、终端、仪表盘。七个选项可点击或按 1–7；左键桌面/Esc 关闭。GFL、Arknights、BF4、BF1 各有不同的中心徽章、环线与背景。 |
 | **系统停机 (Power)** | 锁定/休眠/重启/关机/登出；危险操作需二次确认（ENTER 两次），ESC 取消。 |
 | **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、右下角自由缩放、每个组件可单独 ON/OFF。 |
-| **梯队 (Dock)** | 固定与运行中的单位依序显示（上限 12）；右键单位可固定/取消固定、开新窗口或关闭；设置 → Dock 可输入应用名称直接固定。`dock.position` 可选上/下/左/右；左右时 Dock **垂直贴边**，`dock.align` 控制垂直上/中/下或水平左/中/右；有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；收起时的 **触发面积 4–48px** 也可调。关闭“避让窗口”后 Dock 始终完整显示；收起时只保留不可见热区和细线，展开才显示面板。与状态栏同边时，热区和指示线落在状态栏上，Dock 本体贴住状态栏内侧，不再浮空。 |
+| **梯队 (Dock)** | 固定与运行中的单位依序显示（上限 12）；右键单位可固定/取消固定、开新窗口或关闭；设置 → Dock 可输入应用名称直接固定。`dock.position` 可选上/下/左/右；左右时 Dock **垂直贴边**，`dock.align` 控制垂直上/中/下或水平左/中/右；有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；收起时的 **触发面积 4–48px** 也可调。关闭“避让窗口”后 Dock 始终完整显示；收起时只保留不可见热区和细线，展开才显示面板。与状态栏同边时，热区和指示线落在状态栏上，Dock 本体贴住状态栏内侧，不再浮空。最右侧部署按钮会展开 **部署终端 / 仪表盘** 二选一，也可在「设置 → Dock → 部署按钮」指定默认。 |
 | **通知** | 右上角“通讯”弹窗（滑入、7 秒自动回收、点击关闭）＋控制中心内的历史记录。 |
 | **OSD** | 音量/亮度 HUD，分段仪表 + 大号数字。 |
 | **日历** | 点时钟下拉的行程面板：月份切换、今日高亮、周数。 |
@@ -75,7 +77,7 @@ IPC](#快捷键与-ipc)
 
 其他：
 
-- 五套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（亮色）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。
+- 八套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。三个游戏主题只在该主题下加入自己的背景签名、Bar/Dock 细节、仪表盘与命令轮盘外观，不影响其他主题。
 - 全局缩放：`SHELL SCALE`（整体）与 `FONT SCALE`（文字、展开栏与卡片布局）分开调整；设置背景的灰白遮罩可调透明度与灰度。
 - 统一图标字体（Material Symbols 子集，改名为 *GF Tactical Icons*，约 1 MB，避免与系统字体撞名）、四种附带字体（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 界面支持四种语言：**繁體中文 / 简体中文 / English / 日本語**；在「副官设置 → 系统 → 语言」即时切换（设置页本身也会跟着切换）。
@@ -130,9 +132,18 @@ IPC](#快捷键与-ipc)
 | --- | --- | --- |
 | ![Settings home](docs/screenshots/27-settings-home.png) | ![Wallpaper library](docs/screenshots/28-wallpaper-library.png) | ![Tray](docs/screenshots/29-tray.png) |
 
-| Vertical dock (left) | | |
+| Dashboard | Command rose (GFL) | Command rose (BF4) |
 | --- | --- | --- |
-| ![Vertical dock](docs/screenshots/30-dock-vertical.png) | | |
+| ![Dashboard](docs/screenshots/31-dashboard-gfl.png) | ![Command rose GFL](docs/screenshots/32-command-rose-gfl.png) | ![Command rose BF4](docs/screenshots/33-command-rose-bf4.png) |
+
+| Command rose (Arknights) | Command rose (BF1) | Vertical dock |
+| --- | --- | --- |
+| ![Command rose Arknights](docs/screenshots/34-command-rose-arknights.png) | ![Command rose BF1](docs/screenshots/35-command-rose-bf1.png) | ![Vertical dock](docs/screenshots/30-dock-vertical.png) |
+
+| Dock deploy chooser | | |
+| --- | --- | --- |
+| ![Dock deploy](docs/screenshots/36-dock-deploy.png) | | |
+
 
 同一套外壳跑在 **niri** 上（嵌套于 Hyprland 测试的窗口）：
 

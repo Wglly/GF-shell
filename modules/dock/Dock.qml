@@ -35,6 +35,8 @@ PanelWindow {
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
     readonly property int barInset: root.barOnSameEdge ? Theme.px(Settings.get("bar.thickness", 38)) : 0
     property bool hoverLatch: false
+    property bool deployMenuOpen: false
+    readonly property string deployMode: Settings.get("dock.deployMode", "launcher")
 
     visible: root.enabled && entries.length > 0
     color: "transparent"
@@ -46,11 +48,13 @@ PanelWindow {
     margins.top: root.vertical ? 0 : (root.atTop ? -root.barInset : 0)
     margins.bottom: root.vertical ? 0 : (!root.atTop ? -root.barInset : 0)
     implicitWidth: root.vertical
-        ? (root.revealed ? Theme.px(76) : root.trigger)
+        ? (root.deployMenuOpen && root.modelData ? root.modelData.width
+            : (root.revealed ? Theme.px(76) : root.trigger))
         : (root.modelData ? root.modelData.width : 0)
     implicitHeight: root.vertical
         ? (root.modelData ? root.modelData.height : 0)
-        : (root.revealed ? root.barInset + Theme.px(76) : root.trigger)
+        : (root.deployMenuOpen && root.modelData ? root.modelData.height
+            : (root.revealed ? root.barInset + Theme.px(76) : root.trigger))
     exclusionMode: ExclusionMode.Normal
     // 收起时不占位；展开时只保留 Dock 本身的宽度/高度
     exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
@@ -195,6 +199,33 @@ PanelWindow {
         return Math.max(Theme.px(48), w);
     }
 
+    function deployPanelX() {
+        if (root.vertical) {
+            var p = deployButton.mapToItem(null, 0, 0);
+            return root.atRight ? p.x - deployPanel.width - Theme.px(8)
+                : p.x + deployButton.width + Theme.px(8);
+        }
+        var b = deployButton.mapToItem(null, 0, 0);
+        return Math.max(Theme.px(4), Math.min(root.width - deployPanel.width - Theme.px(4),
+            b.x + deployButton.width / 2 - deployPanel.width / 2));
+    }
+
+    function deployPanelY() {
+        if (root.vertical) {
+            var p = deployButton.mapToItem(null, 0, 0);
+            return Math.max(Theme.px(64), Math.min(root.height - deployPanel.height - Theme.px(8),
+                p.y + deployButton.height / 2 - deployPanel.height / 2));
+        }
+        return root.atTop ? dock.y + dock.height + Theme.px(8)
+            : dock.y - deployPanel.height - Theme.px(8);
+    }
+
+    function runDeploy(mode) {
+        Settings.set("dock.deployMode", mode);
+        root.deployMenuOpen = false;
+        ShellState.open(mode === "dashboard" ? "dashboard" : "launcher");
+    }
+
     function cleanPinned() {
         if (Apps.apps.length === 0)
             return;
@@ -302,6 +333,7 @@ PanelWindow {
     mask: Region {
         Region { item: root.revealed ? dock : null }
         Region { item: root.shouldHide ? triggerArea : null }
+        Region { item: root.deployMenuOpen ? deployPanel : null }
     }
 
     // ---------------------------------------------------------------- 底板
@@ -400,8 +432,11 @@ PanelWindow {
             NumberAnimation { duration: Theme.durFast; easing.type: Easing.OutCubic }
         }
         fill: Theme.alpha(Theme.bg0, 0.0)
-        borderColor: Theme.alpha(Theme.accent, 0.55)
-        chamfer: Theme.px(8)
+        borderColor: Theme.arknights ? Theme.alpha(Theme.text, 0.72)
+            : (Theme.bf4 ? Theme.alpha(Theme.accent2, 0.8)
+            : (Theme.bf1 ? Theme.alpha(Theme.accent, 0.72)
+            : Theme.alpha(Theme.accent, 0.55)))
+        chamfer: Theme.arknights || Theme.bf4 ? Theme.px(2) : (Theme.bf1 ? Theme.px(4) : Theme.px(8))
         innerLine: true
         padding: 0
         cutBottomLeft: true
@@ -447,6 +482,23 @@ PanelWindow {
             anchors.fill: parent
             anchors.margins: 2
             color: Theme.alpha(Theme.bg0, Settings.get("dock.opacity", 0.94))
+        }
+
+        Rectangle {
+            visible: Theme.arknights || Theme.bf4 || Theme.bf1
+            anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
+            anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : parent.right
+            anchors.top: root.vertical ? parent.top : undefined
+            anchors.bottom: root.vertical ? parent.bottom : parent.bottom
+            anchors.leftMargin: Theme.px(3)
+            anchors.rightMargin: Theme.px(3)
+            anchors.topMargin: Theme.px(3)
+            anchors.bottomMargin: Theme.px(3)
+            width: root.vertical ? 2 : undefined
+            height: root.vertical ? undefined : 2
+            color: Theme.arknights ? Theme.accent
+                : (Theme.bf4 ? Theme.accent2 : Theme.accent)
+            opacity: 0.7
         }
 
         Flow {
@@ -587,6 +639,7 @@ PanelWindow {
 
             // 部署按钮
             Item {
+                id: deployButton
                 width: Theme.px(48)
                 height: Theme.px(52)
 
@@ -611,7 +664,7 @@ PanelWindow {
                     anchors.fill: parent
                     hoverEnabled: true
                     cursorShape: Qt.PointingHandCursor
-                    onClicked: ShellState.toggle("launcher")
+                    onClicked: root.deployMenuOpen = !root.deployMenuOpen
                 }
             }
         }
@@ -698,4 +751,100 @@ PanelWindow {
             rotation: -90
         }
     }
+    // 部署按钮二选一：部署终端 / 仪表盘
+    MouseArea {
+        anchors.fill: parent
+        z: 40
+        visible: root.deployMenuOpen
+        onClicked: root.deployMenuOpen = false
+    }
+
+    GfFrame {
+        id: deployPanel
+        visible: root.deployMenuOpen
+        z: 50
+        x: root.deployPanelX()
+        y: root.deployPanelY()
+        width: Theme.px(250)
+        height: Theme.px(122)
+        fill: Theme.alpha(Theme.bg0, 0.98)
+        borderColor: Theme.alpha(Theme.accent, 0.7)
+        chamfer: Theme.arknights || Theme.bf4 ? Theme.px(2) : Theme.px(5)
+        innerLine: true
+        padding: 0
+
+        Column {
+            anchors.fill: parent
+            anchors.margins: Theme.px(9)
+            spacing: Theme.px(5)
+
+            Text {
+                text: "DEPLOY MODE"
+                font.family: Theme.fontMono
+                font.pixelSize: Theme.fs(8)
+                font.letterSpacing: 1.6
+                color: Theme.accent
+            }
+
+            Repeater {
+                model: [
+                    { key: "launcher", title: I18n.t("dock.deployTerminal"), sub: I18n.t("dock.deployTerminal.desc") },
+                    { key: "dashboard", title: Theme.dashboardTitle, sub: I18n.t("dock.deployDashboard.desc") }
+                ]
+
+                delegate: Item {
+                    required property var modelData
+                    width: parent.width
+                    height: Theme.px(38)
+
+                    Rectangle {
+                        anchors.fill: parent
+                        color: deployMouse2.containsMouse || root.deployMode === modelData.key
+                            ? Theme.alpha(Theme.accent, 0.15) : "transparent"
+                        border.width: 1
+                        border.color: root.deployMode === modelData.key
+                            ? Theme.alpha(Theme.accent, 0.65) : "transparent"
+                    }
+                    Row {
+                        anchors.left: parent.left
+                        anchors.leftMargin: Theme.px(9)
+                        anchors.verticalCenter: parent.verticalCenter
+                        spacing: Theme.px(8)
+                        GfIcon {
+                            anchors.verticalCenter: parent.verticalCenter
+                            name: modelData.key === "launcher" ? "rocket_launch" : "radar"
+                            iconSize: Theme.px(17)
+                            color: Theme.accent
+                        }
+                        Column {
+                            anchors.verticalCenter: parent.verticalCenter
+                            spacing: 0
+                            Text {
+                                text: modelData.title
+                                font.family: Theme.fontUI
+                                font.pixelSize: Theme.fs(9)
+                                font.bold: true
+                                color: Theme.text
+                            }
+                            Text {
+                                text: modelData.sub
+                                font.family: Theme.fontMono
+                                font.pixelSize: Theme.fs(7)
+                                color: Theme.textFaint
+                                elide: Text.ElideRight
+                            }
+                        }
+                    }
+                    MouseArea {
+                        id: deployMouse2
+                        anchors.fill: parent
+                        hoverEnabled: true
+                        cursorShape: Qt.PointingHandCursor
+                        onClicked: root.runDeploy(modelData.key)
+                    }
+                }
+            }
+        }
+    }
+
 }

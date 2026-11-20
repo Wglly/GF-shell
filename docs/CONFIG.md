@@ -36,6 +36,7 @@
     "enabled": true,
     "position": "bottom",
     "align": "center",
+    "deployMode": "launcher",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -97,6 +98,7 @@
     "scale": 1.0,
     "animations": true
   },
+  "terminal": { "command": "" },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -159,6 +161,9 @@
 | `sangvis` | 鐵血：近黑 + 警戒紅 | `#d34a34` |
 | `neural` | 神經網絡：深藍 + 冰青 | `#7eb2d6` |
 | `arctic` | 極地：冷灰 + 淡金 | `#cbb98a` |
+| `arknights` | 羅德島：近黑 + 工業青 + 白 | `#3fd4e6` |
+| `bf4` | 戰地 4：深藍 + 掃描線 + 橙 | `#35c7ff` |
+| `bf1` | 戰地 1：舊紙 + 黃銅 + 暗紅 | `#c9a05a` |
 | `light` | 日照：紙白底 + 深金（亮色） | `#b07d18` |
 
 預設只會寫入 `theme.*` 的色票，其餘 token（`panel`、`line`、`text`…）也會一起被覆寫，
@@ -250,6 +255,13 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - `dock.trigger`（4–48px）是 Dock 收起時的熱區高度；越大越容易滑出。收起時熱區透明、面板完全隱藏，僅留 2px 指示線；`exclusiveZone` 為 0，不推開視窗。
 - `dock.avoid = false` 時 Dock 始終完整顯示；`dock.autoHide` 只在避讓開啟時生效。
 - Dock 與狀態列同邊時，熱區與指示線畫在狀態列邊緣，Dock 本體貼住狀態列內側；`mask` 只保留 Dock/熱區輸入，狀態列其餘部分仍可點。
+- `dock.position` 可為 `top` / `bottom` / `left` / `right`；左右為垂直側邊 Dock，`dock.align` 在垂直時是 `top` / `center` / `bottom`。
+- `dock.deployMode`：`launcher` / `dashboard`，部署按鈕彈出二選一時的預設/勾選項。
+- `terminal.command`：命令輪盤「終端」使用的指令；留空會依序嘗試 kitty/foot/alacritty/wezterm。
+
+### 桌面右鍵命令輪盤
+
+在桌面空白處按右鍵，會在游標位置展開七項命令輪盤（設定、壁紙、桌面組件佈局、部署終端、網路、終端、儀表盤）。數字鍵 1–7 可直接選取；左鍵桌面或 Esc 關閉。四個遊戲主題各自有不同的中心、環線與背景；`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard 的額外樣式都只在對應 preset 下可見。
 
 
 ### 側邊欄組件

@@ -11,14 +11,14 @@
 
 | 模組 | 狀態 | 說明 |
 | --- | --- | --- |
-| 主題與面板 | ✅ | 暖炭黑 + 啞光金；**暗色 / 亮色 / 自訂**配色；字體與整體縮放；雙層框、斜切頁籤、緞帶、網點 |
+| 主題與面板 | ✅ | G&K 黑金；**Arknights / BF4 / BF1** 三套只作用於自身主題的簽名層；暗色 / 亮色 / 自訂；字體與整體縮放 |
 | 狀態列 | ✅ | 可自訂組件（OFF / LEFT / CENTER / RIGHT）、透明度 / 灰度 / 模糊 / 高度 / 位置 |
 | 狀態列彈出 | ✅ | 操作員 / 日曆 / 媒體三個詳細欄，錨定被點擊的組件位置 |
 | 部署終端 | ✅ | 分類、搜尋、鍵盤導航、單位檔案、戰鬥力 |
 | 戰術控制 | ✅ | 鏈路、音量/亮度、模組、生命徵象、通訊 |
 | 作戰地圖 | ✅ | 扇區卡、單位列表、點擊切換/聚焦 |
 | 系統停機 | ✅ | 鎖定/休眠/重啟/關機/登出 + 二次確認 |
-| Dock | ✅ | 固定 + 執行中、右鍵固定/取消/關閉、`position` 上/下/左/右（左右為垂直側欄）、熱區 4–48px |
+| Dock | ✅ | 固定 + 執行中、右鍵固定/取消/關閉、`position` 上/下/左/右（左右為垂直側欄）、部署按鈕二選一、熱區 4–48px |
 | 側邊欄 | ✅ | **11 個可拆裝組件**、左/右/OFF 分配、高度 40–100%、上/中/下對齊、滾動 |
 | 桌面組件 | ✅ | 時計、生命徵象、通訊（歌詞）、天氣、cava 頻譜、操作員卡、任務；**網格佈局編輯 + 拖動吸附 + 右下角縮放 + 單獨開關** |
 | 設定介面 | ✅ | 紙白/黑線/黑灰按鈕/黃色懸停；**首頁操作員/系統資訊/頭像上傳**；灰白背景可調；字體縮放時行高同步 |
@@ -47,6 +47,9 @@
 - **壁紙庫**：設定可匯入目錄並自動辨識圖片；狀態列/側邊欄新增壁紙組件，展開可瀏覽全部壁紙；亮色主題不再給壁紙上色。
 - **設定首頁**：操作員頭像上傳、使用者/系統資訊、快速操作；字體縮放時設定列與區塊同步放大，避免重疊。
 - **互動修正**：部署終端支援滑鼠滾輪/拖動滾動；作戰地圖改用字串窗口 ID 的手動拖放與右鍵選取移動；控制中心與狀態列彈層不再加全屏暗幕；側邊欄觸發改左右頂端/底端並可調寬度/位置。
+- **儀表盤**：macOS Launchpad 式全屏應用總覽，含主題化標題、四張狀態卡、單位搜尋、應用網格與快捷鍵；Dock 最右側部署按鈕可展開部署終端/儀表盤二選一。
+- **桌面命令輪盤**：右鍵桌面在游標位置展開七項命令（設定/壁紙/組件佈局/部署終端/網路/終端/儀表盤），1–7 快捷選取，左鍵桌面/Esc 關閉；四主題不同中心徽章、環線與背景。
+- **遊戲主題**：Arknights、BF4、BF1 只在各自 preset 下加入背景簽名、Bar/Dock 細節、儀表盤與命令輪盤外觀。
 - **作戰地圖移動**：把單位條目拖到另一扇區（或右鍵選取後點扇區），呼叫 `Compositor.moveWindow()`；快捷鍵提供 `SUPER+ALT+Tab` 與 `SUPER+SHIFT+Tab` 兩組。
 - **音量控制**：改用 `wpctl` 讀寫預設 sink，修正某些 WirePlumber 設定下 Quickshell `channelVolumes` 為空、滑桿無作用的問題；新增 IPC `volume` / `mute`。
 - **跨發行版安裝**：新增 `scripts/install-fedora.sh`（dnf、COPR、可選原始碼建置）與 `scripts/install-debian.sh`（apt、trixie-backports、可選原始碼建置），支援 `--dry-run`/`--link`/`--dest`/`--yes`。
@@ -110,6 +113,20 @@
 | 設定首頁 / 頭像 | 壁紙庫 | 可展開托盤 |
 | --- | --- | --- |
 | ![Settings home](screenshots/27-settings-home.png) | ![Wallpaper library](screenshots/28-wallpaper-library.png) | ![Tray](screenshots/29-tray.png) |
+
+### 儀表盤、命令輪盤與遊戲主題
+
+| GFL 儀表盤 | GFL 命令輪盤 | BF4 命令輪盤 |
+| --- | --- | --- |
+| ![Dashboard](screenshots/31-dashboard-gfl.png) | ![Command rose GFL](screenshots/32-command-rose-gfl.png) | ![Command rose BF4](screenshots/33-command-rose-bf4.png) |
+
+| Arknights 命令輪盤 | BF1 命令輪盤 | 垂直 Dock |
+| --- | --- | --- |
+| ![Command rose Arknights](screenshots/34-command-rose-arknights.png) | ![Command rose BF1](screenshots/35-command-rose-bf1.png) | ![Vertical dock](screenshots/30-dock-vertical.png) |
+
+| 部署按鈕二選一 | | |
+| --- | --- | --- |
+| ![Deploy chooser](screenshots/36-dock-deploy.png) | | |
 
 ## 驗證方式
 

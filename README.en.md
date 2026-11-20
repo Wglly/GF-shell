@@ -59,11 +59,13 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 | --- | --- |
 | **Status bar** | G&K emblem block, operator entry, echelon/workspace numbers, active window title, centred clock, media, CPU/memory, network, Bluetooth, volume, battery, an expandable tray (icons + recent messages), wallpaper library, and entries for the operation map, tactical control and system halt. Secondary blocks are hidden automatically on narrow screens. Each block can be switched off and moved between left / centre / right in Settings → Status bar → Components. Network, Bluetooth and performance are independent blocks; click them for details, and the network panel lists nearby Wi-Fi networks. |
 | **Deployment terminal (Launcher)** | Full-screen unit list with categories (all/recent/network/development/media/office/combat/system), fuzzy search, keyboard navigation, a unit dossier on the right (CLASS/STATUS/SOURCE/EXEC), a DEPLOY button, and mouse-wheel / drag scrolling. |
+| **Dashboard** | A macOS-Launchpad-style full-screen overview: a themed title, four status cards (system / power / link / media), unit search, an app grid, and SETTINGS / CONTROL / MAP / LAUNCHER shortcuts. GFL, Arknights, BF4 and BF1 each get a different title, background and card outline. |
 | **Tactical control (Control Center)** | Link status (Wi-Fi/Bluetooth), segmented volume/brightness sliders, module switches, CPU/MEM/BAT segmented gauges, notification history and media controls. |
 | **Operation map (Overview)** | One "sector" card per workspace listing its units; click a sector to switch workspaces, click a unit to focus its window; drag a unit onto another sector, or right-click a unit and click the target sector, to move that window. |
+| **Command rose** | A **desktop right-click** opens a Battlefield-style Q command rose at the pointer: Settings, Wallpaper, Widget Layout, Deploy Terminal, Network, Terminal and Dashboard. Click an option or press 1–7; left-click the desktop / Esc closes. GFL, Arknights, BF4 and BF1 each have their own centre badge, rings and backdrop. |
 | **System halt (Power)** | Lock / suspend / restart / shut down / log out. Dangerous actions need a second confirmation (ENTER twice); ESC cancels. |
 | **HUD widgets** | Large clock, system vitals, transmission (with lyrics), weather, cava audio spectrum, operator card and current mission; each can be toggled. A **desktop layout editor** overlays a snap grid; drag widgets, resize from the bottom-right corner, and toggle each one ON/OFF. |
-| **Echelon (Dock)** | Pinned and running units (up to 12), with running apps appended automatically; pin more by typing an app name in Settings → Dock. Right-click a unit to pin/unpin it, open a new window or close it. `dock.position` supports top / bottom / left / right; left/right render a **vertical side dock**, while `dock.align` handles vertical top/centre/bottom or horizontal left/centre/right. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable, and the hidden **trigger area is configurable (4–48 px)**. With **Avoid windows** off the dock stays fully visible; when hidden, only an invisible hot zone and a thin line remain, and the panel appears only on expansion. When the dock shares an edge with the bar, the hot zone/indicator sit on the bar and the dock body attaches to its inner edge instead of floating. |
+| **Echelon (Dock)** | Pinned and running units (up to 12), with running apps appended automatically; pin more by typing an app name in Settings → Dock. Right-click a unit to pin/unpin it, open a new window or close it. `dock.position` supports top / bottom / left / right; left/right render a **vertical side dock**, while `dock.align` handles vertical top/centre/bottom or horizontal left/centre/right. It hides while windows are open and expands when the pointer reaches the bottom hot zone, pushing windows away via an exclusive zone. Icon size / opacity / grayscale / blur are adjustable, and the hidden **trigger area is configurable (4–48 px)**. With **Avoid windows** off the dock stays fully visible; when hidden, only an invisible hot zone and a thin line remain, and the panel appears only on expansion. When the dock shares an edge with the bar, the hot zone/indicator sit on the bar and the dock body attaches to its inner edge instead of floating. The rightmost deploy button expands into a **Deploy Terminal / Dashboard** chooser; Settings → Dock → Deploy Button sets its default. |
 | **Notifications** | "Incoming transmission" toasts in the top-right (slide in, auto-dismiss after 7 s, click to dismiss) plus history in the control centre. |
 | **OSD** | Volume/brightness HUD with a segmented meter and a large readout. |
 | **Calendar** | Schedule panel dropped from the clock: month navigation, today highlight, week number. |
@@ -73,7 +75,7 @@ Documentation: [Install](docs/INSTALL.en.md) · [Configuration](docs/CONFIG.en.m
 
 Also:
 
-- Five theme presets: **G&K STANDARD**, **SANGVIS FERRI**, **NEURAL CLOUD**, **ARCTIC OPS**, **DAYLIGHT OPS** (light); or choose DARK / LIGHT / CUSTOM and set BG0/BG1/PANEL/TEXT/ACCENT hex colours.
+- Eight theme presets: **G&K STANDARD**, **SANGVIS FERRI**, **NEURAL CLOUD**, **ARCTIC OPS**, **RHODES ISLAND (Arknights)**, **BATTLEFIELD 4**, **BATTLEFIELD 1**, **DAYLIGHT OPS** (light); or choose DARK / LIGHT / CUSTOM and set BG0/BG1/PANEL/TEXT/ACCENT hex colours. The three game themes only add their own backdrop signatures, bar/dock details, dashboard and command-rose skins inside that theme; other themes are untouched.
 - Global scaling is split into `SHELL SCALE` (everything) and `FONT SCALE` (text plus popup/card layout); the settings veil has adjustable opacity and gray.
 - One icon font (a Material Symbols subset renamed *GF Tactical Icons*, ~1 MB, so it never collides with a system font) and four bundled text fonts (Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono).
 - Four interface languages: **Traditional Chinese / Simplified Chinese / English / Japanese**; switch live in Settings → System → Language (the settings window itself is translated too).
@@ -128,9 +130,18 @@ Also:
 | --- | --- | --- |
 | ![Settings home](docs/screenshots/27-settings-home.png) | ![Wallpaper library](docs/screenshots/28-wallpaper-library.png) | ![Tray](docs/screenshots/29-tray.png) |
 
-| Vertical dock (left) | | |
+| Dashboard | Command rose (GFL) | Command rose (BF4) |
 | --- | --- | --- |
-| ![Vertical dock](docs/screenshots/30-dock-vertical.png) | | |
+| ![Dashboard](docs/screenshots/31-dashboard-gfl.png) | ![Command rose GFL](docs/screenshots/32-command-rose-gfl.png) | ![Command rose BF4](docs/screenshots/33-command-rose-bf4.png) |
+
+| Command rose (Arknights) | Command rose (BF1) | Vertical dock |
+| --- | --- | --- |
+| ![Command rose Arknights](docs/screenshots/34-command-rose-arknights.png) | ![Command rose BF1](docs/screenshots/35-command-rose-bf1.png) | ![Vertical dock](docs/screenshots/30-dock-vertical.png) |
+
+| Dock deploy chooser | | |
+| --- | --- | --- |
+| ![Dock deploy](docs/screenshots/36-dock-deploy.png) | | |
+
 
 The same shell running on **niri** (nested inside Hyprland for testing):
 

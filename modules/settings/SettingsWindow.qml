@@ -684,6 +684,9 @@ PanelWindow {
                                         { value: "sangvis", label: "SANGVIS" },
                                         { value: "neural", label: "NEURAL" },
                                         { value: "arctic", label: "ARCTIC" },
+                                        { value: "arknights", label: "RHODES" },
+                                        { value: "bf4", label: "BF4" },
+                                        { value: "bf1", label: "BF1" },
                                         { value: "light", label: "DAYLIGHT" }
                                     ]
                                     current: Settings.get("theme.preset", "gfl")
@@ -1043,6 +1046,18 @@ PanelWindow {
                                     }
                                     current: Settings.get("dock.align", "center")
                                     onSelected: v => Settings.set("dock.align", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.deployMode"); desc: I18n.t("set.deployMode.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "launcher", label: "DEPLOY TERMINAL" },
+                                        { value: "dashboard", label: "DASHBOARD" }
+                                    ]
+                                    current: Settings.get("dock.deployMode", "launcher")
+                                    onSelected: v => Settings.set("dock.deployMode", v)
                                 }
                             }
                             SgRow {

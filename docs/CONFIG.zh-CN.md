@@ -36,6 +36,7 @@
     "enabled": true,
     "position": "bottom",
     "align": "center",
+    "deployMode": "launcher",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -97,6 +98,7 @@
     "scale": 1.0,
     "animations": true
   },
+  "terminal": { "command": "" },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -159,6 +161,9 @@
 | `sangvis` | 铁血：近黑 + 警戒红 | `#d34a34` |
 | `neural` | 神经网络：深蓝 + 冰青 | `#7eb2d6` |
 | `arctic` | 极地：冷灰 + 淡金 | `#cbb98a` |
+| `arknights` | 罗德岛：近黑 + 工业青 + 白 | `#3fd4e6` |
+| `bf4` | 战地 4：深蓝 + 扫描线 + 橙 | `#35c7ff` |
+| `bf1` | 战地 1：旧纸 + 黄铜 + 暗红 | `#c9a05a` |
 | `light` | 日照：纸白底 + 深金（亮色） | `#b07d18` |
 
 预设会写入整个 `theme.*` 色板，包括 `panel`、`line`、`text`…，所以切换后 UI 会立刻整体变化。
@@ -292,6 +297,10 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 - `wallpaper.dir`：要导入的壁纸目录；支持 png/jpg/jpeg/webp/avif/bmp。状态栏和侧边栏壁纸库会列出全部图片。
 - `user.avatar`：自定义头像路径；设置首页 BROWSE 会复制到 `~/.config/gf-shell/avatar`。
 - 亮色主题不再给壁纸加纸白洗色；`wallpaper.dim` 仅在暗色主题生效。
+
+### 桌面右键命令轮盘
+
+在桌面空白处按右键，会在光标位置展开七项命令轮盘（设置、壁纸、桌面组件布局、部署终端、网络、终端、仪表盘）。数字键 1–7 可直接选择；左键桌面或 Esc 关闭。四个游戏主题各有不同的中心、环线与背景；`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard 的额外样式只在对应预设下可见。
 
 ## 壁纸
 

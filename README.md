@@ -57,11 +57,13 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | --- | --- |
 | **狀態列 (Bar)** | G&K 識別塊、操作員入口、梯隊/工作區編號、當前單位（視窗）標題、中央時鐘、通訊/CPU/記憶體/網路/藍牙/音量/電池/可展開托盤（圖示＋最近訊息）、壁紙庫、作戰地圖、戰術控制、系統停機。窄螢幕會自動隱藏次要區塊；組件可在「設定 → 狀態列 → 組件」逐項開關，並指定左/中/右。網路、藍牙、性能監控為獨立組件，點擊展開詳情；網路詳情會列出附近可連接的 Wi-Fi。 |
 | **部署終端 (Launcher)** | 全螢幕單位清單：分類（全部/最近/通訊/開發/媒體/文書/作戰/系統）、模糊搜尋、鍵盤導航、右側單位檔案（CLASS/STATUS/SOURCE/EXEC）與 DEPLOY；支援滑鼠滾輪與拖動滾動。 |
+| **儀表盤 (Dashboard)** | macOS Launchpad 式全屏總覽：頂部主題化標題、系統/電力/鏈路/媒體四張狀態卡、單位搜尋、應用網格與 SETTINGS/CONTROL/MAP/LAUNCHER 快捷鍵；GFL、Arknights、BF4、BF1 各自有不同的標題、背景與卡片輪廓。 |
 | **戰術控制 (Control Center)** | 鏈路（Wi-Fi/藍牙）、音量/亮度分段滑條、模組開關、CPU/MEM/BAT 分段儀表、通訊紀錄、隨媒體控制。 |
 | **作戰地圖 (Overview)** | 每個工作區一張「扇區」卡，列出其中單位；點扇區切換工作區、點單位聚焦視窗；把單位拖到另一扇區，或右鍵單位後點擊目標扇區，即可移動視窗。 |
+| **命令輪盤 (Command Rose)** | **桌面右鍵**在滑鼠位置展開《戰地》Q 命令式輪盤：設定、壁紙、桌面組件佈局、部署終端、網路、終端、儀表盤。七個選項可點擊或按 1–7；左鍵桌面/Esc 關閉。GFL、Arknights、BF4、BF1 各有不同的中心徽章、環線與背景。 |
 | **系統停機 (Power)** | 鎖定/休眠/重啟/關機/登出；危險操作需二次確認（ENTER 兩次），ESC 取消。 |
 | **HUD 小工具** | 大時鐘、系統生命徵象、通訊（含歌詞）、天氣、cava 音樂頻譜、操作員卡、當前任務；逐項開關。另有 **桌面佈局編輯模式**：疊加網格、拖動吸附、右下角自由縮放、每個組件可單獨 ON/OFF。 |
-| **梯隊 (Dock)** | 固定與執行中的單位依序顯示（上限 12）；右鍵單位可固定/取消固定、開新視窗或關閉；設定 → Dock 可輸入應用名稱直接固定。`dock.position` 可選上/下/左/右；左右時 Dock **垂直貼邊**，`dock.align` 控制垂直上/中/下或水平左/中/右；有視窗時自動收起；滑到底部熱區才展開，並用 exclusive zone 把視窗推開。圖示尺寸/透明度/灰度/模糊可調；收起時的 **觸發面積 4–48px** 也可調。關閉「避讓視窗」後 Dock 始終完整顯示；收起時只保留不可見熱區與細線，展開才顯示面板。與狀態列同邊時，熱區與指示線落在狀態列上，Dock 本體貼住狀態列內側，不再浮空。 |
+| **梯隊 (Dock)** | 固定與執行中的單位依序顯示（上限 12）；右鍵單位可固定/取消固定、開新視窗或關閉；設定 → Dock 可輸入應用名稱直接固定。`dock.position` 可選上/下/左/右；左右時 Dock **垂直貼邊**，`dock.align` 控制垂直上/中/下或水平左/中/右；有視窗時自動收起；滑到底部熱區才展開，並用 exclusive zone 把視窗推開。圖示尺寸/透明度/灰度/模糊可調；收起時的 **觸發面積 4–48px** 也可調。關閉「避讓視窗」後 Dock 始終完整顯示；收起時只保留不可見熱區與細線，展開才顯示面板。與狀態列同邊時，熱區與指示線落在狀態列上，Dock 本體貼住狀態列內側，不再浮空。最右側部署按鈕會展開 **部署終端 / 儀表盤** 二選一，也可在「設定 → Dock → 部署按鈕」指定預設。 |
 | **通知** | 右上角「通訊」彈窗（滑入、7 秒自動回收、點擊關閉）＋控制中心內的歷史紀錄。 |
 | **OSD** | 音量/亮度 HUD，分段儀表 + 大號數字。 |
 | **日曆** | 點時鐘下拉的行程面板：月份切換、今日高亮、週數。 |
@@ -71,7 +73,7 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 
 其他：
 
-- 五套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（亮色）；亦可選 DARK / LIGHT / CUSTOM，自訂 BG0/BG1/PANEL/TEXT/ACCENT 十六進位色。
+- 八套主題預設：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（亮色）；亦可選 DARK / LIGHT / CUSTOM，自訂 BG0/BG1/PANEL/TEXT/ACCENT 十六進位色。三個遊戲主題只在該主題下加入自己的背景簽名、Bar/Dock 細節、儀表盤與命令輪盤外觀，不影響其他主題。
 - 全域縮放：`SHELL SCALE`（整體）與 `FONT SCALE`（文字、展開欄與卡片佈局）分開調整；設定背景的灰白遮罩可調透明度與灰度。
 - 統一圖示字型（Material Symbols 子集，改名為 *GF Tactical Icons*，約 1 MB，避免與系統字型撞名）、四種隨附字型（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 介面支援四種語言：**繁體中文 / 简体中文 / English / 日本語**；在「副官設置 → 系統 → 語言」即時切換（設定頁本身也會跟著換）。
@@ -126,9 +128,18 @@ GF-shell 是一個從零撰寫的 Quickshell (Qt Quick) 桌面外殼，視覺語
 | --- | --- | --- |
 | ![Settings home](docs/screenshots/27-settings-home.png) | ![Wallpaper library](docs/screenshots/28-wallpaper-library.png) | ![Tray](docs/screenshots/29-tray.png) |
 
-| Vertical dock (left) | | |
+| Dashboard | Command rose (GFL) | Command rose (BF4) |
 | --- | --- | --- |
-| ![Vertical dock](docs/screenshots/30-dock-vertical.png) | | |
+| ![Dashboard](docs/screenshots/31-dashboard-gfl.png) | ![Command rose GFL](docs/screenshots/32-command-rose-gfl.png) | ![Command rose BF4](docs/screenshots/33-command-rose-bf4.png) |
+
+| Command rose (Arknights) | Command rose (BF1) | Vertical dock |
+| --- | --- | --- |
+| ![Command rose Arknights](docs/screenshots/34-command-rose-arknights.png) | ![Command rose BF1](docs/screenshots/35-command-rose-bf1.png) | ![Vertical dock](docs/screenshots/30-dock-vertical.png) |
+
+| Dock deploy chooser | | |
+| --- | --- | --- |
+| ![Dock deploy](docs/screenshots/36-dock-deploy.png) | | |
+
 
 同一套外殼跑在 **niri** 上（嵌套於 Hyprland 測試的視窗）：
 

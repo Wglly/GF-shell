@@ -36,6 +36,7 @@
     "enabled": true,
     "position": "bottom",
     "align": "center",
+    "deployMode": "launcher",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -97,6 +98,7 @@
     "scale": 1.0,
     "animations": true
   },
+  "terminal": { "command": "" },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -159,6 +161,9 @@
 | `sangvis` | サングヴィス・フェリ：ほぼ黒 + 警告の赤 | `#d34a34` |
 | `neural` | ニューラルクラウド：深い青 + アイスシアン | `#7eb2d6` |
 | `arctic` | アークティック：冷たいグレー + 淡い金 | `#cbb98a` |
+| `arknights` | ロドスアイランド：黒 + 産業シアン + 白 | `#3fd4e6` |
+| `bf4` | Battlefield 4：深い青 + スキャンライン + 橙 | `#35c7ff` |
+| `bf1` | Battlefield 1：古紙 + 真鍮 + 暗赤 | `#c9a05a` |
 | `light` | デイライト：紙白＋深い金（ライト） | `#b07d18` |
 
 プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が
@@ -271,6 +276,10 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - `wallpaper.dir`：取り込む壁紙ディレクトリ（png/jpg/jpeg/webp/avif/bmp）。バーとサイドバーの壁紙ライブラリに全画像が並びます。
 - `user.avatar`：カスタムアバターのパス。設定ホームの BROWSE で `~/.config/gf-shell/avatar` にコピーされます。
 - ライトテーマでは壁紙に紙白の色を重ねません。`wallpaper.dim` はダークテーマのみ有効です。
+
+### デスクトップ右クリックのコマンドローズ
+
+デスクトップの空白を右クリックすると、ポインタ位置に 7 項目のコマンドローズ（設定、壁紙、ウィジェット配置、デプロイ端末、ネットワーク、ターミナル、ダッシュボード）が開きます。1–7 キーで選択、左クリックまたは Esc で閉じます。4 つのゲームテーマはそれぞれ中心・リング・背景が異なります。`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard の追加スタイルは対応するプリセットでのみ表示されます。
 
 ## 壁紙
 

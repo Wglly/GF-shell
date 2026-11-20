@@ -64,8 +64,10 @@ IPC](#キーバインドと-ipc)
 | --- | --- |
 | **ステータスバー (Bar)** | G&K エンブレム、オペレーター入口、エシュロン／ワークスペース番号、アクティブウィンドウのタイトル、中央時計、メディア、CPU／メモリ、ネットワーク、Bluetooth、音量、バッテリー、展開式トレイ（アイコン＋最近のメッセージ）、壁紙ライブラリ、作戦マップ／戦術コントロール／システム停止への入口。狭い画面では副次ブロックを自動的に隠します。各ブロックは「設定 → ステータスバー → コンポーネント」で OFF／左／中央／右に変更できます。ネットワーク／Bluetooth／パフォーマンスは独立したブロックで、クリックすると詳細が開きます。ネットワーク詳細には付近の Wi-Fi 一覧が表示されます。 |
 | **デプロイ端末 (Launcher)** | 全画面のユニット一覧。カテゴリ（すべて／最近／通信／開発／メディア／オフィス／戦闘／システム）、あいまい検索、キーボード操作、右側のユニット情報（CLASS／STATUS／SOURCE／EXEC）と DEPLOY ボタン。マウスホイール／ドラッグでスクロールできます。 |
+| **ダッシュボード** | macOS Launchpad 風の全画面一覧。テーマ別タイトル、システム／電力／リンク／メディアの 4 枚のカード、ユニット検索、アプリグリッド、SETTINGS／CONTROL／MAP／LAUNCHER ショートカット。GFL／Arknights／BF4／BF1 でタイトル・背景・カード輪郭が変わります。 |
 | **戦術コントロール (Control Center)** | リンク状態（Wi-Fi／Bluetooth）、音量・亮度のセグメントスライダー、モジュールスイッチ、CPU／MEM／BAT のセグメントゲージ、通知履歴、メディア操作。 |
 | **作戦マップ (Overview)** | ワークスペースごとに 1 枚の「セクター」カードを表示し、その中のユニットを一覧。セクターをクリックでワークスペース移動、ユニットをクリックでそのウィンドウにフォーカス。ユニットを別セクターへドラッグするか、右クリックして対象セクターをクリックするとウィンドウを移動できます。 |
+| **コマンドローズ** | **デスクトップ右クリック**で《Battlefield》の Q コマンド風ホイールを表示：設定、壁紙、ウィジェット配置、デプロイ端末、ネットワーク、ターミナル、ダッシュボード。クリックまたは 1–7 で選択、左クリック／Esc で閉じます。GFL／Arknights／BF4／BF1 で中心バッジ・リング・背景が異なります。 |
 | **システム停止 (Power)** | ロック／サスペンド／再起動／シャットダウン／ログアウト。危険な操作は 2 回目の確認が必要（ENTER 2 回）、ESC でキャンセル。 |
 | **HUD ウィジェット** | 大型時計、システムバイタル、通信（歌詞つき）、天気、cava オーディオスペクトル、オペレーターカード、現在の任務。個別にオン／オフ可能。**デスクトップレイアウト編集**ではグリッドを重ね、ドラッグで移動、右下角でリサイズできます。 |
 | **エシュロン (Dock)** | 固定済みと実行中のユニットを順に表示（上限 12）。実行中のアプリは自動追加。設定 → Dock でアプリ名を入力して固定できます。ユニットを右クリックすると固定／解除、新しいウィンドウ、閉じるを選べます。`dock.position` は上／下／左／右に対応。左右では **縦型サイド Dock** になり、`dock.align` が縦の上／中央／下（または横の左／中央／右）を決めます。ウィンドウがあると自動的に隠れ、下部のホットゾーンにポインタが来ると展開して exclusive zone でウィンドウを押し出します。アイコンサイズ／透明度／グレースケール／ブラーに加え、非表示時の **トリガー領域（4–48px）** も調整できます。**ウィンドウ回避をオフ**にすると Dock は常に表示され、非表示時は不可視のホットゾーンと細線だけになります。バーと同じ辺にある場合、ホットゾーンと線はバー上に表示され、Dock 本体はバーの内側に密着します。 |
@@ -78,7 +80,7 @@ IPC](#キーバインドと-ipc)
 
 その他：
 
-- 5 つのテーマプリセット：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**DAYLIGHT OPS**（ライト）。DARK / LIGHT / CUSTOM を選び、BG0/BG1/PANEL/TEXT/ACCENT を 16 進カラーで指定できます。
+- 8 つのテーマプリセット：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**DAYLIGHT OPS**（ライト）。DARK / LIGHT / CUSTOM を選び、BG0/BG1/PANEL/TEXT/ACCENT を 16 進カラーで指定できます。3 つのゲームテーマは、そのテーマ内だけに背景サイン、バー／Dock のディテール、ダッシュボード、コマンドローズの外観を追加し、他のテーマには影響しません。
 - 全体スケールは `SHELL SCALE`（全体）と `FONT SCALE`（文字と展開パネル／カードのレイアウト）に分離。設定画面のベールは透明度とグレーを調整できます。
 - アイコンフォントを 1 つに統一（Material Symbols のサブセットを *GF Tactical Icons* に改名、約 1 MB、システムフォントとの衝突を回避）。テキストフォント 4 種を同梱（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - UI は **繁體中文 / 简体中文 / English / 日本語** の 4 言語対応。設定 → システム → 言語で即時切替できます（設定画面自体も翻訳されます）。
@@ -133,9 +135,18 @@ IPC](#キーバインドと-ipc)
 | --- | --- | --- |
 | ![Settings home](docs/screenshots/27-settings-home.png) | ![Wallpaper library](docs/screenshots/28-wallpaper-library.png) | ![Tray](docs/screenshots/29-tray.png) |
 
-| Vertical dock (left) | | |
+| Dashboard | Command rose (GFL) | Command rose (BF4) |
 | --- | --- | --- |
-| ![Vertical dock](docs/screenshots/30-dock-vertical.png) | | |
+| ![Dashboard](docs/screenshots/31-dashboard-gfl.png) | ![Command rose GFL](docs/screenshots/32-command-rose-gfl.png) | ![Command rose BF4](docs/screenshots/33-command-rose-bf4.png) |
+
+| Command rose (Arknights) | Command rose (BF1) | Vertical dock |
+| --- | --- | --- |
+| ![Command rose Arknights](docs/screenshots/34-command-rose-arknights.png) | ![Command rose BF1](docs/screenshots/35-command-rose-bf1.png) | ![Vertical dock](docs/screenshots/30-dock-vertical.png) |
+
+| Dock deploy chooser | | |
+| --- | --- | --- |
+| ![Dock deploy](docs/screenshots/36-dock-deploy.png) | | |
+
 
 同じシェルを **niri** 上で実行した様子（Hyprland 内にネストしたウィンドウ）：
 
