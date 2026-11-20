@@ -108,6 +108,7 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -342,6 +343,12 @@ OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從�
 - `wallpaper.dir`：要匯入的壁紙目錄；支援 png/jpg/jpeg/webp/avif/bmp。狀態列與側邊欄的壁紙庫會列出全部圖片。
 - `user.avatar`：自訂頭像路徑；設定首頁的 BROWSE 會複製到 `~/.config/gf-shell/avatar`。
 - 亮色主題不再對壁紙加紙白洗色；`wallpaper.dim` 僅在暗色主題套用。
+
+## 字型
+
+`fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` 分別指定介面、標題數字、數據與小標籤的字型家族；空字串代表隨附字型（Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani）。
+
+設定 → 外觀 → **TYPOGRAPHY** 會用 `fc-list` 掃描 fontconfig 的本地字型，可切換角色、搜尋、預覽並點選套用；「重設此角色」回到隨附字型。字型清單由 `services/Fonts.qml` 自動載入。
 
 ## 合成器設定
 

@@ -108,6 +108,7 @@ Config file: `~/.config/gf-shell/config.json`
     "animations": true
   },
   "terminal": { "command": "" },
+  "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -323,6 +324,12 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 - `wallpaper.dir`: folder to import (png/jpg/jpeg/webp/avif/bmp). The bar and sidebar wallpaper libraries list every image.
 - `user.avatar`: custom avatar path; BROWSE on the settings home copies it to `~/.config/gf-shell/avatar`.
 - Light themes no longer tint the wallpaper with a paper-white wash; `wallpaper.dim` applies to dark themes.
+
+## Typography
+
+`fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` select families for the interface, display/numbers, data and small labels. An empty string uses the bundled font (Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani).
+
+Settings → Appearance → **TYPOGRAPHY** scans fontconfig with `fc-list`; pick a role, search, preview and click a family, or reset the role to the bundled font. The list is loaded by `services/Fonts.qml`.
 
 ## Compositor
 

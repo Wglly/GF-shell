@@ -108,6 +108,7 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -303,6 +304,12 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 ### デスクトップ右クリックのコマンドローズ
 
 デスクトップの空白を右クリックすると、ポインタ位置に 7 項目のコマンドローズ（設定、壁紙、ウィジェット配置、デプロイ端末、ネットワーク、ターミナル、ダッシュボード）が開きます。1–7 キーで選択、左クリックまたは Esc で閉じます。4 つのゲームテーマはそれぞれ中心・リング・装飾が異なり、**全画面の暗幕はありません**。`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard の追加スタイルは対応するプリセットでのみ表示されます。
+
+## フォント
+
+`fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` で UI、見出し数字、データ、小ラベルのフォントファミリーを指定します。空文字は同梱フォント（Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani）です。
+
+設定 → 外観 → **TYPOGRAPHY** は `fc-list` で fontconfig のローカルフォントを検出し、役割の切り替え、検索、プレビュー、クリック適用ができます。「この役割をリセット」で同梱フォントに戻ります。一覧は `services/Fonts.qml` が読み込みます。
 
 ## コンポジタ
 

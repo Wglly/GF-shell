@@ -108,6 +108,7 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -324,6 +325,12 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 ### 桌面右键命令轮盘
 
 在桌面空白处按右键，会在光标位置展开七项命令轮盘（设置、壁纸、桌面组件布局、部署终端、网络、终端、仪表盘）。数字键 1–7 可直接选择；左键桌面或 Esc 关闭。四个游戏主题各有不同的中心、环线与装饰，**没有全屏暗幕**；`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard 的额外样式只在对应预设下可见。
+
+## 字体
+
+`fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` 分别指定界面、标题数字、数据与小标签的字体家族；空字符串代表随附字体（Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani）。
+
+设置 → 外观 → **TYPOGRAPHY** 会用 `fc-list` 扫描 fontconfig 的本地字体，可切换角色、搜索、预览并点击应用；“重置此角色”回到随附字体。字体列表由 `services/Fonts.qml` 自动加载。
 
 ## 合成器设置
 

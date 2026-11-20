@@ -40,6 +40,38 @@ PanelWindow {
         Settings.get("theme.settingsGray", 0.22))
     readonly property real settingsVeilAlpha: Settings.get("theme.settingsOpacity", 0.9)
 
+    property string fontRole: "ui"
+    property string fontQuery: ""
+
+    function fontFor(role) {
+        var defaults = { ui: "Chakra Petch", display: "Saira Condensed",
+            mono: "Share Tech Mono", label: "Rajdhani" };
+        var value = Settings.get("fonts." + role, "");
+        return value !== "" ? value : defaults[role];
+    }
+
+    function setFont(family) {
+        Settings.set("fonts." + root.fontRole, family);
+    }
+
+    readonly property var fontChoices: {
+        var q = root.fontQuery.toLowerCase().trim();
+        var core = ["Chakra Petch", "Saira Condensed", "Share Tech Mono", "Rajdhani", "Noto Sans CJK SC"];
+        var all = core.concat(Fonts.families);
+        var seen = {};
+        var out = [];
+        for (var i = 0; i < all.length; i++) {
+            var f = "" + all[i];
+            if (f === "" || seen[f])
+                continue;
+            if (q !== "" && f.toLowerCase().indexOf(q) < 0)
+                continue;
+            seen[f] = true;
+            out.push(f);
+        }
+        return out;
+    }
+
     property int tab: ShellState.settingsTab
     onTabChanged: {
         ShellState.settingsTab = root.tab;
@@ -884,6 +916,118 @@ PanelWindow {
                             SgButton {
                                 text: I18n.t("set.resetTheme")
                                 onClicked: Settings.applyPreset("gfl")
+                            }
+
+                            SgSection {
+                                width: parent.width; number: "05"; title: "TYPOGRAPHY"
+                                note: I18n.t("set.typography.note")
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.fontRole")
+                                desc: I18n.t("set.fontRole.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "ui", label: "UI" },
+                                        { value: "display", label: "DISPLAY" },
+                                        { value: "mono", label: "MONO" },
+                                        { value: "label", label: "LABEL" }
+                                    ]
+                                    current: root.fontRole
+                                    onSelected: v => root.fontRole = v
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.fontCurrent")
+                                desc: I18n.t("set.fontCurrent.desc")
+                                Text {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    text: root.fontFor(root.fontRole)
+                                    font.family: root.fontFor(root.fontRole)
+                                    font.pixelSize: Theme.fs(11)
+                                    color: Sg.ink
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.fontSearch")
+                                desc: I18n.t("set.fontSearch.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(300)
+                                    text: root.fontQuery
+                                    placeholder: I18n.t("set.fontSearch.placeholder")
+                                    onTextChanged: root.fontQuery = text
+                                }
+                            }
+                            Flickable {
+                                id: fontScroller
+                                width: parent.width
+                                height: Theme.fpx(190)
+                                clip: true
+                                contentWidth: width
+                                contentHeight: fontColumn.height
+                                boundsBehavior: Flickable.StopAtBounds
+
+                                WheelHandler {
+                                    onWheel: wheel => {
+                                        var dy = (wheel.angleDelta.y / 120) * Theme.fpx(64);
+                                        fontScroller.contentY = Math.max(0, Math.min(fontScroller.contentHeight - fontScroller.height, fontScroller.contentY - dy));
+                                        wheel.accepted = true;
+                                    }
+                                }
+
+                                Column {
+                                    id: fontColumn
+                                    width: parent.width
+                                    spacing: 1
+
+                                    Repeater {
+                                        model: root.fontChoices
+                                        delegate: Item {
+                                            required property string modelData
+                                            width: fontColumn.width
+                                            height: Theme.fpx(28)
+                                            readonly property bool active: root.fontFor(root.fontRole) === modelData
+
+                                            Rectangle {
+                                                anchors.fill: parent
+                                                color: active ? Theme.alpha(Sg.yellow, 0.22)
+                                                    : (fontMouse.containsMouse ? Theme.alpha(Sg.ink, 0.06) : "transparent")
+                                                border.width: 0
+                                            }
+                                            Text {
+                                                anchors.left: parent.left
+                                                anchors.leftMargin: Theme.fpx(8)
+                                                anchors.verticalCenter: parent.verticalCenter
+                                                text: modelData
+                                                font.family: modelData
+                                                font.pixelSize: Theme.fs(11)
+                                                color: Sg.ink
+                                            }
+                                            MouseArea {
+                                                id: fontMouse
+                                                anchors.fill: parent
+                                                hoverEnabled: true
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: root.setFont(modelData)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Row {
+                                spacing: Theme.fpx(6)
+                                SgButton {
+                                    text: I18n.t("set.fontReset")
+                                    onClicked: root.setFont("")
+                                }
+                                SgButton {
+                                    text: I18n.t("set.fontRefresh")
+                                    onClicked: Fonts.refresh()
+                                }
                             }
                         }
 

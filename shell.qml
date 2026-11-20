@@ -45,6 +45,10 @@ ShellRoot {
 
     // --------------------------------------------------------- 主题令牌绑定
     Binding { target: Theme; property: "preset"; value: Settings.get("theme.preset", "gfl") }
+    Binding { target: Theme; property: "fontUI"; value: Settings.get("fonts.ui", "") !== "" ? Settings.get("fonts.ui", "") : "Chakra Petch" }
+    Binding { target: Theme; property: "fontDisplay"; value: Settings.get("fonts.display", "") !== "" ? Settings.get("fonts.display", "") : "Saira Condensed" }
+    Binding { target: Theme; property: "fontMono"; value: Settings.get("fonts.mono", "") !== "" ? Settings.get("fonts.mono", "") : "Share Tech Mono" }
+    Binding { target: Theme; property: "fontLabel"; value: Settings.get("fonts.label", "") !== "" ? Settings.get("fonts.label", "") : "Rajdhani" }
     Binding { target: Theme; property: "light"; value: Settings.get("theme.mode", "dark") === "light" }
     Binding { target: Theme; property: "bf1Radius"; value: Settings.get("theme.bf1Radius", 12) }
     Binding { target: Theme; property: "accent"; value: Settings.get("theme.accent", "#e8bd4f") }
@@ -203,6 +207,9 @@ ShellRoot {
         function close(): void {
             ShellState.close();
         }
+
+
+
 
 
 

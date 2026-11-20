@@ -151,6 +151,9 @@ QtObject {
             terminal: {
                 command: ""
             },
+            fonts: {
+                ui: "", display: "", mono: "", label: ""
+            },
             compositor: {
                 hypr: {
                     gapsIn: 5, gapsOut: 10, borderWidth: 1, rounding: 8,
