@@ -30,6 +30,7 @@ Item {
     Rectangle {
         anchors.fill: parent
         color: Theme.alpha(Theme.bg0, 0.75)
+        radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         border.width: 1
         border.color: root.focused ? Theme.alpha(root.accentColor, 0.85) : Theme.alpha(root.accentColor, 0.35)
         Behavior on border.color {

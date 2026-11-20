@@ -45,6 +45,7 @@ ShellRoot {
 
     // --------------------------------------------------------- 主题令牌绑定
     Binding { target: Theme; property: "preset"; value: Settings.get("theme.preset", "gfl") }
+    Binding { target: Theme; property: "bf1Radius"; value: Settings.get("theme.bf1Radius", 12) }
     Binding { target: Theme; property: "accent"; value: Settings.get("theme.accent", "#e8bd4f") }
     Binding { target: Theme; property: "accent2"; value: Settings.get("theme.accent2", "#6f9bc4") }
     Binding { target: Theme; property: "scanlines"; value: Settings.get("theme.scanlines", true) }
@@ -199,6 +200,7 @@ ShellRoot {
         function close(): void {
             ShellState.close();
         }
+
 
         function widgets(): void {
             ShellState.toggleWidgetsEditing();

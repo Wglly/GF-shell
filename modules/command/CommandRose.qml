@@ -217,7 +217,7 @@ PanelWindow {
             Rectangle {
                 visible: root.bf1
                 anchors.fill: parent
-                radius: Theme.px(12)
+                radius: Theme.px(Theme.bf1Radius)
                 color: Theme.alpha(Theme.bg0, 0.95)
                 border.width: 1
                 border.color: Theme.alpha(Theme.accent, 0.7)
@@ -280,7 +280,7 @@ PanelWindow {
             Rectangle {
                 visible: root.bf1
                 anchors.fill: parent
-                radius: Theme.px(8)
+                radius: Theme.bf1Radius > 0 ? Theme.px(Math.max(2, Theme.bf1Radius - 2)) : 0
                 color: optionMouse.containsMouse ? Theme.alpha(Theme.accent, 0.2) : Theme.alpha(Theme.bg1, 0.94)
                 border.width: 1
                 border.color: optionMouse.containsMouse ? Theme.accentHi : Theme.alpha(Theme.accent, 0.5)

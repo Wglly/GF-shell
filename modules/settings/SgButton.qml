@@ -24,6 +24,7 @@ Item {
             : (root.danger ? Sg.red : Sg.gray)
         border.width: 1
         border.color: root.active ? Sg.yellowHi : (root.danger ? "#5d1c14" : Sg.ink)
+        radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
     }
 
     Row {

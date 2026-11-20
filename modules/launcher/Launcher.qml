@@ -442,7 +442,18 @@ PanelWindow {
                         width: rail.width
                         height: Theme.px(38)
 
+                        Rectangle {
+                            visible: Theme.bf1
+                            anchors.fill: parent
+                            radius: Theme.px(Theme.bf1Radius)
+                            color: rt.checked ? Theme.accent
+                                : (rt.containsMouse ? Theme.alpha(Theme.accent, 0.14) : Theme.alpha(Theme.bg0, 0.55))
+                            border.width: 1
+                            border.color: rt.checked ? Theme.accentHi : Theme.alpha(Theme.accent, rt.containsMouse ? 0.8 : 0.3)
+                        }
+
                         Shape {
+                            visible: !Theme.bf1
                             anchors.fill: parent
                             preferredRendererType: Shape.CurveRenderer
                             ShapePath {

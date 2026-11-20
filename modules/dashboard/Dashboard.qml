@@ -91,7 +91,7 @@ PanelWindow {
                 visible: root.bf1
                 anchors.fill: parent
                 anchors.margins: Theme.px(1)
-                radius: Theme.px(16)
+                radius: Theme.bf1Radius > 0 ? Theme.px(Theme.bf1Radius + 4) : 0
                 color: Theme.alpha(Theme.bg0, 0.97)
                 border.width: 2
                 border.color: Theme.alpha(Theme.accent, 0.5)
@@ -216,7 +216,7 @@ PanelWindow {
                             Rectangle {
                                 visible: root.bf1
                                 anchors.fill: parent
-                                radius: Theme.px(10)
+                                radius: Theme.px(Theme.bf1Radius)
                                 color: Theme.alpha(Theme.panel, 0.94)
                                 border.width: 1
                                 border.color: Theme.alpha(Theme.accent, 0.32)
@@ -324,7 +324,7 @@ PanelWindow {
 
                                 Rectangle {
                                     anchors.fill: parent
-                                    radius: root.bf1 ? Theme.px(9) : 0
+                                    radius: root.bf1 && Theme.bf1Radius > 0 ? Theme.px(Math.max(2, Theme.bf1Radius - 2)) : 0
                                     color: cellMouse.containsMouse ? Theme.alpha(Theme.accent, 0.16)
                                         : Theme.alpha(Theme.panel, root.bf1 ? 0.9 : 0.35)
                                     border.width: 1

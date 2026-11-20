@@ -783,6 +783,19 @@ PanelWindow {
                                 }
                             }
 
+                            SgRow {
+                                width: parent.width
+                                visible: Settings.get("theme.preset", "gfl") === "bf1"
+                                label: I18n.t("set.bf1Radius")
+                                desc: I18n.t("set.bf1Radius.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 28; step: 1; decimals: 0
+                                    value: Settings.get("theme.bf1Radius", 12)
+                                    onMoved: v => Settings.set("theme.bf1Radius", Math.round(v))
+                                }
+                            }
+
                             SgSection { width: parent.width; number: "03"; title: "SETTINGS SURFACE"; note: I18n.t("set.settingsSurface") }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.settingsOpacity"); desc: I18n.t("set.settingsOpacity.desc")

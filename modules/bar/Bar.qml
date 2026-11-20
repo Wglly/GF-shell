@@ -198,6 +198,16 @@ PanelWindow {
         }
     }
 
+    Rectangle {
+        visible: Theme.bf1
+        anchors.fill: parent
+        radius: Theme.px(Theme.bf1Radius)
+        color: "transparent"
+        border.width: 1
+        border.color: Theme.alpha(Theme.accent, 0.35)
+        z: 19
+    }
+
     BarThemeAccent {
         anchors.fill: parent
         z: 20

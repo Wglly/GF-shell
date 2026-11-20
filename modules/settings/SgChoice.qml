@@ -27,6 +27,7 @@ Row {
                 color: parent.active || mouse.containsMouse ? Sg.yellow : Sg.gray
                 border.width: 1
                 border.color: parent.active ? Sg.ink : Sg.ink
+                radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
             }
 
             Text {

@@ -71,6 +71,7 @@
   },
   "theme": {
     "preset": "gfl",
+    "bf1Radius": 12,
     "mode": "dark",
     "bg0": "#070708",
     "bg1": "#0d0d0f",

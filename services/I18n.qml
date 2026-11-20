@@ -179,6 +179,8 @@ QtObject {
         "set.animations": "ANIMATIONS", "set.animations.desc": "Slide and fade transitions",
         "set.brackets": "CORNER BRACKETS", "set.brackets.desc": "Tactical corner brackets on panels",
         "set.scanlines": "SCANLINES", "set.scanlines.desc": "CRT scanline texture (off by default)",
+        "set.bf1Radius": "BF1 CORNER RADIUS", "set.bf1Radius.desc": "Rounded corners for every BF1 panel (0–28 px)",
+
         "set.resetTheme": "RESET THEME TO G&K",
         "set.position": "POSITION", "set.position.desc": "Snap to the top or bottom edge",
         "set.dockAlign": "DOCK ALIGN", "set.dockAlign.desc": "Snap the dock to the left, centre or right edge",
@@ -324,6 +326,8 @@ QtObject {
         "set.animations": "動效", "set.animations.desc": "滑入 / 淡入等過場",
         "set.brackets": "四角括標", "set.brackets.desc": "面板四角的戰術括標",
         "set.scanlines": "掃描線", "set.scanlines.desc": "CRT 掃描線紋理（預設關閉）",
+        "set.bf1Radius": "BF1 圓角", "set.bf1Radius.desc": "所有 BF1 面板的圓角半徑（0–28 px）",
+
         "set.resetTheme": "重置為 G&K 主題",
         "set.position": "位置", "set.position.desc": "貼齊螢幕上緣或下緣",
         "set.dockAlign": "Dock 對齊", "set.dockAlign.desc": "讓 Dock 貼齊螢幕左側、中央或右側",
@@ -580,6 +584,8 @@ QtObject {
         "set.brackets.desc": "面板四角的战术括标",
         "set.scanlines": "扫描线",
         "set.scanlines.desc": "CRT 扫描线纹理（预设关闭）",
+        "set.bf1Radius": "BF1 圆角",
+        "set.bf1Radius.desc": "所有 BF1 面板的圆角半径（0–28 px）",
         "set.resetTheme": "重置为 G&K 主题",
         "set.position": "位置",
         "set.position.desc": "贴齐萤幕上缘或下缘",
@@ -897,6 +903,8 @@ QtObject {
         "set.animations": "アニメーション", "set.animations.desc": "スライド／フェード",
         "set.brackets": "コーナーブラケット", "set.brackets.desc": "四隅のタクティカル括標",
         "set.scanlines": "スキャンライン", "set.scanlines.desc": "CRT テクスチャ（既定オフ）",
+        "set.bf1Radius": "BF1 コーナー半径", "set.bf1Radius.desc": "すべての BF1 パネルの角丸半径（0–28 px）",
+
         "set.resetTheme": "G&K テーマに戻す",
         "set.position": "位置", "set.position.desc": "上端または下端に固定",
         "set.dockAlign": "Dock の位置", "set.dockAlign.desc": "Dock を画面の左・中央・右に寄せる",

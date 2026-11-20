@@ -51,6 +51,7 @@ Item {
             height: 4
             color: Sg.yellow
             border.width: 0
+            radius: 2
         }
 
         Row {

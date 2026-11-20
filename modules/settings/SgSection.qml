@@ -12,6 +12,7 @@ Rectangle {
 
     implicitHeight: Theme.fpx(28)
     color: Sg.ink
+    radius: Theme.bf1 ? Theme.px(4) : 0
 
     Rectangle {
         x: 0

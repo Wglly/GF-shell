@@ -476,7 +476,7 @@ PanelWindow {
             visible: Theme.bf1
             anchors.fill: parent
             anchors.margins: Theme.px(1)
-            radius: Theme.px(12)
+            radius: Theme.px(Theme.bf1Radius)
             color: "transparent"
             border.width: 2
             border.color: Theme.alpha(Theme.accent, 0.6)

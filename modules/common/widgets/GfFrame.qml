@@ -27,6 +27,8 @@ Item {
     property bool hovered: false
     property int padding: Theme.pad
     property int radius: 0
+    readonly property int cornerRadius: root.radius > 0
+        ? root.radius : (Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0)
 
     default property alias content: contentItem.data
 
@@ -51,7 +53,27 @@ Item {
     readonly property var points: root.buildPoints(root.width, root.height, root.chamfer, 0)
     readonly property var innerPoints: root.buildPoints(root.width, root.height, root.chamfer, Theme.px(4))
 
+    // BF1（或显式 radius）使用圆角矩形替代斜切 Shape。
+    Rectangle {
+        visible: root.cornerRadius > 0
+        anchors.fill: parent
+        radius: root.cornerRadius
+        color: root.fill
+        border.width: root.strokeWidth
+        border.color: root.hovered ? Theme.accentHi : root.borderColor
+    }
+    Rectangle {
+        visible: root.cornerRadius > Theme.px(6) && root.innerLine
+        anchors.fill: parent
+        anchors.margins: Theme.px(4)
+        radius: Math.max(0, root.cornerRadius - Theme.px(4))
+        color: "transparent"
+        border.width: 1
+        border.color: root.hovered ? Theme.alpha(root.accentColor, 0.24) : root.innerBorderColor
+    }
+
     Shape {
+        visible: root.cornerRadius <= 0
         anchors.fill: parent
         preferredRendererType: Shape.CurveRenderer
 
@@ -67,7 +89,8 @@ Item {
     // 内侧细线：少前面板的「双框」质感
     Shape {
         anchors.fill: parent
-        visible: root.innerLine && root.width > Theme.px(14) && root.height > Theme.px(14)
+        visible: root.cornerRadius <= 0 && root.innerLine
+            && root.width > Theme.px(14) && root.height > Theme.px(14)
         preferredRendererType: Shape.CurveRenderer
 
         ShapePath {
@@ -98,7 +121,7 @@ Item {
 
     // 顶部金线
     Rectangle {
-        visible: root.accentTop
+        visible: root.accentTop && root.cornerRadius <= 0
         x: root.cutTopLeft ? root.chamfer + 4 : 0
         y: 0
         width: Math.max(0, root.width - x - (root.cutTopRight ? root.chamfer + 4 : 0))
@@ -108,7 +131,7 @@ Item {
 
     // 左侧金色刻度块
     Rectangle {
-        visible: root.accentLeft
+        visible: root.accentLeft && root.cornerRadius <= 0
         x: 0
         y: root.cutTopLeft ? root.chamfer + 4 : 0
         width: 2
@@ -118,7 +141,7 @@ Item {
 
     GfCorners {
         anchors.fill: parent
-        visible: root.brackets
+        visible: root.brackets && root.cornerRadius <= 0
         color: Theme.alpha(root.accentColor, 0.7)
         size: Theme.px(9)
     }
