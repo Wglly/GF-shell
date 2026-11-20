@@ -7,7 +7,12 @@ import qs.modules.common
 Item {
     id: root
 
-    property color fill: Theme.alpha(Theme.panel, Theme.panelOpacity)
+    property color fill: Theme.light
+        ? Theme.panel : Theme.alpha(Theme.panel, Theme.panelOpacity)
+    readonly property color effectiveFill: Theme.light
+        ? Qt.rgba(root.fill.r, root.fill.g, root.fill.b,
+            root.fill.a * Math.max(0.0, Math.min(1.0, Theme.panelOpacity)))
+        : root.fill
     property color borderColor: Theme.borderGold
     property color innerBorderColor: Theme.alpha(Theme.text, 0.10)
     property color accentColor: Theme.accent
@@ -59,7 +64,7 @@ Item {
         visible: root.cornerRadius > 0
         anchors.fill: parent
         radius: root.cornerRadius
-        color: root.fill
+        color: root.effectiveFill
         border.width: root.strokeWidth
         border.color: Theme.lineColor(root.hovered ? Theme.accentHi : root.borderColor, root.lineAlpha)
     }
@@ -81,7 +86,7 @@ Item {
         ShapePath {
             strokeWidth: root.strokeWidth
             strokeColor: Theme.lineColor(root.hovered ? Theme.accentHi : root.borderColor, root.lineAlpha)
-            fillColor: root.fill
+            fillColor: root.effectiveFill
             PathPolyline { path: root.points }
             Behavior on strokeColor { ColorAnimation { duration: Theme.durFast } }
         }
