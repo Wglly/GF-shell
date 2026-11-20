@@ -27,7 +27,7 @@ PanelWindow {
     // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
     readonly property bool shouldHide: root.avoid && (root.autoHide || root.hasWindows)
     property bool hovered: false
-    readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch
+    readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch || root.deployMenuOpen
     // 收起时露出的热区高度（用户可调）
     readonly property int trigger: Theme.px(Settings.get("dock.trigger", 24))
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
@@ -47,25 +47,13 @@ PanelWindow {
     // 负 margin 让热区真正贴到屏幕边缘（状态栏上）；内容再用 barInset 让出状态栏
     margins.top: root.vertical ? 0 : (root.atTop ? -root.barInset : 0)
     margins.bottom: root.vertical ? 0 : (!root.atTop ? -root.barInset : 0)
-    implicitWidth: root.vertical
-        ? (root.deployMenuOpen && root.modelData ? root.modelData.width
-            : (root.revealed ? Theme.px(76) : root.trigger))
-        : (root.modelData ? root.modelData.width : 0)
-    implicitHeight: root.vertical
-        ? (root.modelData ? root.modelData.height : 0)
-        : (root.deployMenuOpen && root.modelData ? root.modelData.height
-            : (root.revealed ? root.barInset + Theme.px(76) : root.trigger))
+    // 固定整屏大小的透明层，靠 mask 只暴露 Dock/热区/部署菜单。
+    // 避免展开部署菜单时改变 layer 尺寸，造成 Dock 抽动。
+    implicitWidth: root.modelData ? root.modelData.width : 0
+    implicitHeight: root.modelData ? root.modelData.height : 0
     exclusionMode: ExclusionMode.Normal
     // 收起时不占位；展开时只保留 Dock 本身的宽度/高度
     exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
-    Behavior on implicitHeight {
-        enabled: Theme.animations && !root.vertical
-        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-    }
-    Behavior on implicitWidth {
-        enabled: Theme.animations && root.vertical
-        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
-    }
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "gf-shell-dock"
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
