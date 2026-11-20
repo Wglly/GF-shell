@@ -29,6 +29,12 @@ PanelWindow {
     readonly property real cx: Math.max(Theme.px(300), Math.min(width - Theme.px(300), ShellState.roseX))
     readonly property real cy: Math.max(Theme.px(230), Math.min(height - Theme.px(230), ShellState.roseY))
     readonly property real radius: Math.min(Theme.px(235), Math.min(width, height) * 0.24)
+    property real reveal: 0
+
+    Behavior on reveal {
+        enabled: Theme.animations
+        NumberAnimation { duration: 220; easing.type: Easing.OutCubic }
+    }
 
     readonly property var actions: [
         { key: "settings", icon: "settings", label: I18n.t("rose.settings") },
@@ -60,7 +66,15 @@ PanelWindow {
         }
     }
 
-    onOpenChanged: if (root.open) keys.forceActiveFocus()
+    onOpenChanged: {
+        if (root.open) {
+            root.reveal = 0;
+            Qt.callLater(function() { root.reveal = 1; });
+            keys.forceActiveFocus();
+        } else {
+            root.reveal = 0;
+        }
+    }
 
     Item {
         id: keys
@@ -88,6 +102,8 @@ PanelWindow {
     Item {
         x: root.cx; y: root.cy
         width: 1; height: 1
+        scale: 0.55 + 0.45 * root.reveal
+        opacity: Math.min(1, root.reveal * 1.5)
 
         Rectangle {
             visible: !root.arknights
@@ -244,10 +260,11 @@ PanelWindow {
             required property int index
             readonly property real angle: (-90 + index * (360 / root.actions.length)) * Math.PI / 180
 
-            x: root.cx + Math.cos(angle) * root.radius - width / 2
-            y: root.cy + Math.sin(angle) * root.radius - height / 2
+            x: root.cx + Math.cos(angle) * root.radius * root.reveal - width / 2
+            y: root.cy + Math.sin(angle) * root.radius * root.reveal - height / 2
             width: Theme.px(162)
             height: Theme.px(48)
+            opacity: Math.min(1, root.reveal * 1.7)
 
             GfFrame {
                 anchors.fill: parent
@@ -312,33 +329,4 @@ PanelWindow {
         }
     }
 
-    // 顶部提示
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.top: parent.top
-        anchors.topMargin: Theme.px(34)
-        text: root.arknights ? "RHODES COMMAND  //  SELECT AN OPERATION"
-            : (root.bf4 ? "COMMANDER ROSE  //  SELECT AN ORDER"
-            : (root.bf1 ? "FIELD ORDERS  //  SELECT"
-            : "TACTICAL COMMAND  //  SELECT"))
-        font.family: Theme.fontDisplay
-        font.pixelSize: Theme.fs(18)
-        font.letterSpacing: 2.4
-        color: Theme.alpha(Theme.accentHi, 0.95)
-        style: Text.Outline
-        styleColor: Theme.alpha(Theme.bg0, 0.9)
-    }
-
-    Text {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.px(28)
-        text: "ESC  /  LEFT CLICK DESKTOP  —  CLOSE"
-        font.family: Theme.fontMono
-        font.pixelSize: Theme.fs(8)
-        font.letterSpacing: 1.4
-        color: Theme.textFaint
-        style: Text.Outline
-        styleColor: Theme.alpha(Theme.bg0, 0.85)
-    }
 }
