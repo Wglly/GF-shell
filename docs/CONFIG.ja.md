@@ -29,12 +29,13 @@
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
+    "right": ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
     "enabled": true,
     "position": "bottom",
+    "align": "center",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -43,17 +44,17 @@
     "opacity": 0.94,
     "gray": 0.0,
     "blur": 0.0,
-    "maxItems": 9,
+    "maxItems": 12,
     "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
                "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
   },
   "sidebar": {
     "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "assign": {
       "user": "left", "calendar": "left", "roster": "left", "actions": "left",
       "weather": "left", "stats": "right", "mission": "right",
@@ -99,6 +100,7 @@
   "wallpaper": {
     "enabled": true,
     "path": "",
+    "dir": "",
     "fillMode": "fill",
     "dim": 0.06,
     "color": "#080b0e"
@@ -117,6 +119,7 @@
   "osd":    { "enabled": true, "position": "center" },
   "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
   "power":  { "confirm": true },
+  "user": { "avatar": "" },
   "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
   "hotkeys": { "launcher": "SUPER+Space", "overview": "SUPER+ALT+Tab", "control": "SUPER+Shift+C" },
   "shell":  { "keepAwake": false }
@@ -259,6 +262,14 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - `theme.settingsOpacity`（0.5–1.0）と `theme.settingsGray`（0–1）で設定画面のグレーホワイト半透明を調整。
 - `bg0/bg1/panel/text/accent` を変えると `mode` は `custom` になります。壁紙は `bg0` の明るさに応じて
   紙白に洗われ、ライトテーマでも濃い文字が読めます。
+
+- `dock.align`：`left` / `center` / `right`。Dock を画面の左右に寄せるか中央に置きます。
+- `sidebar.<left|right>.triggerPosition`：`top` / `bottom`。左右画面の上端／下端にホットゾーンを置きます。
+- `sidebar.<left|right>.triggerWidth`：横方向の幅（60–420px）。`trigger` は高さ。
+- サイドバーコンポーネント `wallpaper` を追加。設定 → サイドバー → コンポーネントで左右に割り当てられます。
+- `wallpaper.dir`：取り込む壁紙ディレクトリ（png/jpg/jpeg/webp/avif/bmp）。バーとサイドバーの壁紙ライブラリに全画像が並びます。
+- `user.avatar`：カスタムアバターのパス。設定ホームの BROWSE で `~/.config/gf-shell/avatar` にコピーされます。
+- ライトテーマでは壁紙に紙白の色を重ねません。`wallpaper.dim` はダークテーマのみ有効です。
 
 ## 壁紙
 

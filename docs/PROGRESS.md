@@ -18,10 +18,10 @@
 | 戰術控制 | ✅ | 鏈路、音量/亮度、模組、生命徵象、通訊 |
 | 作戰地圖 | ✅ | 扇區卡、單位列表、點擊切換/聚焦 |
 | 系統停機 | ✅ | 鎖定/休眠/重啟/關機/登出 + 二次確認 |
-| Dock | ✅ | 固定 + 執行中應用、右鍵固定/取消固定/關閉、熱區高度 4–48px、exclusive zone 推開視窗 |
+| Dock | ✅ | 固定 + 執行中、右鍵固定/取消/關閉、`align` 左中右、熱區 4–48px |
 | 側邊欄 | ✅ | **11 個可拆裝組件**、左/右/OFF 分配、高度 40–100%、上/中/下對齊、滾動 |
 | 桌面組件 | ✅ | 時計、生命徵象、通訊（歌詞）、天氣、cava 頻譜、操作員卡、任務；**網格佈局編輯 + 拖動吸附 + 右下角縮放 + 單獨開關** |
-| 設定介面 | ✅ | 紙白/黑線/黑灰按鈕/黃色懸停；**灰白背景可調透明度/灰度**；8 分頁；即時寫入 |
+| 設定介面 | ✅ | 紙白/黑線/黑灰按鈕/黃色懸停；**首頁操作員/系統資訊/頭像上傳**；灰白背景可調；字體縮放時行高同步 |
 | 多語言 | ✅ | 繁中 / 簡中 / English / 日本語；`auto` 跟隨系統；設定內即時切換 |
 | 歌詞 | ✅ | lrclib.net 同步歌詞，媒體卡 / 側邊欄 / 彈出欄共用 |
 | 天氣 | ✅ | wttr.in，20 分鐘輪詢，可指定城市 |
@@ -42,8 +42,11 @@
 - **設定視窗**：改為跟隨目前聚焦的螢幕，多螢幕下不會開到錯誤輸出。
 - **桌面佈局編輯**：`SUPER+SHIFT+W` / 設定 → LAYOUT / IPC `shell widgets`；疊加網格、拖動吸附、右下角縮放、每個組件右上角 ON/OFF。
 - **Dock 熱區**：`dock.trigger` 4–48px，設定 → Dock 可調；收起時顯示加寬金色把手。
-- **Dock 應用**：執行中的應用自動接在固定項目後；右鍵開啟固定/取消固定、新視窗、關閉選單，固定狀態寫回 `dock.pinned`。
-- **狀態列詳情**：網路改為可點擊詳情並列出附近可連接 Wi-Fi（點擊開放網路直接連線，WPA 網路輸入密碼）；藍牙獨立組件與詳情；CPU/MEM 統計點擊展開性能詳情。
+- **Dock 應用**：執行中的應用自動接在固定項目後；右鍵開啟固定/取消固定、新視窗、關閉選單，固定狀態寫回 `dock.pinned`；新增 `dock.align` 可貼齊左右。
+- **狀態列詳情**：網路改為可點擊詳情並列出附近可連接 Wi-Fi（點擊開放網路直接連線，WPA 網路輸入密碼）；藍牙獨立組件與詳情；CPU/MEM 統計點擊展開性能詳情；托盤改為可展開面板，顯示圖示與最近訊息。
+- **壁紙庫**：設定可匯入目錄並自動辨識圖片；狀態列/側邊欄新增壁紙組件，展開可瀏覽全部壁紙；亮色主題不再給壁紙上色。
+- **設定首頁**：操作員頭像上傳、使用者/系統資訊、快速操作；字體縮放時設定列與區塊同步放大，避免重疊。
+- **互動修正**：部署終端支援滑鼠滾輪/拖動滾動；作戰地圖改用字串窗口 ID 的手動拖放與右鍵選取移動；控制中心與狀態列彈層不再加全屏暗幕；側邊欄觸發改左右頂端/底端並可調寬度/位置。
 - **作戰地圖移動**：把單位條目拖到另一扇區（或右鍵選取後點扇區），呼叫 `Compositor.moveWindow()`；快捷鍵提供 `SUPER+ALT+Tab` 與 `SUPER+SHIFT+Tab` 兩組。
 - **音量控制**：改用 `wpctl` 讀寫預設 sink，修正某些 WirePlumber 設定下 Quickshell `channelVolumes` 為空、滑桿無作用的問題；新增 IPC `volume` / `mute`。
 - **跨發行版安裝**：新增 `scripts/install-fedora.sh`（dnf、COPR、可選原始碼建置）與 `scripts/install-debian.sh`（apt、trixie-backports、可選原始碼建置），支援 `--dry-run`/`--link`/`--dest`/`--yes`。
@@ -93,6 +96,20 @@
 | 日本語側邊欄 | niri |
 | --- | --- |
 | ![Japanese sidebar](screenshots/17-sidebar-ja.png) | ![niri](screenshots/11-niri.png) |
+
+### 組件、主題與新詳情
+
+| 桌面佈局編輯 | 亮色桌面 | 亮色啟動器 |
+| --- | --- | --- |
+| ![Widget editor](screenshots/20-widget-editor.png) | ![Light desktop](screenshots/21-light-desktop.png) | ![Light launcher](screenshots/22-light-launcher.png) |
+
+| 網路詳情 / Wi-Fi | 藍牙詳情 | 性能詳情 |
+| --- | --- | --- |
+| ![Network popup](screenshots/24-network-popup.png) | ![Bluetooth popup](screenshots/25-bluetooth-popup.png) | ![Stats popup](screenshots/26-stats-popup.png) |
+
+| 設定首頁 / 頭像 | 壁紙庫 | 可展開托盤 |
+| --- | --- | --- |
+| ![Settings home](screenshots/27-settings-home.png) | ![Wallpaper library](screenshots/28-wallpaper-library.png) | ![Tray](screenshots/29-tray.png) |
 
 ## 驗證方式
 

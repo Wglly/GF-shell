@@ -10,8 +10,8 @@ Item {
     signal toggled()
 
     readonly property bool hovered: mouse.containsMouse
-    implicitWidth: Theme.px(46)
-    implicitHeight: Theme.px(24)
+    implicitWidth: Theme.fpx(46)
+    implicitHeight: Theme.fpx(24)
 
     Rectangle {
         anchors.fill: parent
@@ -21,9 +21,9 @@ Item {
     }
 
     Rectangle {
-        x: root.checked ? parent.width - width - Theme.px(4) : Theme.px(4)
+        x: root.checked ? parent.width - width - Theme.fpx(4) : Theme.fpx(4)
         anchors.verticalCenter: parent.verticalCenter
-        width: Theme.px(14)
+        width: Theme.fpx(14)
         height: width
         color: root.checked ? Sg.ink : "#e9e5da"
         Behavior on x { NumberAnimation { duration: 120; easing.type: Easing.OutCubic } }

@@ -45,7 +45,7 @@ PanelWindow {
     visible: root.open
 
     readonly property var order: ["user", "clock", "calendar", "weather", "roster", "actions",
-        "stats", "mission", "media", "visualizer", "comms"]
+        "stats", "mission", "media", "visualizer", "comms", "wallpaper"]
 
     readonly property var componentIds: {
         var out = [];
@@ -70,6 +70,7 @@ PanelWindow {
         case "visualizer": return "CompVisualizer";
         case "comms": return "CompComms";
         case "mission": return "CompMission";
+        case "wallpaper": return "CompWallpaper";
         default: return "";
         }
     }

@@ -12,18 +12,18 @@ Item {
 
     default property alias content: slot.data
 
-    implicitHeight: Math.max(Theme.px(38), labelColumn.implicitHeight + Theme.px(10))
-    width: parent ? parent.width : Theme.px(400)
+    implicitHeight: Math.max(Theme.fpx(38), labelColumn.implicitHeight + Theme.fpx(10))
+    width: parent ? parent.width : Theme.fpx(400)
 
     Column {
         id: labelColumn
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        width: root.width - Theme.px(230)
+        width: root.width - Theme.fpx(230)
         spacing: 0
 
         Row {
-            spacing: Theme.px(6)
+            spacing: Theme.fpx(6)
             GfText {
                 text: root.label
                 role: "ui"
@@ -54,7 +54,7 @@ Item {
         id: slot
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
-        width: Math.min(Theme.px(252), childrenRect.width)
+        width: Math.min(Theme.fpx(252), childrenRect.width)
         height: childrenRect.height
     }
 

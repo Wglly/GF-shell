@@ -43,6 +43,8 @@ PanelWindow {
         case "network": return Theme.fpx(376);
         case "bluetooth": return Theme.fpx(360);
         case "stats": return Theme.fpx(384);
+        case "tray": return Theme.fpx(380);
+        case "wallpaper": return Theme.fpx(430);
         default: return Theme.fpx(320);
         }
     }
@@ -55,7 +57,7 @@ PanelWindow {
     // 点击外部关闭
     Rectangle {
         anchors.fill: parent
-        color: Theme.alpha(Theme.bg0, 0.45)
+        color: "transparent"
 
         MouseArea {
             anchors.fill: parent
@@ -129,6 +131,8 @@ PanelWindow {
                             : root.kind === "network" ? I18n.t("popup.network")
                             : root.kind === "bluetooth" ? I18n.t("popup.bluetooth")
                             : root.kind === "stats" ? I18n.t("popup.stats")
+                            : root.kind === "tray" ? I18n.t("popup.tray")
+                            : root.kind === "wallpaper" ? I18n.t("popup.wallpaper")
                             : I18n.t("popup.transmissionLog")
                         role: "mono"
                         size: Theme.sizeTiny
@@ -182,6 +186,16 @@ PanelWindow {
 
                 StatsCard {
                     visible: root.kind === "stats"
+                    width: parent.width
+                }
+
+                TrayCard {
+                    visible: root.kind === "tray"
+                    width: parent.width
+                }
+
+                WallpaperCard {
+                    visible: root.kind === "wallpaper"
                     width: parent.width
                 }
 

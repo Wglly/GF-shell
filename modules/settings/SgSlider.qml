@@ -17,8 +17,8 @@ Item {
 
     readonly property real ratio: root.to > root.from ? Math.max(0, Math.min(1, (root.value - root.from) / (root.to - root.from))) : 0
     readonly property bool hovered: mouse.containsMouse || mouse.pressed
-    implicitWidth: Theme.px(230)
-    implicitHeight: Theme.px(26)
+    implicitWidth: Theme.fpx(230)
+    implicitHeight: Theme.fpx(26)
 
     function valueAt(x) {
         var r = Math.max(0, Math.min(1, x / Math.max(1, track.width)));
@@ -32,7 +32,7 @@ Item {
         id: track
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
-        width: parent.width - (root.showValue ? Theme.px(54) : 0)
+        width: parent.width - (root.showValue ? Theme.fpx(54) : 0)
         height: parent.height
 
         Rectangle {
@@ -71,8 +71,8 @@ Item {
         Rectangle {
             x: Math.max(0, Math.min(track.width - width, track.width * root.ratio - width / 2))
             anchors.verticalCenter: parent.verticalCenter
-            width: Theme.px(10)
-            height: Theme.px(10)
+            width: Theme.fpx(10)
+            height: Theme.fpx(10)
             rotation: 45
             color: root.hovered ? Sg.yellow : Sg.ink
             border.width: 1
@@ -98,7 +98,7 @@ Item {
         font.family: Theme.fontMono
         font.pixelSize: Theme.fs(11)
         color: Sg.ink
-        width: Theme.px(50)
+        width: Theme.fpx(50)
         horizontalAlignment: Text.AlignRight
     }
 }

@@ -37,6 +37,8 @@ Item {
                 return Qt.resolvedUrl("blocks/NetBlock.qml");
             case "bluetooth":
                 return Qt.resolvedUrl("blocks/BluetoothBlock.qml");
+            case "wallpaper":
+                return Qt.resolvedUrl("blocks/WallpaperBlock.qml");
             case "volume":
                 return Qt.resolvedUrl("blocks/VolumeBlock.qml");
             case "battery":

@@ -29,12 +29,13 @@
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
+    "right": ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
     "enabled": true,
     "position": "bottom",
+    "align": "center",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -43,17 +44,17 @@
     "opacity": 0.94,
     "gray": 0.0,
     "blur": 0.0,
-    "maxItems": 9,
+    "maxItems": 12,
     "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
                "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
   },
   "sidebar": {
     "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "assign": {
       "user": "left", "calendar": "left", "roster": "left", "actions": "left",
       "weather": "left", "stats": "right", "mission": "right",
@@ -99,6 +100,7 @@
   "wallpaper": {
     "enabled": true,
     "path": "",
+    "dir": "",
     "fillMode": "fill",
     "dim": 0.06,
     "color": "#080b0e"
@@ -117,6 +119,7 @@
   "osd":    { "enabled": true, "position": "center" },
   "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
   "power":  { "confirm": true },
+  "user": { "avatar": "" },
   "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
   "hotkeys": { "launcher": "SUPER+Space", "overview": "SUPER+ALT+Tab", "control": "SUPER+Shift+C" },
   "shell":  { "keepAwake": false }
@@ -280,6 +283,14 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 - `theme.fontScale`（0.8–1.4）缩放文字，以及展开栏/卡片布局；`theme.scale`（0.8–1.3）缩放整个 shell。
 - `theme.settingsOpacity`（0.5–1.0）与 `theme.settingsGray`（0–1）控制设置窗口的灰白半透明遮罩。
 - 自定义 `bg0/bg1/panel/text/accent` 会把 `mode` 设为 `custom`；壁纸会按 `bg0` 亮度加纸白洗色。
+
+- `dock.align`：`left` / `center` / `right`，让 Dock 贴齐屏幕左右侧或保持中央。
+- `sidebar.<left|right>.triggerPosition`：`top` / `bottom`，触发区位于该侧屏幕的顶端或底端。
+- `sidebar.<left|right>.triggerWidth`：横向热区宽度（60–420px）；`trigger` 是热区高度。
+- 侧边栏组件新增 `wallpaper`，可在「设置 → 侧边栏 → 组件」分配到左/右。
+- `wallpaper.dir`：要导入的壁纸目录；支持 png/jpg/jpeg/webp/avif/bmp。状态栏和侧边栏壁纸库会列出全部图片。
+- `user.avatar`：自定义头像路径；设置首页 BROWSE 会复制到 `~/.config/gf-shell/avatar`。
+- 亮色主题不再给壁纸加纸白洗色；`wallpaper.dim` 仅在暗色主题生效。
 
 ## 壁纸
 

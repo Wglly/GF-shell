@@ -18,6 +18,7 @@ PanelWindow {
     readonly property int iconSize: Math.round(Settings.get("dock.iconSize", 42) * Theme.uiScale)
     readonly property int maxItems: Settings.get("dock.maxItems", 12)
     readonly property bool atTop: Settings.get("dock.position", "bottom") === "top"
+    readonly property string align: Settings.get("dock.align", "center")
     readonly property bool hasWindows: Compositor.windows.length > 0
     // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
     readonly property bool shouldHide: root.avoid && (root.autoHide || root.hasWindows)
@@ -315,7 +316,11 @@ PanelWindow {
     GfFrame {
         id: dock
         visible: root.revealed
-        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.horizontalCenter: root.align === "center" ? parent.horizontalCenter : undefined
+        anchors.left: root.align === "left" ? parent.left : undefined
+        anchors.right: root.align === "right" ? parent.right : undefined
+        anchors.leftMargin: Theme.px(6)
+        anchors.rightMargin: Theme.px(6)
         anchors.bottom: !root.atTop ? parent.bottom : undefined
         anchors.top: root.atTop ? parent.top : undefined
         anchors.bottomMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))

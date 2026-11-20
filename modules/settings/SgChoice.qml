@@ -10,7 +10,7 @@ Row {
     property var current: ""
     signal selected(var value)
 
-    spacing: Theme.px(4)
+    spacing: Theme.fpx(4)
 
     Repeater {
         model: root.options
@@ -19,8 +19,8 @@ Row {
             required property var modelData
             readonly property bool active: root.current === modelData.value
 
-            width: Math.max(Theme.px(44), textItem.implicitWidth + Theme.px(18))
-            height: Theme.px(26)
+            width: Math.max(Theme.fpx(44), textItem.implicitWidth + Theme.fpx(18))
+            height: Theme.fpx(26)
 
             Rectangle {
                 anchors.fill: parent
@@ -35,7 +35,7 @@ Row {
                 text: modelData.label
                 font.family: Theme.fontUI
                 font.pixelSize: Theme.fs(10)
-                font.letterSpacing: Theme.px(1)
+                font.letterSpacing: Theme.fpx(1)
                 font.bold: true
                 color: parent.active || mouse.containsMouse ? Sg.ink : "#f4f1e8"
             }

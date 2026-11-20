@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 import "SgStyle.js" as Sg
 import qs.modules.common
 import qs.modules.common.widgets
@@ -40,7 +41,12 @@ PanelWindow {
     readonly property real settingsVeilAlpha: Settings.get("theme.settingsOpacity", 0.9)
 
     property int tab: ShellState.settingsTab
-    onTabChanged: ShellState.settingsTab = root.tab
+    onTabChanged: {
+        ShellState.settingsTab = root.tab;
+        if (flick)
+            flick.contentY = 0;
+    }
+    onOpenChanged: if (root.open && flick) flick.contentY = 0
 
     readonly property var barKinds: [
         { key: "launcher", labelKey: "bar.launcher" },
@@ -52,6 +58,7 @@ PanelWindow {
         { key: "stats", labelKey: "bar.stats" },
         { key: "net", labelKey: "bar.network" },
         { key: "bluetooth", labelKey: "bar.bluetooth" },
+        { key: "wallpaper", labelKey: "bar.wallpaper" },
         { key: "volume", labelKey: "bar.volume" },
         { key: "battery", labelKey: "bar.battery" },
         { key: "tray", labelKey: "bar.tray" },
@@ -71,7 +78,8 @@ PanelWindow {
         { key: "media", labelKey: "sb.media", descKey: "sb.media.desc" },
         { key: "visualizer", labelKey: "sb.visualizer", descKey: "sb.visualizer.desc" },
         { key: "comms", labelKey: "sb.comms", descKey: "sb.comms.desc" },
-        { key: "mission", labelKey: "sb.mission", descKey: "sb.mission.desc" }
+        { key: "mission", labelKey: "sb.mission", descKey: "sb.mission.desc" },
+        { key: "wallpaper", labelKey: "sb.wallpaper", descKey: "sb.wallpaper.desc" }
     ]
 
     function barSection(kind) {
@@ -128,6 +136,22 @@ PanelWindow {
                 Settings.set("dock.pinned", ids);
             }
             return;
+        }
+    }
+
+    function pickWallpaperDir() {
+        if (!wallpaperDirPicker.running)
+            wallpaperDirPicker.running = true;
+    }
+
+    property Process wallpaperDirPicker: Process {
+        command: ["sh", "-c", "zenity --file-selection --directory --title='Wallpaper directory' 2>/dev/null"]
+        stdout: StdioCollector {
+            onStreamFinished: {
+                var p = ("" + text).trim();
+                if (p !== "")
+                    Wallpapers.setDirectory(p);
+            }
         }
     }
 
@@ -218,20 +242,20 @@ PanelWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: parent.top
-            height: Theme.px(64)
+            height: Theme.fpx(64)
             color: Sg.ink
 
             Rectangle {
                 x: 0
                 y: 0
-                width: Theme.px(8)
+                width: Theme.fpx(8)
                 height: parent.height
                 color: Sg.yellow
             }
 
             Column {
                 anchors.left: parent.left
-                anchors.leftMargin: Theme.px(20)
+                anchors.leftMargin: Theme.fpx(20)
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: -4
 
@@ -239,18 +263,18 @@ PanelWindow {
                     text: "ADJUTANT CONFIG"
                     font.family: Theme.fontDisplay
                     font.pixelSize: Theme.fs(24)
-                    font.letterSpacing: Theme.px(6)
+                    font.letterSpacing: Theme.fpx(6)
                     font.bold: true
                     color: Sg.paper
                 }
                 Row {
-                    spacing: Theme.px(10)
-                    Rectangle { width: Theme.px(28); height: 1; anchors.verticalCenter: parent.verticalCenter; color: Sg.yellow }
+                    spacing: Theme.fpx(10)
+                    Rectangle { width: Theme.fpx(28); height: 1; anchors.verticalCenter: parent.verticalCenter; color: Sg.yellow }
                     Text {
                         text: "副官設置   //   GF-SHELL CONFIGURATION"
                         font.family: Theme.fontUI
                         font.pixelSize: Theme.fs(9)
-                        font.letterSpacing: Theme.px(2)
+                        font.letterSpacing: Theme.fpx(2)
                         color: "#b8b1a3"
                     }
                 }
@@ -258,9 +282,9 @@ PanelWindow {
 
             Row {
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.px(14)
+                anchors.rightMargin: Theme.fpx(14)
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.px(10)
+                spacing: Theme.fpx(10)
 
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
@@ -270,11 +294,11 @@ PanelWindow {
                     color: "#9c9587"
                 }
 
-                Rectangle { width: 1; height: Theme.px(24); color: "#3a3a3a" }
+                Rectangle { width: 1; height: Theme.fpx(24); color: "#3a3a3a" }
 
                 Item {
-                    width: Theme.px(30)
-                    height: Theme.px(30)
+                    width: Theme.fpx(30)
+                    height: Theme.fpx(30)
 
                     Rectangle {
                         anchors.fill: parent
@@ -304,15 +328,15 @@ PanelWindow {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: parent.bottom
-            height: Theme.px(30)
+            height: Theme.fpx(30)
             color: Sg.ink
 
             Row {
                 anchors.left: parent.left
-                anchors.leftMargin: Theme.px(12)
+                anchors.leftMargin: Theme.fpx(12)
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: Theme.px(8)
-                Rectangle { width: Theme.px(5); height: Theme.px(5); color: Sg.yellow }
+                spacing: Theme.fpx(8)
+                Rectangle { width: Theme.fpx(5); height: Theme.fpx(5); color: Sg.yellow }
                 Text {
                     text: I18n.t("set.footer.autoSave")
                     font.family: Theme.fontUI
@@ -323,7 +347,7 @@ PanelWindow {
 
             Text {
                 anchors.right: parent.right
-                anchors.rightMargin: Theme.px(12)
+                anchors.rightMargin: Theme.fpx(12)
                 anchors.verticalCenter: parent.verticalCenter
                 text: "GF-SHELL  ·  " + Compositor.backend.toUpperCase() + "  ·  QUICKSHELL 0.3"
                 font.family: Theme.fontMono
@@ -343,26 +367,26 @@ PanelWindow {
                 anchors.left: parent.left
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                width: Theme.px(224)
+                width: Theme.fpx(224)
                 color: Sg.ink
 
                 Column {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    anchors.margins: Theme.px(12)
-                    spacing: Theme.px(2)
+                    anchors.margins: Theme.fpx(12)
+                    spacing: Theme.fpx(2)
 
                     Text {
-                        x: Theme.px(8)
+                        x: Theme.fpx(8)
                         text: "SECTIONS"
                         font.family: Theme.fontMono
                         font.pixelSize: Theme.fs(9)
                         color: "#8c8679"
-                        font.letterSpacing: Theme.px(2)
+                        font.letterSpacing: Theme.fpx(2)
                     }
 
-                    Item { width: 1; height: Theme.px(6) }
+                    Item { width: 1; height: Theme.fpx(6) }
 
                     Repeater {
                         model: root.tabs
@@ -373,7 +397,7 @@ PanelWindow {
                             readonly property bool active: root.tab === index
 
                             width: parent.width
-                            height: Theme.px(46)
+                            height: Theme.fpx(46)
 
                             Rectangle {
                                 anchors.fill: parent
@@ -381,16 +405,16 @@ PanelWindow {
                             }
                             Rectangle {
                                 x: 0; y: 0
-                                width: Theme.px(3)
+                                width: Theme.fpx(3)
                                 height: parent.height
                                 color: active ? Sg.ink : (tabMouse.containsMouse ? Sg.yellow : "transparent")
                             }
 
                             Row {
                                 anchors.left: parent.left
-                                anchors.leftMargin: Theme.px(12)
+                                anchors.leftMargin: Theme.fpx(12)
                                 anchors.verticalCenter: parent.verticalCenter
-                                spacing: Theme.px(10)
+                                spacing: Theme.fpx(10)
 
                                 Text {
                                     text: "0" + (index + 1)
@@ -404,7 +428,7 @@ PanelWindow {
                                         text: modelData.label
                                         font.family: Theme.fontUI
                                         font.pixelSize: Theme.fs(12)
-                                        font.letterSpacing: Theme.px(1.6)
+                                        font.letterSpacing: Theme.fpx(1.6)
                                         font.bold: true
                                         color: active ? Sg.ink : Sg.paper
                                     }
@@ -427,27 +451,27 @@ PanelWindow {
                         }
                     }
 
-                    Item { width: 1; height: Theme.px(10) }
-                    Rectangle { width: parent.width - Theme.px(16); x: Theme.px(8); height: 1; color: "#3a3a3a" }
-                    Item { width: 1; height: Theme.px(10) }
+                    Item { width: 1; height: Theme.fpx(10) }
+                    Rectangle { width: parent.width - Theme.fpx(16); x: Theme.fpx(8); height: 1; color: "#3a3a3a" }
+                    Item { width: 1; height: Theme.fpx(10) }
 
                     Column {
                         width: parent.width
-                        spacing: Theme.px(4)
+                        spacing: Theme.fpx(4)
                         Text {
-                            x: Theme.px(8); text: "OPERATOR"
+                            x: Theme.fpx(8); text: "OPERATOR"
                             font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#8c8679"
                         }
                         Text {
-                            x: Theme.px(8); text: User.displayName + "  //  " + User.opNumber
+                            x: Theme.fpx(8); text: User.displayName + "  //  " + User.opNumber
                             font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Sg.paper
                         }
                         Text {
-                            x: Theme.px(8)
+                            x: Theme.fpx(8)
                             text: User.session + "  ·  " + User.host
                             font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#9c9587"
                             elide: Text.ElideRight
-                            width: parent.width - Theme.px(16)
+                            width: parent.width - Theme.fpx(16)
                         }
                     }
                 }
@@ -465,8 +489,8 @@ PanelWindow {
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: parent.top
-                    anchors.margins: Theme.px(22)
-                    height: Theme.px(46)
+                    anchors.margins: Theme.fpx(22)
+                    height: Theme.fpx(46)
 
                     Column {
                         anchors.left: parent.left
@@ -476,7 +500,7 @@ PanelWindow {
                             text: root.tabs[root.tab].label
                             font.family: Theme.fontDisplay
                             font.pixelSize: Theme.fs(26)
-                            font.letterSpacing: Theme.px(4)
+                            font.letterSpacing: Theme.fpx(4)
                             font.bold: true
                             color: Sg.ink
                         }
@@ -484,7 +508,7 @@ PanelWindow {
                             text: I18n.t("set.page." + root.tabs[root.tab].key)
                             font.family: Theme.fontUI
                             font.pixelSize: Theme.fs(9)
-                            font.letterSpacing: Theme.px(2)
+                            font.letterSpacing: Theme.fpx(2)
                             color: Sg.mute
                         }
                     }
@@ -492,8 +516,8 @@ PanelWindow {
                     Rectangle {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        width: Theme.px(120)
-                        height: Theme.px(24)
+                        width: Theme.fpx(120)
+                        height: Theme.fpx(24)
                         color: Sg.ink
                         Text {
                             anchors.centerIn: parent
@@ -519,12 +543,12 @@ PanelWindow {
                     anchors.right: parent.right
                     anchors.top: pageHead.bottom
                     anchors.bottom: parent.bottom
-                    anchors.leftMargin: Theme.px(22)
-                    anchors.rightMargin: Theme.px(22)
-                    anchors.topMargin: Theme.px(8)
+                    anchors.leftMargin: Theme.fpx(22)
+                    anchors.rightMargin: Theme.fpx(22)
+                    anchors.topMargin: Theme.fpx(8)
                     clip: true
                     contentWidth: width
-                    contentHeight: pageColumn.implicitHeight + Theme.px(24)
+                    contentHeight: pageColumn.implicitHeight + Theme.fpx(24)
                     boundsBehavior: Flickable.StopAtBounds
 
                     Rectangle {
@@ -540,13 +564,115 @@ PanelWindow {
                     Column {
                         id: pageColumn
                         width: flick.width
-                        spacing: Theme.px(12)
+                        spacing: Theme.fpx(12)
 
                         // APPEARANCE
                         Column {
                             visible: root.tab === 0
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
+
+                            SgSection { width: parent.width; number: "00"; title: "HOME"; note: I18n.t("set.sec.home") }
+
+                            Row {
+                                width: parent.width
+                                height: Theme.fpx(96)
+                                spacing: Theme.fpx(14)
+
+                                Rectangle {
+                                    width: Theme.fpx(84); height: Theme.fpx(84)
+                                    color: Sg.ink
+                                    border.width: 1
+                                    border.color: Sg.yellow
+                                    Image {
+                                        anchors.fill: parent; anchors.margins: 2
+                                        source: User.avatar
+                                        cache: false
+                                        fillMode: Image.PreserveAspectCrop
+                                    }
+                                }
+
+                                Column {
+                                    width: parent.width - Theme.fpx(108)
+                                    spacing: Theme.fpx(2)
+                                    Text {
+                                        text: User.displayName
+                                        font.family: Theme.fontDisplay
+                                        font.pixelSize: Theme.fs(20)
+                                        font.bold: true
+                                        color: Sg.ink
+                                    }
+                                    Text {
+                                        text: "USER  " + User.name + "   //   SESSION  " + User.session
+                                        font.family: Theme.fontMono
+                                        font.pixelSize: Theme.fs(8)
+                                        color: Sg.ink
+                                    }
+                                    Text {
+                                        text: "HOST  " + (User.host || "—") + "   ·   UPTIME  " + User.uptime
+                                        font.family: Theme.fontMono
+                                        font.pixelSize: Theme.fs(8)
+                                        color: Sg.ink
+                                    }
+                                    Text {
+                                        text: "OS  " + (User.osName || "—") + "   ·   KERNEL  " + (User.kernel || "—")
+                                        font.family: Theme.fontMono
+                                        font.pixelSize: Theme.fs(8)
+                                        color: Sg.ink
+                                    }
+                                    Text {
+                                        text: "CPU  " + (User.cpuModel || "—")
+                                        font.family: Theme.fontMono
+                                        font.pixelSize: Theme.fs(8)
+                                        color: Sg.ink
+                                        width: parent.width
+                                        elide: Text.ElideRight
+                                    }
+                                }
+                            }
+
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.avatar")
+                                desc: I18n.t("set.avatar.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(300)
+                                    text: Settings.get("user.avatar", "")
+                                    placeholder: "/home/you/Pictures/avatar.png"
+                                    onAccepted: value => User.setAvatar(value)
+                                }
+                                SgButton {
+                                    anchors.right: parent.right
+                                    anchors.rightMargin: Theme.fpx(310)
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    text: I18n.t("set.browse")
+                                    onClicked: User.pickAvatar()
+                                }
+                            }
+
+                            SgRow {
+                                width: parent.width; last: true
+                                label: I18n.t("set.quick")
+                                desc: I18n.t("set.quick.desc")
+                                Row {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    spacing: Theme.fpx(6)
+                                    SgButton {
+                                        text: Settings.get("theme.mode", "dark") === "light" ? "DARK" : "LIGHT"
+                                        onClicked: Settings.applyPreset(Settings.get("theme.mode", "dark") === "light" ? "gfl" : "light")
+                                    }
+                                    SgButton {
+                                        text: "WIDGETS"
+                                        onClicked: {
+                                            ShellState.close();
+                                            ShellState.widgetsEditing = true;
+                                        }
+                                    }
+                                    SgButton { text: "WALLPAPER"; onClicked: root.tab = 5 }
+                                    SgButton { text: "DOCK"; onClicked: root.tab = 2 }
+                                }
+                            }
 
                             SgSection { width: parent.width; number: "01"; title: "IDENTITY"; note: I18n.t("set.sec.identity") }
                             SgRow {
@@ -606,7 +732,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.uiScale"); desc: I18n.t("set.uiScale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.8; to: 1.3; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0.8; to: 1.3; step: 0.05; decimals: 2
                                     value: Settings.get("theme.scale", 1.0)
                                     onMoved: v => Settings.set("theme.scale", v)
                                 }
@@ -615,7 +741,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.fontScale"); desc: I18n.t("set.fontScale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.8; to: 1.4; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0.8; to: 1.4; step: 0.05; decimals: 2
                                     value: Settings.get("theme.fontScale", 1.0)
                                     onMoved: v => Settings.set("theme.fontScale", v)
                                 }
@@ -624,7 +750,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.panelOpacity"); desc: I18n.t("set.panelOpacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.5; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.5; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("theme.panelOpacity", 0.95)
                                     onMoved: v => Settings.set("theme.panelOpacity", v)
                                 }
@@ -659,7 +785,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.settingsOpacity"); desc: I18n.t("set.settingsOpacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.5; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.5; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("theme.settingsOpacity", 0.9)
                                     onMoved: v => Settings.set("theme.settingsOpacity", v)
                                 }
@@ -668,7 +794,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: I18n.t("set.settingsGray"); desc: I18n.t("set.settingsGray.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("theme.settingsGray", 0.22)
                                     onMoved: v => Settings.set("theme.settingsGray", v)
                                 }
@@ -679,7 +805,7 @@ PanelWindow {
                                 width: parent.width; label: "BG0"; desc: I18n.t("set.hex.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(180)
+                                    width: Theme.fpx(180)
                                     text: Settings.get("theme.bg0", "#070708")
                                     onAccepted: value => root.setHex("bg0", value)
                                 }
@@ -688,7 +814,7 @@ PanelWindow {
                                 width: parent.width; label: "BG1"; desc: I18n.t("set.hex.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(180)
+                                    width: Theme.fpx(180)
                                     text: Settings.get("theme.bg1", "#0d0d0f")
                                     onAccepted: value => root.setHex("bg1", value)
                                 }
@@ -697,7 +823,7 @@ PanelWindow {
                                 width: parent.width; label: "PANEL"; desc: I18n.t("set.hex.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(180)
+                                    width: Theme.fpx(180)
                                     text: Settings.get("theme.panel", "#141416")
                                     onAccepted: value => root.setHex("panel", value)
                                 }
@@ -706,7 +832,7 @@ PanelWindow {
                                 width: parent.width; label: "TEXT"; desc: I18n.t("set.hex.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(180)
+                                    width: Theme.fpx(180)
                                     text: Settings.get("theme.text", "#f2eee3")
                                     onAccepted: value => root.setHex("text", value)
                                 }
@@ -715,7 +841,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: "ACCENT"; desc: I18n.t("set.hex.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(180)
+                                    width: Theme.fpx(180)
                                     text: Settings.get("theme.accent", "#e8bd4f")
                                     onAccepted: value => root.setHex("accent", value)
                                 }
@@ -731,7 +857,7 @@ PanelWindow {
                         Column {
                             visible: root.tab === 1
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "PLACEMENT"; note: I18n.t("set.sec.placement") }
                             SgRow {
@@ -747,7 +873,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.thickness"); desc: I18n.t("set.thickness.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 30; to: 56; step: 1
+                                    width: Theme.fpx(200); from: 30; to: 56; step: 1
                                     value: Settings.get("bar.thickness", 38)
                                     onMoved: v => Settings.set("bar.thickness", v)
                                 }
@@ -766,7 +892,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.opacity"); desc: I18n.t("set.opacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.3; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.3; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("bar.opacity", 0.94)
                                     onMoved: v => Settings.set("bar.opacity", v)
                                 }
@@ -775,7 +901,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.grayscale"); desc: I18n.t("set.grayscale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("bar.gray", 0)
                                     onMoved: v => Settings.set("bar.gray", v)
                                 }
@@ -784,7 +910,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("bar.blur", 0)
                                     onMoved: v => Settings.set("bar.blur", v)
                                 }
@@ -816,7 +942,7 @@ PanelWindow {
                                     width: parent.width
                                     label: I18n.t(modelData.labelKey)
                                     desc: "OFF / LEFT / CENTER / RIGHT"
-                                    controlWidth: Theme.px(300)
+                                    controlWidth: Theme.fpx(300)
                                     SgChoice {
                                         anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                         options: [
@@ -836,7 +962,7 @@ PanelWindow {
                         Column {
                             visible: root.tab === 2
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "BEHAVIOUR"; note: I18n.t("set.sec.behaviour") }
                             SgRow {
@@ -874,7 +1000,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.trigger"); desc: I18n.t("set.trigger.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 4; to: 48; step: 1
+                                    width: Theme.fpx(200); from: 4; to: 48; step: 1
                                     value: Settings.get("dock.trigger", 24)
                                     onMoved: v => Settings.set("dock.trigger", v)
                                 }
@@ -889,10 +1015,23 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.dockAlign"); desc: I18n.t("set.dockAlign.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "left", label: "LEFT" },
+                                        { value: "center", label: "CENTER" },
+                                        { value: "right", label: "RIGHT" }
+                                    ]
+                                    current: Settings.get("dock.align", "center")
+                                    onSelected: v => Settings.set("dock.align", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; label: I18n.t("set.maxItems"); desc: I18n.t("set.maxItems.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 5; to: 12; step: 1
+                                    width: Theme.fpx(200); from: 5; to: 12; step: 1
                                     value: Settings.get("dock.maxItems", 12)
                                     onMoved: v => Settings.set("dock.maxItems", v)
                                 }
@@ -905,7 +1044,7 @@ PanelWindow {
                                     + Settings.get("dock.maxItems", 12)
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(220)
+                                    width: Theme.fpx(220)
                                     placeholder: "app name"
                                     onAccepted: value => root.pinByName(value)
                                 }
@@ -916,7 +1055,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.iconSize"); desc: I18n.t("set.iconSize.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 32; to: 64; step: 1
+                                    width: Theme.fpx(200); from: 32; to: 64; step: 1
                                     value: Settings.get("dock.iconSize", 44)
                                     onMoved: v => Settings.set("dock.iconSize", v)
                                 }
@@ -925,7 +1064,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.opacity"); desc: I18n.t("set.opacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.3; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.3; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("dock.opacity", 0.94)
                                     onMoved: v => Settings.set("dock.opacity", v)
                                 }
@@ -934,7 +1073,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.grayscale"); desc: I18n.t("set.grayscale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("dock.gray", 0)
                                     onMoved: v => Settings.set("dock.gray", v)
                                 }
@@ -943,7 +1082,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("dock.blur", 0)
                                     onMoved: v => Settings.set("dock.blur", v)
                                 }
@@ -954,7 +1093,7 @@ PanelWindow {
                         Column {
                             visible: root.tab === 3
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "LEFT SIDEBAR"; note: I18n.t("set.sec.left") }
                             SgRow {
@@ -966,10 +1105,40 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.triggerWidth"); desc: I18n.t("set.triggerWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 60; to: 420; step: 4
+                                    value: Settings.get("sidebar.left.triggerWidth", 180)
+                                    onMoved: v => Settings.set("sidebar.left.triggerWidth", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.triggerPos"); desc: I18n.t("set.triggerPos.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "top", label: "TOP" },
+                                        { value: "bottom", label: "BOTTOM" }
+                                    ]
+                                    current: Settings.get("sidebar.left.triggerPosition", "top")
+                                    onSelected: v => Settings.set("sidebar.left.triggerPosition", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.triggerHeight"); desc: I18n.t("set.triggerHeight.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 4; to: 48; step: 1
+                                    value: Settings.get("sidebar.left.trigger", 12)
+                                    onMoved: v => Settings.set("sidebar.left.trigger", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; label: I18n.t("set.width"); desc: I18n.t("set.width.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 280; to: 460; step: 2
+                                    width: Theme.fpx(200); from: 280; to: 460; step: 2
                                     value: Settings.get("sidebar.left.width", 356)
                                     onMoved: v => Settings.set("sidebar.left.width", v)
                                 }
@@ -978,7 +1147,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.height"); desc: I18n.t("set.height.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("sidebar.left.height", 0.92)
                                     onMoved: v => Settings.set("sidebar.left.height", v)
                                 }
@@ -1000,7 +1169,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.opacity"); desc: I18n.t("set.opacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("sidebar.left.opacity", 0.96)
                                     onMoved: v => Settings.set("sidebar.left.opacity", v)
                                 }
@@ -1009,7 +1178,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.grayscale"); desc: I18n.t("set.grayscale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("sidebar.left.gray", 0)
                                     onMoved: v => Settings.set("sidebar.left.gray", v)
                                 }
@@ -1018,7 +1187,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("sidebar.left.blur", 0)
                                     onMoved: v => Settings.set("sidebar.left.blur", v)
                                 }
@@ -1027,7 +1196,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: I18n.t("set.delay"); desc: I18n.t("set.delay.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 200; to: 1400; step: 50
+                                    width: Theme.fpx(200); from: 200; to: 1400; step: 50
                                     value: Settings.get("sidebar.left.delay", 650)
                                     onMoved: v => Settings.set("sidebar.left.delay", v)
                                 }
@@ -1043,10 +1212,40 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.triggerWidth"); desc: I18n.t("set.triggerWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 60; to: 420; step: 4
+                                    value: Settings.get("sidebar.right.triggerWidth", 180)
+                                    onMoved: v => Settings.set("sidebar.right.triggerWidth", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.triggerPos"); desc: I18n.t("set.triggerPos.desc")
+                                SgChoice {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    options: [
+                                        { value: "top", label: "TOP" },
+                                        { value: "bottom", label: "BOTTOM" }
+                                    ]
+                                    current: Settings.get("sidebar.right.triggerPosition", "top")
+                                    onSelected: v => Settings.set("sidebar.right.triggerPosition", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.triggerHeight"); desc: I18n.t("set.triggerHeight.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 4; to: 48; step: 1
+                                    value: Settings.get("sidebar.right.trigger", 12)
+                                    onMoved: v => Settings.set("sidebar.right.trigger", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; label: I18n.t("set.width"); desc: I18n.t("set.width.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 280; to: 460; step: 2
+                                    width: Theme.fpx(200); from: 280; to: 460; step: 2
                                     value: Settings.get("sidebar.right.width", 372)
                                     onMoved: v => Settings.set("sidebar.right.width", v)
                                 }
@@ -1055,7 +1254,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.height"); desc: I18n.t("set.height.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("sidebar.right.height", 0.92)
                                     onMoved: v => Settings.set("sidebar.right.height", v)
                                 }
@@ -1077,7 +1276,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.opacity"); desc: I18n.t("set.opacity.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0.4; to: 1.0; step: 0.01; decimals: 2
                                     value: Settings.get("sidebar.right.opacity", 0.96)
                                     onMoved: v => Settings.set("sidebar.right.opacity", v)
                                 }
@@ -1086,7 +1285,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.grayscale"); desc: I18n.t("set.grayscale.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("sidebar.right.gray", 0)
                                     onMoved: v => Settings.set("sidebar.right.gray", v)
                                 }
@@ -1095,7 +1294,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("sidebar.right.blur", 0)
                                     onMoved: v => Settings.set("sidebar.right.blur", v)
                                 }
@@ -1104,7 +1303,7 @@ PanelWindow {
                                 width: parent.width; last: true; label: I18n.t("set.delay"); desc: I18n.t("set.delay.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 200; to: 1400; step: 50
+                                    width: Theme.fpx(200); from: 200; to: 1400; step: 50
                                     value: Settings.get("sidebar.right.delay", 650)
                                     onMoved: v => Settings.set("sidebar.right.delay", v)
                                 }
@@ -1118,7 +1317,7 @@ PanelWindow {
                                     width: parent.width
                                     label: I18n.t(modelData.labelKey)
                                     desc: I18n.t(modelData.descKey)
-                                    controlWidth: Theme.px(250)
+                                    controlWidth: Theme.fpx(250)
                                     SgChoice {
                                         anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                         options: [
@@ -1137,7 +1336,7 @@ PanelWindow {
                         Column {
                             visible: root.tab === 4
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "DESKTOP WIDGETS"; note: I18n.t("set.sec.widgets") }
                             Repeater {
@@ -1158,7 +1357,7 @@ PanelWindow {
                                     width: parent.width
                                     label: I18n.t("set.widgets." + widgetRow.wkey)
                                     desc: I18n.t("set.widgets." + widgetRow.wkey + ".desc")
-                                    controlWidth: Theme.px(80)
+                                    controlWidth: Theme.fpx(80)
                                     SgToggle {
                                         anchors.right: parent.right
                                         anchors.verticalCenter: parent.verticalCenter
@@ -1173,7 +1372,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.city"); desc: I18n.t("set.city.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200)
+                                    width: Theme.fpx(200)
                                     text: Settings.get("widgets.weather.city", "")
                                     placeholder: "auto"
                                     onAccepted: value => Settings.set("widgets.weather.city", value)
@@ -1193,7 +1392,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("widget.grid"); desc: I18n.t("widget.grid.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 16; to: 96; step: 8
+                                    width: Theme.fpx(200); from: 16; to: 96; step: 8
                                     value: Settings.get("widgets.grid", 48)
                                     onMoved: v => Settings.set("widgets.grid", v)
                                 }
@@ -1218,12 +1417,12 @@ PanelWindow {
                         Column {
                             visible: root.tab === 5
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "BUILT-IN WALLPAPERS"; note: I18n.t("set.sec.builtin") }
                             Row {
                                 width: parent.width
-                                spacing: Theme.px(10)
+                                spacing: Theme.fpx(10)
 
                                 Repeater {
                                     model: Wallpapers.builtin
@@ -1233,8 +1432,8 @@ PanelWindow {
                                         required property int index
                                         readonly property bool active: Wallpapers.selected === (Wallpapers.folder + modelData.file)
 
-                                        width: (parent.width - Theme.px(30)) / 4
-                                        height: Theme.px(104)
+                                        width: (parent.width - Theme.fpx(30)) / 4
+                                        height: Theme.fpx(104)
 
                                         Rectangle {
                                             anchors.fill: parent
@@ -1250,7 +1449,7 @@ PanelWindow {
                                             anchors.left: parent.left
                                             anchors.right: parent.right
                                             anchors.bottom: parent.bottom
-                                            height: Theme.px(20)
+                                            height: Theme.fpx(20)
                                             color: Sg.ink
                                             opacity: 0.86
                                         }
@@ -1273,12 +1472,82 @@ PanelWindow {
                                 }
                             }
 
-                            SgSection { width: parent.width; number: "02"; title: "CUSTOM IMAGE"; note: I18n.t("set.sec.custom") }
+                            SgSection { width: parent.width; number: "02"; title: "WALLPAPER DIRECTORY"; note: I18n.t("set.sec.wallpaperDir") }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.wallpaperDir"); desc: I18n.t("set.wallpaperDir.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(320)
+                                    text: Wallpapers.directory
+                                    placeholder: "/home/you/Pictures/Wallpapers"
+                                    onAccepted: value => Wallpapers.setDirectory(value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: I18n.t("set.wallpaperLibrary"); desc: I18n.t("set.wallpaperLibrary.desc")
+                                Row {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    spacing: Theme.fpx(6)
+                                    SgButton { text: I18n.t("set.browse"); onClicked: root.pickWallpaperDir() }
+                                    SgButton { text: I18n.t("set.scan"); onClicked: Wallpapers.refresh() }
+                                }
+                            }
+                            Grid {
+                                width: parent.width
+                                columns: 4
+                                spacing: Theme.fpx(8)
+                                visible: Wallpapers.user.length > 0
+
+                                Repeater {
+                                    model: Wallpapers.user
+                                    delegate: Item {
+                                        required property var modelData
+                                        width: (parent.width - Theme.fpx(24)) / 4
+                                        height: Theme.fpx(88)
+                                        Rectangle {
+                                            anchors.fill: parent
+                                            color: Wallpapers.selected === modelData.path ? Sg.yellow : Sg.ink
+                                        }
+                                        Image {
+                                            anchors.fill: parent; anchors.margins: 2
+                                            source: modelData.path
+                                            fillMode: Image.PreserveAspectCrop
+                                            asynchronous: true
+                                        }
+                                        Text {
+                                            anchors.left: parent.left; anchors.leftMargin: 5
+                                            anchors.bottom: parent.bottom; anchors.bottomMargin: 4
+                                            width: parent.width - 10
+                                            text: modelData.name
+                                            font.family: Theme.fontMono
+                                            font.pixelSize: Theme.fs(7)
+                                            color: Wallpapers.selected === modelData.path ? Sg.yellow : Sg.paper
+                                            elide: Text.ElideRight
+                                        }
+                                        MouseArea {
+                                            anchors.fill: parent
+                                            cursorShape: Qt.PointingHandCursor
+                                            onClicked: Wallpapers.choosePath(modelData.path)
+                                        }
+                                    }
+                                }
+                            }
+                            Text {
+                                visible: Wallpapers.directory === "" || Wallpapers.user.length === 0
+                                width: parent.width
+                                text: Wallpapers.directory === "" ? I18n.t("set.wallpaperDir.empty") : I18n.t("set.wallpaperDir.none")
+                                font.family: Theme.fontMono
+                                font.pixelSize: Theme.fs(9)
+                                color: Sg.ink
+                                opacity: 0.55
+                            }
+
+                            SgSection { width: parent.width; number: "03"; title: "CUSTOM IMAGE"; note: I18n.t("set.sec.custom") }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.path"); desc: I18n.t("set.path.desc")
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(380)
+                                    width: Theme.fpx(380)
                                     text: Settings.get("wallpaper.path", "")
                                     placeholder: "file:///home/you/Pictures/wallpaper.png"
                                     onAccepted: value => Settings.set("wallpaper.path", value)
@@ -1301,7 +1570,7 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.dim"); desc: I18n.t("set.dim.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.px(200); from: 0; to: 0.6; step: 0.01; decimals: 2
+                                    width: Theme.fpx(200); from: 0; to: 0.6; step: 0.01; decimals: 2
                                     value: Settings.get("wallpaper.dim", 0.06)
                                     onMoved: v => Settings.set("wallpaper.dim", v)
                                 }
@@ -1320,12 +1589,12 @@ PanelWindow {
                         Column {
                             visible: root.tab === 6
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "SESSION"; note: I18n.t("set.sec.session") }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.lang"); desc: I18n.t("set.lang.desc")
-                                controlWidth: Theme.px(330)
+                                controlWidth: Theme.fpx(330)
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     options: [
@@ -1387,7 +1656,7 @@ PanelWindow {
                                     width: parent.width
                                     label: modelData.k
                                     desc: I18n.t("set.sec.hotkeys")
-                                    controlWidth: Theme.px(210)
+                                    controlWidth: Theme.fpx(210)
                                     Text {
                                         anchors.right: parent.right
                                         anchors.verticalCenter: parent.verticalCenter
@@ -1404,12 +1673,12 @@ PanelWindow {
                         Column {
                             visible: root.tab === 7
                             width: parent.width
-                            spacing: Theme.px(10)
+                            spacing: Theme.fpx(10)
 
                             SgSection { width: parent.width; number: "01"; title: "ABOUT"; note: I18n.t("set.sec.about") }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.version"); desc: I18n.t("set.version.desc")
-                                controlWidth: Theme.px(160)
+                                controlWidth: Theme.fpx(160)
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: "v1.0  //  MIT"
@@ -1418,7 +1687,7 @@ PanelWindow {
                             }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.runtime"); desc: I18n.t("set.runtime.desc")
-                                controlWidth: Theme.px(200)
+                                controlWidth: Theme.fpx(200)
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Compositor.backend.toUpperCase() + "  ·  " + User.session
@@ -1427,7 +1696,7 @@ PanelWindow {
                             }
                             SgRow {
                                 width: parent.width; last: true; label: I18n.t("set.configFile"); desc: I18n.t("set.configFile.desc")
-                                controlWidth: Theme.px(320)
+                                controlWidth: Theme.fpx(320)
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Settings.path
@@ -1450,13 +1719,13 @@ PanelWindow {
                             }
 
                             Row {
-                                spacing: Theme.px(8)
+                                spacing: Theme.fpx(8)
                                 SgButton { text: I18n.t("set.gfwiki"); onClicked: Qt.openUrlExternally("https://www.gfwiki.org/") }
                                 SgButton { text: I18n.t("set.resetAll"); danger: true; onClicked: Settings.reset() }
                             }
                         }
 
-                        Item { width: 1; height: Theme.px(20) }
+                        Item { width: 1; height: Theme.fpx(20) }
                     }
                 }
             }

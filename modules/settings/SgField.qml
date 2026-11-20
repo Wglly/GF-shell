@@ -10,8 +10,8 @@ Item {
     property string placeholder: ""
     signal accepted(string value)
 
-    implicitHeight: Theme.px(28)
-    implicitWidth: Theme.px(240)
+    implicitHeight: Theme.fpx(28)
+    implicitWidth: Theme.fpx(240)
     readonly property bool focused: input.activeFocus
 
     Rectangle {
@@ -24,8 +24,8 @@ Item {
     TextInput {
         id: input
         anchors.fill: parent
-        anchors.leftMargin: Theme.px(8)
-        anchors.rightMargin: Theme.px(8)
+        anchors.leftMargin: Theme.fpx(8)
+        anchors.rightMargin: Theme.fpx(8)
         text: root.text
         color: Sg.ink
         font.family: Theme.fontMono

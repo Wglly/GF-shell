@@ -29,12 +29,13 @@ Config file: `~/.config/gf-shell/config.json`
     "titleMode": "window",
     "left": ["launcher", "user", "workspaces", "title"],
     "center": ["clock"],
-    "right": ["media", "stats", "net", "bluetooth", "volume", "battery", "tray",
+    "right": ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray",
               "overview", "control", "power"]
   },
   "dock": {
     "enabled": true,
     "position": "bottom",
+    "align": "center",
     "autoHide": false,
     "avoid": true,
     "trigger": 24,
@@ -43,17 +44,17 @@ Config file: `~/.config/gf-shell/config.json`
     "opacity": 0.94,
     "gray": 0.0,
     "blur": 0.0,
-    "maxItems": 9,
+    "maxItems": 12,
     "pinned": ["firefox.desktop", "kitty.desktop", "foot.desktop",
                "org.gnome.Nautilus.desktop", "code.desktop", "steam.desktop"]
   },
   "sidebar": {
     "left":  { "enabled": true, "width": 356, "height": 0.82, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "right": { "enabled": true, "width": 372, "height": 0.88, "align": "top",
                "opacity": 0.96, "gray": 0.0, "blur": 0.0,
-               "autoHide": true, "delay": 650, "trigger": 6 },
+               "autoHide": true, "delay": 650, "trigger": 12, "triggerWidth": 180, "triggerPosition": "top" },
     "assign": {
       "user": "left", "calendar": "left", "roster": "left", "actions": "left",
       "weather": "left", "stats": "right", "mission": "right",
@@ -99,6 +100,7 @@ Config file: `~/.config/gf-shell/config.json`
   "wallpaper": {
     "enabled": true,
     "path": "",
+    "dir": "",
     "fillMode": "fill",
     "dim": 0.06,
     "color": "#080b0e"
@@ -117,6 +119,7 @@ Config file: `~/.config/gf-shell/config.json`
   "osd":    { "enabled": true, "position": "center" },
   "overview": { "columns": 4, "desktops": 8, "backdrop": 0.94, "showWindows": true },
   "power":  { "confirm": true },
+  "user": { "avatar": "" },
   "notifications": { "dnd": false, "toasts": true, "maxToasts": 4, "position": "top-right" },
   "hotkeys": { "launcher": "SUPER+Space", "overview": "SUPER+ALT+Tab", "control": "SUPER+Shift+C" },
   "shell":  { "keepAwake": false }
@@ -276,6 +279,14 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 - Setting custom `bg0/bg1/bg/panel/text/accent/...` switches `mode` to `custom`. The wallpaper is
   washed toward paper white based on `bg0` luminance so dark text stays readable in light themes.
 - Presets write the full palette; `scale`, `fontScale`, `settingsOpacity` are not overwritten.
+
+- `dock.align`: `left` / `center` / `right`; snap the dock to a screen side or keep it centred.
+- `sidebar.<left|right>.triggerPosition`: `top` / `bottom`; the hot zone sits at the top or bottom corner.
+- `sidebar.<left|right>.triggerWidth`: horizontal hot-zone width (60–420 px); `trigger` is its height.
+- The `wallpaper` sidebar component can be assigned left/right in Settings → Sidebars → Components.
+- `wallpaper.dir`: folder to import (png/jpg/jpeg/webp/avif/bmp). The bar and sidebar wallpaper libraries list every image.
+- `user.avatar`: custom avatar path; BROWSE on the settings home copies it to `~/.config/gf-shell/avatar`.
+- Light themes no longer tint the wallpaper with a paper-white wash; `wallpaper.dim` applies to dark themes.
 
 ## Wallpaper
 

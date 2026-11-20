@@ -10,22 +10,22 @@ Rectangle {
     property string title: ""
     property string note: ""
 
-    implicitHeight: Theme.px(28)
+    implicitHeight: Theme.fpx(28)
     color: Sg.ink
 
     Rectangle {
         x: 0
         y: 0
-        width: Theme.px(4)
+        width: Theme.fpx(4)
         height: parent.height
         color: Sg.yellow
     }
 
     Row {
         anchors.left: parent.left
-        anchors.leftMargin: Theme.px(12)
+        anchors.leftMargin: Theme.fpx(12)
         anchors.verticalCenter: parent.verticalCenter
-        spacing: Theme.px(8)
+        spacing: Theme.fpx(8)
 
         Text {
             text: root.number
@@ -37,7 +37,7 @@ Rectangle {
             text: root.title
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(11)
-            font.letterSpacing: Theme.px(2)
+            font.letterSpacing: Theme.fpx(2)
             font.bold: true
             color: Sg.paper
         }
@@ -45,7 +45,7 @@ Rectangle {
 
     Text {
         anchors.right: parent.right
-        anchors.rightMargin: Theme.px(10)
+        anchors.rightMargin: Theme.fpx(10)
         anchors.verticalCenter: parent.verticalCenter
         text: root.note
         font.family: Theme.fontMono

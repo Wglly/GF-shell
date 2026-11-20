@@ -25,7 +25,15 @@ PanelWindow {
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
     property date now: new Date()
-    property int moveId: -1
+    property var moveId: null
+    property var sectorCards: []
+    property var draggableId: null
+    property var dragEntry: null
+    property bool dragging: false
+    property bool dragJustFinished: false
+    property point dragStart: Qt.point(0, 0)
+    property point dragPoint: Qt.point(0, 0)
+    property int hoverCard: -1
 
     readonly property bool compact: root.width < Theme.px(1000)
     readonly property int columns: root.compact ? 2
@@ -42,6 +50,29 @@ PanelWindow {
                 out.push(list[i]);
         }
         return out;
+    }
+
+    function updateHoverCard(x, y) {
+        root.hoverCard = -1;
+        for (var i = 0; i < root.sectorCards.length; i++) {
+            var card = root.sectorCards[i];
+            var p = card.mapFromItem(null, x, y);
+            if (p.x >= 0 && p.y >= 0 && p.x <= card.width && p.y <= card.height) {
+                root.hoverCard = card.wsId;
+                return;
+            }
+        }
+    }
+
+    function finishDrag(x, y) {
+        for (var i = 0; i < root.sectorCards.length; i++) {
+            var card = root.sectorCards[i];
+            var p = card.mapFromItem(null, x, y);
+            if (p.x >= 0 && p.y >= 0 && p.x <= card.width && p.y <= card.height) {
+                Compositor.moveWindow(root.draggableId, card.wsId);
+                return;
+            }
+        }
     }
 
     Timer {
@@ -224,7 +255,7 @@ PanelWindow {
                 GfKeyCap { label: "CLICK"; visible: !root.compact }
                 GfText {
                     visible: !root.compact
-                    text: root.moveId > 0
+                    text: root.moveId !== null
                         ? "MOVE MODE   ·   CLICK A SECTOR TO MOVE   ·   ESC CANCEL"
                         : "SECTOR → WORKSPACE   ·   UNIT → FOCUS   ·   DRAG / RIGHT-CLICK UNIT TO MOVE"
                     role: "mono"; size: Theme.sizeTiny - 1; tone: "faint"
@@ -255,8 +286,16 @@ PanelWindow {
         readonly property int sectorNumber: sectorIndex + 1
         readonly property var wins: root.windowsFor(card.wsId)
 
+        Component.onCompleted: root.sectorCards.push(card)
+        Component.onDestruction: {
+            var i = root.sectorCards.indexOf(card);
+            if (i >= 0)
+                root.sectorCards.splice(i, 1);
+        }
+
         fill: Theme.alpha(Theme.bg1, 0.92)
-        borderColor: card.active ? Theme.accentHi : Theme.alpha(Theme.accent, 0.32)
+        borderColor: root.hoverCard === card.wsId ? Theme.accentHi
+            : (card.active ? Theme.accentHi : Theme.alpha(Theme.accent, 0.32))
         strokeWidth: card.active ? 2 : 1
         chamfer: Theme.px(6)
         cutTopLeft: false
@@ -274,40 +313,13 @@ PanelWindow {
             acceptedButtons: Qt.LeftButton
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-                if (root.moveId > 0) {
+                if (root.moveId !== null) {
                     Compositor.moveWindow(root.moveId, card.wsId);
-                    root.moveId = -1;
+                    root.moveId = null;
                     return;
                 }
                 Compositor.focusWorkspace(card.ws !== null ? card.ws.id : card.sectorNumber);
                 ShellState.close();
-            }
-        }
-
-        // 拖放目标：把单位拖到本扇区
-        DropArea {
-            id: dropZone
-            anchors.fill: parent
-            z: 2
-            keys: ["application/x-gf-window"]
-
-            Rectangle {
-                anchors.fill: parent
-                visible: dropZone.containsDrag
-                color: Theme.alpha(Theme.accent, 0.14)
-                border.width: 2
-                border.color: Theme.accentHi
-            }
-
-            onDropped: drop => {
-                var raw = drop.getData("application/x-gf-window");
-                if (!raw || raw === "")
-                    raw = drop.text;
-                var id = parseInt(raw);
-                if (!isNaN(id) && id > 0) {
-                    Compositor.moveWindow(id, card.wsId);
-                    drop.acceptProposedAction();
-                }
             }
         }
 
@@ -390,19 +402,6 @@ PanelWindow {
                     height: Theme.px(28)
                     z: 10
 
-                    Drag.active: winMouse.drag.active
-                    Drag.hotSpot.x: Theme.px(12)
-                    Drag.hotSpot.y: Theme.px(12)
-                    Drag.keys: ["application/x-gf-window"]
-                    Drag.mimeData: ({ "application/x-gf-window": "" + modelData.id })
-
-                    Item {
-                        id: dragProxy
-                        width: 1
-                        height: 1
-                        visible: false
-                    }
-
                     Rectangle {
                         anchors.fill: parent
                         color: root.moveId === modelData.id ? Theme.alpha(Theme.accentHi, 0.22)
@@ -445,12 +444,52 @@ PanelWindow {
                         id: winMouse
                         anchors.fill: parent
                         hoverEnabled: true
-                        cursorShape: Qt.PointingHandCursor
-                        drag.target: dragProxy
-                        drag.threshold: Theme.px(8)
-                        onClicked: {
-                            if (winMouse.drag.active)
+                        cursorShape: Qt.SizeAllCursor
+                        acceptedButtons: Qt.LeftButton | Qt.RightButton
+
+                        onPressed: mouse => {
+                            if (mouse.button !== Qt.LeftButton)
                                 return;
+                            var p = winRow.mapToItem(null, mouse.x, mouse.y);
+                            root.dragStart = p;
+                            root.dragPoint = p;
+                            root.draggableId = modelData.id;
+                            root.dragEntry = modelData;
+                            root.dragging = false;
+                        }
+                        onPositionChanged: mouse => {
+                            if (!pressed || root.draggableId !== modelData.id)
+                                return;
+                            var p = winRow.mapToItem(null, mouse.x, mouse.y);
+                            if (!root.dragging) {
+                                var dx = p.x - root.dragStart.x;
+                                var dy = p.y - root.dragStart.y;
+                                if (Math.sqrt(dx * dx + dy * dy) < 8)
+                                    return;
+                                root.dragging = true;
+                            }
+                            root.dragPoint = p;
+                            root.updateHoverCard(p.x, p.y);
+                        }
+                        onReleased: mouse => {
+                            if (root.dragging) {
+                                var p = winRow.mapToItem(null, mouse.x, mouse.y);
+                                root.finishDrag(p.x, p.y);
+                                root.dragJustFinished = true;
+                                dragGuard.restart();
+                            }
+                            root.dragging = false;
+                            root.draggableId = null;
+                            root.dragEntry = null;
+                            root.hoverCard = -1;
+                        }
+                        onClicked: mouse => {
+                            if (root.dragJustFinished)
+                                return;
+                            if (mouse.button === Qt.RightButton) {
+                                root.moveId = modelData.id;
+                                return;
+                            }
                             Compositor.focusWindow(modelData.id);
                             ShellState.close();
                         }
@@ -515,6 +554,35 @@ PanelWindow {
                 size: Theme.sizeTiny - 3
                 tone: "faint"
             }
+        }
+    }
+
+    Timer {
+        id: dragGuard
+        interval: 120
+        onTriggered: root.dragJustFinished = false
+    }
+
+    GfFrame {
+        visible: root.dragging && root.dragEntry !== null
+        x: Math.min(root.width - width - Theme.px(8), root.dragPoint.x + Theme.px(12))
+        y: Math.min(root.height - height - Theme.px(8), root.dragPoint.y + Theme.px(12))
+        width: Theme.px(190)
+        height: Theme.px(34)
+        z: 200
+        fill: Theme.alpha(Theme.bg0, 0.96)
+        borderColor: Theme.accentHi
+        chamfer: Theme.px(4)
+        padding: 0
+
+        GfText {
+            anchors.centerIn: parent
+            text: root.dragEntry ? root.dragEntry.title : ""
+            role: "ui"; size: Theme.sizeTiny
+            color: Theme.accentHi
+            elide: Text.ElideRight
+            width: parent.width - Theme.px(12)
+            horizontalAlignment: Text.AlignHCenter
         }
     }
 

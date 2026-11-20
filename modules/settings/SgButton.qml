@@ -15,8 +15,8 @@ Item {
     signal clicked()
 
     readonly property bool hovered: mouse.containsMouse
-    implicitHeight: Theme.px(root.compact ? 26 : 30)
-    implicitWidth: Math.max(Theme.px(56), label.implicitWidth + Theme.px(22))
+    implicitHeight: Theme.fpx(root.compact ? 26 : 30)
+    implicitWidth: Math.max(Theme.fpx(56), label.implicitWidth + Theme.fpx(22))
 
     Rectangle {
         anchors.fill: parent
@@ -29,13 +29,13 @@ Item {
     Row {
         id: row
         anchors.centerIn: parent
-        spacing: Theme.px(6)
+        spacing: Theme.fpx(6)
 
         GfIcon {
             anchors.verticalCenter: parent.verticalCenter
             visible: root.icon !== ""
             name: root.icon
-            iconSize: Theme.px(13)
+            iconSize: Theme.fpx(13)
             color: root.active || root.hovered ? Sg.ink : "#f4f1e8"
         }
         Text {
@@ -43,7 +43,7 @@ Item {
             text: root.text
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(root.compact ? 10 : 11)
-            font.letterSpacing: Theme.px(1.2)
+            font.letterSpacing: Theme.fpx(1.2)
             font.bold: true
             color: root.active || root.hovered ? Sg.ink : "#f4f1e8"
         }

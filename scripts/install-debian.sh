@@ -61,7 +61,7 @@ RUNTIME=(
     pipewire wireplumber upower network-manager bluez
     brightnessctl grim slurp wl-clipboard fonts-noto-cjk
 )
-OPTIONAL=(wf-recorder playerctl cava curl)
+OPTIONAL=(wf-recorder playerctl cava curl zenity)
 
 if [[ "$GF_DRY_RUN" = "1" ]]; then
     echo "  sudo apt-get update"

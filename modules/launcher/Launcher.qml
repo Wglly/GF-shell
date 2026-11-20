@@ -108,7 +108,7 @@ PanelWindow {
         return out;
     }
 
-    readonly property var shownApps: root.filtered.slice(0, root.columns * 4)
+    readonly property var shownApps: root.filtered
     readonly property var currentApp: root.shownApps.length > 0
         ? root.shownApps[Math.min(root.selected, root.shownApps.length - 1)] : null
 
@@ -122,7 +122,20 @@ PanelWindow {
     }
 
     onShownAppsChanged: root.clampSelection()
+    onSelectedChanged: root.ensureVisible()
     onQueryChanged: root.selected = 0
+
+    function ensureVisible() {
+        if (!scroller)
+            return;
+        var row = Math.floor(root.selected / root.columns);
+        var top = row * (Theme.px(96) + Theme.px(8));
+        var bottom = top + Theme.px(96);
+        if (top < scroller.contentY)
+            scroller.contentY = top;
+        else if (bottom > scroller.contentY + scroller.height)
+            scroller.contentY = bottom - scroller.height;
+    }
 
     function move(delta) {
         var n = root.shownApps.length;
@@ -553,18 +566,34 @@ PanelWindow {
                         height: Theme.px(22)
                     }
 
-                    Grid {
-                        id: grid
+                    Flickable {
+                        id: scroller
                         anchors.top: listHint.bottom
                         anchors.topMargin: Theme.px(6)
                         anchors.left: parent.left
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
-                        columns: root.columns
-                        rowSpacing: Theme.px(8)
-                        columnSpacing: Theme.px(8)
+                        clip: true
+                        contentWidth: width
+                        contentHeight: Math.max(grid.implicitHeight, height + 1)
+                        boundsBehavior: Flickable.StopAtBounds
 
-                        Repeater {
+                        WheelHandler {
+                            onWheel: wheel => {
+                                var dy = (wheel.angleDelta.y / 120) * Theme.px(78);
+                                scroller.contentY = Math.max(0, Math.min(scroller.contentHeight - scroller.height, scroller.contentY - dy));
+                                wheel.accepted = true;
+                            }
+                        }
+
+                        Grid {
+                            id: grid
+                            width: scroller.width
+                            columns: root.columns
+                            rowSpacing: Theme.px(8)
+                            columnSpacing: Theme.px(8)
+
+                            Repeater {
                             model: root.shownApps
 
                             delegate: Item {
@@ -705,6 +734,7 @@ PanelWindow {
                             size: Theme.sizeTiny - 1
                             tone: "faint"
                         }
+                    }
                     }
                 }
 

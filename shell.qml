@@ -188,6 +188,13 @@ ShellRoot {
             ShellState.close();
         }
 
+
+
+
+
+
+
+
         function widgets(): void {
             ShellState.toggleWidgetsEditing();
         }

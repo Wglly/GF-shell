@@ -40,6 +40,7 @@ Column {
                 width: parent.width * 0.66
                 height: parent.height * 0.66
                 source: User.avatar
+                cache: false
                 fillMode: Image.PreserveAspectFit
             }
 

@@ -40,7 +40,7 @@ PanelWindow {
 
     Rectangle {
         anchors.fill: parent
-        color: Theme.alpha(Theme.bg0, 0.3)
+        color: "transparent"
 
         MouseArea {
             anchors.fill: parent

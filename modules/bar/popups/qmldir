@@ -2,3 +2,5 @@ module qs.modules.bar.popups
 NetworkCard 1.0 NetworkCard.qml
 BluetoothCard 1.0 BluetoothCard.qml
 StatsCard 1.0 StatsCard.qml
+TrayCard 1.0 TrayCard.qml
+WallpaperCard 1.0 WallpaperCard.qml

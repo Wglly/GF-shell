@@ -73,6 +73,7 @@ PanelWindow {
         case "tray": return w >= Theme.px(950);
         case "net": return w >= Theme.px(840);
         case "bluetooth": return w >= Theme.px(900);
+        case "wallpaper": return w >= Theme.px(1150);
         default: return true;
         }
     }

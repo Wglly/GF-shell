@@ -10,18 +10,18 @@ Item {
     property string subtitle: ""
     property string code: ""
 
-    implicitHeight: Theme.px(30)
-    width: parent ? parent.width : Theme.px(400)
+    implicitHeight: Theme.fpx(30)
+    width: parent ? parent.width : Theme.fpx(400)
 
     Rectangle {
-        width: Theme.px(2)
-        height: Theme.px(12)
-        y: Theme.px(4)
+        width: Theme.fpx(2)
+        height: Theme.fpx(12)
+        y: Theme.fpx(4)
         color: Theme.accent
     }
 
     GfText {
-        x: Theme.px(8)
+        x: Theme.fpx(8)
         anchors.verticalCenter: parent.verticalCenter
         text: root.title.toUpperCase()
         role: "label"

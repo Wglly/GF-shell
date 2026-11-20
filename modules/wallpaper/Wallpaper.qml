@@ -46,9 +46,12 @@ PanelWindow {
         opacity: Settings.get("wallpaper.enabled", true) ? 0 : 1
     }
 
-    // 压暗（暖黑）
+    readonly property bool darkSurfaces: (Theme.bg0.r * 0.299 + Theme.bg0.g * 0.587 + Theme.bg0.b * 0.114) <= 0.55
+
+    // 压暗（暖黑；亮色主题不染色）
     Rectangle {
         anchors.fill: parent
+        visible: root.darkSurfaces
         color: Theme.alpha(Theme.bg0, Settings.get("wallpaper.dim", 0.06))
     }
 
@@ -57,6 +60,7 @@ PanelWindow {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
+        visible: root.darkSurfaces
         height: Theme.px(120)
         gradient: Gradient {
             GradientStop { position: 0.0; color: Theme.alpha(Theme.bg0, 0.82) }
@@ -69,19 +73,12 @@ PanelWindow {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        visible: root.darkSurfaces
         height: Theme.px(150)
         gradient: Gradient {
             GradientStop { position: 0.0; color: "transparent" }
             GradientStop { position: 1.0; color: Theme.alpha(Theme.bg0, 0.7) }
         }
-    }
-
-    // 亮色主题：把深色壁紙洗成紙白，讓深色文字可讀
-    Rectangle {
-        anchors.fill: parent
-        visible: (Theme.bg0.r * 0.299 + Theme.bg0.g * 0.587 + Theme.bg0.b * 0.114) > 0.55
-        color: "#f4f0e6"
-        opacity: 0.74
     }
 
     // 半调网点（很淡，补齐壁纸没有覆盖到的区域）

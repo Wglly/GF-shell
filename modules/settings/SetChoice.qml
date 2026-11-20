@@ -10,7 +10,7 @@ Row {
     property string value: ""
     signal picked(string value)
 
-    spacing: Theme.px(2)
+    spacing: Theme.fpx(2)
 
     Repeater {
         model: root.options

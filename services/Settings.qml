@@ -18,7 +18,7 @@ QtObject {
 
     function defaults() {
         return {
-            version: 7,
+            version: 8,
             language: "auto",            // auto | zh_TW | zh_CN | en | ja
             bar: {
                 position: "top",         // top | bottom
@@ -34,11 +34,12 @@ QtObject {
                 size: 1.0,
                 left: ["launcher", "user", "workspaces", "title"],
                 center: ["clock"],
-                right: ["media", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]
+                right: ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]
             },
             dock: {
                 enabled: true,
                 position: "bottom",
+                align: "center",          // center | left | right
                 autoHide: false,
                 iconSize: 44,
                 opacity: 0.94,
@@ -109,17 +110,17 @@ QtObject {
                 left: {
                     enabled: true, width: 356, height: 0.82, align: "top",
                     opacity: 0.94, gray: 0.0, blur: 0.0,
-                    autoHide: true, delay: 650, trigger: 6
+                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top"
                 },
                 right: {
                     enabled: true, width: 372, height: 0.88, align: "top",
                     opacity: 0.94, gray: 0.0, blur: 0.0,
-                    autoHide: true, delay: 650, trigger: 6
+                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top"
                 },
                 assign: {
                     user: "left", calendar: "left", roster: "left", actions: "left",
                     weather: "left", stats: "right", mission: "right",
-                    media: "right", visualizer: "right", comms: "right", clock: "off"
+                    media: "right", visualizer: "right", comms: "right", clock: "off", wallpaper: "right"
                 }
             },
             osd: {
@@ -382,6 +383,23 @@ QtObject {
         root.set("version", 7);
     }
 
+    // v7 → v8：狀態列加入壁紙庫入口。
+    function migrateWallpaperComponent(parsed) {
+        var v = parsed && parsed.version ? parsed.version : 0;
+        if (v >= 8)
+            return;
+        var right = root.get("bar.right", []);
+        if (Array.isArray(right) && right.indexOf("wallpaper") < 0) {
+            right = right.slice();
+            var idx = right.indexOf("media");
+            right.splice(idx >= 0 ? idx + 1 : right.length, 0, "wallpaper");
+            root.set("bar.right", right);
+        }
+        if (root.get("sidebar.assign.wallpaper", "off") === "off")
+            root.set("sidebar.assign.wallpaper", "right");
+        root.set("version", 8);
+    }
+
     property FileView cfgFile: FileView {
         id: cfg
         path: root.path
@@ -403,6 +421,7 @@ QtObject {
                 root.migrateLanguage(parsed);
                 root.migrateBluetooth(parsed);
                 root.migrateDockLimit(parsed);
+                root.migrateWallpaperComponent(parsed);
             }
             if (!parsed)
                 root.save();

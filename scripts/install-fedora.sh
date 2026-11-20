@@ -57,7 +57,7 @@ RUNTIME=(
     brightnessctl grim slurp wl-clipboard
     google-noto-sans-cjk-fonts
 )
-OPTIONAL=(wf-recorder playerctl cava curl)
+OPTIONAL=(wf-recorder playerctl cava curl zenity)
 
 if [[ "$GF_DRY_RUN" = "1" ]]; then
     echo "  sudo dnf install -y ${RUNTIME[*]}"

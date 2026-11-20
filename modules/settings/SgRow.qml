@@ -9,16 +9,16 @@ Item {
     property string label: ""
     property string desc: ""
     property bool last: false
-    property int controlWidth: Theme.px(250)
+    property int controlWidth: Theme.fpx(250)
     default property alias content: slot.data
 
-    implicitHeight: Theme.px(52)
+    implicitHeight: Theme.fpx(52)
 
     Column {
         anchors.left: parent.left
         anchors.verticalCenter: parent.verticalCenter
         anchors.right: slot.left
-        anchors.rightMargin: Theme.px(12)
+        anchors.rightMargin: Theme.fpx(12)
         spacing: 1
 
         Text {
@@ -43,7 +43,7 @@ Item {
         anchors.right: parent.right
         anchors.verticalCenter: parent.verticalCenter
         width: root.controlWidth
-        height: childrenRect.height
+        height: root.height
     }
 
     Rectangle {
