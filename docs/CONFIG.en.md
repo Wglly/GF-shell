@@ -109,6 +109,7 @@ Config file: `~/.config/gf-shell/config.json`
   },
   "terminal": { "command": "" },
   "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
+  "cursor": { "theme": "", "size": 24 },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -330,6 +331,13 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 `fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` select families for the interface, display/numbers, data and small labels. An empty string uses the bundled font (Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani).
 
 Settings → Appearance → **TYPOGRAPHY** scans fontconfig with `fc-list`; pick a role, search, preview and click a family, or reset the role to the bundled font. The list is loaded by `services/Fonts.qml`.
+
+## Pointer
+
+`cursor.theme` / `cursor.size` store the selection. Settings → Appearance → **POINTER** scans `/usr/share/icons`, `~/.local/share/icons` and `~/.icons` for Xcursor themes with a `cursors/` directory; search and apply them live.
+
+- Hyprland: `hyprctl setcursor`, with GTK `gsettings` kept in sync.
+- niri: `scripts/niri-gf-cursor.py` updates the `cursor { xcursor-theme … }` block, backs it up, validates with `niri validate`, restores on failure, and niri auto-reloads.
 
 ## Compositor
 

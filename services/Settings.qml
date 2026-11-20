@@ -154,6 +154,9 @@ QtObject {
             fonts: {
                 ui: "", display: "", mono: "", label: ""
             },
+            cursor: {
+                theme: "", size: 24
+            },
             compositor: {
                 hypr: {
                     gapsIn: 5, gapsOut: 10, borderWidth: 1, rounding: 8,

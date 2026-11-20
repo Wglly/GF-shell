@@ -109,6 +109,7 @@
   },
   "terminal": { "command": "" },
   "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
+  "cursor": { "theme": "", "size": 24 },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -331,6 +332,13 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 `fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` 分别指定界面、标题数字、数据与小标签的字体家族；空字符串代表随附字体（Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani）。
 
 设置 → 外观 → **TYPOGRAPHY** 会用 `fc-list` 扫描 fontconfig 的本地字体，可切换角色、搜索、预览并点击应用；“重置此角色”回到随附字体。字体列表由 `services/Fonts.qml` 自动加载。
+
+## 鼠标指针
+
+`cursor.theme` / `cursor.size` 保存选择。设置 → 外观 → **POINTER** 会扫描 `/usr/share/icons`、`~/.local/share/icons`、`~/.icons` 中含 `cursors/` 的 Xcursor 主题，可搜索并即时应用。
+
+- Hyprland：`hyprctl setcursor`，并同步 GTK 的 `gsettings`。
+- niri：由 `scripts/niri-gf-cursor.py` 更新 `cursor { xcursor-theme … }`，自动备份、`niri validate` 校验，失败还原；niri 自动重新加载。
 
 ## 合成器设置
 

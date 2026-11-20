@@ -109,6 +109,7 @@
   },
   "terminal": { "command": "" },
   "fonts": { "ui": "", "display": "", "mono": "", "label": "" },
+  "cursor": { "theme": "", "size": 24 },
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
@@ -310,6 +311,13 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 `fonts.ui` / `fonts.display` / `fonts.mono` / `fonts.label` で UI、見出し数字、データ、小ラベルのフォントファミリーを指定します。空文字は同梱フォント（Chakra Petch / Saira Condensed / Share Tech Mono / Rajdhani）です。
 
 設定 → 外観 → **TYPOGRAPHY** は `fc-list` で fontconfig のローカルフォントを検出し、役割の切り替え、検索、プレビュー、クリック適用ができます。「この役割をリセット」で同梱フォントに戻ります。一覧は `services/Fonts.qml` が読み込みます。
+
+## ポインター
+
+`cursor.theme` / `cursor.size` に選択を保存します。設定 → 外観 → **POINTER** は `/usr/share/icons`、`~/.local/share/icons`、`~/.icons` の `cursors/` を持つ Xcursor テーマを検出し、検索して即時適用できます。
+
+- Hyprland：`hyprctl setcursor`、GTK の `gsettings` も同期。
+- niri：`scripts/niri-gf-cursor.py` が `cursor { xcursor-theme … }` を更新し、バックアップ、`niri validate` 検証、失敗時復元。niri は自動リロードします。
 
 ## コンポジタ
 

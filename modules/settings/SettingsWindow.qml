@@ -42,6 +42,7 @@ PanelWindow {
 
     property string fontRole: "ui"
     property string fontQuery: ""
+    property string cursorQuery: ""
 
     function fontFor(role) {
         var defaults = { ui: "Chakra Petch", display: "Saira Condensed",
@@ -52,6 +53,17 @@ PanelWindow {
 
     function setFont(family) {
         Settings.set("fonts." + root.fontRole, family);
+    }
+
+    readonly property var cursorChoices: {
+        var q = root.cursorQuery.toLowerCase().trim();
+        var out = [];
+        for (var i = 0; i < Cursors.themes.length; i++) {
+            var name = "" + Cursors.themes[i];
+            if (q === "" || name.toLowerCase().indexOf(q) >= 0)
+                out.push(name);
+        }
+        return out;
     }
 
     readonly property var fontChoices: {
@@ -1027,6 +1039,108 @@ PanelWindow {
                                 SgButton {
                                     text: I18n.t("set.fontRefresh")
                                     onClicked: Fonts.refresh()
+                                }
+                            }
+
+                            SgSection {
+                                width: parent.width; number: "06"; title: "POINTER"
+                                note: I18n.t("set.pointer.note")
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.cursorTheme")
+                                desc: I18n.t("set.cursorTheme.desc")
+                                Text {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    text: Cursors.current
+                                    font.family: Theme.fontMono
+                                    font.pixelSize: Theme.fs(10)
+                                    color: Sg.ink
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.cursorSize")
+                                desc: I18n.t("set.cursorSize.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 16; to: 48; step: 1; decimals: 0
+                                    value: Settings.get("cursor.size", 24)
+                                    onMoved: v => Cursors.applySize(v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.cursorSearch")
+                                desc: I18n.t("set.cursorSearch.desc")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(300)
+                                    text: root.cursorQuery
+                                    placeholder: I18n.t("set.cursorSearch.placeholder")
+                                    onTextChanged: root.cursorQuery = text
+                                }
+                            }
+                            Flickable {
+                                id: cursorScroller
+                                width: parent.width
+                                height: Theme.fpx(150)
+                                clip: true
+                                contentWidth: width
+                                contentHeight: cursorColumn.height
+                                boundsBehavior: Flickable.StopAtBounds
+
+                                WheelHandler {
+                                    onWheel: wheel => {
+                                        var dy = (wheel.angleDelta.y / 120) * Theme.fpx(60);
+                                        cursorScroller.contentY = Math.max(0, Math.min(cursorScroller.contentHeight - cursorScroller.height, cursorScroller.contentY - dy));
+                                        wheel.accepted = true;
+                                    }
+                                }
+
+                                Column {
+                                    id: cursorColumn
+                                    width: parent.width
+                                    spacing: 1
+
+                                    Repeater {
+                                        model: root.cursorChoices
+                                        delegate: Item {
+                                            required property string modelData
+                                            width: cursorColumn.width
+                                            height: Theme.fpx(28)
+                                            readonly property bool active: Cursors.current === modelData
+
+                                            Rectangle {
+                                                anchors.fill: parent
+                                                color: active ? Theme.alpha(Sg.yellow, 0.22)
+                                                    : (cursorMouse.containsMouse ? Theme.alpha(Sg.ink, 0.06) : "transparent")
+                                            }
+                                            Text {
+                                                anchors.left: parent.left
+                                                anchors.leftMargin: Theme.fpx(8)
+                                                anchors.verticalCenter: parent.verticalCenter
+                                                text: modelData
+                                                font.family: Theme.fontUI
+                                                font.pixelSize: Theme.fs(10)
+                                                color: Sg.ink
+                                            }
+                                            MouseArea {
+                                                id: cursorMouse
+                                                anchors.fill: parent
+                                                hoverEnabled: true
+                                                cursorShape: Qt.PointingHandCursor
+                                                onClicked: Cursors.apply(modelData)
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Row {
+                                spacing: Theme.fpx(6)
+                                SgButton {
+                                    text: I18n.t("set.cursorRefresh")
+                                    onClicked: Cursors.refresh()
                                 }
                             }
                         }
