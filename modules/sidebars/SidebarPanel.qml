@@ -108,9 +108,7 @@ PanelWindow {
 
         GfFrame {
             anchors.fill: parent
-            fill: Theme.light
-                ? Theme.alpha(Theme.bg0, root.cfg.opacity !== undefined ? root.cfg.opacity : 0.94)
-                : Theme.alpha(Theme.bg0, 0.0)
+            fill: Theme.alpha(Theme.bg0, root.cfg.opacity !== undefined ? root.cfg.opacity : 0.94)
             borderColor: Theme.alpha(Theme.accent, root.cfg.edgeOpacity !== undefined ? root.cfg.edgeOpacity : 0.55)
             strokeWidth: Theme.px(root.cfg.edgeWidth !== undefined ? root.cfg.edgeWidth : 1)
             chamfer: 0
@@ -125,6 +123,7 @@ PanelWindow {
                 anchors.fill: parent
                 anchors.margins: 3
                 source: Wallpapers.source
+                opacity: root.cfg.opacity !== undefined ? root.cfg.opacity : 0.94
                 blur: root.cfg.blur !== undefined ? root.cfg.blur : 0
                 gray: root.cfg.gray !== undefined ? root.cfg.gray : 0
                 strength: 0.55
