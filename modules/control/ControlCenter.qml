@@ -25,6 +25,17 @@ PanelWindow {
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.OnDemand : WlrKeyboardFocus.None
 
     readonly property var bt: Bluetooth.defaultAdapter
+    readonly property bool barAtTop: Settings.get("bar.position", "top") !== "bottom"
+    readonly property int barThickness: Theme.px(Settings.get("bar.thickness", 38))
+    readonly property bool hasAnchor: ShellState.popupAnchorX > 0
+    readonly property real panelX: {
+        var w = Theme.px(392);
+        var x = root.hasAnchor ? ShellState.popupAnchorX - w / 2 : root.width - w - Theme.px(8);
+        return Math.max(Theme.px(8), Math.min(root.width - w - Theme.px(8), x));
+    }
+    readonly property real panelY: root.barAtTop
+        ? root.barThickness + Theme.px(8)
+        : root.height - root.barThickness - Theme.px(8) - panel.height
 
     // 半透明遮罩 + 点击面板外关闭
     Item {
@@ -50,10 +61,8 @@ PanelWindow {
 
     GfFrame {
         id: panel
-        anchors.top: parent.top
-        anchors.right: parent.right
-        anchors.topMargin: Theme.barHeight + Theme.px(8)
-        anchors.rightMargin: Theme.px(8)
+        x: root.panelX
+        y: root.panelY
         width: Theme.px(392)
         height: content.implicitHeight + Theme.px(34)
         fill: Theme.alpha(Theme.panel, 0.97)
