@@ -420,10 +420,11 @@ PanelWindow {
             NumberAnimation { duration: Theme.durFast; easing.type: Easing.OutCubic }
         }
         fill: Theme.alpha(Theme.bg0, 0.0)
-        borderColor: Theme.arknights ? Theme.alpha(Theme.text, 0.72)
-            : (Theme.bf4 ? Theme.alpha(Theme.accent2, 0.8)
+        borderColor: Theme.arknights ? Theme.alpha(Theme.text, Settings.get("dock.edgeOpacity", 0.55))
+            : (Theme.bf4 ? Theme.alpha(Theme.accent2, Settings.get("dock.edgeOpacity", 0.55))
             : (Theme.bf1 ? "transparent"
-            : Theme.alpha(Theme.accent, 0.55)))
+            : Theme.alpha(Theme.accent, Settings.get("dock.edgeOpacity", 0.55))))
+        strokeWidth: Theme.px(Settings.get("dock.edgeWidth", 1))
         chamfer: Theme.arknights || Theme.bf4 ? Theme.px(2) : (Theme.bf1 ? 0 : Theme.px(8))
         innerLine: true
         padding: 0
@@ -478,8 +479,8 @@ PanelWindow {
             anchors.margins: Theme.px(1)
             radius: Theme.px(Theme.bf1Radius)
             color: "transparent"
-            border.width: 2
-            border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.6))
+            border.width: Theme.px(Settings.get("dock.edgeWidth", 1))
+            border.color: Theme.lineColor(Theme.alpha(Theme.accent, Settings.get("dock.edgeOpacity", 0.55)))
         }
 
         Rectangle {

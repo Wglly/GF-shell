@@ -46,6 +46,7 @@ PanelWindow {
     readonly property bool visOn: Settings.get("widgets.visualizer.enabled", false)
     readonly property bool userOn: Settings.get("widgets.user.enabled", true)
     readonly property bool hudVisible: ShellState.widgetsVisible && ShellState.overlay === "none"
+    readonly property real widgetOpacity: Settings.get("widgets.opacity", 1.0)
 
     // 桌面右键：召唤命令轮盘；命令轮盘开启时左键桌面关闭。
     MouseArea {
@@ -68,7 +69,7 @@ PanelWindow {
         id: clockWidget
         visible: root.clockOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.clock.x", 0.045))
         y: root.fracY(Settings.get("widgets.clock.y", 0.10))
@@ -163,7 +164,7 @@ PanelWindow {
         id: statsWidget
         visible: root.statsOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.stats.x", 0.045))
         y: root.fracY(Settings.get("widgets.stats.y", 0.42))
@@ -171,6 +172,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.stats.height", 184)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.45)
@@ -276,7 +278,7 @@ PanelWindow {
         id: mediaWidget
         visible: root.mediaOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.media.x", 0.72))
         y: root.fracY(Settings.get("widgets.media.y", 0.10))
@@ -284,6 +286,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.media.height", 132)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.45)
@@ -425,7 +428,7 @@ PanelWindow {
         id: missionWidget
         visible: root.missionOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.mission.x", 0.72))
         y: root.fracY(Settings.get("widgets.mission.y", 0.87))
@@ -433,6 +436,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.mission.height", 128)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.5)
@@ -535,7 +539,7 @@ PanelWindow {
         id: weatherWidget
         visible: root.weatherOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.weather.x", 0.045))
         y: root.fracY(Settings.get("widgets.weather.y", 0.72))
@@ -543,6 +547,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.weather.height", 150)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.45)
@@ -647,7 +652,7 @@ PanelWindow {
         id: visWidget
         visible: root.visOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.visualizer.x", 0.72))
         y: root.fracY(Settings.get("widgets.visualizer.y", 0.42))
@@ -655,6 +660,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.visualizer.height", 104)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.45)
@@ -712,7 +718,7 @@ PanelWindow {
         id: userWidget
         visible: root.userOn && root.hudVisible
         enabled: !ShellState.widgetsEditing
-        opacity: ShellState.widgetsEditing ? 0.55 : 1
+        opacity: (ShellState.widgetsEditing ? 0.55 : 1) * root.widgetOpacity
         clip: true
         x: root.fracX(Settings.get("widgets.user.x", 0.72))
         y: root.fracY(Settings.get("widgets.user.y", 0.60))
@@ -720,6 +726,7 @@ PanelWindow {
         height: Theme.px(Math.max(80, Settings.get("widgets.user.height", 232)))
 
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.68)
             borderColor: Theme.alpha(Theme.accent, 0.45)
@@ -830,13 +837,14 @@ PanelWindow {
 
         // 顶部工具条
         GfFrame {
+        lineAlpha: Settings.get("widgets.lineOpacity", 1.0)
             id: editToolbar
             z: 5
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: Settings.get("bar.position", "top") !== "bottom"
                 ? Settings.get("bar.thickness", 38) + Theme.px(12) : Theme.px(12)
-            width: Math.min(Theme.px(760), parent.width - Theme.px(40))
+            width: Math.min(Theme.px(1000), parent.width - Theme.px(40))
             height: Theme.px(62)
             fill: Theme.alpha(Theme.bg0, 0.94)
             borderColor: Theme.alpha(Theme.accent, 0.8)
@@ -876,6 +884,34 @@ PanelWindow {
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.px(8)
 
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 0
+                    GfText {
+                        text: I18n.t("widget.opacity")
+                        role: "mono"; size: Theme.sizeTiny - 3
+                        color: Theme.textDim
+                    }
+                    GfSlider {
+                        width: Theme.px(104); height: Theme.px(18)
+                        value: Settings.get("widgets.opacity", 1.0)
+                        onMoved: v => Settings.set("widgets.opacity", v)
+                    }
+                }
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 0
+                    GfText {
+                        text: I18n.t("widget.lineOpacity")
+                        role: "mono"; size: Theme.sizeTiny - 3
+                        color: Theme.textDim
+                    }
+                    GfSlider {
+                        width: Theme.px(104); height: Theme.px(18)
+                        value: Settings.get("widgets.lineOpacity", 1.0)
+                        onMoved: v => Settings.set("widgets.lineOpacity", v)
+                    }
+                }
                 GfText {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "GRID " + Settings.get("widgets.grid", 48)

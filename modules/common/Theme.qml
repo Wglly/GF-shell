@@ -125,8 +125,9 @@ QtObject {
         return Qt.rgba(c.r, c.g, c.b, a);
     }
 
-    function lineColor(c) {
-        return Qt.rgba(c.r, c.g, c.b, c.a * theme.lineOpacity);
+    function lineColor(c, scale) {
+        var k = scale === undefined ? 1.0 : scale;
+        return Qt.rgba(c.r, c.g, c.b, c.a * theme.lineOpacity * k);
     }
 
     function mix(a, b, t) {

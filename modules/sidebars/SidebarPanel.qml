@@ -109,7 +109,8 @@ PanelWindow {
         GfFrame {
             anchors.fill: parent
             fill: Theme.alpha(Theme.bg0, 0.0)
-            borderColor: Theme.alpha(Theme.accent, 0.55)
+            borderColor: Theme.alpha(Theme.accent, root.cfg.edgeOpacity !== undefined ? root.cfg.edgeOpacity : 0.55)
+            strokeWidth: Theme.px(root.cfg.edgeWidth !== undefined ? root.cfg.edgeWidth : 1)
             chamfer: 0
             padding: 0
             innerLine: true

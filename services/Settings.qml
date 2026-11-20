@@ -27,6 +27,8 @@ QtObject {
                 autoHide: false,
                 clock24h: true,
                 showSeconds: false,
+                edgeWidth: 1,
+                edgeOpacity: 0.55,
                 titleMode: "window",     // window | mission
                 opacity: 0.94,
                 gray: 0.0,
@@ -41,6 +43,9 @@ QtObject {
                 position: "bottom",
                 align: "center",          // center | left | right
                 autoHide: false,
+                deployMode: "launcher",
+                edgeWidth: 1,
+                edgeOpacity: 0.55,
                 iconSize: 44,
                 opacity: 0.94,
                 gray: 0.0,
@@ -100,6 +105,8 @@ QtObject {
             },
             widgets: {
                 grid: 48,
+                opacity: 1.0,
+                lineOpacity: 1.0,
                 clock: { enabled: true, x: 0.045, y: 0.10, showDate: true, showSeconds: true },
                 stats: { enabled: true, x: 0.045, y: 0.42 },
                 media: { enabled: true, x: 0.72, y: 0.10 },
@@ -113,12 +120,14 @@ QtObject {
                 left: {
                     enabled: true, width: 356, height: 0.82, align: "top",
                     opacity: 0.94, gray: 0.0, blur: 0.0,
-                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top"
+                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top",
+                    edgeWidth: 1, edgeOpacity: 0.55
                 },
                 right: {
                     enabled: true, width: 372, height: 0.88, align: "top",
                     opacity: 0.94, gray: 0.0, blur: 0.0,
-                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top"
+                    autoHide: true, delay: 650, trigger: 12, triggerWidth: 180, triggerPosition: "top",
+                    edgeWidth: 1, edgeOpacity: 0.55
                 },
                 assign: {
                     user: "left", calendar: "left", roster: "left", actions: "left",

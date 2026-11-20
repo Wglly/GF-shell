@@ -107,9 +107,9 @@ PanelWindow {
     Rectangle {
         anchors.left: parent.left
         anchors.right: parent.right
-        y: root.atTop ? parent.height - 1 : 0
-        height: 1
-        color: Theme.alpha(Theme.accent, 0.55)
+        y: root.atTop ? parent.height - Theme.px(Settings.get("bar.edgeWidth", 1)) : 0
+        height: Theme.px(Settings.get("bar.edgeWidth", 1))
+        color: Theme.lineColor(Theme.alpha(Theme.accent, Settings.get("bar.edgeOpacity", 0.55)))
     }
 
     // 左端金色起始块
@@ -203,8 +203,8 @@ PanelWindow {
         anchors.fill: parent
         radius: Theme.px(Theme.bf1Radius)
         color: "transparent"
-        border.width: 1
-        border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.35))
+        border.width: Theme.px(Settings.get("bar.edgeWidth", 1))
+        border.color: Theme.lineColor(Theme.alpha(Theme.accent, Settings.get("bar.edgeOpacity", 0.35)))
         z: 19
     }
 

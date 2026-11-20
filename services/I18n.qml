@@ -122,6 +122,10 @@ QtObject {
         "set.quick": "QUICK ACTIONS", "set.quick.desc": "Theme, widget layout, wallpaper and dock shortcuts",
 
         "set.sec.placement": "PLACEMENT & SIZE", "set.sec.barSurface": "OPACITY / GRAY / BLUR",
+        "set.edgeWidth": "EDGE LINE WIDTH", "set.edgeOpacity": "EDGE LINE OPACITY",
+        "set.edgeWidth.desc": "Thickness of the outer edge line",
+        "set.edgeOpacity.desc": "Opacity of the outer edge line",
+
         "set.sec.clock": "CLOCK DISPLAY", "set.sec.behaviour": "AVOIDANCE",
         "set.sec.dockLook": "SIZE & LOOK", "set.sec.left": "SQUAD / CALENDAR",
         "set.sec.right": "COMMS / LYRICS", "set.sec.widgets": "DESKTOP WIDGETS",
@@ -136,6 +140,10 @@ QtObject {
         "set.sec.notifications": "NOTIFICATIONS", "set.sec.hotkeys": "HOTKEYS",
         "set.sec.about": "ABOUT", "set.sec.licensing": "ART & LICENSING",
         "widget.editMode": "WIDGET LAYOUT", "widget.dragHint": "Drag to move · bottom-right to resize · snaps to grid",
+        "widget.opacity": "WIDGET OPACITY", "widget.lineOpacity": "WIDGET LINES",
+        "set.widgetOpacity.desc": "Global opacity of all desktop widgets",
+        "set.widgetLineOpacity.desc": "Global border and line opacity of desktop widgets",
+
         "widget.offHint": "DISABLED · toggle ON to show", "widget.done": "DONE",
         "widget.reset": "RESET", "widget.layout": "LAYOUT",
         "widget.editLayout": "EDIT DESKTOP LAYOUT",
@@ -272,6 +280,10 @@ QtObject {
         "set.quick": "快速操作", "set.quick.desc": "主題、桌面佈局、壁紙與 Dock 快捷入口",
 
         "set.sec.placement": "位置與尺寸", "set.sec.barSurface": "透明度 / 灰度 / 模糊",
+        "set.edgeWidth": "邊緣線寬度", "set.edgeOpacity": "邊緣線透明度",
+        "set.edgeWidth.desc": "外框邊緣線的粗細",
+        "set.edgeOpacity.desc": "外框邊緣線的透明度",
+
         "set.sec.clock": "時計顯示", "set.sec.behaviour": "避讓邏輯",
         "set.sec.dockLook": "尺寸與質感", "set.sec.left": "編成 / 日曆",
         "set.sec.right": "通訊 / 歌詞", "set.sec.widgets": "桌面組件",
@@ -286,6 +298,10 @@ QtObject {
         "set.sec.notifications": "通訊", "set.sec.hotkeys": "快捷鍵",
         "set.sec.about": "關於", "set.sec.licensing": "素材與授權",
         "widget.editMode": "桌面組件佈局", "widget.dragHint": "拖動移動 · 右下角縮放 · 吸附網格",
+        "widget.opacity": "組件透明度", "widget.lineOpacity": "組件線條",
+        "set.widgetOpacity.desc": "所有桌面組件的全域透明度",
+        "set.widgetLineOpacity.desc": "所有桌面組件的邊框／線條透明度",
+
         "widget.offHint": "已關閉 · 切換 ON 顯示", "widget.done": "完成",
         "widget.reset": "重置", "widget.layout": "佈局",
         "widget.editLayout": "編輯桌面佈局",
@@ -493,6 +509,10 @@ QtObject {
         "set.quick.desc": "主题、桌面布局、壁纸与 Dock 快捷入口",
         "set.sec.placement": "位置与尺寸",
         "set.sec.barSurface": "透明度 / 灰度 / 模糊",
+        "set.edgeWidth": "边缘线宽度",
+        "set.edgeOpacity": "边缘线透明度",
+        "set.edgeWidth.desc": "外框边缘线的粗细",
+        "set.edgeOpacity.desc": "外框边缘线的透明度",
         "set.sec.clock": "时计显示",
         "set.sec.behaviour": "避让逻辑",
         "set.sec.dockLook": "尺寸与质感",
@@ -518,6 +538,10 @@ QtObject {
         "set.sec.licensing": "素材与授权",
         "widget.editMode": "桌面组件布局",
         "widget.dragHint": "拖动移动 · 右下角缩放 · 吸附网格",
+        "widget.opacity": "组件透明度",
+        "widget.lineOpacity": "组件线条",
+        "set.widgetOpacity.desc": "所有桌面组件的全域透明度",
+        "set.widgetLineOpacity.desc": "所有桌面组件的边框／线条透明度",
         "widget.offHint": "已关闭 · 切换 ON 显示",
         "widget.done": "完成",
         "widget.reset": "重置",
@@ -856,6 +880,10 @@ QtObject {
         "set.quick": "クイック操作", "set.quick.desc": "テーマ、レイアウト、壁紙、Dock へのショートカット",
 
         "set.sec.placement": "位置とサイズ", "set.sec.barSurface": "透明度 / グレー / ブラー",
+        "set.edgeWidth": "エッジ線の太さ", "set.edgeOpacity": "エッジ線の透明度",
+        "set.edgeWidth.desc": "外枠エッジ線の太さ",
+        "set.edgeOpacity.desc": "外枠エッジ線の透明度",
+
         "set.sec.clock": "時計表示", "set.sec.behaviour": "回避動作",
         "set.sec.dockLook": "サイズと質感", "set.sec.left": "分隊 / カレンダー",
         "set.sec.right": "通信 / 歌詞", "set.sec.widgets": "デスクトップウィジェット",
@@ -870,6 +898,10 @@ QtObject {
         "set.sec.notifications": "通知", "set.sec.hotkeys": "ホットキー",
         "set.sec.about": "情報", "set.sec.licensing": "素材とライセンス",
         "widget.editMode": "デスクトップレイアウト", "widget.dragHint": "ドラッグで移動 · 右下でリサイズ · グリッドに吸着",
+        "widget.opacity": "ウィジェット透明度", "widget.lineOpacity": "ウィジェット線",
+        "set.widgetOpacity.desc": "すべてのデスクトップウィジェットの全体透明度",
+        "set.widgetLineOpacity.desc": "すべてのデスクトップウィジェットの枠線／ライン透明度",
+
         "widget.offHint": "無効 · ON で表示", "widget.done": "完了",
         "widget.reset": "リセット", "widget.layout": "レイアウト",
         "widget.editLayout": "デスクトップレイアウトを編集",

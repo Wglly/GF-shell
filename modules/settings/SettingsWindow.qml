@@ -941,12 +941,30 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; last: true; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
+                                width: parent.width; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("bar.blur", 0)
                                     onMoved: v => Settings.set("bar.blur", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.edgeWidth"); desc: I18n.t("set.edgeWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 1; to: 4; step: 1; decimals: 0
+                                    value: Settings.get("bar.edgeWidth", 1)
+                                    onMoved: v => Settings.set("bar.edgeWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: I18n.t("set.edgeOpacity"); desc: I18n.t("set.edgeOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    value: Settings.get("bar.edgeOpacity", 0.55)
+                                    onMoved: v => Settings.set("bar.edgeOpacity", v)
                                 }
                             }
 
@@ -1143,12 +1161,30 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; last: true; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
+                                width: parent.width; label: I18n.t("set.blur"); desc: I18n.t("set.blur.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("dock.blur", 0)
                                     onMoved: v => Settings.set("dock.blur", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.edgeWidth"); desc: I18n.t("set.edgeWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 1; to: 4; step: 1; decimals: 0
+                                    value: Settings.get("dock.edgeWidth", 1)
+                                    onMoved: v => Settings.set("dock.edgeWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: I18n.t("set.edgeOpacity"); desc: I18n.t("set.edgeOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    value: Settings.get("dock.edgeOpacity", 0.55)
+                                    onMoved: v => Settings.set("dock.edgeOpacity", v)
                                 }
                             }
                         }
@@ -1254,6 +1290,24 @@ PanelWindow {
                                     width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
                                     value: Settings.get("sidebar.left.blur", 0)
                                     onMoved: v => Settings.set("sidebar.left.blur", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.edgeWidth"); desc: I18n.t("set.edgeWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 1; to: 4; step: 1; decimals: 0
+                                    value: Settings.get("sidebar.left.edgeWidth", 1)
+                                    onMoved: v => Settings.set("sidebar.left.edgeWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.edgeOpacity"); desc: I18n.t("set.edgeOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    value: Settings.get("sidebar.left.edgeOpacity", 0.55)
+                                    onMoved: v => Settings.set("sidebar.left.edgeOpacity", v)
                                 }
                             }
                             SgRow {
@@ -1364,6 +1418,24 @@ PanelWindow {
                                 }
                             }
                             SgRow {
+                                width: parent.width; label: I18n.t("set.edgeWidth"); desc: I18n.t("set.edgeWidth.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 1; to: 4; step: 1; decimals: 0
+                                    value: Settings.get("sidebar.right.edgeWidth", 1)
+                                    onMoved: v => Settings.set("sidebar.right.edgeWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; label: I18n.t("set.edgeOpacity"); desc: I18n.t("set.edgeOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 1; step: 0.05; decimals: 2
+                                    value: Settings.get("sidebar.right.edgeOpacity", 0.55)
+                                    onMoved: v => Settings.set("sidebar.right.edgeOpacity", v)
+                                }
+                            }
+                            SgRow {
                                 width: parent.width; last: true; label: I18n.t("set.delay"); desc: I18n.t("set.delay.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
@@ -1428,6 +1500,25 @@ PanelWindow {
                                         checked: Settings.get("widgets." + widgetRow.wkey + ".enabled", false)
                                         onToggled: Settings.toggle("widgets." + widgetRow.wkey + ".enabled")
                                     }
+                                }
+                            }
+
+                            SgRow {
+                                width: parent.width; label: I18n.t("widget.opacity"); desc: I18n.t("set.widgetOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0.2; to: 1.0; step: 0.01; decimals: 2
+                                    value: Settings.get("widgets.opacity", 1.0)
+                                    onMoved: v => Settings.set("widgets.opacity", v)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; last: true; label: I18n.t("widget.lineOpacity"); desc: I18n.t("set.widgetLineOpacity.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0.0; to: 1.0; step: 0.01; decimals: 2
+                                    value: Settings.get("widgets.lineOpacity", 1.0)
+                                    onMoved: v => Settings.set("widgets.lineOpacity", v)
                                 }
                             }
 
