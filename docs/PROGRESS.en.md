@@ -18,7 +18,7 @@ Every screenshot lives in [`docs/screenshots/`](screenshots/) and can be opened 
 | Control centre | ✅ | Links, volume/brightness, modules, vitals, comms |
 | Operation map | ✅ | Sector cards, unit lists, click to switch/focus |
 | System halt | ✅ | Lock / suspend / restart / shutdown / logout + confirmation |
-| Dock | ✅ | Pinned + running, right-click pin/unpin/close, left/centre/right align, hot zone 4–48 px |
+| Dock | ✅ | Pinned + running, right-click pin/unpin/close, top/bottom/left/right position (vertical side dock), hot zone 4–48 px |
 | Sidebars | ✅ | **11 swappable components**, left/right/off assignment, height 40–100%, top/center/bottom, scrolling |
 | Desktop widgets | ✅ | Clock, vitals, media (lyrics), weather, cava spectrum, operator card, mission; **grid editor with drag-snap, bottom-right resizing and per-widget ON/OFF** |
 | Settings | ✅ | Paper UI; **HOME page with avatar upload, user/system info**; translucent veil; rows scale with fonts |

@@ -263,7 +263,8 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - `bg0/bg1/panel/text/accent` を変えると `mode` は `custom` になります。壁紙は `bg0` の明るさに応じて
   紙白に洗われ、ライトテーマでも濃い文字が読めます。
 
-- `dock.align`：`left` / `center` / `right`。Dock を画面の左右に寄せるか中央に置きます。
+- `dock.position`：`top` / `bottom` / `left` / `right`。左右では縦型サイド Dock になります。
+- `dock.align`：横は `left` / `center` / `right`、縦は `top` / `center` / `bottom`。
 - `sidebar.<left|right>.triggerPosition`：`top` / `bottom`。左右画面の上端／下端にホットゾーンを置きます。
 - `sidebar.<left|right>.triggerWidth`：横方向の幅（60–420px）。`trigger` は高さ。
 - サイドバーコンポーネント `wallpaper` を追加。設定 → サイドバー → コンポーネントで左右に割り当てられます。

@@ -299,7 +299,8 @@ OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從�
   紙白洗色，讓深色文字在亮色主題下仍可讀。
 - 主題預設寫入完整色盤；`scale`、`fontScale`、`settingsOpacity` 不會被預設覆蓋。
 
-- `dock.align`：`left` / `center` / `right`，讓 Dock 貼齊螢幕左右側或保持中央。
+- `dock.position`：`top` / `bottom` / `left` / `right`；左右時 Dock 垂直貼邊。
+- `dock.align`：水平 Dock 用 `left` / `center` / `right`；垂直 Dock 用 `top` / `center` / `bottom`。
 - `sidebar.<left|right>.triggerPosition`：`top` / `bottom`，觸發區位於該側螢幕的頂端或底端。
 - `sidebar.<left|right>.triggerWidth`：橫向熱區寬度（60–420px）；`trigger` 是熱區高度。
 - 側邊欄組件新增 `wallpaper`；可在「設定 → 側邊欄 → 組件」分配到左/右。

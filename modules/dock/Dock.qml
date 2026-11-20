@@ -17,7 +17,11 @@ PanelWindow {
     readonly property bool avoid: Settings.get("dock.avoid", true)
     readonly property int iconSize: Math.round(Settings.get("dock.iconSize", 42) * Theme.uiScale)
     readonly property int maxItems: Settings.get("dock.maxItems", 12)
-    readonly property bool atTop: Settings.get("dock.position", "bottom") === "top"
+    readonly property string position: Settings.get("dock.position", "bottom")
+    readonly property bool atTop: root.position === "top"
+    readonly property bool atLeft: root.position === "left"
+    readonly property bool atRight: root.position === "right"
+    readonly property bool vertical: root.atLeft || root.atRight
     readonly property string align: Settings.get("dock.align", "center")
     readonly property bool hasWindows: Compositor.windows.length > 0
     // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
@@ -34,22 +38,31 @@ PanelWindow {
 
     visible: root.enabled && entries.length > 0
     color: "transparent"
-    anchors.bottom: !root.atTop
-    anchors.top: root.atTop
-    anchors.left: true
-    anchors.right: true
+    anchors.top: root.vertical ? true : root.atTop
+    anchors.bottom: root.vertical ? true : !root.atTop
+    anchors.left: root.vertical ? root.atLeft : true
+    anchors.right: root.vertical ? root.atRight : true
     // 负 margin 让热区真正贴到屏幕边缘（状态栏上）；内容再用 barInset 让出状态栏
-    margins.top: root.atTop ? -root.barInset : 0
-    margins.bottom: !root.atTop ? -root.barInset : 0
-    implicitHeight: root.revealed ? root.barInset + Theme.px(76) : root.trigger
+    margins.top: root.vertical ? 0 : (root.atTop ? -root.barInset : 0)
+    margins.bottom: root.vertical ? 0 : (!root.atTop ? -root.barInset : 0)
+    implicitWidth: root.vertical
+        ? (root.revealed ? Theme.px(76) : root.trigger)
+        : (root.modelData ? root.modelData.width : 0)
+    implicitHeight: root.vertical
+        ? (root.modelData ? root.modelData.height : 0)
+        : (root.revealed ? root.barInset + Theme.px(76) : root.trigger)
     exclusionMode: ExclusionMode.Normal
-    // 收起时不占位；展开时只保留 Dock 本身的高度
+    // 收起时不占位；展开时只保留 Dock 本身的宽度/高度
     exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
     Behavior on implicitHeight {
-        enabled: Theme.animations
+        enabled: Theme.animations && !root.vertical
         NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
     }
-    WlrLayershell.layer: WlrLayer.Top
+    Behavior on implicitWidth {
+        enabled: Theme.animations && root.vertical
+        NumberAnimation { duration: 180; easing.type: Easing.OutCubic }
+    }
+    WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "gf-shell-dock"
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
 
@@ -171,6 +184,17 @@ PanelWindow {
         return pinned.concat(running.slice(0, room));
     }
 
+    readonly property int horizontalFlowWidth: {
+        var w = 0;
+        for (var i = 0; i < root.entries.length; i++) {
+            var sep = i > 0 && root.entries[i].pinned === false && root.entries[i - 1].pinned === true;
+            w += Theme.px(46) + (sep ? Theme.px(8) : 0);
+        }
+        w += Theme.px(48);
+        w += Theme.px(4) * root.entries.length;
+        return Math.max(Theme.px(48), w);
+    }
+
     function cleanPinned() {
         if (Apps.apps.length === 0)
             return;
@@ -284,17 +308,21 @@ PanelWindow {
     // 屏幕边缘热区：位于状态栏之上，收起时只显示一条细线
     Item {
         id: triggerArea
-        // 与状态列同边时只占中间一段，避免挡住整条状态列的点击
-        width: root.barOnSameEdge ? Theme.px(96) : parent.width
-        anchors.horizontalCenter: root.barOnSameEdge ? parent.horizontalCenter : undefined
-        anchors.left: !root.barOnSameEdge ? parent.left : undefined
-        anchors.right: !root.barOnSameEdge ? parent.right : undefined
-        anchors.top: root.atTop ? parent.top : undefined
-        anchors.bottom: !root.atTop ? parent.bottom : undefined
-        height: root.trigger
+        // 水平 Dock：状态栏边缘的一条；垂直 Dock：整条侧边。
+        width: root.vertical ? root.trigger
+            : (root.barOnSameEdge ? Theme.px(96) : parent.width)
+        height: root.vertical ? parent.height : root.trigger
+        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined)
+            : (root.barOnSameEdge ? undefined : parent.left)
+        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined)
+            : (root.barOnSameEdge ? undefined : parent.right)
+        anchors.horizontalCenter: !root.vertical && root.barOnSameEdge
+            ? parent.horizontalCenter : undefined
+        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
+        anchors.bottom: root.vertical ? parent.bottom : (!root.atTop ? parent.bottom : undefined)
 
         Rectangle {
-            visible: !root.revealed
+            visible: !root.revealed && !root.vertical
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.top: root.atTop ? parent.top : undefined
@@ -303,7 +331,7 @@ PanelWindow {
             color: Theme.alpha(Theme.accent, 0.22)
         }
         Rectangle {
-            visible: !root.revealed
+            visible: !root.revealed && !root.vertical
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: root.atTop ? parent.top : undefined
             anchors.bottom: !root.atTop ? parent.bottom : undefined
@@ -311,23 +339,62 @@ PanelWindow {
             height: 3
             color: Theme.alpha(Theme.accent, 0.8)
         }
+        Rectangle {
+            visible: !root.revealed && root.vertical
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            anchors.left: root.atLeft ? parent.left : undefined
+            anchors.right: root.atRight ? parent.right : undefined
+            width: 2
+            color: Theme.alpha(Theme.accent, 0.22)
+        }
+        Rectangle {
+            visible: !root.revealed && root.vertical
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: root.atLeft ? parent.left : undefined
+            anchors.right: root.atRight ? parent.right : undefined
+            width: 3
+            height: Theme.px(56)
+            color: Theme.alpha(Theme.accent, 0.8)
+        }
     }
+
+
 
     GfFrame {
         id: dock
         visible: root.revealed
-        anchors.horizontalCenter: root.align === "center" ? parent.horizontalCenter : undefined
-        anchors.left: root.align === "left" ? parent.left : undefined
-        anchors.right: root.align === "right" ? parent.right : undefined
+        // 水平：左/中/右；垂直：上/中/下
+        anchors.horizontalCenter: root.vertical ? undefined
+            : (root.align === "center" ? parent.horizontalCenter : undefined)
+        anchors.verticalCenter: root.vertical && root.align === "center"
+            ? parent.verticalCenter : undefined
+        anchors.left: root.vertical
+            ? (root.atLeft ? parent.left : undefined)
+            : (root.align === "left" ? parent.left : undefined)
+        anchors.right: root.vertical
+            ? (root.atRight ? parent.right : undefined)
+            : (root.align === "right" ? parent.right : undefined)
+        anchors.top: root.vertical
+            ? (root.align === "top" ? parent.top : undefined)
+            : (root.atTop ? parent.top : undefined)
+        anchors.bottom: root.vertical
+            ? (root.align === "bottom" ? parent.bottom : undefined)
+            : (!root.atTop ? parent.bottom : undefined)
         anchors.leftMargin: Theme.px(6)
         anchors.rightMargin: Theme.px(6)
-        anchors.bottom: !root.atTop ? parent.bottom : undefined
-        anchors.top: root.atTop ? parent.top : undefined
-        anchors.bottomMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
-        anchors.topMargin: root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
-        width: Math.max(contentRow.implicitWidth + Theme.px(26),
-            root.menuTarget !== null ? Theme.px(430) : 0)
-        height: Theme.px(58)
+        anchors.topMargin: root.vertical ? Theme.px(6)
+            : (root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6)))
+        anchors.bottomMargin: root.vertical ? Theme.px(6)
+            : (root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6)))
+        width: root.vertical
+            ? (root.menuTarget !== null ? Theme.px(430) : Theme.px(58))
+            : Math.max(contentRow.width + Theme.px(26),
+                root.menuTarget !== null ? Theme.px(430) : 0)
+        height: root.vertical
+            ? (root.menuTarget !== null ? Theme.px(58)
+                : Math.max(Theme.px(58), contentRow.implicitHeight + Theme.px(26)))
+            : Theme.px(58)
         Behavior on width {
             enabled: Theme.animations
             NumberAnimation { duration: Theme.durFast; easing.type: Easing.OutCubic }
@@ -342,6 +409,30 @@ PanelWindow {
         cutTopLeft: false
         cutTopRight: false
         accentTop: true
+
+        Connections {
+            target: contentRow
+            function onImplicitHeightChanged() {
+                if (root.vertical && root.menuTarget === null)
+                    dock.height = contentRow.implicitHeight + Theme.px(26);
+            }
+        }
+        Connections {
+            target: root
+            function onMenuTargetChanged() {
+                if (root.vertical && root.menuTarget === null)
+                    dock.height = contentRow.implicitHeight + Theme.px(26);
+            }
+        }
+        Timer {
+            interval: 60
+            repeat: false
+            running: root.vertical
+            onTriggered: {
+                if (root.vertical && root.menuTarget === null)
+                    dock.height = contentRow.implicitHeight + Theme.px(26);
+            }
+        }
 
         GlassBackdrop {
             anchors.fill: parent
@@ -358,10 +449,12 @@ PanelWindow {
             color: Theme.alpha(Theme.bg0, Settings.get("dock.opacity", 0.94))
         }
 
-        Row {
+        Flow {
             id: contentRow
             anchors.centerIn: parent
-            spacing: Theme.px(4)
+            width: root.vertical ? Theme.px(54) : root.horizontalFlowWidth
+            flow: root.vertical ? Flow.TopToBottom : Flow.LeftToRight
+            spacing: root.vertical ? Theme.px(3) : Theme.px(4)
 
             Repeater {
                 model: root.entries
@@ -382,10 +475,10 @@ PanelWindow {
                     // 固定/运行之间的分隔
                     Rectangle {
                         visible: slot.showSeparator
-                        x: 0
-                        y: Theme.px(12)
-                        width: 1
-                        height: Theme.px(26)
+                        x: root.vertical ? Theme.px(12) : 0
+                        y: root.vertical ? 0 : Theme.px(12)
+                        width: root.vertical ? Theme.px(26) : 1
+                        height: root.vertical ? 1 : Theme.px(26)
                         color: Theme.alpha(Theme.accent, 0.35)
                     }
 

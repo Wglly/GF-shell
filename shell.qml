@@ -184,6 +184,8 @@ ShellRoot {
             ShellState.toggle(overlay);
         }
 
+
+
         function close(): void {
             ShellState.close();
         }

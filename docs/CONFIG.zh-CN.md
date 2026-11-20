@@ -284,7 +284,8 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 - `theme.settingsOpacity`（0.5–1.0）与 `theme.settingsGray`（0–1）控制设置窗口的灰白半透明遮罩。
 - 自定义 `bg0/bg1/panel/text/accent` 会把 `mode` 设为 `custom`；壁纸会按 `bg0` 亮度加纸白洗色。
 
-- `dock.align`：`left` / `center` / `right`，让 Dock 贴齐屏幕左右侧或保持中央。
+- `dock.position`：`top` / `bottom` / `left` / `right`；左右时 Dock 垂直贴边。
+- `dock.align`：水平 Dock 用 `left` / `center` / `right`；垂直 Dock 用 `top` / `center` / `bottom`。
 - `sidebar.<left|right>.triggerPosition`：`top` / `bottom`，触发区位于该侧屏幕的顶端或底端。
 - `sidebar.<left|right>.triggerWidth`：横向热区宽度（60–420px）；`trigger` 是热区高度。
 - 侧边栏组件新增 `wallpaper`，可在「设置 → 侧边栏 → 组件」分配到左/右。

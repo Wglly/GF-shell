@@ -280,7 +280,8 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
   washed toward paper white based on `bg0` luminance so dark text stays readable in light themes.
 - Presets write the full palette; `scale`, `fontScale`, `settingsOpacity` are not overwritten.
 
-- `dock.align`: `left` / `center` / `right`; snap the dock to a screen side or keep it centred.
+- `dock.position`: `top` / `bottom` / `left` / `right`; left/right render a vertical side dock.
+- `dock.align`: horizontal `left` / `center` / `right`; vertical `top` / `center` / `bottom`.
 - `sidebar.<left|right>.triggerPosition`: `top` / `bottom`; the hot zone sits at the top or bottom corner.
 - `sidebar.<left|right>.triggerWidth`: horizontal hot-zone width (60–420 px); `trigger` is its height.
 - The `wallpaper` sidebar component can be assigned left/right in Settings → Sidebars → Components.

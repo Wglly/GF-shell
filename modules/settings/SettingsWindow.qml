@@ -1009,20 +1009,38 @@ PanelWindow {
                                 width: parent.width; label: I18n.t("set.position"); desc: I18n.t("set.position.desc")
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    options: [{ value: "bottom", label: "BOTTOM" }, { value: "top", label: "TOP" }]
+                                    options: [
+                                        { value: "bottom", label: "BOTTOM" },
+                                        { value: "top", label: "TOP" },
+                                        { value: "left", label: "LEFT" },
+                                        { value: "right", label: "RIGHT" }
+                                    ]
                                     current: Settings.get("dock.position", "bottom")
-                                    onSelected: v => Settings.set("dock.position", v)
+                                    onSelected: v => {
+                                        Settings.set("dock.position", v);
+                                        if (v === "left" || v === "right")
+                                            Settings.set("dock.align", "center");
+                                    }
                                 }
                             }
                             SgRow {
                                 width: parent.width; label: I18n.t("set.dockAlign"); desc: I18n.t("set.dockAlign.desc")
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    options: [
-                                        { value: "left", label: "LEFT" },
-                                        { value: "center", label: "CENTER" },
-                                        { value: "right", label: "RIGHT" }
-                                    ]
+                                    options: {
+                                        var p = Settings.get("dock.position", "bottom");
+                                        if (p === "left" || p === "right")
+                                            return [
+                                                { value: "top", label: "TOP" },
+                                                { value: "center", label: "CENTER" },
+                                                { value: "bottom", label: "BOTTOM" }
+                                            ];
+                                        return [
+                                            { value: "left", label: "LEFT" },
+                                            { value: "center", label: "CENTER" },
+                                            { value: "right", label: "RIGHT" }
+                                        ];
+                                    }
                                     current: Settings.get("dock.align", "center")
                                     onSelected: v => Settings.set("dock.align", v)
                                 }
