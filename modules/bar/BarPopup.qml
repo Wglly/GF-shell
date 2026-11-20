@@ -77,7 +77,8 @@ PanelWindow {
             : root.height - root.barThickness - Theme.fpx(8) - height
         width: root.panelWidth
         height: content.implicitHeight + Theme.fpx(26)
-        fill: Theme.alpha(Theme.bg1, 0.985)
+        fill: Theme.alpha(Theme.bg1, Settings.get("bar.opacity", 0.94))
+        applyPanelOpacity: false
         borderColor: Theme.alpha(Theme.accent, 0.75)
         chamfer: Theme.fpx(6)
         padding: 0

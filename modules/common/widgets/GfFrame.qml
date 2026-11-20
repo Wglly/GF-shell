@@ -9,7 +9,7 @@ Item {
 
     property color fill: Theme.light
         ? Theme.panel : Theme.alpha(Theme.panel, Theme.panelOpacity)
-    readonly property color effectiveFill: Theme.light
+    readonly property color effectiveFill: Theme.light && root.applyPanelOpacity
         ? Qt.rgba(root.fill.r, root.fill.g, root.fill.b,
             root.fill.a * Math.max(0.0, Math.min(1.0, Theme.panelOpacity)))
         : root.fill
@@ -33,6 +33,7 @@ Item {
     property int padding: Theme.pad
     property int radius: 0
     property real lineAlpha: 1.0
+    property bool applyPanelOpacity: true
     readonly property int cornerRadius: root.radius > 0
         ? root.radius : (Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0)
 

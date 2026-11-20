@@ -65,7 +65,8 @@ PanelWindow {
         y: root.panelY
         width: Theme.px(392)
         height: content.implicitHeight + Theme.px(34)
-        fill: Theme.alpha(Theme.panel, 0.97)
+        fill: Theme.alpha(Theme.panel, Settings.get("bar.opacity", 0.94))
+        applyPanelOpacity: false
         borderColor: Theme.alpha(Theme.lineBright, 0.7)
         chamfer: Theme.px(12)
         padding: 0
