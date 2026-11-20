@@ -5,18 +5,12 @@ import qs.modules.common
 // 不依赖合成器 blur；在 niri / Hyprland 上表现一致。
 Item {
     id: root
+    visible: !Theme.light
 
     property string source: ""
     property real blur: 0          // 0..1
     property real gray: 0          // 0..1
     property real strength: 1.0    // 壁纸在面板中的可见度
-
-    // 亮色主题使用稳定亮灰底层，避免壁纸采样把面板压暗。
-    Rectangle {
-        anchors.fill: parent
-        visible: Theme.light
-        color: Theme.alpha(Theme.bg0, 0.94)
-    }
 
     Image {
         id: img
