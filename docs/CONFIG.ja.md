@@ -108,6 +108,18 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "compositor": {
+    "hypr": {
+      "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "blur": true, "animations": true
+    },
+    "niri": {
+      "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "border": true, "focus": false
+    }
+  },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -291,6 +303,15 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 ### デスクトップ右クリックのコマンドローズ
 
 デスクトップの空白を右クリックすると、ポインタ位置に 7 項目のコマンドローズ（設定、壁紙、ウィジェット配置、デプロイ端末、ネットワーク、ターミナル、ダッシュボード）が開きます。1–7 キーで選択、左クリックまたは Esc で閉じます。4 つのゲームテーマはそれぞれ中心・リング・装飾が異なり、**全画面の暗幕はありません**。`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard の追加スタイルは対応するプリセットでのみ表示されます。
+
+## コンポジタ
+
+設定 → システム → **HYPRLAND / NIRI** は実行中のバックエンドに応じて表示されます：
+
+- **Hyprland**：内外ギャップ、枠線幅、角丸、アクティブ／非アクティブ枠色、ブラー、アニメーション。`hl.config` で即時適用（非 Lua 設定では `hyprctl keyword`）。
+- **niri**：ギャップ、枠線／フォーカスリング幅、ウィンドウ角丸、色とオン／オフ。`scripts/niri-gf-settings.py` が `~/.config/niri/config.d/` の layout を更新し、初回は `*.gf-backup` に保存、`niri validate` で検証、失敗時は復元します。niri は自動リロードします。
+
+値は `compositor.hypr.*` / `compositor.niri.*` に保存され、niri の角丸は管理された `window-rule` で全ウィンドウに適用されます。
 
 ## 壁紙
 

@@ -108,6 +108,18 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "compositor": {
+    "hypr": {
+      "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "blur": true, "animations": true
+    },
+    "niri": {
+      "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "border": true, "focus": false
+    }
+  },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -312,6 +324,15 @@ OFF / LEFT / CENTER / RIGHT，OFF 即从状态栏移除。
 ### 桌面右键命令轮盘
 
 在桌面空白处按右键，会在光标位置展开七项命令轮盘（设置、壁纸、桌面组件布局、部署终端、网络、终端、仪表盘）。数字键 1–7 可直接选择；左键桌面或 Esc 关闭。四个游戏主题各有不同的中心、环线与装饰，**没有全屏暗幕**；`ThemeSignature`、BarThemeAccent、CommandRose、Dashboard 的额外样式只在对应预设下可见。
+
+## 合成器设置
+
+设置 → 系统 → **HYPRLAND / NIRI** 会根据当前后端显示：
+
+- **Hyprland**：内外间距、边框宽度、圆角、活动/非活动边框色、模糊、动画。变更通过 `hl.config` 即时应用；非 Lua 配置使用 `hyprctl keyword`。
+- **niri**：间距、边框/焦点环宽度、窗口圆角、边框色与开关。由 `scripts/niri-gf-settings.py` 写入 `~/.config/niri/config.d/` 的 layout 区块，首次修改备份为 `*.gf-backup`，写入后执行 `niri validate`，失败自动还原；niri 会自动重新加载。
+
+数值保存在 `compositor.hypr.*` 与 `compositor.niri.*`；niri 圆角通过受管理的 `window-rule` 应用到所有窗口。
 
 ## 壁纸
 

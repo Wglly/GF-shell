@@ -1822,6 +1822,181 @@ PanelWindow {
                                     }
                                 }
                             }
+
+                            SgSection {
+                                width: parent.width; number: "04"; title: "HYPRLAND"
+                                note: I18n.t("set.compositor.hypr")
+                                visible: Compositor.isHyprland
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.gapsIn"); desc: I18n.t("set.compositor.live")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 40; step: 1; decimals: 0
+                                    value: Settings.get("compositor.hypr.gapsIn", 5)
+                                    onMoved: v => CompositorSettings.setHypr("gapsIn", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.gapsOut"); desc: I18n.t("set.compositor.live")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 80; step: 1; decimals: 0
+                                    value: Settings.get("compositor.hypr.gapsOut", 10)
+                                    onMoved: v => CompositorSettings.setHypr("gapsOut", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.borderWidth"); desc: I18n.t("set.compositor.live")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 10; step: 1; decimals: 0
+                                    value: Settings.get("compositor.hypr.borderWidth", 1)
+                                    onMoved: v => CompositorSettings.setHypr("borderWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.rounding"); desc: I18n.t("set.compositor.live")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 30; step: 1; decimals: 0
+                                    value: Settings.get("compositor.hypr.rounding", 8)
+                                    onMoved: v => CompositorSettings.setHypr("rounding", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.activeColor"); desc: I18n.t("set.compositor.color")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(220)
+                                    text: Settings.get("compositor.hypr.activeColor", "#e8bd4f")
+                                    onAccepted: value => CompositorSettings.setHypr("activeColor", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.inactiveColor"); desc: I18n.t("set.compositor.color")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(220)
+                                    text: Settings.get("compositor.hypr.inactiveColor", "#403a2e")
+                                    onAccepted: value => CompositorSettings.setHypr("inactiveColor", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                visible: Compositor.isHyprland
+                                label: I18n.t("set.blur"); desc: I18n.t("set.compositor.live")
+                                SgToggle {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    checked: Settings.get("compositor.hypr.blur", true)
+                                    onToggled: CompositorSettings.setHypr("blur", !Settings.get("compositor.hypr.blur", true))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isHyprland; last: true
+                                label: I18n.t("set.animations"); desc: I18n.t("set.compositor.live")
+                                SgToggle {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    checked: Settings.get("compositor.hypr.animations", true)
+                                    onToggled: CompositorSettings.setHypr("animations", !Settings.get("compositor.hypr.animations", true))
+                                }
+                            }
+
+                            SgSection {
+                                width: parent.width; number: "05"; title: "NIRI"
+                                note: I18n.t("set.compositor.niri")
+                                visible: Compositor.isNiri
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.gapsIn"); desc: I18n.t("set.compositor.niriLive")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 80; step: 1; decimals: 0
+                                    value: Settings.get("compositor.niri.gaps", 16)
+                                    onMoved: v => CompositorSettings.setNiri("gaps", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.borderWidth"); desc: I18n.t("set.compositor.niriLive")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 10; step: 1; decimals: 0
+                                    value: Settings.get("compositor.niri.borderWidth", 2)
+                                    onMoved: v => CompositorSettings.setNiri("borderWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.focusWidth"); desc: I18n.t("set.compositor.niriLive")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 10; step: 1; decimals: 0
+                                    value: Settings.get("compositor.niri.focusWidth", 4)
+                                    onMoved: v => CompositorSettings.setNiri("focusWidth", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.cornerRadius"); desc: I18n.t("set.compositor.niriLive")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 30; step: 1; decimals: 0
+                                    value: Settings.get("compositor.niri.radius", 12)
+                                    onMoved: v => CompositorSettings.setNiri("radius", Math.round(v))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.activeColor"); desc: I18n.t("set.compositor.color")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(220)
+                                    text: Settings.get("compositor.niri.activeColor", "#e8bd4f")
+                                    onAccepted: value => CompositorSettings.setNiri("activeColor", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.inactiveColor"); desc: I18n.t("set.compositor.color")
+                                SgField {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(220)
+                                    text: Settings.get("compositor.niri.inactiveColor", "#403a2e")
+                                    onAccepted: value => CompositorSettings.setNiri("inactiveColor", value)
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri
+                                label: I18n.t("set.border"); desc: I18n.t("set.compositor.niriLive")
+                                SgToggle {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    checked: Settings.get("compositor.niri.border", true)
+                                    onToggled: CompositorSettings.setNiri("border", !Settings.get("compositor.niri.border", true))
+                                }
+                            }
+                            SgRow {
+                                width: parent.width; visible: Compositor.isNiri; last: true
+                                label: I18n.t("set.focusRing"); desc: I18n.t("set.compositor.niriLive")
+                                SgToggle {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    checked: Settings.get("compositor.niri.focus", false)
+                                    onToggled: CompositorSettings.setNiri("focus", !Settings.get("compositor.niri.focus", false))
+                                }
+                            }
                         }
 
                         // ABOUT

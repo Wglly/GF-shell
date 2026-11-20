@@ -17,3 +17,4 @@ singleton Visualizer 1.0 Visualizer.qml
 singleton Weather 1.0 Weather.qml
 singleton User 1.0 User.qml
 singleton Terminal 1.0 Terminal.qml
+singleton CompositorSettings 1.0 CompositorSettings.qml

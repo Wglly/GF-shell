@@ -108,6 +108,18 @@ Config file: `~/.config/gf-shell/config.json`
     "animations": true
   },
   "terminal": { "command": "" },
+  "compositor": {
+    "hypr": {
+      "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "blur": true, "animations": true
+    },
+    "niri": {
+      "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "border": true, "focus": false
+    }
+  },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -311,6 +323,15 @@ block can be set to OFF / LEFT / CENTER / RIGHT; the editor rewrites these array
 - `wallpaper.dir`: folder to import (png/jpg/jpeg/webp/avif/bmp). The bar and sidebar wallpaper libraries list every image.
 - `user.avatar`: custom avatar path; BROWSE on the settings home copies it to `~/.config/gf-shell/avatar`.
 - Light themes no longer tint the wallpaper with a paper-white wash; `wallpaper.dim` applies to dark themes.
+
+## Compositor
+
+Settings → System → **HYPRLAND / NIRI** shows the section for the running backend:
+
+- **Hyprland**: inner/outer gaps, border width, rounding, active/inactive border colours, blur and animations. Changes are applied live with `hl.config` (or `hyprctl keyword` on non-Lua configs).
+- **niri**: gaps, border/focus-ring width, window corner radius, colours and toggles. `scripts/niri-gf-settings.py` patches the layout block under `~/.config/niri/config.d/`, backs up each file as `*.gf-backup` on first change, validates with `niri validate`, restores backups on failure, and lets niri auto-reload.
+
+Values live under `compositor.hypr.*` and `compositor.niri.*`; the niri radius is applied globally through a managed `window-rule`.
 
 ## Wallpaper
 

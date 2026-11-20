@@ -151,6 +151,18 @@ QtObject {
             terminal: {
                 command: ""
             },
+            compositor: {
+                hypr: {
+                    gapsIn: 5, gapsOut: 10, borderWidth: 1, rounding: 8,
+                    activeColor: "#e8bd4f", inactiveColor: "#403a2e",
+                    blur: true, animations: true
+                },
+                niri: {
+                    gaps: 16, borderWidth: 2, focusWidth: 4, radius: 12,
+                    activeColor: "#e8bd4f", inactiveColor: "#403a2e",
+                    border: true, focus: false
+                }
+            },
             notifications: {
                 dnd: false,
                 toasts: true,

@@ -108,6 +108,18 @@
     "animations": true
   },
   "terminal": { "command": "" },
+  "compositor": {
+    "hypr": {
+      "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "blur": true, "animations": true
+    },
+    "niri": {
+      "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
+      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "border": true, "focus": false
+    }
+  },
   "wallpaper": {
     "enabled": true,
     "path": "",
@@ -330,6 +342,15 @@ OFF / LEFT / CENTER / RIGHT，編輯器會改寫這三個陣列；OFF 等同從�
 - `wallpaper.dir`：要匯入的壁紙目錄；支援 png/jpg/jpeg/webp/avif/bmp。狀態列與側邊欄的壁紙庫會列出全部圖片。
 - `user.avatar`：自訂頭像路徑；設定首頁的 BROWSE 會複製到 `~/.config/gf-shell/avatar`。
 - 亮色主題不再對壁紙加紙白洗色；`wallpaper.dim` 僅在暗色主題套用。
+
+## 合成器設定
+
+設定 → 系統 → **HYPRLAND / NIRI** 會依目前後端顯示：
+
+- **Hyprland**：內外間距、邊框寬度、圓角、作用中/非作用中邊框色、模糊、動畫。變更會用 `hl.config` 即時套用；傳統非 Lua 設定則用 `hyprctl keyword`。
+- **niri**：間距、邊框/焦點環寬度、視窗圓角、邊框色與開關。變更由 `scripts/niri-gf-settings.py` 寫入 `~/.config/niri/config.d/` 的 layout 區塊，第一次修改會備份為 `*.gf-backup`，寫入後執行 `niri validate`，驗證失敗會自動還原；niri 會自動重新載入。
+
+數值儲存在 `compositor.hypr.*` 與 `compositor.niri.*`；niri 的圓角會以受管理的 `window-rule` 套用到所有視窗。
 
 ## 壁紙
 
