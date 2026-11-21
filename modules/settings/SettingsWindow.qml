@@ -1149,16 +1149,6 @@ PanelWindow {
 
                             SgSection { width: parent.width; number: "01"; title: "PLACEMENT"; note: I18n.t("set.sec.placement") }
                             SgRow {
-                                width: parent.width
-                                label: I18n.t("set.hideMargin"); desc: I18n.t("set.hideMargin.desc")
-                                SgSlider {
-                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.fpx(200); from: 0; to: 240; step: 4
-                                    value: Settings.get("dock.hideMargin", 48)
-                                    onMoved: v => Settings.set("dock.hideMargin", Math.round(v))
-                                }
-                            }
-                            SgRow {
                                 width: parent.width; label: I18n.t("set.position"); desc: I18n.t("set.position.desc")
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
@@ -1302,6 +1292,16 @@ PanelWindow {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     checked: Settings.get("dock.avoid", true) && Settings.get("dock.autoHide", false)
                                     onToggled: Settings.toggle("dock.autoHide")
+                                }
+                            }
+                            SgRow {
+                                width: parent.width
+                                label: I18n.t("set.hideMargin"); desc: I18n.t("set.hideMargin.desc")
+                                SgSlider {
+                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
+                                    width: Theme.fpx(200); from: 0; to: 240; step: 4
+                                    value: Settings.get("dock.hideMargin", 48)
+                                    onMoved: v => Settings.set("dock.hideMargin", Math.round(v))
                                 }
                             }
                             SgRow {
