@@ -526,29 +526,6 @@ PanelWindow {
         cutTopRight: false
         accentTop: true
 
-        Connections {
-            target: contentRow
-            function onImplicitHeightChanged() {
-                if (root.vertical && root.menuTarget === null)
-                    dock.height = contentRow.implicitHeight + Theme.px(26);
-            }
-        }
-        Connections {
-            target: root
-            function onMenuTargetChanged() {
-                if (root.vertical && root.menuTarget === null)
-                    dock.height = contentRow.implicitHeight + Theme.px(26);
-            }
-        }
-        Timer {
-            interval: 60
-            repeat: false
-            running: root.vertical
-            onTriggered: {
-                if (root.vertical && root.menuTarget === null)
-                    dock.height = contentRow.implicitHeight + Theme.px(26);
-            }
-        }
 
         GlassBackdrop {
             anchors.fill: parent
