@@ -11,6 +11,17 @@ import qs.services
 PanelWindow {
     id: root
 
+    readonly property string deployTitle: Theme.hoi4 ? "HIGH COMMAND"
+        : (Theme.arknights ? "RHODES DEPLOYMENT" : (Theme.bf4 ? "DEPLOYMENT OVERVIEW"
+        : (Theme.bf1 ? "FIELD DEPLOYMENT" : (Theme.preset === "sangvis" ? "HOSTILE DEPLOYMENT"
+        : (Theme.preset === "neural" ? "NETWORK DEPLOYMENT" : (Theme.preset === "arctic"
+        ? "ARCTIC DEPLOYMENT" : "DEPLOYMENT"))))))
+    readonly property string deployCommand: Theme.hoi4 ? "GENERAL STAFF  /  NATIONAL COMMAND"
+        : (Theme.arknights ? "MOBILE CITY  /  OPERATOR DEPLOY" : (Theme.bf4 ? "SQUAD NET  /  COMMANDER"
+        : (Theme.bf1 ? "ALLIED HQ  /  FIELD COMMAND" : (Theme.preset === "sangvis" ? "FERRUM DIVISION  /  HOSTILE"
+        : (Theme.preset === "neural" ? "NEURAL NODE  /  NETWORK" : (Theme.preset === "arctic"
+        ? "ARCTIC OPS  /  FIELD COMMAND" : "GRIFFIN & KRYUGER  /  S09 COMMAND"))))))
+
     readonly property bool open: ShellState.overlay === "launcher"
     visible: root.open
     color: "transparent"
@@ -208,15 +219,13 @@ PanelWindow {
     }
 
     // 右下巨大徽章水印
-    Image {
+    ThemeEmblemBadge {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.margins: -Theme.px(40)
-        width: Theme.px(420)
-        height: Theme.px(420)
-        source: Qt.resolvedUrl("../../assets/icons/emblem-accent.png")
-        opacity: 0.05
-        fillMode: Image.PreserveAspectFit
+        size: Theme.px(420)
+        ribbon: false
+        opacity: 0.055
     }
 
     // ---------------------------------------------------------------- 面板
@@ -254,11 +263,10 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: Theme.px(14)
 
-                    Image {
+                    ThemeEmblemBadge {
                         anchors.verticalCenter: parent.verticalCenter
-                        source: Qt.resolvedUrl("../../assets/icons/emblem-accent.png")
-                        width: Theme.px(36)
-                        height: Theme.px(36)
+                        size: Theme.px(38)
+                        active: true
                     }
 
                     Column {
@@ -266,9 +274,7 @@ PanelWindow {
                         spacing: -Theme.px(4)
 
                         GfText {
-                            text: Theme.arknights ? "RHODES DEPLOYMENT"
-                                : (Theme.bf4 ? "DEPLOYMENT OVERVIEW"
-                                : (Theme.bf1 ? "FIELD DEPLOYMENT" : "DEPLOYMENT"))
+                            text: root.deployTitle
                             role: "display"
                             size: Theme.sizeDisplay
                             tracking: 7
@@ -299,7 +305,7 @@ PanelWindow {
                                 color: Theme.alpha(Theme.accent, 0.4)
                             }
                             GfText {
-                                text: "GRIFFIN & KRYUGER  /  S09 COMMAND"
+                                text: root.deployCommand
                                 role: "mono"
                                 size: Theme.sizeTiny - 1
                                 color: Theme.alpha(Theme.accent, 0.75)

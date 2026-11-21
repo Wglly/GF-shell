@@ -79,7 +79,7 @@ Item {
                 anchors.centerIn: parent
                 width: Theme.px(28)
                 height: Theme.px(28)
-                source: "ThemeEmblem.qml"
+                source: "../../common/widgets/ThemeEmblem.qml"
             }
             Binding {
                 target: emblemLoader.item
