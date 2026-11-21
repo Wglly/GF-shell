@@ -272,7 +272,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 - `dock.pinned` は .desktop ファイル名の配列。固定項目を順に表示し、未固定の実行中アプリを後ろに追加します（上限 `dock.maxItems`、既定 12）。
 - 設定 → Dock の「PIN AN APP」でアプリ名を入力して Enter すると固定できます。
 - Dock アイコンを右クリックすると固定／解除、新しいウィンドウ、閉じるを選べます。固定状態は `dock.pinned` に保存されます。
-- `dock.trigger`（4–48px）は非表示時のホットゾーン厚。左右 Dock では `dock.triggerLength`（40–320px、既定 72）が画面端に沿った長さを決めます。非表示時はホットゾーンが透明でパネルは完全に隠れ、2px の線だけ残ります。`exclusiveZone` は 0 です。
+- `dock.trigger`（4–48px）は非表示時のホットゾーン厚。左右 Dock では `dock.triggerLength`（4–320px、既定 72）が画面端に沿った長さを決めます。非表示時はホットゾーンが透明でパネルは完全に隠れ、2px の線だけ残ります。`exclusiveZone` は 0 です。
 - `dock.avoid` はウィンドウ回避のみ、`dock.autoHide` は自動非表示のみを制御し、互いに独立しています。左右 Dock のホットゾーンは整列位置の周囲 96px に限定されます。
 - バーと同じ辺にある場合、ホットゾーンと線はバー端に描画され、Dock 本体はバーの内側に密着します。`mask` は Dock とホットゾーンだけを入力対象にするため、バーの他の部分はクリックできます。
 - `dock.avoid`（既定 true）/ `dock.autoHide`（既定 false）で調整できます。

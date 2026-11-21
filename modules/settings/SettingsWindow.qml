@@ -1312,7 +1312,7 @@ PanelWindow {
                                 label: I18n.t("set.triggerLength"); desc: I18n.t("set.triggerLength.desc")
                                 SgSlider {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.fpx(200); from: 40; to: 320; step: 4
+                                    width: Theme.fpx(200); from: 4; to: 320; step: 4
                                     value: Settings.get("dock.triggerLength", 72)
                                     onMoved: v => Settings.set("dock.triggerLength", Math.round(v))
                                 }
