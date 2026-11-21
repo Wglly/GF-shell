@@ -284,7 +284,7 @@ Right-click empty desktop to open a seven-action command rose at the pointer (Se
 - Controlled by `dock.avoid` (default true) and `dock.autoHide` (default false).
 ### Sidebar components
 
-Assign each component to a side, or turn it off, with `sidebar.assign.<id>` (`left` / `right` / `off`):
+Settings → Sidebars → Components uses the same drag board as the bar: drag between left / right to reorder, or into OFF to hide. Order is stored in `sidebar.leftOrder` / `sidebar.rightOrder`, and `sidebar.assign.<id>` is kept in sync:
 
 | id | content |
 | --- | --- |

@@ -151,14 +151,6 @@ PanelWindow {
         }
     }
 
-    function sidebarSide(id) {
-        return Settings.get("sidebar.assign." + id, "off");
-    }
-
-    function setSidebarSide(id, side) {
-        Settings.set("sidebar.assign." + id, side);
-    }
-
     function pinByName(value) {
         var q = ("" + value).trim().toLowerCase();
         if (q === "")
@@ -585,7 +577,7 @@ PanelWindow {
 
                 Flickable {
                     id: flick
-                    interactive: !barEditor.dragging
+                    interactive: !barEditor.dragging && !sidebarEditor.dragging
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: pageHead.bottom
@@ -1700,25 +1692,10 @@ PanelWindow {
                             }
 
                             SgSection { width: parent.width; number: "03"; title: "COMPONENTS"; note: I18n.t("set.sec.sidebarComponents") }
-                            Repeater {
-                                model: root.sidebarKinds
-                                delegate: SgRow {
-                                    required property var modelData
-                                    width: parent.width
-                                    label: I18n.t(modelData.labelKey)
-                                    desc: I18n.t(modelData.descKey)
-                                    controlWidth: Theme.fpx(250)
-                                    SgChoice {
-                                        anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                        options: [
-                                            { value: "off", label: "OFF" },
-                                            { value: "left", label: "LEFT" },
-                                            { value: "right", label: "RIGHT" }
-                                        ]
-                                        current: root.sidebarSide(modelData.key)
-                                        onSelected: v => root.setSidebarSide(modelData.key, v)
-                                    }
-                                }
+                            SidebarLayoutEditor {
+                                id: sidebarEditor
+                                width: parent.width
+                                entries: root.sidebarKinds
                             }
                         }
 

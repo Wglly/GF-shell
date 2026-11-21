@@ -278,7 +278,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 ### サイドバーコンポーネント
 
-`sidebar.assign.<id>`（`left` / `right` / `off`）で各コンポーネントの配置を決めます。
+「設定 → サイドバー → コンポーネント」はバーと同じドラッグボードです。左／右へドラッグして並べ替え、OFF で非表示にします。順序は `sidebar.leftOrder` / `sidebar.rightOrder` に保存され、`sidebar.assign.<id>` も同期します。
 `user` / `calendar` / `roster` / `actions` / `stats` / `weather` / `clock` / `media` /
 `visualizer` / `comms` / `mission` に対応。
 

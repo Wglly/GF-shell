@@ -299,7 +299,7 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 ### 侧边栏组件
 
-`sidebar.assign.<id>`（`left` / `right` / `off`）决定组件在左侧、右侧或关闭；组件包括
+「设置 → 侧边栏 → 组件」使用与状态栏相同的拖放看板：拖到左/右排序，拖到 OFF 关闭。顺序保存在 `sidebar.leftOrder` / `sidebar.rightOrder`，`sidebar.assign.<id>` 同步更新；组件包括
 `user`（操作员）、`calendar`（月历）、`roster`（梯队名册）、`actions`（快捷操作）、
 `stats`（系统状态）、`weather`（天气）、`clock`（时钟）、`media`（媒体+歌词）、
 `visualizer`（频谱）、`comms`（通知）、`mission`（任务）。

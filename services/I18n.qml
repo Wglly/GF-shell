@@ -172,6 +172,8 @@ QtObject {
         "widget.grid": "GRID SIZE", "widget.grid.desc": "Snap grid in pixels (16 – 96)",
 
         "set.sec.barComponents": "BAR COMPONENTS", "set.sec.sidebarComponents": "SIDEBAR COMPONENTS",
+        "set.sidebarDragHint": "DRAG A COMPONENT BETWEEN LEFT / RIGHT · DROP INTO OFF TO HIDE",
+
         "set.barDragHint": "DRAG A COMPONENT TO A ZONE · DROP INTO OFF TO HIDE",
         "set.barZoneLeft": "LEFT", "set.barZoneCenter": "CENTER", "set.barZoneRight": "RIGHT",
         "set.barZoneOff": "OFF / HIDDEN", "set.barResetLayout": "RESET BAR LAYOUT",
@@ -357,6 +359,8 @@ QtObject {
         "widget.grid": "網格大小", "widget.grid.desc": "吸附網格像素（16 – 96）",
 
         "set.sec.barComponents": "狀態列組件", "set.sec.sidebarComponents": "側邊欄組件",
+        "set.sidebarDragHint": "拖動組件到左側／右側 · 拖到 OFF 可隱藏",
+
         "set.barDragHint": "拖動組件到左/中/右區塊 · 拖到 OFF 可隱藏",
         "set.barZoneLeft": "左側", "set.barZoneCenter": "中央", "set.barZoneRight": "右側",
         "set.barZoneOff": "關閉 / 隱藏", "set.barResetLayout": "重設狀態列佈局",
@@ -640,6 +644,7 @@ QtObject {
         "widget.grid.desc": "吸附网格像素（16 – 96）",
         "set.sec.barComponents": "状态列组件",
         "set.sec.sidebarComponents": "侧边栏组件",
+        "set.sidebarDragHint": "拖动组件到左侧／右侧 · 拖到 OFF 可隐藏",
         "set.barDragHint": "拖动组件到左/中/右区块 · 拖到 OFF 可隐藏",
         "set.barZoneLeft": "左侧",
         "set.barZoneCenter": "中央",
@@ -1026,6 +1031,8 @@ QtObject {
         "widget.grid": "グリッドサイズ", "widget.grid.desc": "吸着グリッド（16 – 96）",
 
         "set.sec.barComponents": "ステータスバーコンポーネント", "set.sec.sidebarComponents": "サイドバーコンポーネント",
+        "set.sidebarDragHint": "コンポーネントを左／右へドラッグ · OFF で非表示",
+
         "set.barDragHint": "コンポーネントを左／中央／右へドラッグ · OFF で非表示",
         "set.barZoneLeft": "左", "set.barZoneCenter": "中央", "set.barZoneRight": "右",
         "set.barZoneOff": "OFF / 非表示", "set.barResetLayout": "バーレイアウトをリセット",

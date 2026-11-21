@@ -48,15 +48,7 @@ PanelWindow {
     readonly property var order: ["user", "clock", "calendar", "weather", "roster", "actions",
         "stats", "mission", "media", "visualizer", "comms", "wallpaper"]
 
-    readonly property var componentIds: {
-        var out = [];
-        for (var i = 0; i < root.order.length; i++) {
-            var id = root.order[i];
-            if (Settings.get("sidebar.assign." + id, "off") === root.side)
-                out.push(id);
-        }
-        return out;
-    }
+    readonly property var componentIds: SidebarLayout.items(root.side)
 
     function componentFile(id) {
         switch (id) {

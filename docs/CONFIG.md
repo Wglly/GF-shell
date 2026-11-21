@@ -306,7 +306,7 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 ### 側邊欄組件
 
-用 `sidebar.assign.<id>`（`left` / `right` / `off`）把每個組件分配到左或右，或關閉：
+「設定 → 側邊欄 → 組件」使用與狀態列相同的拖放看板：拖到左/右排序，拖到 OFF 關閉。順序存於 `sidebar.leftOrder` / `sidebar.rightOrder`，`sidebar.assign.<id>` 會同步更新：
 
 | id | 內容 |
 | --- | --- |

@@ -20,3 +20,4 @@ singleton Terminal 1.0 Terminal.qml
 singleton CompositorSettings 1.0 CompositorSettings.qml
 singleton Fonts 1.0 Fonts.qml
 singleton Cursors 1.0 Cursors.qml
+singleton SidebarLayout 1.0 SidebarLayout.qml
