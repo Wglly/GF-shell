@@ -476,29 +476,21 @@ PanelWindow {
                 }
             }
         }
-        // 水平：左/中/右；垂直：上/中/下
-        anchors.horizontalCenter: root.vertical ? undefined
-            : (root.align === "center" ? parent.horizontalCenter : undefined)
-        anchors.verticalCenter: root.vertical && root.align === "center"
-            ? parent.verticalCenter : undefined
-        anchors.left: root.vertical
-            ? (root.atLeft ? parent.left : undefined)
-            : (root.align === "left" ? parent.left : undefined)
-        anchors.right: root.vertical
-            ? (root.atRight ? parent.right : undefined)
-            : (root.align === "right" ? parent.right : undefined)
-        anchors.top: root.vertical
-            ? (root.align === "top" ? parent.top : undefined)
-            : (root.atTop ? parent.top : undefined)
-        anchors.bottom: root.vertical
-            ? (root.align === "bottom" ? parent.bottom : undefined)
-            : (!root.atTop ? parent.bottom : undefined)
-        anchors.leftMargin: Theme.px(6)
-        anchors.rightMargin: Theme.px(6)
-        anchors.topMargin: root.vertical ? Theme.px(6)
-            : (root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6)))
-        anchors.bottomMargin: root.vertical ? Theme.px(6)
-            : (root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6)))
+        // Explicit x/y geometry instead of switching anchors: changing an anchor
+        // to undefined does not always remove it, which stretched the frame when
+        // moving the dock from bottom to top.
+        x: root.vertical
+            ? (root.atLeft ? Theme.px(6) : parent.width - width - Theme.px(6))
+            : (root.align === "left" ? Theme.px(6)
+                : (root.align === "right" ? parent.width - width - Theme.px(6)
+                : (parent.width - width) / 2))
+        y: root.vertical
+            ? (root.align === "top" ? Theme.px(6)
+                : (root.align === "bottom" ? parent.height - height - Theme.px(6)
+                : (parent.height - height) / 2))
+            : (root.atTop
+                ? root.barInset + (root.barOnSameEdge ? 0 : Theme.px(6))
+                : parent.height - height - root.barInset - (root.barOnSameEdge ? 0 : Theme.px(6)))
         width: root.vertical
             ? (root.menuTarget !== null ? Theme.px(430) : Theme.px(58))
             : Math.max(contentRow.width + Theme.px(26),
