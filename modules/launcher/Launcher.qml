@@ -318,7 +318,8 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         spacing: -2
                         GfText {
-                            text: "OPERATOR"
+                            text: Theme.hoi4 ? "HEAD OF STATE"
+                                : (Theme.battle ? "COMMANDER" : (Theme.arknights ? "DOCTOR" : "OPERATOR"))
                             role: "mono"
                             size: Theme.sizeTiny - 2
                             tone: "faint"

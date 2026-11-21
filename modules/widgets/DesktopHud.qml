@@ -748,7 +748,8 @@ PanelWindow {
                 GfText {
                     anchors.left: parent.left; anchors.leftMargin: Theme.px(10)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: Theme.hoi4 ? "HEAD OF STATE" : "OPERATOR"
+                    text: Theme.hoi4 ? "HEAD OF STATE"
+                        : (Theme.battle ? "SOLDIER" : (Theme.arknights ? "OPERATOR" : "OPERATOR"))
                     role: "mono"; size: Theme.sizeTiny; tracking: 1.8; color: Theme.accent
                 }
                 GfText {

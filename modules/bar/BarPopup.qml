@@ -128,7 +128,9 @@ PanelWindow {
                     width: parent.width
 
                     GfText {
-                        text: root.kind === "user" ? I18n.t("popup.operatorFile")
+                        text: root.kind === "user"
+                            ? (Theme.hoi4 ? "HEAD OF STATE FILE"
+                                : (Theme.battle ? "SOLDIER DOSSIER" : (Theme.arknights ? "OPERATOR FILE" : I18n.t("popup.operatorFile"))))
                             : root.kind === "calendar" ? I18n.t("calendar.schedule")
                             : root.kind === "network" ? I18n.t("popup.network")
                             : root.kind === "bluetooth" ? I18n.t("popup.bluetooth")

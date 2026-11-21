@@ -503,7 +503,9 @@ PanelWindow {
                         width: parent.width
                         spacing: Theme.fpx(4)
                         Text {
-                            x: Theme.fpx(8); text: "OPERATOR"
+                            x: Theme.fpx(8)
+                            text: Theme.hoi4 ? "HEAD OF STATE"
+                                : (Theme.battle ? "COMMANDER" : (Theme.arknights ? "DOCTOR" : "OPERATOR"))
                             font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#8c8679"
                         }
                         Text {

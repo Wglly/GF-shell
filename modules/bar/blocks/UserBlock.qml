@@ -21,13 +21,45 @@ Item {
         anchors.centerIn: parent
         spacing: Theme.px(6)
 
-        Image {
+        Item {
             anchors.verticalCenter: parent.verticalCenter
-            width: Theme.px(18)
-            height: Theme.px(18)
-            source: User.avatar
-            fillMode: Image.PreserveAspectFit
-            opacity: root.hovered ? 1 : 0.85
+            width: Theme.px(20)
+            height: Theme.px(20)
+            Rectangle {
+                anchors.fill: parent
+                visible: Theme.hoi4 || Theme.battle || Theme.arknights
+                color: "transparent"
+                border.width: 1
+                border.color: Theme.hoi4 ? Theme.alpha(Theme.accent, 0.8)
+                    : (Theme.battle ? Theme.alpha(Theme.accent2, 0.8) : Theme.alpha(Theme.accent, 0.65))
+            }
+            Image {
+                anchors.fill: parent
+                anchors.margins: 2
+                source: User.avatar
+                fillMode: Image.PreserveAspectFit
+                opacity: root.hovered ? 1 : 0.85
+            }
+            GfText {
+                visible: Theme.hoi4
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.topMargin: Theme.px(-6)
+                text: "★"
+                role: "mono"
+                size: Theme.sizeTiny - 3
+                color: Theme.accentHi
+            }
+            GfText {
+                visible: Theme.battle
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: Theme.px(-5)
+                text: Theme.bf4 ? "SGT" : "LT"
+                role: "mono"
+                size: Theme.sizeTiny - 4
+                color: Theme.accent2
+            }
         }
 
         Column {
