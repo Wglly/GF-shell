@@ -1,7 +1,7 @@
 import QtQuick
 import qs.modules.common
 
-// Theme-specific theatre map behind the desktop widgets.
+// Theme-specific theatre map behind the Overview (OPERATION MAP) cards.
 // Exactly one map is selected by the active preset; other themes have no map layer.
 Item {
     id: root

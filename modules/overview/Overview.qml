@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
+import qs.modules.themes
 
 // Overview — 作战地图。每个工作区是一张「战区卡」：
 // 金色扇区缎带 + 单位列表；背景是暖炭底 + 半调网点 + 大地图水印。
@@ -88,6 +89,8 @@ PanelWindow {
         anchors.fill: parent
         color: Theme.bg1
     }
+
+    ThemeMapBackground { anchors.fill: parent }
 
     Image {
         anchors.fill: parent

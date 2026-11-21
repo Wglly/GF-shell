@@ -196,7 +196,7 @@ the entire UI immediately. Setting a custom `accent` changes `preset` to `custom
 
 ### Theme theatre maps
 
-The desktop HUD loads exactly one map background per `theme.preset`; other themes load none:
+The desktop overview (OPERATION MAP) loads exactly one map background per `theme.preset`; the wallpaper and desktop widgets are untouched, and other themes load none:
 
 | preset | Map |
 | --- | --- |

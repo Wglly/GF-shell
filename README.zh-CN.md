@@ -77,7 +77,7 @@ IPC](#快捷键与-ipc)
 
 其他：
 
-- 九套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**HEARTS OF IRON IV**、**DAYLIGHT OPS**（亮色，中性亮灰底）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。游戏主题只在该主题下加入自己的背景签名、Bar/Dock 细节与仪表盘外观；HoI4 另有“国家档案／外交电报”侧边栏、罗马数字战区页签、参谋地图桌面框、双线黄铜面板与 NATIONAL SITUATION REPORT 抬头。所有出现用户卡片的位置（状态栏用户弹出、侧边栏操作员档案、桌面操作员卡）都会随主题切换版式：HoI4 为国家领导人肖像＋政治力量/稳定度/战争支持，BF4/BF1 为士兵档案＋军衔背景与服役记录，Arknights 为罗德岛干员档案＋职业/稀有度/信赖。桌面作战地图背景也会随主题切换：HoI4 为黄铜墨卡托世界图、BF1 为欧洲战线图、BF4 为全球网络图、Arknights 为泰拉／罗德岛测绘、GFL 为大陆战区图；其他主题不会加载这些地图。BF1 圆角半径（0–28px）、全局动画速度（0.5×–2.0×）与全局线条透明度（0–1）可在设置 → 外观 → 表面调整。
+- 九套主题预设：**G&K STANDARD**、**SANGVIS FERRI**、**NEURAL CLOUD**、**ARCTIC OPS**、**RHODES ISLAND (Arknights)**、**BATTLEFIELD 4**、**BATTLEFIELD 1**、**HEARTS OF IRON IV**、**DAYLIGHT OPS**（亮色，中性亮灰底）；也可选 DARK / LIGHT / CUSTOM，自订 BG0/BG1/PANEL/TEXT/ACCENT 十六进制颜色。游戏主题只在该主题下加入自己的背景签名、Bar/Dock 细节与仪表盘外观；HoI4 另有“国家档案／外交电报”侧边栏、罗马数字战区页签、参谋地图桌面框、双线黄铜面板与 NATIONAL SITUATION REPORT 抬头。所有出现用户卡片的位置（状态栏用户弹出、侧边栏操作员档案、桌面操作员卡）都会随主题切换版式：HoI4 为国家领导人肖像＋政治力量/稳定度/战争支持，BF4/BF1 为士兵档案＋军衔背景与服役记录，Arknights 为罗德岛干员档案＋职业/稀有度/信赖。桌面概览（OPERATION MAP）展开时的地图背景也会随主题切换：HoI4 为黄铜墨卡托世界图、BF1 为欧洲战线图、BF4 为全球网络图、Arknights 为泰拉／罗德岛测绘、GFL 为大陆战区图；其他主题不会加载这些地图。BF1 圆角半径（0–28px）、全局动画速度（0.5×–2.0×）与全局线条透明度（0–1）可在设置 → 外观 → 表面调整。
 - 全局缩放：`SHELL SCALE`（整体）与 `FONT SCALE`（文字、展开栏与卡片布局）分开调整；设置背景的灰白遮罩可调透明度与灰度。
 - 统一图标字体（Material Symbols 子集，改名为 *GF Tactical Icons*，约 1 MB，避免与系统字体撞名）、四种附带字体（Chakra Petch / Saira Condensed / Rajdhani / Share Tech Mono）。
 - 界面支持四种语言：**繁體中文 / 简体中文 / English / 日本語**；在「副官设置 → 系统 → 语言」即时切换（设置页本身也会跟着切换）。
