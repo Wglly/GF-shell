@@ -157,7 +157,7 @@ Item {
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
             font.bold: true
-            color: chip.selected ? Sg.ink : Sg.paper
+            color: chip.selected || chip.hovered ? Sg.ink : Sg.paper
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
         }
