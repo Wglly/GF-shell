@@ -67,7 +67,7 @@ IPC](#快捷键与-ipc)
 | **命令轮盘 (Command Rose)** | **桌面右键**在鼠标位置展开《战地》Q 命令式轮盘：设置、壁纸、桌面组件布局、部署终端、网络、终端、仪表盘。七个选项可点击或按 1–7；左键桌面/Esc 关闭。GFL、Arknights、BF4、BF1 各有不同的中心徽章与环线；**没有全屏暗幕**，展开时桌面保持原本亮度与可视度。 |
 | **系统停机 (Power)** | 锁定/休眠/重启/关机/登出；危险操作需二次确认（ENTER 两次），ESC 取消。 |
 | **HUD 小工具** | 大时钟、系统生命体征、通讯（含歌词）、天气、cava 音频频谱、操作员卡、当前任务；逐项开关。另有 **桌面布局编辑模式**：叠加网格、拖动吸附、右下角自由缩放、每个组件可单独 ON/OFF；编辑工具栏可调 **全局组件透明度**与**组件线条透明度**。 |
-| **梯队 (Dock)** | 固定与运行中的单位依序显示（上限 12）；右键单位可固定/取消固定、开新窗口或关闭；设置 → Dock 可输入应用名称直接固定。`dock.position` 可选上/下/左/右；左右时 Dock **垂直贴边**，`dock.align` 控制垂直上/中/下或水平左/中/右；有窗口时自动收起；滑到底部热区才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；收起时的 **触发面积 4–48px** 也可调。关闭“避让窗口”后 Dock 始终完整显示；收起时只保留不可见热区和细线，展开才显示面板。与状态栏同边时，热区和指示线落在状态栏上，Dock 本体贴住状态栏内侧，不再浮空。最右侧部署按钮会展开 **部署终端 / 仪表盘** 二选一，也可在「设置 → Dock → 部署按钮」指定默认。 |
+| **梯队 (Dock)** | 固定与运行中的单位依序显示（上限 12）；右键单位可固定/取消固定、开新窗口或关闭；设置 → Dock 可输入应用名称直接固定。`dock.position` 可选上/下/左/右；左右时 Dock **垂直贴边**，`dock.align` 控制垂直上/中/下或水平左/中/右。只有开启自动隐藏时才收起；鼠标移到 Dock 所在的那条屏幕边缘（2px 边线）才展开，并用 exclusive zone 推开窗口。图标尺寸/透明度/灰度/模糊可调；关闭“避让窗口”后 Dock 始终完整显示；收起时只保留 2px 边线，展开才显示面板。最右侧部署按钮会展开 **部署终端 / 仪表盘** 二选一，也可在「设置 → Dock → 部署按钮」指定默认。 |
 | **通知** | 右上角“通讯”弹窗（滑入、7 秒自动回收、点击关闭）＋控制中心内的历史记录。 |
 | **OSD** | 音量/亮度 HUD，分段仪表 + 大号数字。 |
 | **日历** | 点时钟下拉的行程面板：月份切换、今日高亮、周数。 |
@@ -298,7 +298,7 @@ qs -c gf-shell ipc call shell status
 | `sidebar` | `left` / `right` 的 `width`、`height`（0.4–1.0）、`align`、`opacity`、`gray`、`blur`、`assign.<id>`（left/right/off） |
 | `theme` | `preset`（含 `light`）、`mode`（dark/light/custom）、`accent`、`accent2`、`bg0`、`bg1`、`panel`、`text`、`fontScale`、`settingsOpacity`、`settingsGray`、`scale`、`animations` |
 | `wallpaper` | `enabled`、`path`（`file://` 或空＝内置）、`fillMode`、`dim` |
-| `dock` | `enabled`、`autoHide`、`avoid`、`trigger`（热区 4–48px）、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
+| `dock` | `enabled`、`autoHide`、`avoid`、`iconSize`、`opacity`、`gray`、`blur`、`maxItems`、`pinned` |
 | `widgets` | `grid`（吸附像素）、各组件的 `enabled`、`x`、`y`、`width`、`height`（布局编辑器右下角缩放） |
 | `overview` | `columns`、`desktops`、`backdrop` |
 | `notifications` | `dnd`、`toasts`、`maxToasts` |

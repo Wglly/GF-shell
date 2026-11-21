@@ -43,8 +43,6 @@ Config file: `~/.config/gf-shell/config.json`
     "edgeOpacity": 0.55,
     "autoHide": false,
     "avoid": true,
-    "trigger": 24,
-    "triggerLength": 72,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -272,9 +270,8 @@ All three surfaces share these fields:
 - `dock.pinned` is an array of desktop file names; the dock shows pinned entries in order and appends running apps that are not pinned, up to `dock.maxItems` (default 12).
 - Settings → Dock → “PIN AN APP” lets you type an app name and press Enter to pin it.
 - Right-click a dock icon to pin/unpin it, open a new window or close it; the pin state is written back to `dock.pinned`.
-- `dock.trigger` (4–48 px) is the hot-zone thickness for a horizontal dock; a left/right dock is a 4 px edge strip whose length is set by `dock.triggerLength` (4–320 px, default 72). While hidden the zone is transparent, the panel is fully hidden (only a 2 px indicator line remains) and the exclusive zone is 0.
 - `dock.avoid` only controls window avoidance; `dock.autoHide` only controls hiding. They are independent.
-- When the dock shares an edge with the bar, the hot zone/indicator are drawn on the bar edge and the dock body attaches to the bar's inner edge; the input `mask` only keeps the dock and hot-zone regions, so the rest of the bar remains clickable.
+- When the dock shares an edge with the bar, the 6 px edge line/indicator are drawn on the screen edge; the input `mask` only keeps the dock and edge line, so the rest of the bar remains clickable.
 - `dock.position`: `top` / `bottom` / `left` / `right`; left/right are vertical side docks and `dock.align` becomes `top` / `center` / `bottom`.
 - `dock.deployMode`: `launcher` / `dashboard`; default/checked option in the deploy button chooser.
 - `terminal.command`: command used by the rose Terminal action; empty tries kitty/foot/alacritty/wezterm in order.

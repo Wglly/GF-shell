@@ -43,8 +43,6 @@
     "edgeOpacity": 0.55,
     "autoHide": false,
     "avoid": true,
-    "trigger": 24,
-    "triggerLength": 72,
     "iconSize": 44,
     "size": 1.0,
     "opacity": 0.94,
@@ -289,13 +287,12 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 - `dock.autoHide = true` 時 Dock 才收起並等待熱區；關閉後即使有視窗也保持顯示。
 - `dock.avoid = true` 且 Dock 顯示時才設定 `exclusiveZone`，由合成器推開視窗；關閉後 `exclusiveZone` 為 0，不再避讓。
-- 左右側邊 Dock 的熱區只位於 Dock 對齊位置附近 96px，不再覆蓋整條側邊。
+- 收起的 Dock 只在它所貼的螢幕邊緣保留 2px 細線；滑鼠碰到該邊緣才展開。
 - `dock.pinned` 是桌面檔名陣列；Dock 依序顯示固定項目，並把正在執行但未固定的應用接在後面，上限 `dock.maxItems`（預設 12）。
 - 設定 → Dock 的「PIN AN APP」可輸入應用名稱後按 Enter 直接固定。
 - 右鍵點擊 Dock 圖示可固定/取消固定、開新視窗或關閉；固定狀態寫回 `dock.pinned`。
-- `dock.trigger`（4–48px）是水平 Dock 收起時的熱區厚度；左右 Dock 是 4px 邊緣細條，另由 `dock.triggerLength`（4–320px，預設 72）控制長度。收起時熱區透明、面板完全隱藏，僅留 2px 指示線；`exclusiveZone` 為 0。
 - `dock.avoid` 只控制視窗避讓；`dock.autoHide` 只控制是否自動隱藏，兩者獨立。
-- Dock 與狀態列同邊時，熱區與指示線畫在狀態列邊緣，Dock 本體貼住狀態列內側；`mask` 只保留 Dock/熱區輸入，狀態列其餘部分仍可點。
+- Dock 與狀態列同邊時，6px 邊線與指示線畫在螢幕邊緣；`mask` 只保留 Dock/邊線輸入，狀態列其餘部分仍可點。
 - `dock.position` 可為 `top` / `bottom` / `left` / `right`；左右為垂直側邊 Dock，`dock.align` 在垂直時是 `top` / `center` / `bottom`。
 - `dock.deployMode`：`launcher` / `dashboard`，部署按鈕彈出二選一時的預設/勾選項。
 - `terminal.command`：命令輪盤「終端」使用的指令；留空會依序嘗試 kitty/foot/alacritty/wezterm。

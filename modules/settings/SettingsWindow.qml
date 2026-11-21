@@ -1295,29 +1295,6 @@ PanelWindow {
                                 }
                             }
                             SgRow {
-                                width: parent.width; label: I18n.t("set.trigger"); desc: I18n.t("set.trigger.desc")
-                                SgSlider {
-                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.fpx(200); from: 4; to: 48; step: 1
-                                    value: Settings.get("dock.trigger", 24)
-                                    onMoved: v => Settings.set("dock.trigger", v)
-                                }
-                            }
-                            SgRow {
-                                width: parent.width
-                                visible: {
-                                    var p = Settings.get("dock.position", "bottom");
-                                    return p === "left" || p === "right";
-                                }
-                                label: I18n.t("set.triggerLength"); desc: I18n.t("set.triggerLength.desc")
-                                SgSlider {
-                                    anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                    width: Theme.fpx(200); from: 4; to: 320; step: 4
-                                    value: Settings.get("dock.triggerLength", 72)
-                                    onMoved: v => Settings.set("dock.triggerLength", Math.round(v))
-                                }
-                            }
-                            SgRow {
                                 width: parent.width; label: I18n.t("set.position"); desc: I18n.t("set.position.desc")
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter

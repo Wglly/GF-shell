@@ -30,9 +30,8 @@ PanelWindow {
     readonly property bool shouldHide: root.autoHide
     property bool hovered: false
     readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch || root.deployMenuOpen
-    // 收起时露出的热区高度（用户可调）
-    readonly property int trigger: Theme.px(Settings.get("dock.trigger", 24))
-    readonly property int triggerLength: Theme.px(Settings.get("dock.triggerLength", 72))
+    // Reveal only on the exact screen edge; there is no side hot-zone rectangle.
+    readonly property int edge: Theme.px(6)
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
         && ((root.atTop && Settings.get("bar.position", "top") === "top")
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
@@ -323,84 +322,79 @@ PanelWindow {
     // 只让 Dock 本体和屏幕边缘热区接收输入；中间的状态栏区域保持可点
     mask: Region {
         Region { item: root.revealed ? dock : null }
+        Region {
+            x: (root.shouldHide && !root.revealed && root.vertical)
+                ? (root.atLeft ? 0 : root.width - root.edge) : 0
+            y: (root.shouldHide && !root.revealed && !root.vertical)
+                ? (root.atTop ? 0 : root.height - root.edge) : 0
+            width: (root.shouldHide && !root.revealed)
+                ? (root.vertical ? root.edge : root.width) : 0
+            height: (root.shouldHide && !root.revealed)
+                ? (root.vertical ? root.height : root.edge) : 0
+        }
         Region { item: root.shouldHide ? triggerArea : null }
         Region { item: root.deployMenuOpen ? deployPanel : null }
     }
 
     // ---------------------------------------------------------------- 底板
-    // 屏幕边缘热区：位于状态栏之上，收起时只显示一条细线
+    // Screen-edge trigger: a 2 px strip along the dock's own screen edge.
+    // Top/bottom trigger the full width; left/right trigger the full height.
     Item {
         id: triggerArea
-        // 水平 Dock：状态栏边缘的一条；垂直 Dock：整条侧边。
-        // A side hot zone is a thin 4 px strip parallel to the screen edge.
-        // Its length is configurable; the horizontal dock still uses dock.trigger.
-        width: root.vertical ? Theme.px(4)
-            : (root.barOnSameEdge ? Theme.px(96) : parent.width)
-        // A vertical Dock must not turn the entire screen edge into a hot zone:
-        // only the area around its aligned position reveals it.
-        height: root.vertical ? root.triggerLength : root.trigger
-        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined)
-            : (root.barOnSameEdge ? undefined : parent.left)
-        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined)
-            : (root.barOnSameEdge ? undefined : parent.right)
-        anchors.horizontalCenter: !root.vertical && root.barOnSameEdge
-            ? parent.horizontalCenter : undefined
-        anchors.top: root.vertical
-            ? (root.align === "top" ? parent.top : undefined)
-            : (root.atTop ? parent.top : undefined)
-        anchors.bottom: root.vertical
-            ? (root.align === "bottom" ? parent.bottom : undefined)
-            : (!root.atTop ? parent.bottom : undefined)
-        anchors.verticalCenter: root.vertical && root.align === "center"
-            ? parent.verticalCenter : undefined
-        anchors.topMargin: root.vertical && root.align === "top"
-            ? Theme.px(46) : 0
-        anchors.bottomMargin: root.vertical && root.align === "bottom"
-            ? Theme.px(46) : 0
+        width: root.vertical ? root.edge : parent.width
+        height: root.vertical ? parent.height : root.edge
+        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
+        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : undefined
+        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
+        anchors.bottom: root.vertical ? undefined : (!root.atTop ? parent.bottom : undefined)
 
         Rectangle {
-            visible: !root.revealed && !root.vertical
-            anchors.left: parent.left
-            anchors.right: parent.right
-            anchors.top: root.atTop ? parent.top : undefined
-            anchors.bottom: !root.atTop ? parent.bottom : undefined
-            height: 2
+            anchors.fill: parent
+            visible: !root.revealed
             color: Theme.alpha(Theme.accent, 0.22)
         }
         Rectangle {
-            visible: !root.revealed && !root.vertical
-            anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: root.atTop ? parent.top : undefined
-            anchors.bottom: !root.atTop ? parent.bottom : undefined
-            width: Theme.px(56)
-            height: 3
+            visible: !root.revealed
+            anchors.horizontalCenter: root.vertical ? parent.horizontalCenter : undefined
+            anchors.verticalCenter: root.vertical ? undefined : parent.verticalCenter
+            width: root.vertical ? 3 : Theme.px(56)
+            height: root.vertical ? Theme.px(56) : 3
             color: Theme.alpha(Theme.accent, 0.8)
         }
-        Rectangle {
-            visible: !root.revealed && root.vertical
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            anchors.left: root.atLeft ? parent.left : undefined
-            anchors.right: root.atRight ? parent.right : undefined
-            width: 2
-            color: Theme.alpha(Theme.accent, 0.22)
-        }
-        Rectangle {
-            visible: !root.revealed && root.vertical
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.left: root.atLeft ? parent.left : undefined
-            anchors.right: root.atRight ? parent.right : undefined
-            width: 3
-            height: Theme.px(56)
-            color: Theme.alpha(Theme.accent, 0.8)
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: true
+            onEntered: {
+                root.hovered = true;
+                root.hoverLatch = true;
+                hideTimer.stop();
+            }
+            onExited: {
+                root.hovered = false;
+                if (root.shouldHide)
+                    hideTimer.restart();
+            }
         }
     }
-
 
 
     GfFrame {
         id: dock
         visible: root.revealed
+
+        HoverHandler {
+            onHoveredChanged: {
+                root.hovered = hovered;
+                if (hovered) {
+                    root.hoverLatch = true;
+                    hideTimer.stop();
+                } else if (root.shouldHide) {
+                    hideTimer.restart();
+                }
+            }
+        }
         // 水平：左/中/右；垂直：上/中/下
         anchors.horizontalCenter: root.vertical ? undefined
             : (root.align === "center" ? parent.horizontalCenter : undefined)
