@@ -235,6 +235,8 @@ QtObject {
         "set.enabled": "ENABLED", "set.enabled.desc": "Show this panel",
         "set.avoid": "AVOID WINDOWS", "set.avoid.desc": "Hide when windows are open; expand on hover and push windows away",
         "set.trigger": "TRIGGER AREA", "set.trigger.desc": "Hot-zone height when the dock is hidden (4 – 48 px)",
+        "set.triggerLength": "SIDE HOT ZONE", "set.triggerLength.desc": "Length of the hot zone around a left/right dock (40 – 320 px)",
+
 
         "set.maxItems": "MAX ITEMS", "set.maxItems.desc": "Number of apps shown (5 – 12)",
         "set.deployMode": "DEPLOY BUTTON", "set.deployMode.desc": "Choose the deploy button action or use its popup",
@@ -422,6 +424,8 @@ QtObject {
         "set.enabled": "啟用", "set.enabled.desc": "顯示此面板",
         "set.avoid": "避讓視窗", "set.avoid.desc": "有視窗時收起；滑到熱區展開並推開視窗",
         "set.trigger": "觸發面積", "set.trigger.desc": "Dock 收起時的热區高度（4 – 48px）",
+        "set.triggerLength": "側邊熱區長度", "set.triggerLength.desc": "左右 Dock 熱區沿螢幕邊的長度（40 – 320px）",
+
 
         "set.maxItems": "最大數量", "set.maxItems.desc": "顯示的應用數量（5 – 12）",
         "set.deployMode": "部署按鈕", "set.deployMode.desc": "選擇部署按鈕的動作，或使用它的彈出選單",
@@ -746,6 +750,8 @@ QtObject {
         "set.avoid.desc": "有视窗时收起；滑到热区展开并推开视窗",
         "set.trigger": "触发面积",
         "set.trigger.desc": "Dock 收起时的热区高度（4 – 48px）",
+        "set.triggerLength": "侧边热区长度",
+        "set.triggerLength.desc": "左右 Dock 热区沿萤幕边的长度（40 – 320px）",
         "set.maxItems": "最大数量",
         "set.maxItems.desc": "显示的应用数量（5 – 12）",
         "set.deployMode": "部署按钮",
@@ -1094,6 +1100,8 @@ QtObject {
         "set.enabled": "有効", "set.enabled.desc": "このパネルを表示",
         "set.avoid": "ウィンドウ回避", "set.avoid.desc": "ウィンドウがあると隠れ、ホバーで展開して押し出す",
         "set.trigger": "トリガー領域", "set.trigger.desc": "Dock 非表示時のホットゾーン高さ（4 – 48px）",
+        "set.triggerLength": "サイドホットゾーン", "set.triggerLength.desc": "左右 Dock のホットゾーン長さ（40 – 320px）",
+
 
         "set.maxItems": "最大項目", "set.maxItems.desc": "表示するアプリ数（5 – 12）",
         "set.deployMode": "デプロイボタン", "set.deployMode.desc": "デプロイボタンの動作、またはポップアップメニュー",

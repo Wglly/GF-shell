@@ -32,6 +32,7 @@ PanelWindow {
     readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch || root.deployMenuOpen
     // 收起时露出的热区高度（用户可调）
     readonly property int trigger: Theme.px(Settings.get("dock.trigger", 24))
+    readonly property int triggerLength: Theme.px(Settings.get("dock.triggerLength", 72))
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
         && ((root.atTop && Settings.get("bar.position", "top") === "top")
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
@@ -335,7 +336,7 @@ PanelWindow {
             : (root.barOnSameEdge ? Theme.px(96) : parent.width)
         // A vertical Dock must not turn the entire screen edge into a hot zone:
         // only the area around its aligned position reveals it.
-        height: root.vertical ? Theme.px(96) : root.trigger
+        height: root.vertical ? root.triggerLength : root.trigger
         anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined)
             : (root.barOnSameEdge ? undefined : parent.left)
         anchors.right: root.vertical ? (root.atRight ? parent.right : undefined)
