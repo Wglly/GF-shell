@@ -1,6 +1,7 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
@@ -41,6 +42,82 @@ PanelWindow {
     property bool hoverLatch: false
     property bool deployMenuOpen: false
     readonly property string deployMode: Settings.get("dock.deployMode", "launcher")
+
+    // Hyprland does not always deliver layer-shell hover along the extreme edge,
+    // so auto-hidden docks also poll the compositor cursor. This makes the
+    // collapse margin work independently of the layer input region.
+    readonly property int edgeDistance: {
+        if (!Compositor.isHyprland)
+            return 99999;
+        var gx = root.modelData ? (root.modelData.x || 0) : 0;
+        var gy = root.modelData ? (root.modelData.y || 0) : 0;
+        var lx = root.cursorX - gx;
+        var ly = root.cursorY - gy;
+        if (lx < 0 || ly < 0 || lx > root.width || ly > root.height)
+            return 99999;
+        if (root.vertical)
+            return root.atLeft ? lx : (root.width - lx);
+        return root.atTop ? ly : (root.height - ly);
+    }
+    property real cursorX: 0
+    property real cursorY: 0
+
+    function overDock(lx, ly) {
+        if (!root.revealed || root.deployMenuOpen)
+            return false;
+        var dx = dock.x, dy = dock.y;
+        return lx >= dx && lx <= dx + dock.width && ly >= dy && ly <= dy + dock.height;
+    }
+
+    function evaluateCursor(x, y) {
+        root.cursorX = x;
+        root.cursorY = y;
+        if (!root.autoHide || !root.enabled || !root.visible)
+            return;
+        var gx = root.modelData ? (root.modelData.x || 0) : 0;
+        var gy = root.modelData ? (root.modelData.y || 0) : 0;
+        var lx = x - gx, ly = y - gy;
+        if (lx < 0 || ly < 0 || lx > root.width || ly > root.height) {
+            if (root.hovered) {
+                root.hovered = false;
+                hideTimer.restart();
+            }
+            return;
+        }
+        var edgeDist = root.vertical ? (root.atLeft ? lx : (root.width - lx))
+                                     : (root.atTop ? ly : (root.height - ly));
+        var inside = root.revealed
+            ? (edgeDist <= root.hideMargin || root.overDock(lx, ly))
+            : (edgeDist <= root.edge);
+        if (inside) {
+            root.hovered = true;
+            root.hoverLatch = true;
+            hideTimer.stop();
+        } else if (root.hovered) {
+            root.hovered = false;
+            hideTimer.restart();
+        }
+    }
+
+    Timer {
+        interval: 100
+        repeat: true
+        running: root.autoHide && root.enabled && root.visible
+            && Compositor.isHyprland && !root.deployMenuOpen
+        onTriggered: { if (!cursorProbe.running) cursorProbe.running = true; }
+    }
+
+    property Process cursorProbe: Process {
+        command: ["hyprctl", "cursorpos", "-j"]
+        stdout: StdioCollector { id: cursorOut }
+        onExited: {
+            try {
+                var d = JSON.parse(cursorOut.text);
+                root.evaluateCursor(d.x, d.y);
+            } catch (e) {
+            }
+        }
+    }
 
     visible: root.enabled && entries.length > 0
     color: "transparent"
@@ -324,7 +401,6 @@ PanelWindow {
     // 只让 Dock 本体和屏幕边缘热区接收输入；中间的状态栏区域保持可点
     mask: Region {
         Region { item: root.revealed ? dock : null }
-        Region { item: root.revealed ? retentionArea : null }
         Region {
             x: (root.shouldHide && !root.revealed && root.vertical)
                 ? (root.atLeft ? 0 : root.width - root.edge) : 0
@@ -339,41 +415,15 @@ PanelWindow {
         Region { item: root.deployMenuOpen ? deployPanel : null }
     }
 
-    // While open, keep a configurable band along the edge active so moving
-    // the pointer inward from the 6 px edge does not instantly close the dock.
-    Item {
-        id: retentionArea
-        visible: root.revealed
-        width: root.vertical ? root.hideMargin : parent.width
-        height: root.vertical ? parent.height : root.hideMargin
-        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
-        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : undefined
-        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
-        anchors.bottom: root.vertical ? undefined : (!root.atTop ? parent.bottom : undefined)
-
-        MouseArea {
-            anchors.fill: parent
-            acceptedButtons: Qt.NoButton
-            hoverEnabled: true
-            onEntered: {
-                root.hovered = true;
-                root.hoverLatch = true;
-                hideTimer.stop();
-            }
-            onExited: {
-                if (root.shouldHide)
-                    hideTimer.restart();
-            }
-        }
-    }
-
     // ---------------------------------------------------------------- 底板
     // Screen-edge trigger: a 2 px strip along the dock's own screen edge.
     // Top/bottom trigger the full width; left/right trigger the full height.
     Item {
         id: triggerArea
-        width: root.vertical ? root.edge : parent.width
-        height: root.vertical ? parent.height : root.edge
+        width: root.vertical ? (root.revealed ? Math.max(root.edge, root.hideMargin) : root.edge)
+            : parent.width
+        height: root.vertical ? parent.height
+            : (root.revealed ? Math.max(root.edge, root.hideMargin) : root.edge)
         anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
         anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : undefined
         anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
