@@ -2,34 +2,53 @@ import QtQuick
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
+import "."
 
-// EmblemBlock — 左端 G&K 识别块：金线徽章 + 公司名 + 扇区号。
+// EmblemBlock — theme-aware deployment terminal.
+// The glyph and wording change per game instead of printing the preset name.
 Item {
     id: root
 
-    readonly property string brand: Theme.arknights ? "RHODES"
-        : (Theme.bf4 ? "BF4" : (Theme.bf1 ? "BF1" : (Theme.hoi4 ? "HOI4"
-        : (Theme.preset === "sangvis" ? "SANGVIS" : (Theme.preset === "neural" ? "NEURAL"
-        : (Theme.preset === "arctic" ? "ARCTIC" : "G&K"))))))
-    readonly property string subBrand: Theme.arknights ? "RHODES ISLAND"
-        : (Theme.bf4 ? "BATTLEFIELD 4" : (Theme.bf1 ? "BATTLEFIELD 1" : (Theme.hoi4 ? "HEARTS OF IRON IV"
-        : (Theme.preset === "sangvis" ? "SANGVIS FERRI" : (Theme.preset === "neural" ? "NEURAL CLOUD"
-        : (Theme.preset === "arctic" ? "ARCTIC OPS" : "GRIFFIN & KRYUGER"))))))
-    readonly property string tag: Theme.hoi4 ? "YEAR" : "SECTOR"
-    readonly property string tagValue: Theme.hoi4 ? "1936" : "09"
+    readonly property bool gfl: !(Theme.arknights || Theme.bf4 || Theme.bf1 || Theme.hoi4
+        || Theme.preset === "sangvis" || Theme.preset === "neural" || Theme.preset === "arctic")
+    readonly property string title: Theme.hoi4 ? "HIGH COMMAND"
+        : (Theme.bf4 ? "COMMANDER" : (Theme.bf1 ? "FIELD HQ" : (Theme.arknights ? "OPERATOR"
+        : (Theme.preset === "sangvis" ? "HOSTILE" : (Theme.preset === "neural" ? "NETWORK"
+        : (Theme.preset === "arctic" ? "ARCTIC" : "DEPLOY"))))))
+    readonly property string subtitle: Theme.hoi4 ? "GENERAL STAFF · 1936"
+        : (Theme.bf4 ? "SQUAD NETWORK" : (Theme.bf1 ? "ALLIED COMMAND · 1918"
+        : (Theme.arknights ? "MOBILE CITY COMMAND" : (Theme.preset === "sangvis" ? "FERRUM DIVISION"
+        : (Theme.preset === "neural" ? "NEURAL NODE" : (Theme.preset === "arctic" ? "FIELD COMMAND"
+        : "TACTICAL COMMAND"))))))
+    readonly property string tag: (Theme.hoi4 || Theme.bf1) ? "YEAR" : (Theme.bf4 ? "NET" : (Theme.arknights ? "CLASS"
+        : (Theme.preset === "sangvis" ? "ALERT" : (Theme.preset === "neural" ? "LINK"
+        : (Theme.preset === "arctic" ? "TEMP" : "SECTOR")))))
+    readonly property string tagValue: Theme.hoi4 ? "1936"
+        : (Theme.bf1 ? "1918" : (Theme.bf4 ? "ACTIVE" : (Theme.arknights ? "OP"
+        : (Theme.preset === "sangvis" ? "RED" : (Theme.preset === "neural" ? "SYNC"
+        : (Theme.preset === "arctic" ? "-40" : "09"))))))
 
     implicitWidth: row.implicitWidth + Theme.px(16)
     implicitHeight: Theme.barHeight
 
     Rectangle {
         anchors.fill: parent
-        color: mouse.containsMouse ? Theme.alpha(Theme.accent, 0.08) : "transparent"
+        color: mouse.containsMouse ? Theme.alpha(Theme.accent, 0.10) : "transparent"
+
+        // Theme-specific bottom edge.
         Rectangle {
             visible: mouse.containsMouse
             anchors.bottom: parent.bottom
             width: parent.width
+            height: Theme.px(Theme.bf4 ? 2 : 1)
+            color: Theme.bf4 ? Theme.accent2 : Theme.accent
+        }
+        Rectangle {
+            visible: !mouse.containsMouse && (Theme.hoi4 || Theme.bf1)
+            anchors.bottom: parent.bottom
+            width: parent.width
             height: 1
-            color: Theme.accent
+            color: Theme.alpha(Theme.accent, Theme.hoi4 ? 0.5 : 0.25)
         }
     }
 
@@ -38,13 +57,36 @@ Item {
         anchors.centerIn: parent
         spacing: Theme.px(8)
 
-        Image {
+        Item {
             anchors.verticalCenter: parent.verticalCenter
-            source: Qt.resolvedUrl("../../../assets/icons/emblem-accent.png")
-            width: Theme.px(22)
-            height: Theme.px(22)
-            fillMode: Image.PreserveAspectFit
-            smooth: true
+            width: Theme.px(30)
+            height: Theme.px(30)
+
+            // The G&K crest is the only preset-specific raster mark.
+            Image {
+                visible: root.gfl
+                anchors.centerIn: parent
+                source: Qt.resolvedUrl("../../../assets/icons/emblem-accent.png")
+                width: Theme.px(22)
+                height: Theme.px(22)
+                fillMode: Image.PreserveAspectFit
+                smooth: true
+                opacity: mouse.containsMouse ? 1 : 0.9
+            }
+            Loader {
+                id: emblemLoader
+                visible: !root.gfl
+                anchors.centerIn: parent
+                width: Theme.px(28)
+                height: Theme.px(28)
+                source: "ThemeEmblem.qml"
+            }
+            Binding {
+                target: emblemLoader.item
+                property: "active"
+                value: mouse.containsMouse
+                when: emblemLoader.item !== null
+            }
         }
 
         Column {
@@ -52,16 +94,16 @@ Item {
             spacing: -Theme.px(2)
 
             GfText {
-                text: root.brand
-                role: "display"
-                size: Theme.sizeMedium + 1
-                tracking: 2.6
+                text: root.title
+                role: Theme.arknights ? "mono" : "display"
+                size: Theme.sizeMedium + (root.hoi4 || Theme.bf4 ? 0 : 1)
+                tracking: Theme.hoi4 ? 1.8 : (Theme.arknights ? 1.2 : 2.4)
                 bold: true
-                color: Theme.accent
+                color: Theme.arknights ? Theme.text : Theme.accent
             }
 
             GfText {
-                text: root.subBrand
+                text: root.subtitle
                 role: "label"
                 size: Theme.sizeTiny - 3
                 tracking: 1.1
@@ -91,7 +133,7 @@ Item {
                 text: root.tagValue
                 role: "mono"
                 size: Theme.sizeTiny
-                color: Theme.accent
+                color: Theme.bf4 ? Theme.accent2 : Theme.accent
             }
         }
     }
