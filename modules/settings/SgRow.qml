@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 
 // SgRow — 设置行：左侧标签/说明，右侧控件。
@@ -26,14 +25,14 @@ Item {
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(13)
             font.bold: true
-            color: Sg.ink
+            color: Theme.sgInk
         }
         Text {
             width: parent.width
             text: root.desc
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
-            color: Sg.mute
+            color: Theme.sgMute
             elide: Text.ElideRight
         }
     }
@@ -52,7 +51,7 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         height: 1
-        color: Sg.ink
+        color: Theme.sgInk
         opacity: 0.18
     }
 }

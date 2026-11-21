@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 
 // SgSlider — 白色底上的黑线轨道 + 黄色进度 + 黑色菱形指针。
@@ -40,7 +39,7 @@ Item {
             y: parent.height / 2 - 1
             width: parent.width
             height: 2
-            color: Sg.ink
+            color: Theme.sgInk
             opacity: 0.55
         }
 
@@ -49,7 +48,7 @@ Item {
             y: parent.height / 2 - 2
             width: track.width * root.ratio
             height: 4
-            color: Sg.yellow
+            color: Theme.sgAccent
             border.width: 0
             radius: 2
         }
@@ -63,7 +62,7 @@ Item {
                     width: parent.width / 11
                     height: 1
                     y: track.height - 6
-                    color: Sg.ink
+                    color: Theme.sgInk
                     opacity: index / 11 <= root.ratio ? 0.7 : 0.2
                 }
             }
@@ -75,9 +74,9 @@ Item {
             width: Theme.fpx(10)
             height: Theme.fpx(10)
             rotation: 45
-            color: root.hovered ? Sg.yellow : Sg.ink
+            color: root.hovered ? Theme.sgAccent : Theme.sgInk
             border.width: 1
-            border.color: Theme.lineColor(Sg.ink)
+            border.color: Theme.lineColor(Theme.sgInk)
         }
 
         MouseArea {
@@ -98,7 +97,7 @@ Item {
         text: (root.decimals > 0 ? root.value.toFixed(root.decimals) : Math.round(root.value)) + root.suffix
         font.family: Theme.fontMono
         font.pixelSize: Theme.fs(11)
-        color: Sg.ink
+        color: Theme.sgInk
         width: Theme.fpx(50)
         horizontalAlignment: Text.AlignRight
     }

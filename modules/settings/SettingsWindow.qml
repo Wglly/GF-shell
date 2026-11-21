@@ -2,7 +2,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Io
-import "SgStyle.js" as Sg
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
@@ -36,8 +35,9 @@ PanelWindow {
     WlrLayershell.namespace: "gf-shell-settings"
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
-    readonly property color settingsVeil: Theme.mix("#f4f1e9", "#8d897f",
-        Settings.get("theme.settingsGray", 0.22))
+    readonly property color settingsVeil: Theme.light
+        ? Theme.mix(Theme.panel, Theme.panelAlt, Settings.get("theme.settingsGray", 0.22))
+        : Theme.mix(Theme.bg1, Theme.bg0, Settings.get("theme.settingsGray", 0.22))
     readonly property real settingsVeilAlpha: Settings.get("theme.settingsOpacity", 0.9)
 
     property string fontRole: "ui"
@@ -279,14 +279,14 @@ PanelWindow {
             anchors.right: parent.right
             anchors.top: parent.top
             height: Theme.fpx(64)
-            color: Sg.ink
+            color: Theme.sgBand
 
             Rectangle {
                 x: 0
                 y: 0
                 width: Theme.fpx(8)
                 height: parent.height
-                color: Sg.yellow
+                color: Theme.sgAccent
             }
 
             Column {
@@ -301,17 +301,17 @@ PanelWindow {
                     font.pixelSize: Theme.fs(24)
                     font.letterSpacing: Theme.fpx(6)
                     font.bold: true
-                    color: Sg.paper
+                    color: Theme.sgBandText
                 }
                 Row {
                     spacing: Theme.fpx(10)
-                    Rectangle { width: Theme.fpx(28); height: 1; anchors.verticalCenter: parent.verticalCenter; color: Sg.yellow }
+                    Rectangle { width: Theme.fpx(28); height: 1; anchors.verticalCenter: parent.verticalCenter; color: Theme.sgAccent }
                     Text {
                         text: "副官設置   //   GF-SHELL CONFIGURATION"
                         font.family: Theme.fontUI
                         font.pixelSize: Theme.fs(9)
                         font.letterSpacing: Theme.fpx(2)
-                        color: "#b8b1a3"
+                        color: Theme.alpha(Theme.sgBandText, 0.65)
                     }
                 }
             }
@@ -327,10 +327,10 @@ PanelWindow {
                     text: "CONFIG v" + Settings.get("version", 2) + "   ·   AUTO-SAVE"
                     font.family: Theme.fontMono
                     font.pixelSize: Theme.fs(9)
-                    color: "#9c9587"
+                    color: Theme.alpha(Theme.sgBandText, 0.5)
                 }
 
-                Rectangle { width: 1; height: Theme.fpx(24); color: "#3a3a3a" }
+                Rectangle { width: 1; height: Theme.fpx(24); color: Theme.alpha(Theme.sgBandText, 0.18) }
 
                 Item {
                     width: Theme.fpx(30)
@@ -338,15 +338,15 @@ PanelWindow {
 
                     Rectangle {
                         anchors.fill: parent
-                        color: closeMouse.containsMouse ? Sg.yellow : "transparent"
+                        color: closeMouse.containsMouse ? Theme.sgAccent : "transparent"
                         border.width: 1
-                        border.color: Theme.lineColor(closeMouse.containsMouse ? Sg.yellow : "#5a5a5a")
+                        border.color: Theme.lineColor(closeMouse.containsMouse ? Theme.sgAccent : Theme.alpha(Theme.sgBandText, 0.35))
                     }
                     Text {
                         anchors.centerIn: parent
                         text: "✕"
                         font.pixelSize: Theme.fs(14)
-                        color: closeMouse.containsMouse ? Sg.ink : Sg.paper
+                        color: closeMouse.containsMouse ? Theme.sgOnAccent : Theme.sgBandText
                     }
                     MouseArea {
                         id: closeMouse
@@ -365,19 +365,19 @@ PanelWindow {
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             height: Theme.fpx(30)
-            color: Sg.ink
+            color: Theme.sgBand
 
             Row {
                 anchors.left: parent.left
                 anchors.leftMargin: Theme.fpx(12)
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: Theme.fpx(8)
-                Rectangle { width: Theme.fpx(5); height: Theme.fpx(5); color: Sg.yellow }
+                Rectangle { width: Theme.fpx(5); height: Theme.fpx(5); color: Theme.sgAccent }
                 Text {
                     text: I18n.t("set.footer.autoSave")
                     font.family: Theme.fontUI
                     font.pixelSize: Theme.fs(9)
-                    color: "#b8b1a3"
+                    color: Theme.alpha(Theme.sgBandText, 0.62)
                 }
             }
 
@@ -388,7 +388,7 @@ PanelWindow {
                 text: "GF-SHELL  ·  " + Compositor.backend.toUpperCase() + "  ·  QUICKSHELL 0.3"
                 font.family: Theme.fontMono
                 font.pixelSize: Theme.fs(9)
-                color: "#9c9587"
+                color: Theme.alpha(Theme.sgBandText, 0.5)
             }
         }
 
@@ -404,7 +404,7 @@ PanelWindow {
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
                 width: Theme.fpx(224)
-                color: Sg.ink
+                color: Theme.sgBand
 
                 Column {
                     anchors.left: parent.left
@@ -418,7 +418,7 @@ PanelWindow {
                         text: "SECTIONS"
                         font.family: Theme.fontMono
                         font.pixelSize: Theme.fs(9)
-                        color: "#8c8679"
+                        color: Theme.alpha(Theme.sgBandText, 0.45)
                         font.letterSpacing: Theme.fpx(2)
                     }
 
@@ -437,13 +437,13 @@ PanelWindow {
 
                             Rectangle {
                                 anchors.fill: parent
-                                color: active ? Sg.yellow : (tabMouse.containsMouse ? "#2c2c2c" : "transparent")
+                                color: active ? Theme.sgAccent : (tabMouse.containsMouse ? Theme.sgGrayHi : "transparent")
                             }
                             Rectangle {
                                 x: 0; y: 0
                                 width: Theme.fpx(3)
                                 height: parent.height
-                                color: active ? Sg.ink : (tabMouse.containsMouse ? Sg.yellow : "transparent")
+                                color: active ? Theme.sgOnAccent : (tabMouse.containsMouse ? Theme.sgAccent : "transparent")
                             }
 
                             Row {
@@ -456,7 +456,7 @@ PanelWindow {
                                     text: "0" + (index + 1)
                                     font.family: Theme.fontMono
                                     font.pixelSize: Theme.fs(9)
-                                    color: active ? Sg.ink : "#7d7668"
+                                    color: active ? Theme.sgOnAccent : Theme.alpha(Theme.sgBandText, 0.55)
                                 }
                                 Column {
                                     spacing: -3
@@ -466,13 +466,13 @@ PanelWindow {
                                         font.pixelSize: Theme.fs(12)
                                         font.letterSpacing: Theme.fpx(1.6)
                                         font.bold: true
-                                        color: active ? Sg.ink : Sg.paper
+                                        color: active ? Theme.sgOnAccent : Theme.sgBandText
                                     }
                                     Text {
                                         text: I18n.t("set.tab." + modelData.key)
                                         font.family: Theme.fontUI
                                         font.pixelSize: Theme.fs(8)
-                                        color: active ? "#4a463d" : "#8c8679"
+                                        color: active ? Theme.alpha(Theme.sgOnAccent, 0.65) : Theme.alpha(Theme.sgBandText, 0.45)
                                     }
                                 }
                             }
@@ -488,7 +488,7 @@ PanelWindow {
                     }
 
                     Item { width: 1; height: Theme.fpx(10) }
-                    Rectangle { width: parent.width - Theme.fpx(16); x: Theme.fpx(8); height: 1; color: "#3a3a3a" }
+                    Rectangle { width: parent.width - Theme.fpx(16); x: Theme.fpx(8); height: 1; color: Theme.alpha(Theme.sgBandText, 0.18) }
                     Item { width: 1; height: Theme.fpx(10) }
 
                     Column {
@@ -498,16 +498,16 @@ PanelWindow {
                             x: Theme.fpx(8)
                             text: Theme.hoi4 ? "HEAD OF STATE"
                                 : (Theme.battle ? "COMMANDER" : (Theme.arknights ? "DOCTOR" : "OPERATOR"))
-                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#8c8679"
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: Theme.alpha(Theme.sgBandText, 0.45)
                         }
                         Text {
                             x: Theme.fpx(8); text: User.displayName + "  //  " + User.opNumber
-                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Sg.paper
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Theme.sgBandText
                         }
                         Text {
                             x: Theme.fpx(8)
                             text: User.session + "  ·  " + User.host
-                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: "#9c9587"
+                            font.family: Theme.fontMono; font.pixelSize: Theme.fs(8); color: Theme.alpha(Theme.sgBandText, 0.5)
                             elide: Text.ElideRight
                             width: parent.width - Theme.fpx(16)
                         }
@@ -520,7 +520,7 @@ PanelWindow {
                 anchors.right: parent.right
                 anchors.top: parent.top
                 anchors.bottom: parent.bottom
-                color: Sg.paper
+                color: Theme.sgPaper
 
                 Item {
                     id: pageHead
@@ -540,14 +540,14 @@ PanelWindow {
                             font.pixelSize: Theme.fs(26)
                             font.letterSpacing: Theme.fpx(4)
                             font.bold: true
-                            color: Sg.ink
+                            color: Theme.sgInk
                         }
                         Text {
                             text: I18n.t("set.page." + root.tabs[root.tab].key)
                             font.family: Theme.fontUI
                             font.pixelSize: Theme.fs(9)
                             font.letterSpacing: Theme.fpx(2)
-                            color: Sg.mute
+                            color: Theme.sgMute
                         }
                     }
 
@@ -556,13 +556,13 @@ PanelWindow {
                         anchors.verticalCenter: parent.verticalCenter
                         width: Theme.fpx(120)
                         height: Theme.fpx(24)
-                        color: Sg.ink
+                        color: Theme.sgInk
                         Text {
                             anchors.centerIn: parent
                             text: "SECTION 0" + (root.tab + 1)
                             font.family: Theme.fontMono
                             font.pixelSize: Theme.fs(9)
-                            color: Sg.yellow
+                            color: Theme.sgAccent
                         }
                     }
 
@@ -571,7 +571,7 @@ PanelWindow {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
                         height: 2
-                        color: Sg.ink
+                        color: Theme.sgInk
                     }
                 }
 
@@ -596,7 +596,7 @@ PanelWindow {
                         y: flick.visibleArea.yPosition * flick.height
                         width: 3
                         height: Math.max(20, flick.visibleArea.heightRatio * flick.height)
-                        color: Sg.ink
+                        color: Theme.sgInk
                         opacity: 0.45
                     }
 
@@ -620,9 +620,9 @@ PanelWindow {
 
                                 Rectangle {
                                     width: Theme.fpx(84); height: Theme.fpx(84)
-                                    color: Sg.ink
+                                    color: Theme.sgInk
                                     border.width: 1
-                                    border.color: Theme.lineColor(Sg.yellow)
+                                    border.color: Theme.lineColor(Theme.sgAccent)
                                     Image {
                                         anchors.fill: parent; anchors.margins: 2
                                         source: User.avatar
@@ -639,31 +639,31 @@ PanelWindow {
                                         font.family: Theme.fontDisplay
                                         font.pixelSize: Theme.fs(20)
                                         font.bold: true
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                     }
                                     Text {
                                         text: "USER  " + User.name + "   //   SESSION  " + User.session
                                         font.family: Theme.fontMono
                                         font.pixelSize: Theme.fs(8)
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                     }
                                     Text {
                                         text: "HOST  " + (User.host || "—") + "   ·   UPTIME  " + User.uptime
                                         font.family: Theme.fontMono
                                         font.pixelSize: Theme.fs(8)
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                     }
                                     Text {
                                         text: "OS  " + (User.osName || "—") + "   ·   KERNEL  " + (User.kernel || "—")
                                         font.family: Theme.fontMono
                                         font.pixelSize: Theme.fs(8)
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                     }
                                     Text {
                                         text: "CPU  " + (User.cpuModel || "—")
                                         font.family: Theme.fontMono
                                         font.pixelSize: Theme.fs(8)
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                         width: parent.width
                                         elide: Text.ElideRight
                                     }
@@ -955,7 +955,7 @@ PanelWindow {
                                     text: root.fontFor(root.fontRole)
                                     font.family: root.fontFor(root.fontRole)
                                     font.pixelSize: Theme.fs(11)
-                                    color: Sg.ink
+                                    color: Theme.sgInk
                                 }
                             }
                             SgRow {
@@ -1002,8 +1002,8 @@ PanelWindow {
 
                                             Rectangle {
                                                 anchors.fill: parent
-                                                color: active ? Theme.alpha(Sg.yellow, 0.22)
-                                                    : (fontMouse.containsMouse ? Theme.alpha(Sg.ink, 0.06) : "transparent")
+                                                color: active ? Theme.alpha(Theme.sgAccent, 0.22)
+                                                    : (fontMouse.containsMouse ? Theme.alpha(Theme.sgInk, 0.06) : "transparent")
                                                 border.width: 0
                                             }
                                             Text {
@@ -1013,7 +1013,7 @@ PanelWindow {
                                                 text: modelData
                                                 font.family: modelData
                                                 font.pixelSize: Theme.fs(11)
-                                                color: Sg.ink
+                                                color: Theme.sgInk
                                             }
                                             MouseArea {
                                                 id: fontMouse
@@ -1051,7 +1051,7 @@ PanelWindow {
                                     text: Cursors.current
                                     font.family: Theme.fontMono
                                     font.pixelSize: Theme.fs(10)
-                                    color: Sg.ink
+                                    color: Theme.sgInk
                                 }
                             }
                             SgRow {
@@ -1109,8 +1109,8 @@ PanelWindow {
 
                                             Rectangle {
                                                 anchors.fill: parent
-                                                color: active ? Theme.alpha(Sg.yellow, 0.22)
-                                                    : (cursorMouse.containsMouse ? Theme.alpha(Sg.ink, 0.06) : "transparent")
+                                                color: active ? Theme.alpha(Theme.sgAccent, 0.22)
+                                                    : (cursorMouse.containsMouse ? Theme.alpha(Theme.sgInk, 0.06) : "transparent")
                                             }
                                             Text {
                                                 anchors.left: parent.left
@@ -1119,7 +1119,7 @@ PanelWindow {
                                                 text: modelData
                                                 font.family: Theme.fontUI
                                                 font.pixelSize: Theme.fs(10)
-                                                color: Sg.ink
+                                                color: Theme.sgInk
                                             }
                                             MouseArea {
                                                 id: cursorMouse
@@ -1823,7 +1823,7 @@ PanelWindow {
 
                                         Rectangle {
                                             anchors.fill: parent
-                                            color: active ? Sg.yellow : Sg.ink
+                                            color: active ? Theme.sgAccent : Theme.sgBand
                                         }
                                         Image {
                                             anchors.fill: parent
@@ -1836,7 +1836,7 @@ PanelWindow {
                                             anchors.right: parent.right
                                             anchors.bottom: parent.bottom
                                             height: Theme.fpx(20)
-                                            color: Sg.ink
+                                            color: Theme.sgBand
                                             opacity: 0.86
                                         }
                                         Text {
@@ -1847,7 +1847,7 @@ PanelWindow {
                                             text: modelData.name
                                             font.family: Theme.fontMono
                                             font.pixelSize: Theme.fs(8)
-                                            color: active ? Sg.yellow : Sg.paper
+                                            color: active ? Theme.sgAccent : Theme.sgBandText
                                         }
                                         MouseArea {
                                             anchors.fill: parent
@@ -1892,7 +1892,7 @@ PanelWindow {
                                         height: Theme.fpx(88)
                                         Rectangle {
                                             anchors.fill: parent
-                                            color: Wallpapers.selected === modelData.path ? Sg.yellow : Sg.ink
+                                            color: Wallpapers.selected === modelData.path ? Theme.sgAccent : Theme.sgBand
                                         }
                                         Image {
                                             anchors.fill: parent; anchors.margins: 2
@@ -1907,7 +1907,7 @@ PanelWindow {
                                             text: modelData.name
                                             font.family: Theme.fontMono
                                             font.pixelSize: Theme.fs(7)
-                                            color: Wallpapers.selected === modelData.path ? Sg.yellow : Sg.paper
+                                            color: Wallpapers.selected === modelData.path ? Theme.sgAccent : Theme.sgBandText
                                             elide: Text.ElideRight
                                         }
                                         MouseArea {
@@ -1924,7 +1924,7 @@ PanelWindow {
                                 text: Wallpapers.directory === "" ? I18n.t("set.wallpaperDir.empty") : I18n.t("set.wallpaperDir.none")
                                 font.family: Theme.fontMono
                                 font.pixelSize: Theme.fs(9)
-                                color: Sg.ink
+                                color: Theme.sgInk
                                 opacity: 0.55
                             }
 
@@ -2049,7 +2049,7 @@ PanelWindow {
                                         text: modelData.v
                                         font.family: Theme.fontMono
                                         font.pixelSize: Theme.fs(10)
-                                        color: Sg.ink
+                                        color: Theme.sgInk
                                     }
                                 }
                             }
@@ -2243,7 +2243,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: "v1.0  //  MIT"
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Theme.sgInk
                                 }
                             }
                             SgRow {
@@ -2252,7 +2252,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Compositor.backend.toUpperCase() + "  ·  " + User.session
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(10); color: Theme.sgInk
                                 }
                             }
                             SgRow {
@@ -2261,7 +2261,7 @@ PanelWindow {
                                 Text {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     text: Settings.path
-                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Sg.ink
+                                    font.family: Theme.fontMono; font.pixelSize: Theme.fs(9); color: Theme.sgInk
                                     elide: Text.ElideLeft
                                     width: parent.width
                                     horizontalAlignment: Text.AlignRight
@@ -2275,7 +2275,7 @@ PanelWindow {
                                 text: I18n.t("set.license")
                                 font.family: Theme.fontUI
                                 font.pixelSize: Theme.fs(10)
-                                color: Sg.inkSoft
+                                color: Theme.sgInkSoft
                                 lineHeight: 1.4
                             }
 

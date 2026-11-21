@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 
 // SgSection — 黑底白字分区带。
@@ -11,7 +10,7 @@ Rectangle {
     property string note: ""
 
     implicitHeight: Theme.fpx(28)
-    color: Sg.ink
+    color: Theme.sgBand
     radius: Theme.bf1 ? Theme.px(4) : 0
 
     Rectangle {
@@ -19,7 +18,7 @@ Rectangle {
         y: 0
         width: Theme.fpx(4)
         height: parent.height
-        color: Sg.yellow
+        color: Theme.sgAccent
     }
 
     Row {
@@ -32,7 +31,7 @@ Rectangle {
             text: root.number
             font.family: Theme.fontMono
             font.pixelSize: Theme.fs(10)
-            color: Sg.yellow
+            color: Theme.sgAccent
         }
         Text {
             text: root.title
@@ -40,7 +39,7 @@ Rectangle {
             font.pixelSize: Theme.fs(11)
             font.letterSpacing: Theme.fpx(2)
             font.bold: true
-            color: Sg.paper
+            color: Theme.sgBandText
         }
     }
 
@@ -51,6 +50,6 @@ Rectangle {
         text: root.note
         font.family: Theme.fontMono
         font.pixelSize: Theme.fs(9)
-        color: "#b9b2a4"
+        color: Theme.alpha(Theme.sgBandText, 0.62)
     }
 }

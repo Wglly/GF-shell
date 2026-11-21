@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 import qs.services
 
@@ -167,9 +166,9 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            color: chip.selected ? Sg.yellow : (chip.hovered ? Theme.mix(Sg.yellow, Sg.gray, 0.35) : Sg.gray)
+            color: chip.selected ? Theme.sgAccent : (chip.hovered ? Theme.mix(Theme.sgAccent, Theme.sgGray, 0.35) : Theme.sgGray)
             border.width: chip.selected ? 2 : 1
-            border.color: chip.selected ? Sg.ink : Theme.lineColor(Sg.ink)
+            border.color: chip.selected ? Theme.sgInk : Theme.lineColor(Theme.sgInk)
             radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         }
         Text {
@@ -180,7 +179,7 @@ Item {
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
             font.bold: true
-            color: chip.hovered ? Sg.ink : Sg.paper
+            color: chip.hovered ? Theme.sgOnAccent : Theme.sgOnGray
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
         }
@@ -225,10 +224,10 @@ Item {
         Rectangle {
             anchors.fill: parent
             color: root.dragging && root.hoverSection === zone.section
-                ? Theme.alpha(Sg.yellow, 0.14) : Theme.alpha(Sg.ink, 0.035)
+                ? Theme.alpha(Theme.sgAccent, 0.14) : Theme.alpha(Theme.sgInk, 0.035)
             border.width: 1
             border.color: root.dragging && root.hoverSection === zone.section
-                ? Sg.yellow : Theme.alpha(Sg.ink, 0.18)
+                ? Theme.sgAccent : Theme.alpha(Theme.sgInk, 0.18)
             radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         }
         Column {
@@ -240,7 +239,7 @@ Item {
                 font.family: Theme.fontMono
                 font.pixelSize: Theme.fs(8)
                 font.letterSpacing: 1.1
-                color: Sg.mute
+                color: Theme.sgMute
             }
             Flow {
                 id: zoneRow
@@ -265,7 +264,7 @@ Item {
             text: I18n.t("set.barDragHint")
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
-            color: Sg.ink
+            color: Theme.sgInk
             opacity: 0.72
         }
 
@@ -280,7 +279,7 @@ Item {
                     : I18n.t("set.barSelectHint")
                 font.family: Theme.fontMono
                 font.pixelSize: Theme.fs(8)
-                color: Sg.ink
+                color: Theme.sgInk
                 elide: Text.ElideRight
             }
             SgButton {
@@ -320,10 +319,10 @@ Item {
             Rectangle {
                 anchors.fill: parent
                 color: root.dragging && root.hoverSection === "off"
-                    ? Theme.alpha(Sg.yellow, 0.12) : Theme.alpha(Sg.ink, 0.035)
+                    ? Theme.alpha(Theme.sgAccent, 0.12) : Theme.alpha(Theme.sgInk, 0.035)
                 border.width: 1
                 border.color: root.dragging && root.hoverSection === "off"
-                    ? Sg.yellow : Theme.alpha(Sg.ink, 0.18)
+                    ? Theme.sgAccent : Theme.alpha(Theme.sgInk, 0.18)
                 radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
             }
             Column {
@@ -334,7 +333,7 @@ Item {
                     text: I18n.t("set.barZoneOff")
                     font.family: Theme.fontMono
                     font.pixelSize: Theme.fs(8)
-                    color: Sg.mute
+                    color: Theme.sgMute
                 }
                 Flow {
                     id: offRow
@@ -359,16 +358,16 @@ Item {
         y: Math.min(root.height - height - 4, root.dragPos.y + Theme.fpx(8))
         width: Theme.fpx(110)
         height: Theme.fpx(28)
-        color: Theme.alpha(Sg.yellow, 0.95)
+        color: Theme.alpha(Theme.sgAccent, 0.95)
         border.width: 1
-        border.color: Sg.ink
+        border.color: Theme.sgInk
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         Text {
             anchors.centerIn: parent
             text: root.labelFor(root.dragKind)
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
-            color: Sg.ink
+            color: Theme.sgOnAccent
         }
     }
 }

@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 import qs.modules.common.widgets
 
@@ -20,10 +19,10 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: root.active || root.hovered ? Sg.yellow
-            : (root.danger ? Sg.red : Sg.gray)
+        color: root.active || root.hovered ? Theme.sgAccent
+            : (root.danger ? Theme.sgRed : Theme.sgGray)
         border.width: 1
-        border.color: Theme.lineColor(root.active ? Sg.yellowHi : (root.danger ? "#5d1c14" : Sg.ink))
+        border.color: Theme.lineColor(root.active ? Theme.sgAccentHi : (root.danger ? "#5d1c14" : Theme.sgInk))
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
     }
 
@@ -37,7 +36,7 @@ Item {
             visible: root.icon !== ""
             name: root.icon
             iconSize: Theme.fpx(13)
-            color: root.active || root.hovered ? Sg.ink : "#f4f1e8"
+            color: root.active || root.hovered ? Theme.sgOnAccent : Theme.sgOnGray
         }
         Text {
             id: label
@@ -46,7 +45,7 @@ Item {
             font.pixelSize: Theme.fs(root.compact ? 10 : 11)
             font.letterSpacing: Theme.fpx(1.2)
             font.bold: true
-            color: root.active || root.hovered ? Sg.ink : "#f4f1e8"
+            color: root.active || root.hovered ? Theme.sgOnAccent : Theme.sgOnGray
         }
     }
 

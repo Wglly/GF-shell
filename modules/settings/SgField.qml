@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 
 // SgField — 纸白输入框，黑框；聚焦变黄。
@@ -16,9 +15,9 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        color: Sg.paper
+        color: Theme.sgPaper
         border.width: 1
-        border.color: Theme.lineColor(root.focused ? Sg.yellow : Sg.ink)
+        border.color: Theme.lineColor(root.focused ? Theme.sgAccent : Theme.sgInk)
         radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
     }
 
@@ -28,7 +27,7 @@ Item {
         anchors.leftMargin: Theme.fpx(8)
         anchors.rightMargin: Theme.fpx(8)
         text: root.text
-        color: Sg.ink
+        color: Theme.sgInk
         font.family: Theme.fontMono
         font.pixelSize: Theme.fs(10)
         verticalAlignment: TextInput.AlignVCenter
@@ -42,7 +41,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             visible: input.text === ""
             text: root.placeholder
-            color: Sg.mute
+            color: Theme.sgMute
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(10)
         }

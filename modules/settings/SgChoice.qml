@@ -1,5 +1,4 @@
 import QtQuick
-import "SgStyle.js" as Sg
 import qs.modules.common
 
 // SgChoice — 黑灰分段选择，选中变黄。
@@ -24,9 +23,9 @@ Row {
 
             Rectangle {
                 anchors.fill: parent
-                color: parent.active || mouse.containsMouse ? Sg.yellow : Sg.gray
+                color: parent.active || mouse.containsMouse ? Theme.sgAccent : Theme.sgGray
                 border.width: 1
-                border.color: Theme.lineColor(parent.active ? Sg.ink : Sg.ink)
+                border.color: Theme.lineColor(parent.active ? Theme.sgInk : Theme.sgInk)
                 radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
             }
 
@@ -38,7 +37,7 @@ Row {
                 font.pixelSize: Theme.fs(10)
                 font.letterSpacing: Theme.fpx(1)
                 font.bold: true
-                color: parent.active || mouse.containsMouse ? Sg.ink : "#f4f1e8"
+                color: parent.active || mouse.containsMouse ? Theme.sgOnAccent : Theme.sgOnGray
             }
 
             MouseArea {
