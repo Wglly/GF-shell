@@ -296,7 +296,7 @@ PanelWindow {
                 root.sectorCards.splice(i, 1);
         }
 
-        fill: Theme.alpha(Theme.bg1, 0.92)
+        fill: Theme.alpha(Theme.bg1, 0.58)
         borderColor: root.hoverCard === card.wsId ? Theme.accentHi
             : (card.active ? Theme.accentHi : Theme.alpha(Theme.accent, 0.32))
         strokeWidth: card.active ? 2 : 1
@@ -332,7 +332,7 @@ PanelWindow {
             y: 0
             width: parent.width
             height: Theme.px(34)
-            color: Theme.alpha(Theme.bg0, 0.82)
+            color: Theme.alpha(Theme.bg0, 0.55)
 
             Rectangle {
                 x: 0
