@@ -1245,25 +1245,16 @@ PanelWindow {
                             }
 
                             SgSection { width: parent.width; number: "04"; title: "COMPONENTS"; note: I18n.t("set.sec.barComponents") }
-                            Repeater {
-                                model: root.barKinds
-                                delegate: SgRow {
-                                    required property var modelData
-                                    width: parent.width
-                                    label: I18n.t(modelData.labelKey)
-                                    desc: "OFF / LEFT / CENTER / RIGHT"
-                                    controlWidth: Theme.fpx(300)
-                                    SgChoice {
-                                        anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
-                                        options: [
-                                            { value: "off", label: "OFF" },
-                                            { value: "left", label: "LEFT" },
-                                            { value: "center", label: "CENTER" },
-                                            { value: "right", label: "RIGHT" }
-                                        ]
-                                        current: root.barSection(modelData.key)
-                                        onSelected: v => root.setBarSection(modelData.key, v)
-                                    }
+                            BarLayoutEditor {
+                                width: parent.width
+                                entries: root.barKinds
+                            }
+                            SgButton {
+                                text: I18n.t("set.barResetLayout")
+                                onClicked: {
+                                    Settings.set("bar.left", ["launcher", "user", "workspaces", "title"]);
+                                    Settings.set("bar.center", ["clock"]);
+                                    Settings.set("bar.right", ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]);
                                 }
                             }
                         }

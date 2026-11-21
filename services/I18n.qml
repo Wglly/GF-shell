@@ -172,6 +172,10 @@ QtObject {
         "widget.grid": "GRID SIZE", "widget.grid.desc": "Snap grid in pixels (16 – 96)",
 
         "set.sec.barComponents": "BAR COMPONENTS", "set.sec.sidebarComponents": "SIDEBAR COMPONENTS",
+        "set.barDragHint": "DRAG A COMPONENT TO A ZONE · DROP INTO OFF TO HIDE",
+        "set.barZoneLeft": "LEFT", "set.barZoneCenter": "CENTER", "set.barZoneRight": "RIGHT",
+        "set.barZoneOff": "OFF / HIDDEN", "set.barResetLayout": "RESET BAR LAYOUT",
+
         "set.height": "HEIGHT", "set.height.desc": "Panel height (40 – 100% of the screen)",
         "set.align": "ALIGN", "set.align.desc": "Top / centre / bottom",
         "sb.user": "OPERATOR", "sb.user.desc": "Operator profile and session",
@@ -351,6 +355,10 @@ QtObject {
         "widget.grid": "網格大小", "widget.grid.desc": "吸附網格像素（16 – 96）",
 
         "set.sec.barComponents": "狀態列組件", "set.sec.sidebarComponents": "側邊欄組件",
+        "set.barDragHint": "拖動組件到左/中/右區塊 · 拖到 OFF 可隱藏",
+        "set.barZoneLeft": "左側", "set.barZoneCenter": "中央", "set.barZoneRight": "右側",
+        "set.barZoneOff": "關閉 / 隱藏", "set.barResetLayout": "重設狀態列佈局",
+
         "set.height": "高度", "set.height.desc": "面板高度（螢幕 40 – 100%）",
         "set.align": "對齊", "set.align.desc": "上 / 中 / 下",
         "sb.user": "操作員", "sb.user.desc": "操作員檔案與會話",
@@ -628,6 +636,12 @@ QtObject {
         "widget.grid.desc": "吸附网格像素（16 – 96）",
         "set.sec.barComponents": "状态列组件",
         "set.sec.sidebarComponents": "侧边栏组件",
+        "set.barDragHint": "拖动组件到左/中/右区块 · 拖到 OFF 可隐藏",
+        "set.barZoneLeft": "左侧",
+        "set.barZoneCenter": "中央",
+        "set.barZoneRight": "右侧",
+        "set.barZoneOff": "关闭 / 隐藏",
+        "set.barResetLayout": "重设状态列布局",
         "set.height": "高度",
         "set.height.desc": "面板高度（萤幕 40 – 100%）",
         "set.align": "对齐",
@@ -1006,6 +1020,10 @@ QtObject {
         "widget.grid": "グリッドサイズ", "widget.grid.desc": "吸着グリッド（16 – 96）",
 
         "set.sec.barComponents": "ステータスバーコンポーネント", "set.sec.sidebarComponents": "サイドバーコンポーネント",
+        "set.barDragHint": "コンポーネントを左／中央／右へドラッグ · OFF で非表示",
+        "set.barZoneLeft": "左", "set.barZoneCenter": "中央", "set.barZoneRight": "右",
+        "set.barZoneOff": "OFF / 非表示", "set.barResetLayout": "バーレイアウトをリセット",
+
         "set.height": "高さ", "set.height.desc": "パネルの高さ（画面の 40 – 100%）",
         "set.align": "整列", "set.align.desc": "上 / 中央 / 下",
         "sb.user": "オペレーター", "sb.user.desc": "オペレーター情報とセッション",
