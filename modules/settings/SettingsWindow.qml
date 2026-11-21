@@ -35,9 +35,9 @@ PanelWindow {
     WlrLayershell.namespace: "gf-shell-settings"
     WlrLayershell.keyboardFocus: root.open ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
 
-    readonly property color settingsVeil: Theme.light
-        ? Theme.mix(Theme.panel, Theme.panelAlt, Settings.get("theme.settingsGray", 0.22))
-        : Theme.mix(Theme.bg1, Theme.bg0, Settings.get("theme.settingsGray", 0.22))
+    readonly property color settingsVeil: Theme.mix(
+        Theme.mix("#f4f1e9", "#8d897f", Settings.get("theme.settingsGray", 0.22)),
+        Theme.accent, 0.035)
     readonly property real settingsVeilAlpha: Settings.get("theme.settingsOpacity", 0.9)
 
     property string fontRole: "ui"

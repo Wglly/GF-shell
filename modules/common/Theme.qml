@@ -70,24 +70,24 @@ QtObject {
     property color textFaint: "#7d7668"
     property color textGhost: "#4a463d"
 
-    // Settings surface tokens: the settings console follows the active theme.
-    // Light mode keeps the paper console; dark modes use the theme's panels.
-    readonly property color sgPaper: Theme.panel
-    readonly property color sgPaperAlt: Theme.panelAlt
-    readonly property color sgInk: Theme.text
-    readonly property color sgInkSoft: Theme.textDim
-    readonly property color sgGray: Theme.light ? "#2b2b2b" : Theme.panelAlt
-    readonly property color sgGrayHi: Theme.light ? "#3d3d3d" : Theme.panelHi
-    readonly property color sgMute: Theme.textFaint
-    readonly property color sgLine: Theme.light ? "#1a1a1a" : Theme.line
+    // Settings surface tokens: the daylight paper console is shared by every
+    // preset; only accent, warning and selection colours follow the theme.
+    readonly property color sgPaper: "#f6f6f6"
+    readonly property color sgPaperAlt: "#e6e6e6"
+    readonly property color sgInk: "#1e1e1e"
+    readonly property color sgInkSoft: "#555555"
+    readonly property color sgGray: "#2b2b2b"
+    readonly property color sgGrayHi: "#3d3d3d"
+    readonly property color sgMute: "#7b766b"
+    readonly property color sgLine: "#b8b8b8"
     readonly property color sgAccent: Theme.accent
     readonly property color sgAccentHi: Theme.accentHi
     readonly property color sgRed: Theme.red
-    readonly property color sgBand: Theme.light ? Theme.ink : Theme.bg0
-    readonly property color sgBandText: Theme.light ? "#f4f1e8" : Theme.text
+    readonly property color sgBand: "#141414"
+    readonly property color sgBandText: "#f4f1e8"
     readonly property color sgOnAccent: Theme.ink
-    readonly property color sgOnGray: Theme.light ? "#f4f1e8" : Theme.text
-    readonly property color sgKnob: Theme.light ? "#e9e5da" : Theme.text
+    readonly property color sgOnGray: "#f4f1e8"
+    readonly property color sgKnob: "#e9e5da"
 
     // 便捷别名（GFL 语义）
     readonly property color gold: accent
