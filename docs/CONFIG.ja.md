@@ -195,6 +195,20 @@
 プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が
 即座に変わります。`accent` を個別に指定すると `preset` は `custom` になります。
 
+### テーマ別作戦地図
+
+デスクトップ HUD は `theme.preset` ごとに 1 枚の地図背景だけを読み込みます：
+
+| preset | 地図 |
+| --- | --- |
+| `hoi4` | `assets/maps/hoi4-world-mercator.png`（メルカトル世界図） |
+| `bf1` | `assets/maps/bf1-europe.png`（ヨーロッパ戦線） |
+| `bf4` | `assets/maps/bf4-world.png`（全球ネットワーク） |
+| `arknights` | `assets/maps/arknights-rhodes.png`（テラ／ロードス島） |
+| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-continent.png`（大陸戦域） |
+
+`modules/themes/ThemeMapBackground.qml` が現在のテーマの 1 枚だけを選び、ライトモードでは読み込みません。画像は `scripts/gen_theme_maps.py` がローカルの Natural Earth ラスタから再生成します。
+
 ## デザイントークン（`modules/common/Theme.qml`）
 
 ```qml

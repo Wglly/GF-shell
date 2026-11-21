@@ -195,6 +195,20 @@
 预设会写入整个 `theme.*` 色板，包括 `panel`、`line`、`text`…，所以切换后 UI 会立刻整体变化。
 自定义 `accent` 会把 `preset` 设为 `custom`。
 
+### 主题作战地图
+
+桌面 HUD 会按 `theme.preset` 只加载一张独立地图背景，其他主题不加载：
+
+| preset | 地图 |
+| --- | --- |
+| `hoi4` | `assets/maps/hoi4-world-mercator.png`（墨卡托世界图） |
+| `bf1` | `assets/maps/bf1-europe.png`（欧洲战线） |
+| `bf4` | `assets/maps/bf4-world.png`（全球网络） |
+| `arknights` | `assets/maps/arknights-rhodes.png`（泰拉／罗德岛） |
+| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-continent.png`（大陆战区） |
+
+`modules/themes/ThemeMapBackground.qml` 只挑选当前主题的图片；亮色模式不加载。图片由 `scripts/gen_theme_maps.py` 从本机 Natural Earth 底图重绘。
+
 ## 设计 token（`modules/common/Theme.qml`）
 
 ```qml

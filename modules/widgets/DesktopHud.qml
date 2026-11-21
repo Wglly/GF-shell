@@ -65,6 +65,11 @@ PanelWindow {
         }
     }
 
+    ThemeMapBackground {
+        anchors.fill: parent
+        visible: root.hudVisible
+    }
+
     Hoi4DesktopChrome {
         anchors.fill: parent
         visible: Theme.hoi4 && root.hudVisible
