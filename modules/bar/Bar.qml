@@ -30,7 +30,10 @@ PanelWindow {
     anchors.bottom: !root.atTop
     implicitHeight: root.currentThickness
     color: "transparent"
-    exclusiveZone: Settings.get("bar.visible", true) ? root.currentThickness : 0
+    // Keep only a tiny invisible input strip while collapsed; draw nothing and
+    // reserve no exclusive space until the pointer touches the edge.
+    exclusiveZone: Settings.get("bar.visible", true)
+        ? (root.collapsed ? 0 : root.currentThickness) : 0
     exclusionMode: ExclusionMode.Normal
     WlrLayershell.layer: WlrLayer.Top
     WlrLayershell.namespace: "gf-shell-bar"
@@ -82,6 +85,7 @@ PanelWindow {
     // ---------------------------------------------------------------- 底板
     Rectangle {
         anchors.fill: parent
+        opacity: root.collapsed ? 0 : 1
         color: Theme.alpha(Theme.bg0, Settings.get("bar.opacity", 0.94))
     }
 
@@ -92,7 +96,7 @@ PanelWindow {
         blur: Settings.get("bar.blur", 0)
         gray: Settings.get("bar.gray", 0)
         strength: 0.5
-        opacity: 0.9
+        opacity: root.collapsed ? 0 : 0.9
     }
 
     // 顶部暖色高光（很淡）
@@ -101,6 +105,7 @@ PanelWindow {
         anchors.left: parent.left
         anchors.right: parent.right
         height: 1
+        opacity: root.collapsed ? 0 : 1
         color: Theme.alpha(Theme.text, 0.05)
     }
 
@@ -110,6 +115,7 @@ PanelWindow {
         anchors.right: parent.right
         y: root.atTop ? parent.height - Theme.px(Settings.get("bar.edgeWidth", 1)) : 0
         height: Theme.px(Settings.get("bar.edgeWidth", 1))
+        opacity: root.collapsed ? 0 : 1
         color: Theme.lineColor(Theme.alpha(Theme.accent, Settings.get("bar.edgeOpacity", 0.55)))
     }
 
@@ -119,12 +125,14 @@ PanelWindow {
         y: 0
         width: Theme.px(3)
         height: parent.height
+        opacity: root.collapsed ? 0 : 1
         color: Theme.accent
     }
 
     // 右侧密排刻度（装饰）
     Row {
         visible: root.width > Theme.px(600)
+        opacity: root.collapsed ? 0 : 1
         anchors.right: parent.right
         anchors.rightMargin: Theme.px(10)
         anchors.verticalCenter: parent.verticalCenter
@@ -140,11 +148,12 @@ PanelWindow {
         }
     }
 
-    Hoi4BarChrome { anchors.fill: parent }
+    Hoi4BarChrome { anchors.fill: parent; opacity: root.collapsed ? 0 : 1 }
 
     // ---------------------------------------------------------------- 左段
     Row {
         id: leftRow
+        opacity: root.collapsed ? 0 : 1
         anchors.left: parent.left
         anchors.leftMargin: Theme.px(12)
         anchors.verticalCenter: parent.verticalCenter
@@ -165,6 +174,7 @@ PanelWindow {
     // ---------------------------------------------------------------- 中段
     Row {
         id: centerRow
+        opacity: root.collapsed ? 0 : 1
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.verticalCenter: parent.verticalCenter
         height: parent.height
@@ -184,6 +194,7 @@ PanelWindow {
     // ---------------------------------------------------------------- 右段
     Row {
         id: rightRow
+        opacity: root.collapsed ? 0 : 1
         anchors.right: parent.right
         anchors.rightMargin: Theme.px(16)
         anchors.verticalCenter: parent.verticalCenter
@@ -204,6 +215,7 @@ PanelWindow {
     Rectangle {
         visible: Theme.bf1
         anchors.fill: parent
+        opacity: root.collapsed ? 0 : 1
         radius: Theme.px(Theme.bf1Radius)
         color: "transparent"
         border.width: Theme.px(Settings.get("bar.edgeWidth", 1))
@@ -213,6 +225,7 @@ PanelWindow {
 
     BarThemeAccent {
         anchors.fill: parent
+        opacity: root.collapsed ? 0 : 1
         z: 20
     }
 }
