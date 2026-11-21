@@ -3,8 +3,8 @@ import "SgStyle.js" as Sg
 import qs.modules.common
 import qs.services
 
-// BarLayoutEditor — end-4pc style bar module board:
-// drag chips between LEFT / CENTER / RIGHT, or into OFF to hide.
+// BarLayoutEditor — end-4pc style bar module board.
+// All existing bar kinds are chips; drag between LEFT/CENTER/RIGHT or OFF.
 Item {
     id: root
 
@@ -23,8 +23,13 @@ Item {
         return out;
     }
 
-    implicitHeight: Theme.fpx(236)
-    clip: false
+    property string dragKind: ""
+    property bool dragging: false
+    property point dragStart: Qt.point(0, 0)
+    property point dragPos: Qt.point(0, 0)
+    property string hoverSection: ""
+
+    implicitHeight: Theme.fpx(360)
 
     function itemsFor(section) {
         if (section === "left") return root.leftItems;
@@ -40,75 +45,154 @@ Item {
         return key;
     }
 
+    function zoneFor(section) {
+        if (section === "left") return leftZone;
+        if (section === "center") return centerZone;
+        if (section === "right") return rightZone;
+        return offZone;
+    }
+
+    function sectionAt(x, y) {
+        var zones = [
+            { section: "left", item: leftZone },
+            { section: "center", item: centerZone },
+            { section: "right", item: rightZone },
+            { section: "off", item: offZone }
+        ];
+        for (var i = 0; i < zones.length; i++) {
+            var p = zones[i].item.mapFromItem(null, x, y);
+            if (p.x >= 0 && p.y >= 0 && p.x <= zones[i].item.width && p.y <= zones[i].item.height)
+                return zones[i].section;
+        }
+        return "";
+    }
+
+    function dropIndex(section, x, y) {
+        if (section === "off")
+            return 0;
+        var zone = zoneFor(section);
+        var p = zone.row.mapFromItem(null, x, y);
+        var children = zone.row.children;
+        var idx = 0;
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            if (child.width <= 0)
+                continue;
+            if (p.y > child.y + child.height) {
+                idx = i + 1;
+            } else if (p.y >= child.y) {
+                if (p.x > child.x + child.width / 2)
+                    idx = i + 1;
+                break;
+            } else {
+                break;
+            }
+        }
+        return idx;
+    }
+
     function move(key, section, index) {
         if (!key)
             return;
-        var list = ["left", "center", "right"];
+        var sections = ["left", "center", "right"];
         var current = {};
-        for (var i = 0; i < list.length; i++)
-            current[list[i]] = (Settings.get("bar." + list[i], []) || []).slice();
-        for (var s = 0; s < list.length; s++) {
-            var arr = current[list[s]];
-            var pos = arr.indexOf(key);
+        for (var i = 0; i < sections.length; i++)
+            current[sections[i]] = (Settings.get("bar." + sections[i], []) || []).slice();
+        for (var s = 0; s < sections.length; s++) {
+            var pos = current[sections[s]].indexOf(key);
             if (pos >= 0)
-                arr.splice(pos, 1);
+                current[sections[s]].splice(pos, 1);
         }
         if (section !== "off") {
             var target = current[section];
             var at = Math.max(0, Math.min(target.length, index === undefined ? target.length : index));
             target.splice(at, 0, key);
         }
-        for (var k = 0; k < list.length; k++)
-            Settings.set("bar." + list[k], current[list[k]]);
+        for (var k = 0; k < sections.length; k++)
+            Settings.set("bar." + sections[k], current[sections[k]]);
     }
 
+    function startDrag(kind, x, y) {
+        root.dragKind = kind;
+        root.dragging = false;
+        root.dragStart = Qt.point(x, y);
+        root.dragPos = Qt.point(x, y);
+        root.hoverSection = "";
+    }
+
+    function updateDrag(x, y) {
+        if (root.dragKind === "")
+            return;
+        if (!root.dragging) {
+            var dx = x - root.dragStart.x;
+            var dy = y - root.dragStart.y;
+            if (Math.sqrt(dx * dx + dy * dy) < Theme.fpx(6))
+                return;
+            root.dragging = true;
+        }
+        root.dragPos = Qt.point(x, y);
+        root.hoverSection = root.sectionAt(x, y);
+    }
+
+    function endDrag(x, y) {
+        if (root.dragging) {
+            var section = root.sectionAt(x, y);
+            if (section !== "")
+                root.move(root.dragKind, section, root.dropIndex(section, x, y));
+        }
+        root.dragKind = "";
+        root.dragging = false;
+        root.hoverSection = "";
+    }
 
     component Chip: Item {
         id: chip
         property string kind: ""
-        property string section: "off"
         readonly property string label: root.labelFor(chip.kind)
         readonly property bool hovered: mouse.containsMouse
 
-        width: Math.max(Theme.fpx(74), labelItem.implicitWidth + Theme.fpx(20))
+        width: Math.max(Theme.fpx(76), labelItem.implicitWidth + Theme.fpx(20))
         height: Theme.fpx(28)
-        opacity: mouse.drag.active ? 0.55 : 1
+        opacity: root.dragging && root.dragKind === chip.kind ? 0.5 : 1
 
         Rectangle {
             anchors.fill: parent
             color: chip.hovered ? Sg.yellow : Sg.gray
             border.width: 1
-            border.color: Sg.ink
+            border.color: Theme.lineColor(Sg.ink)
             radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         }
         Text {
             id: labelItem
             anchors.centerIn: parent
+            width: parent.width - Theme.fpx(10)
             text: chip.label
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
             font.bold: true
             color: chip.hovered ? Sg.ink : Sg.paper
             elide: Text.ElideRight
-            width: parent.width - Theme.fpx(10)
             horizontalAlignment: Text.AlignHCenter
         }
-
-        Item { id: dragProxy; width: 1; height: 1; visible: false }
-
-        Drag.active: mouse.drag.active
-        Drag.hotSpot.x: Theme.fpx(12)
-        Drag.hotSpot.y: Theme.fpx(12)
-        Drag.keys: ["text/plain"]
-        Drag.mimeData: ({ "text/plain": chip.kind })
-
         MouseArea {
             id: mouse
             anchors.fill: parent
             hoverEnabled: true
             cursorShape: Qt.SizeAllCursor
-            drag.target: dragProxy
-            drag.threshold: Theme.fpx(6)
+            onPressed: mouse => {
+                var p = chip.mapToItem(null, mouse.x, mouse.y);
+                root.startDrag(chip.kind, p.x, p.y);
+            }
+            onPositionChanged: mouse => {
+                if (!pressed)
+                    return;
+                var p = chip.mapToItem(null, mouse.x, mouse.y);
+                root.updateDrag(p.x, p.y);
+            }
+            onReleased: mouse => {
+                var p = chip.mapToItem(null, mouse.x, mouse.y);
+                root.endDrag(p.x, p.y);
+            }
         }
     }
 
@@ -116,65 +200,39 @@ Item {
         id: zone
         property string section: "left"
         property string title: ""
-        height: Theme.fpx(82)
         readonly property var zoneItems: root.itemsFor(zone.section)
+        property alias row: zoneRow
+        height: Theme.fpx(154)
 
-        function indexAt(x) {
-            var localX = x - zoneRow.x;
-            var idx = 0;
-            for (var i = 0; i < zoneRow.children.length; i++) {
-                var child = zoneRow.children[i];
-                if (child.width <= 0)
-                    continue;
-                if (localX > child.x + child.width / 2)
-                    idx++;
-            }
-            return idx;
+        Rectangle {
+            anchors.fill: parent
+            color: root.dragging && root.hoverSection === zone.section
+                ? Theme.alpha(Sg.yellow, 0.14) : Theme.alpha(Sg.ink, 0.035)
+            border.width: 1
+            border.color: root.dragging && root.hoverSection === zone.section
+                ? Sg.yellow : Theme.alpha(Sg.ink, 0.18)
+            radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         }
-
         Column {
             anchors.fill: parent
+            anchors.margins: Theme.fpx(6)
             spacing: Theme.fpx(4)
             Text {
                 text: zone.title
                 font.family: Theme.fontMono
                 font.pixelSize: Theme.fs(8)
-                font.letterSpacing: 1.2
+                font.letterSpacing: 1.1
                 color: Sg.mute
             }
-            Item {
+            Flow {
+                id: zoneRow
                 width: parent.width
-                height: Theme.fpx(38)
-                Rectangle {
-                    anchors.fill: parent
-                    color: drop.containsDrag ? Theme.alpha(Sg.yellow, 0.16) : "transparent"
-                    border.width: 1
-                    border.color: drop.containsDrag ? Sg.yellow : Theme.alpha(Sg.ink, 0.18)
-                    radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
-                }
-                Row {
-                    id: zoneRow
-                    x: Theme.fpx(5)
-                    anchors.verticalCenter: parent.verticalCenter
-                    spacing: Theme.fpx(4)
-                    Repeater {
-                        model: zone.zoneItems
-                        delegate: Chip {
-                            required property string modelData
-                            kind: modelData
-                            section: zone.section
-                        }
-                    }
-                }
-                DropArea {
-                    id: drop
-                    anchors.fill: parent
-                    keys: ["text/plain"]
-                    onDropped: d => {
-                        var key = d.getData("text/plain");
-                        if (!key) key = d.text;
-                        root.move(key, zone.section, zone.indexAt(d.x));
-                        d.acceptProposedAction();
+                spacing: Theme.fpx(4)
+                Repeater {
+                    model: zone.zoneItems
+                    delegate: Chip {
+                        required property string modelData
+                        kind: modelData
                     }
                 }
             }
@@ -190,39 +248,34 @@ Item {
             font.family: Theme.fontUI
             font.pixelSize: Theme.fs(9)
             color: Sg.ink
-            opacity: 0.7
+            opacity: 0.72
         }
 
         Row {
             width: parent.width
             spacing: Theme.fpx(6)
-            Zone {
-                width: (parent.width - Theme.fpx(12)) / 3
-                section: "left"; title: I18n.t("set.barZoneLeft")
-            }
-            Zone {
-                width: (parent.width - Theme.fpx(12)) / 3
-                section: "center"; title: I18n.t("set.barZoneCenter")
-            }
-            Zone {
-                width: (parent.width - Theme.fpx(12)) / 3
-                section: "right"; title: I18n.t("set.barZoneRight")
-            }
+            Zone { id: leftZone; width: (parent.width - Theme.fpx(12)) / 3; section: "left"; title: I18n.t("set.barZoneLeft") }
+            Zone { id: centerZone; width: (parent.width - Theme.fpx(12)) / 3; section: "center"; title: I18n.t("set.barZoneCenter") }
+            Zone { id: rightZone; width: (parent.width - Theme.fpx(12)) / 3; section: "right"; title: I18n.t("set.barZoneRight") }
         }
 
         Item {
+            id: offZone
             width: parent.width
-            height: Theme.fpx(66)
+            height: Theme.fpx(104)
             Rectangle {
                 anchors.fill: parent
-                color: offDrop.containsDrag ? Theme.alpha(Sg.yellow, 0.12) : Theme.alpha(Sg.ink, 0.04)
+                color: root.dragging && root.hoverSection === "off"
+                    ? Theme.alpha(Sg.yellow, 0.12) : Theme.alpha(Sg.ink, 0.035)
                 border.width: 1
-                border.color: Theme.alpha(Sg.ink, 0.18)
+                border.color: root.dragging && root.hoverSection === "off"
+                    ? Sg.yellow : Theme.alpha(Sg.ink, 0.18)
                 radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
             }
             Column {
-                x: Theme.fpx(6); width: parent.width - Theme.fpx(12)
-                spacing: Theme.fpx(3)
+                anchors.fill: parent
+                anchors.margins: Theme.fpx(6)
+                spacing: Theme.fpx(4)
                 Text {
                     text: I18n.t("set.barZoneOff")
                     font.family: Theme.fontMono
@@ -230,6 +283,7 @@ Item {
                     color: Sg.mute
                 }
                 Flow {
+                    id: offRow
                     width: parent.width
                     spacing: Theme.fpx(4)
                     Repeater {
@@ -237,22 +291,30 @@ Item {
                         delegate: Chip {
                             required property string modelData
                             kind: modelData
-                            section: "off"
                         }
                     }
                 }
             }
-            DropArea {
-                id: offDrop
-                anchors.fill: parent
-                keys: ["text/plain"]
-                onDropped: d => {
-                    var key = d.getData("text/plain");
-                    if (!key) key = d.text;
-                    root.move(key, "off", 0);
-                    d.acceptProposedAction();
-                }
-            }
+        }
+    }
+
+    Rectangle {
+        visible: root.dragging
+        z: 100
+        x: Math.min(root.width - width - 4, root.dragPos.x + Theme.fpx(8))
+        y: Math.min(root.height - height - 4, root.dragPos.y + Theme.fpx(8))
+        width: Theme.fpx(110)
+        height: Theme.fpx(28)
+        color: Theme.alpha(Sg.yellow, 0.95)
+        border.width: 1
+        border.color: Sg.ink
+        radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
+        Text {
+            anchors.centerIn: parent
+            text: root.labelFor(root.dragKind)
+            font.family: Theme.fontUI
+            font.pixelSize: Theme.fs(9)
+            color: Sg.ink
         }
     }
 }
