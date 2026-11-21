@@ -42,6 +42,7 @@
     "edgeWidth": 1,
     "edgeOpacity": 0.55,
     "autoHide": false,
+    "hideMargin": 48,
     "avoid": true,
     "iconSize": 44,
     "size": 1.0,
@@ -292,6 +293,7 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 設定 → Dock 的「PIN AN APP」可輸入應用名稱後按 Enter 直接固定。
 - 右鍵點擊 Dock 圖示可固定/取消固定、開新視窗或關閉；固定狀態寫回 `dock.pinned`。
 - `dock.avoid` 只控制視窗避讓；`dock.autoHide` 只控制是否自動隱藏，兩者獨立。
+- `dock.hideMargin`（0–240px，預設 48）是收起判定範圍：指標離開螢幕邊緣這個距離後才收起。
 - Dock 與狀態列同邊時，6px 邊線與指示線畫在螢幕邊緣；`mask` 只保留 Dock/邊線輸入，狀態列其餘部分仍可點。
 - `dock.position` 可為 `top` / `bottom` / `left` / `right`；左右為垂直側邊 Dock，`dock.align` 在垂直時是 `top` / `center` / `bottom`。
 - `dock.deployMode`：`launcher` / `dashboard`，部署按鈕彈出二選一時的預設/勾選項。

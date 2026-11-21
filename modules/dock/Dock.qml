@@ -32,6 +32,8 @@ PanelWindow {
     readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch || root.deployMenuOpen
     // Reveal only on the exact screen edge; there is no side hot-zone rectangle.
     readonly property int edge: Theme.px(6)
+    // How far the pointer may move away from the screen edge before collapsing.
+    readonly property int hideMargin: Theme.px(Settings.get("dock.hideMargin", 48))
     readonly property bool barOnSameEdge: Settings.get("bar.visible", true)
         && ((root.atTop && Settings.get("bar.position", "top") === "top")
             || (!root.atTop && Settings.get("bar.position", "top") === "bottom"))
@@ -322,6 +324,7 @@ PanelWindow {
     // 只让 Dock 本体和屏幕边缘热区接收输入；中间的状态栏区域保持可点
     mask: Region {
         Region { item: root.revealed ? dock : null }
+        Region { item: root.revealed ? retentionArea : null }
         Region {
             x: (root.shouldHide && !root.revealed && root.vertical)
                 ? (root.atLeft ? 0 : root.width - root.edge) : 0
@@ -334,6 +337,34 @@ PanelWindow {
         }
         Region { item: root.shouldHide ? triggerArea : null }
         Region { item: root.deployMenuOpen ? deployPanel : null }
+    }
+
+    // While open, keep a configurable band along the edge active so moving
+    // the pointer inward from the 6 px edge does not instantly close the dock.
+    Item {
+        id: retentionArea
+        visible: root.revealed
+        width: root.vertical ? root.hideMargin : parent.width
+        height: root.vertical ? parent.height : root.hideMargin
+        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
+        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : undefined
+        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
+        anchors.bottom: root.vertical ? undefined : (!root.atTop ? parent.bottom : undefined)
+
+        MouseArea {
+            anchors.fill: parent
+            acceptedButtons: Qt.NoButton
+            hoverEnabled: true
+            onEntered: {
+                root.hovered = true;
+                root.hoverLatch = true;
+                hideTimer.stop();
+            }
+            onExited: {
+                if (root.shouldHide)
+                    hideTimer.restart();
+            }
+        }
     }
 
     // ---------------------------------------------------------------- 底板

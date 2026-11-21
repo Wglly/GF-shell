@@ -42,6 +42,7 @@
     "edgeWidth": 1,
     "edgeOpacity": 0.55,
     "autoHide": false,
+    "hideMargin": 48,
     "avoid": true,
     "iconSize": 44,
     "size": 1.0,
@@ -292,6 +293,7 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - 设置 → Dock 的“PIN AN APP”可输入应用名称后按 Enter 直接固定。
 - 右键点击 Dock 图标可固定/取消固定、开新窗口或关闭；固定状态写回 `dock.pinned`。
 - `dock.avoid` 只控制窗口避让；`dock.autoHide` 只控制自动隐藏，两者独立。
+- `dock.hideMargin`（0–240px，默认 48）是收起判定范围：指针离开屏幕边缘这个距离后才收起。
 - Dock 与状态栏同边时，热区与指示线画在状态栏边缘，Dock 本体贴住状态栏内侧；`mask` 只保留 Dock/热区输入，状态栏其余部分仍可点。
 
 

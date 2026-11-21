@@ -227,6 +227,8 @@ QtObject {
 
         "set.thickness": "THICKNESS", "set.thickness.desc": "Height in pixels (30 – 56)",
         "set.autoHide": "AUTO HIDE", "set.autoHide.desc": "Hide even without windows (only while avoidance is on)",
+        "set.hideMargin": "COLLAPSE MARGIN", "set.hideMargin.desc": "How far the pointer may leave the screen edge before the dock collapses (0 – 240 px)",
+
         "set.opacity": "OPACITY", "set.opacity.desc": "Background opacity",
         "set.grayscale": "GRAYSCALE", "set.grayscale.desc": "Desaturate the wallpaper sample (0 – 1)",
         "set.blur": "BLUR", "set.blur.desc": "Blur the wallpaper sample (own shader)",
@@ -416,6 +418,8 @@ QtObject {
 
         "set.thickness": "高度", "set.thickness.desc": "像素（30 – 56）",
         "set.autoHide": "自動隱藏", "set.autoHide.desc": "即使沒有視窗也收起（僅在啟用避讓時生效）",
+        "set.hideMargin": "收起判定範圍", "set.hideMargin.desc": "滑鼠離開螢幕邊緣多遠才收起 Dock（0 – 240px）",
+
         "set.opacity": "不透明度", "set.opacity.desc": "背景不透明度",
         "set.grayscale": "灰度", "set.grayscale.desc": "壁紙採樣去飽和（0 – 1）",
         "set.blur": "模糊", "set.blur.desc": "壁紙採樣模糊（自繪 shader）",
@@ -734,6 +738,8 @@ QtObject {
         "set.thickness.desc": "像素（30 – 56）",
         "set.autoHide": "自动隐藏",
         "set.autoHide.desc": "即使没有视窗也收起（仅在启用避让时生效）",
+        "set.hideMargin": "收起判定范围",
+        "set.hideMargin.desc": "鼠标离开屏幕边缘多远才收起 Dock（0 – 240px）",
         "set.opacity": "不透明度",
         "set.opacity.desc": "背景不透明度",
         "set.grayscale": "灰度",
@@ -1092,6 +1098,8 @@ QtObject {
 
         "set.thickness": "高さ", "set.thickness.desc": "ピクセル（30 – 56）",
         "set.autoHide": "自動非表示", "set.autoHide.desc": "ウィンドウがなくても隠す（回避が有効なときのみ）",
+        "set.hideMargin": "収納マージン", "set.hideMargin.desc": "ポインターが画面端から離れて Dock を閉じるまでの距離（0 – 240px）",
+
         "set.opacity": "不透明度", "set.opacity.desc": "背景の不透明度",
         "set.grayscale": "グレースケール", "set.grayscale.desc": "壁紙サンプルの彩度（0 – 1）",
         "set.blur": "ブラー", "set.blur.desc": "壁紙サンプルのぼかし（自前シェーダー）",

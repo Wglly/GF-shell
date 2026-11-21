@@ -43,6 +43,7 @@ QtObject {
                 position: "bottom",
                 align: "center",          // center | left | right
                 autoHide: false,
+                hideMargin: 48,
                 deployMode: "launcher",
                 edgeWidth: 1,
                 edgeOpacity: 0.55,

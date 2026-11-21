@@ -42,6 +42,7 @@ Config file: `~/.config/gf-shell/config.json`
     "edgeWidth": 1,
     "edgeOpacity": 0.55,
     "autoHide": false,
+    "hideMargin": 48,
     "avoid": true,
     "iconSize": 44,
     "size": 1.0,
@@ -271,6 +272,7 @@ All three surfaces share these fields:
 - Settings → Dock → “PIN AN APP” lets you type an app name and press Enter to pin it.
 - Right-click a dock icon to pin/unpin it, open a new window or close it; the pin state is written back to `dock.pinned`.
 - `dock.avoid` only controls window avoidance; `dock.autoHide` only controls hiding. They are independent.
+- `dock.hideMargin` (0–240 px, default 48) is the collapse margin: the dock closes only after the pointer moves this far away from the screen edge.
 - When the dock shares an edge with the bar, the 6 px edge line/indicator are drawn on the screen edge; the input `mask` only keeps the dock and edge line, so the rest of the bar remains clickable.
 - `dock.position`: `top` / `bottom` / `left` / `right`; left/right are vertical side docks and `dock.align` becomes `top` / `center` / `bottom`.
 - `dock.deployMode`: `launcher` / `dashboard`; default/checked option in the deploy button chooser.
