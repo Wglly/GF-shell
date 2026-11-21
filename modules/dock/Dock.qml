@@ -420,14 +420,14 @@ PanelWindow {
     // Top/bottom trigger the full width; left/right trigger the full height.
     Item {
         id: triggerArea
+        // Explicit x/y, like the dock frame: stale anchors from the previous
+        // orientation must never stretch the edge/collapse band.
         width: root.vertical ? (root.revealed ? Math.max(root.edge, root.hideMargin) : root.edge)
             : parent.width
         height: root.vertical ? parent.height
             : (root.revealed ? Math.max(root.edge, root.hideMargin) : root.edge)
-        anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined) : parent.left
-        anchors.right: root.vertical ? (root.atRight ? parent.right : undefined) : undefined
-        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
-        anchors.bottom: root.vertical ? undefined : (!root.atTop ? parent.bottom : undefined)
+        x: root.vertical ? (root.atLeft ? 0 : parent.width - width) : 0
+        y: root.vertical ? 0 : (root.atTop ? 0 : parent.height - height)
 
         Rectangle {
             anchors.fill: parent
