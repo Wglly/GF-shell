@@ -24,9 +24,10 @@ PanelWindow {
     readonly property bool atRight: root.position === "right"
     readonly property bool vertical: root.atLeft || root.atRight
     readonly property string align: Settings.get("dock.align", "center")
-    readonly property bool hasWindows: Compositor.windows.length > 0
-    // `avoid` 是总开关：关闭避让后 Dock 始终完整显示（autoHide 不再单独隐藏）
-    readonly property bool shouldHide: root.avoid && (root.autoHide || root.hasWindows)
+    // auto-hide is independent from window avoidance: turning it off must keep
+    // the Dock visible even when windows exist. `avoid` only controls whether the
+    // layer reserves an exclusive zone / pushes windows.
+    readonly property bool shouldHide: root.autoHide
     property bool hovered: false
     readonly property bool revealed: !root.shouldHide || root.hovered || root.hoverLatch || root.deployMenuOpen
     // 收起时露出的热区高度（用户可调）
@@ -54,7 +55,7 @@ PanelWindow {
     implicitHeight: root.modelData ? root.modelData.height : 0
     exclusionMode: ExclusionMode.Normal
     // 收起时不占位；展开时只保留 Dock 本身的宽度/高度
-    exclusiveZone: root.visible && root.revealed ? Theme.px(76) : 0
+    exclusiveZone: root.visible && root.revealed && root.avoid ? Theme.px(76) : 0
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "gf-shell-dock"
     WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
@@ -332,15 +333,27 @@ PanelWindow {
         // 水平 Dock：状态栏边缘的一条；垂直 Dock：整条侧边。
         width: root.vertical ? root.trigger
             : (root.barOnSameEdge ? Theme.px(96) : parent.width)
-        height: root.vertical ? parent.height : root.trigger
+        // A vertical Dock must not turn the entire screen edge into a hot zone:
+        // only the area around its aligned position reveals it.
+        height: root.vertical ? Theme.px(96) : root.trigger
         anchors.left: root.vertical ? (root.atLeft ? parent.left : undefined)
             : (root.barOnSameEdge ? undefined : parent.left)
         anchors.right: root.vertical ? (root.atRight ? parent.right : undefined)
             : (root.barOnSameEdge ? undefined : parent.right)
         anchors.horizontalCenter: !root.vertical && root.barOnSameEdge
             ? parent.horizontalCenter : undefined
-        anchors.top: root.vertical ? parent.top : (root.atTop ? parent.top : undefined)
-        anchors.bottom: root.vertical ? parent.bottom : (!root.atTop ? parent.bottom : undefined)
+        anchors.top: root.vertical
+            ? (root.align === "top" ? parent.top : undefined)
+            : (root.atTop ? parent.top : undefined)
+        anchors.bottom: root.vertical
+            ? (root.align === "bottom" ? parent.bottom : undefined)
+            : (!root.atTop ? parent.bottom : undefined)
+        anchors.verticalCenter: root.vertical && root.align === "center"
+            ? parent.verticalCenter : undefined
+        anchors.topMargin: root.vertical && root.align === "top"
+            ? Theme.px(46) : 0
+        anchors.bottomMargin: root.vertical && root.align === "bottom"
+            ? Theme.px(46) : 0
 
         Rectangle {
             visible: !root.revealed && !root.vertical

@@ -272,7 +272,7 @@ All three surfaces share these fields:
 - Settings → Dock → “PIN AN APP” lets you type an app name and press Enter to pin it.
 - Right-click a dock icon to pin/unpin it, open a new window or close it; the pin state is written back to `dock.pinned`.
 - `dock.trigger` (4–48 px) is the hot-zone height while hidden; larger is easier to hit. While hidden the zone is transparent, the panel is fully hidden (only a 2 px indicator line remains) and the exclusive zone is 0.
-- With `dock.avoid = false` the dock stays fully visible; `dock.autoHide` only applies while avoidance is on.
+- `dock.avoid` only controls window avoidance; `dock.autoHide` only controls hiding. They are independent.
 - When the dock shares an edge with the bar, the hot zone/indicator are drawn on the bar edge and the dock body attaches to the bar's inner edge; the input `mask` only keeps the dock and hot-zone regions, so the rest of the bar remains clickable.
 - `dock.position`: `top` / `bottom` / `left` / `right`; left/right are vertical side docks and `dock.align` becomes `top` / `center` / `bottom`.
 - `dock.deployMode`: `launcher` / `dashboard`; default/checked option in the deploy button chooser.
