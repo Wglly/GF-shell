@@ -312,7 +312,7 @@ UI 一律透過 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 ### 狀態列組件
 
-`bar.left`、`bar.center`、`bar.right` 是區塊 id 陣列。「設定 → 狀態列 → 組件」現在是 end-4pc 式拖放看板：把晶片拖進 LEFT / CENTER / RIGHT 即可移動與排序，拖到 OFF 即關閉；編輯器會即時改寫這三個陣列。
+`bar.left`、`bar.center`、`bar.right` 是區塊 id 陣列。「設定 → 狀態列 → 組件」現在是 end-4pc 式拖放看板：把晶片拖進 LEFT / CENTER / RIGHT 即可移動與排序，拖到 OFF 即關閉；也可以先點選晶片，再按上方的 LEFT / CENTER / RIGHT / OFF 按鈕移動。編輯器會即時改寫這三個陣列。
 
 
 ### 桌面佈局編輯

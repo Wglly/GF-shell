@@ -175,6 +175,8 @@ QtObject {
         "set.barDragHint": "DRAG A COMPONENT TO A ZONE · DROP INTO OFF TO HIDE",
         "set.barZoneLeft": "LEFT", "set.barZoneCenter": "CENTER", "set.barZoneRight": "RIGHT",
         "set.barZoneOff": "OFF / HIDDEN", "set.barResetLayout": "RESET BAR LAYOUT",
+        "set.barSelected": "SELECTED:", "set.barSelectHint": "CLICK A CHIP, THEN A ZONE — OR DRAG",
+
 
         "set.height": "HEIGHT", "set.height.desc": "Panel height (40 – 100% of the screen)",
         "set.align": "ALIGN", "set.align.desc": "Top / centre / bottom",
@@ -358,6 +360,8 @@ QtObject {
         "set.barDragHint": "拖動組件到左/中/右區塊 · 拖到 OFF 可隱藏",
         "set.barZoneLeft": "左側", "set.barZoneCenter": "中央", "set.barZoneRight": "右側",
         "set.barZoneOff": "關閉 / 隱藏", "set.barResetLayout": "重設狀態列佈局",
+        "set.barSelected": "已選取：", "set.barSelectHint": "點選組件再按區域，或直接拖動",
+
 
         "set.height": "高度", "set.height.desc": "面板高度（螢幕 40 – 100%）",
         "set.align": "對齊", "set.align.desc": "上 / 中 / 下",
@@ -642,6 +646,8 @@ QtObject {
         "set.barZoneRight": "右侧",
         "set.barZoneOff": "关闭 / 隐藏",
         "set.barResetLayout": "重设状态列布局",
+        "set.barSelected": "已选取：",
+        "set.barSelectHint": "点选组件再按区域，或直接拖动",
         "set.height": "高度",
         "set.height.desc": "面板高度（萤幕 40 – 100%）",
         "set.align": "对齐",
@@ -1023,6 +1029,8 @@ QtObject {
         "set.barDragHint": "コンポーネントを左／中央／右へドラッグ · OFF で非表示",
         "set.barZoneLeft": "左", "set.barZoneCenter": "中央", "set.barZoneRight": "右",
         "set.barZoneOff": "OFF / 非表示", "set.barResetLayout": "バーレイアウトをリセット",
+        "set.barSelected": "選択中：", "set.barSelectHint": "チップを選択してゾーンを押すか、ドラッグ",
+
 
         "set.height": "高さ", "set.height.desc": "パネルの高さ（画面の 40 – 100%）",
         "set.align": "整列", "set.align.desc": "上 / 中央 / 下",

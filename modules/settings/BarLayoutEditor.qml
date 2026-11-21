@@ -28,8 +28,10 @@ Item {
     property point dragStart: Qt.point(0, 0)
     property point dragPos: Qt.point(0, 0)
     property string hoverSection: ""
+    property string selectedKind: ""
+    property bool suppressClick: false
 
-    implicitHeight: Theme.fpx(360)
+    implicitHeight: Theme.fpx(392)
 
     function itemsFor(section) {
         if (section === "left") return root.leftItems;
@@ -134,7 +136,14 @@ Item {
         root.hoverSection = root.sectionAt(x, y);
     }
 
+    function moveSelected(section) {
+        if (root.selectedKind === "")
+            return;
+        root.move(root.selectedKind, section, itemsFor(section).length);
+    }
+
     function endDrag(x, y) {
+        root.suppressClick = root.dragging;
         if (root.dragging) {
             var section = root.sectionAt(x, y);
             if (section !== "")
@@ -154,12 +163,13 @@ Item {
         width: Math.max(Theme.fpx(76), labelItem.implicitWidth + Theme.fpx(20))
         height: Theme.fpx(28)
         opacity: root.dragging && root.dragKind === chip.kind ? 0.5 : 1
+        readonly property bool selected: root.selectedKind === chip.kind
 
         Rectangle {
             anchors.fill: parent
-            color: chip.hovered ? Sg.yellow : Sg.gray
-            border.width: 1
-            border.color: Theme.lineColor(Sg.ink)
+            color: chip.selected ? Sg.yellow : (chip.hovered ? Theme.mix(Sg.yellow, Sg.gray, 0.35) : Sg.gray)
+            border.width: chip.selected ? 2 : 1
+            border.color: chip.selected ? Sg.ink : Theme.lineColor(Sg.ink)
             radius: Theme.bf1 ? Theme.px(Theme.bf1Radius) : 0
         }
         Text {
@@ -178,6 +188,7 @@ Item {
             id: mouse
             anchors.fill: parent
             hoverEnabled: true
+            preventStealing: true
             cursorShape: Qt.SizeAllCursor
             onPressed: mouse => {
                 var p = chip.mapToItem(null, mouse.x, mouse.y);
@@ -192,6 +203,13 @@ Item {
             onReleased: mouse => {
                 var p = chip.mapToItem(null, mouse.x, mouse.y);
                 root.endDrag(p.x, p.y);
+            }
+            onClicked: {
+                if (root.suppressClick) {
+                    root.suppressClick = false;
+                    return;
+                }
+                root.selectedKind = root.selectedKind === chip.kind ? "" : chip.kind;
             }
         }
     }
@@ -249,6 +267,42 @@ Item {
             font.pixelSize: Theme.fs(9)
             color: Sg.ink
             opacity: 0.72
+        }
+
+        Row {
+            width: parent.width
+            spacing: Theme.fpx(4)
+            Text {
+                width: Theme.fpx(220)
+                anchors.verticalCenter: parent.verticalCenter
+                text: root.selectedKind !== ""
+                    ? I18n.t("set.barSelected") + " " + root.labelFor(root.selectedKind)
+                    : I18n.t("set.barSelectHint")
+                font.family: Theme.fontMono
+                font.pixelSize: Theme.fs(8)
+                color: Sg.ink
+                elide: Text.ElideRight
+            }
+            SgButton {
+                text: I18n.t("set.barZoneLeft")
+                enabled: root.selectedKind !== ""
+                onClicked: root.moveSelected("left")
+            }
+            SgButton {
+                text: I18n.t("set.barZoneCenter")
+                enabled: root.selectedKind !== ""
+                onClicked: root.moveSelected("center")
+            }
+            SgButton {
+                text: I18n.t("set.barZoneRight")
+                enabled: root.selectedKind !== ""
+                onClicked: root.moveSelected("right")
+            }
+            SgButton {
+                text: "OFF"
+                enabled: root.selectedKind !== ""
+                onClicked: root.moveSelected("off")
+            }
         }
 
         Row {

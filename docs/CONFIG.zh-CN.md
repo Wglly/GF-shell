@@ -293,7 +293,7 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 
 ### 状态栏组件
 
-`bar.left` / `bar.center` / `bar.right` 为区块 id 数组；「设置 → 状态栏 → 组件」现在是 end-4pc 式拖放看板：把芯片拖到 LEFT / CENTER / RIGHT 即可移动与排序，拖到 OFF 即关闭；编辑器会实时改写这三个数组。
+`bar.left` / `bar.center` / `bar.right` 为区块 id 数组；「设置 → 状态栏 → 组件」现在是 end-4pc 式拖放看板：把芯片拖到 LEFT / CENTER / RIGHT 即可移动与排序，拖到 OFF 即关闭；也可以先点击芯片，再按上方的 LEFT / CENTER / RIGHT / OFF 按钮移动。编辑器会实时改写这三个数组。
 
 
 ### 桌面布局编辑

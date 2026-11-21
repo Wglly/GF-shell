@@ -271,7 +271,7 @@ UI は常に `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` で色を
 
 ### バーコンポーネント
 
-`bar.left` / `bar.center` / `bar.right` はブロック id の配列です。設定 → ステータスバー → コンポーネントは end-4pc 風のドラッグボードになり、チップを LEFT / CENTER / RIGHT へドラッグして移動・並べ替え、OFF へドロップして非表示にできます。
+`bar.left` / `bar.center` / `bar.right` はブロック id の配列です。設定 → ステータスバー → コンポーネントは end-4pc 風のドラッグボードになり、チップを LEFT / CENTER / RIGHT へドラッグして移動・並べ替え、OFF へドロップして非表示にできます。チップをクリックしてから上の LEFT / CENTER / RIGHT / OFF ボタンで移動することもできます。
 
 
 ### デスクトップレイアウト編集

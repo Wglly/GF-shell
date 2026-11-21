@@ -583,6 +583,7 @@ PanelWindow {
 
                 Flickable {
                     id: flick
+                    interactive: !barEditor.dragging
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.top: pageHead.bottom
@@ -1246,6 +1247,7 @@ PanelWindow {
 
                             SgSection { width: parent.width; number: "04"; title: "COMPONENTS"; note: I18n.t("set.sec.barComponents") }
                             BarLayoutEditor {
+                                id: barEditor
                                 width: parent.width
                                 entries: root.barKinds
                             }

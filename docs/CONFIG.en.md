@@ -290,7 +290,7 @@ panel height and vertical placement; the panel scrolls when its components do no
 
 ### Bar components
 
-`bar.left`, `bar.center`, `bar.right` are arrays of block ids. Settings → Status bar → Components is now an end-4pc-style drag board: drag chips into LEFT / CENTER / RIGHT to move and order them, or into OFF to disable; the arrays are rewritten live.
+`bar.left`, `bar.center`, `bar.right` are arrays of block ids. Settings → Status bar → Components is now an end-4pc-style drag board: drag chips into LEFT / CENTER / RIGHT to move and order them, or into OFF to disable. You can also click a chip, then press the LEFT / CENTER / RIGHT / OFF buttons above. The arrays are rewritten live.
 
 
 ### Desktop layout editor
