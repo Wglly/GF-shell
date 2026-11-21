@@ -205,7 +205,7 @@
 | `bf1` | `assets/maps/bf1-europe.png`（ヨーロッパ戦線） |
 | `bf4` | `assets/maps/bf4-world.png`（全球ネットワーク） |
 | `arknights` | `assets/maps/arknights-rhodes.png`（テラ／ロードス島） |
-| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-continent.png`（大陸戦域） |
+| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-world.png`（大陸戦域） |
 
 `modules/themes/ThemeMapBackground.qml` が現在のテーマの 1 枚だけを選び、ライトモードでは読み込みません。画像は `scripts/gen_theme_maps.py` がローカルの Natural Earth ラスタから再生成します。
 

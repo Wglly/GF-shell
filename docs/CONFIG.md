@@ -205,7 +205,7 @@
 | `bf1` | `assets/maps/bf1-europe.png`（歐洲戰線） |
 | `bf4` | `assets/maps/bf4-world.png`（全球網路） |
 | `arknights` | `assets/maps/arknights-rhodes.png`（泰拉／羅德島） |
-| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-continent.png`（大陸戰區） |
+| `gfl` / `sangvis` / `neural` / `arctic` | `assets/maps/gfl-world.png`（大陸戰區） |
 
 `modules/themes/ThemeMapBackground.qml` 只會挑選目前主題的一張圖；亮色模式不載入地圖。圖片由 `scripts/gen_theme_maps.py` 從本機 Natural Earth 向量底圖重繪。
 

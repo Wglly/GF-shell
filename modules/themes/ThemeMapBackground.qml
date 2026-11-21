@@ -18,7 +18,7 @@ Item {
         case "gfl":
         case "sangvis":
         case "neural":
-        case "arctic": return Qt.resolvedUrl("../../assets/maps/gfl-continent.png");
+        case "arctic": return Qt.resolvedUrl("../../assets/maps/gfl-world.png");
         default: return "";
         }
     }

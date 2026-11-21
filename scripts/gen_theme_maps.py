@@ -215,33 +215,66 @@ def bf4():
 
 # --------------------------------------------------------------------- GFL
 def gfl():
-    im, arr, water = load_source(SRC_EUROPE, [(65, 95, 173), (175, 238, 238), (2, 206, 206)])
+    """Girls' Frontline world map: equirectangular Earth, dark bronze staff paper."""
+    im, arr, water = load_source(SRC_WORLD, [(255, 255, 255), (175, 238, 238)])
     rec = recolor(arr, water, PALETTES["gfl"], border_color=(16, 13, 9))
-    im = fit(Image.fromarray(rec), (1920, 1080))
-    im = grain(im, 3, 7)
-    im = vignette(im, 2.0, 0.66)
-    im = im.convert("RGBA")
-    ov = Image.new("RGBA", im.size, (0, 0, 0, 0)); d = ImageDraw.Draw(ov)
-    border(d, (54, 64, 1866, 1016), (201, 162, 74, 90))
-    grid(d, (64, 74, 1856, 1006), 120, (201, 162, 74, 16))
+    rec = Image.fromarray(rec)
+    W, H = 1920, 1080
+    mx0, my0, mx1, my1 = 40, 132, 1880, 980
+    mw, mh = mx1 - mx0, my1 - my0
+    world = rec.resize((mw, mh), Image.LANCZOS)
+    base = Image.new("RGBA", (W, H), (8, 9, 7, 255))
+    base.alpha_composite(world.convert("RGBA"), (mx0, my0))
+    base = grain(base.convert("RGB"), 3, 7).convert("RGBA")
+    ov = Image.new("RGBA", (W, H), (0, 0, 0, 0)); d = ImageDraw.Draw(ov)
+
     f_title = font(SERIF, 25); f_sub = font(MONO, 13); f_cap = font(SANS, 14); f_small = font(MONO, 10)
-    label(d, (82, 82), "THE CONTINENT", f_title, (238, 222, 190, 175), spacing=1)
-    label(d, (82, 114), "POST-COLLAPSE OPERATIONS MAP  ·  SECTOR 09", f_sub, (201, 162, 74, 145), spacing=1)
-    for text, x, y in [("SECTOR 09", 690, 500), ("SECTOR 11", 1160, 610), ("SECTOR 05", 850, 360),
-                       ("SANGVIS FERRI", 1080, 720), ("NEURAL CLOUD", 1450, 400), ("ARCTIC OPS", 800, 240)]:
-        label(d, (x, y), text, f_cap, (238, 222, 190, 95), anchor="mm", spacing=1)
-    # Contamination halos.
-    for x, y, r in [(980, 500, 150), (1180, 680, 120), (1450, 420, 110)]:
-        for rr in range(r, 12, -18):
-            d.ellipse([x - rr, y - rr, x + rr, y + rr], outline=(155, 58, 42, 20), width=1)
-    # Griffin routes and nodes.
-    for x, y in [(760, 480), (980, 500), (1160, 610), (1450, 400)]:
-        d.rectangle([x - 5, y - 5, x + 5, y + 5], outline=(232, 189, 79, 130), width=1)
-        d.line([(x - 9, y), (x + 9, y)], fill=(232, 189, 79, 70), width=1)
-    d.line([(760, 480), (980, 500), (1160, 610), (1450, 400)], fill=(232, 189, 79, 55), width=1)
-    label(d, (1840, 980), "GRIFFIN & KRYUGER // TACTICAL COMMAND", f_small, (201, 162, 74, 115), anchor="rs")
-    im = Image.alpha_composite(im, ov)
-    im.convert("RGB").save(os.path.join(OUT, "gfl-continent.png"), optimize=True)
+    border(d, (mx0 - 14, my0 - 14, mx1 + 14, my1 + 14), (201, 162, 74, 95))
+
+    # Lat/lon graticule across the full world.
+    for lon in range(-180, 181, 30):
+        x = mx0 + (lon + 180) / 360 * mw
+        d.line([(x, my0), (x, my1)], fill=(201, 162, 74, 18), width=1)
+    for lat in range(-60, 81, 20):
+        y = my0 + (80 - lat) / 140 * mh
+        d.line([(mx0, y), (mx1, y)], fill=(201, 162, 74, 18), width=1)
+
+    def ll(lon, lat):
+        return (mx0 + (lon + 180) / 360 * mw, my0 + (80 - lat) / 140 * mh)
+
+    # The Continent, the operational heart of GFL's world.
+    x1, y1 = ll(-18, 72); x2, y2 = ll(46, 34)
+    d.rectangle([x1, y1, x2, y2], outline=(232, 189, 79, 120), width=2)
+    d.line([(x1, y1), (x1 - 24, y1)], fill=(232, 189, 79, 130), width=1)
+    label(d, (x1 + 8, y1 + 8), "THE CONTINENT", f_cap, (238, 222, 190, 160), spacing=1)
+    label(d, (x1 + 8, y1 + 26), "SECTOR 09  ·  GRIFFIN & KRYUGER", f_small, (201, 162, 74, 130), spacing=1)
+
+    for text, lon, lat, anchor in [
+        ("NORTH AMERICA", -105, 46, "mm"), ("SOUTH AMERICA", -60, -16, "mm"),
+        ("EUROPE", 12, 48, "mm"), ("AFRICA", 20, 5, "mm"), ("ASIA", 92, 44, "mm"),
+        ("OCEANIA", 135, -26, "mm")]:
+        label(d, ll(lon, lat), text, f_cap, (238, 222, 190, 82), anchor=anchor, spacing=1)
+
+    # Contamination halos and faction nodes.
+    for lon, lat, radius in [(20, 49, 120), (36, 45, 100), (118, 32, 110), (22, 72, 80)]:
+        cx, cy = ll(lon, lat)
+        for rr in range(radius, 12, -18):
+            d.ellipse([cx - rr, cy - rr, cx + rr, cy + rr], outline=(155, 58, 42, 22), width=1)
+    for name, lon, lat in [("GRIFFIN & KRYUGER", 8, 50), ("SANGVIS FERRI", 34, 44),
+                           ("NEURAL CLOUD", 120, 31), ("ARCTIC OPS", 22, 72)]:
+        x, y = ll(lon, lat)
+        d.rectangle([x - 5, y - 5, x + 5, y + 5], outline=(232, 189, 79, 150), width=1)
+        d.line([(x - 9, y), (x + 9, y)], fill=(232, 189, 79, 80), width=1)
+        d.line([(x, y - 9), (x, y + 9)], fill=(232, 189, 79, 80), width=1)
+        label(d, (x + 12, y), name, f_small, (238, 222, 190, 125), spacing=0)
+
+    label(d, (70, 64), "THE WORLD", f_title, (238, 222, 190, 180), spacing=1)
+    label(d, (70, 96), "POST-COLLAPSE OPERATIONS MAP  ·  EQUIRECTANGULAR SURVEY", f_sub, (201, 162, 74, 150), spacing=1)
+    label(d, (mx0, 1030), "GRIFFIN & KRYUGER // TACTICAL COMMAND", f_small, (201, 162, 74, 120))
+    label(d, (mx1, 1030), "CLASSIFIED  ·  SECTOR ARCHIVE 09", f_small, (201, 162, 74, 120), anchor="ra")
+    im = Image.alpha_composite(base, ov)
+    im = vignette(im.convert("RGB"), 2.0, 0.50)
+    im.save(os.path.join(OUT, "gfl-world.png"), optimize=True)
 
 # --------------------------------------------------------------------- Arknights terra/Rhodes Island
 def ark():
@@ -335,6 +368,6 @@ def ark():
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
     hoi4(); bf1(); bf4(); gfl(); ark()
-    for n in ["hoi4-world-mercator.png", "bf1-europe.png", "bf4-world.png", "gfl-continent.png", "arknights-rhodes.png"]:
+    for n in ["hoi4-world-mercator.png", "bf1-europe.png", "bf4-world.png", "gfl-world.png", "arknights-rhodes.png"]:
         p = os.path.join(OUT, n)
         print(n, Image.open(p).size, os.path.getsize(p))
