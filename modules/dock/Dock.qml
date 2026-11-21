@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
+import qs.modules.themes
 
 // Dock — 屏幕底部的梯隊条：固定的单位 + 正在运行的单位。
 PanelWindow {
@@ -499,6 +500,8 @@ PanelWindow {
                 : (Theme.bf4 ? Theme.accent2 : Theme.accent)
             opacity: 0.7
         }
+
+        Hoi4DockChrome { anchors.fill: parent }
 
         Flow {
             id: contentRow

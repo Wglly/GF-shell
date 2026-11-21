@@ -108,6 +108,32 @@ Item {
         }
     }
 
+    // HoI4 staff-paper double rule and top/bottom brass plates.
+    Rectangle {
+        anchors.fill: parent
+        anchors.margins: Theme.px(6)
+        visible: Theme.hoi4 && root.cornerRadius <= 0
+        color: "transparent"
+        border.width: 1
+        border.color: Theme.lineColor(Theme.alpha(root.accentColor, 0.26), root.lineAlpha)
+    }
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        visible: Theme.hoi4
+        width: Theme.px(42)
+        height: Theme.px(2)
+        color: Theme.lineColor(Theme.alpha(root.accentColor, 0.85), root.lineAlpha)
+    }
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        visible: Theme.hoi4
+        width: Theme.px(28)
+        height: 1
+        color: Theme.lineColor(Theme.alpha(root.accentColor, 0.45), root.lineAlpha)
+    }
+
     Image {
         anchors.fill: parent
         anchors.margins: 1

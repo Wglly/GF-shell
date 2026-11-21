@@ -732,6 +732,7 @@ PanelWindow {
                                         { value: "arknights", label: "RHODES" },
                                         { value: "bf4", label: "BF4" },
                                         { value: "bf1", label: "BF1" },
+                                        { value: "hoi4", label: "HOI4" },
                                         { value: "light", label: "DAYLIGHT" }
                                     ]
                                     current: Settings.get("theme.preset", "gfl")

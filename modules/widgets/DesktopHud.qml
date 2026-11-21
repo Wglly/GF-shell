@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
+import qs.modules.themes
 
 // DesktopHud — 桌面常驻 HUD：大时钟、系统生命体征、通讯、当前任务。
 // 黑金面板 + 金色标题条，活在 background 层，窗口会盖在它上面。
@@ -62,6 +63,11 @@ PanelWindow {
             if (ShellState.commandRose)
                 ShellState.closeCommandRose();
         }
+    }
+
+    Hoi4DesktopChrome {
+        anchors.fill: parent
+        visible: Theme.hoi4 && root.hudVisible
     }
 
     // ------------------------------------------------------------------ 时钟
@@ -200,7 +206,7 @@ PanelWindow {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.px(10)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: I18n.t("hud.vitals")
+                    text: Theme.hoi4 ? "WAR INDUSTRY" : I18n.t("hud.vitals")
                     role: "mono"
                     size: Theme.sizeTiny
                     tracking: 1.8
@@ -211,7 +217,7 @@ PanelWindow {
                     anchors.right: parent.right
                     anchors.rightMargin: Theme.px(8)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "LIVE"
+                    text: Theme.hoi4 ? "CURRENT" : "LIVE"
                     role: "mono"
                     size: Theme.sizeTiny - 2
                     color: Theme.alpha(Theme.accent2, 0.9)
@@ -312,7 +318,7 @@ PanelWindow {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.px(10)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: I18n.t("hud.transmission")
+                    text: Theme.hoi4 ? "FOREIGN DISPATCH" : I18n.t("hud.transmission")
                     role: "mono"
                     size: Theme.sizeTiny
                     tracking: 1.8
@@ -462,7 +468,7 @@ PanelWindow {
                     anchors.left: parent.left
                     anchors.leftMargin: Theme.px(10)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: I18n.t("hud.currentMission")
+                    text: Theme.hoi4 ? "NATIONAL FOCUS" : I18n.t("hud.currentMission")
                     role: "mono"
                     size: Theme.sizeTiny
                     tracking: 1.8
@@ -742,7 +748,7 @@ PanelWindow {
                 GfText {
                     anchors.left: parent.left; anchors.leftMargin: Theme.px(10)
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "OPERATOR"
+                    text: Theme.hoi4 ? "HEAD OF STATE" : "OPERATOR"
                     role: "mono"; size: Theme.sizeTiny; tracking: 1.8; color: Theme.accent
                 }
                 GfText {

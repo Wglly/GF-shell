@@ -101,11 +101,14 @@ QtObject {
     readonly property bool arknights: preset === "arknights"
     readonly property bool bf4: preset === "bf4"
     readonly property bool bf1: preset === "bf1"
+    readonly property bool hoi4: preset === "hoi4"
     readonly property bool battle: bf4 || bf1
     readonly property string themeTitle: arknights ? "RHODES ISLAND"
-        : (bf4 ? "BATTLEFIELD 4" : (bf1 ? "BATTLEFIELD 1" : "GRIFFIN & KRYUGER"))
+        : (bf4 ? "BATTLEFIELD 4" : (bf1 ? "BATTLEFIELD 1"
+        : (hoi4 ? "HEARTS OF IRON IV" : "GRIFFIN & KRYUGER")))
     readonly property string dashboardTitle: arknights ? "RHODES DASHBOARD"
-        : (bf4 ? "COMMANDER DASHBOARD" : (bf1 ? "FIELD DASHBOARD" : "TACTICAL DASHBOARD"))
+        : (bf4 ? "COMMANDER DASHBOARD" : (bf1 ? "FIELD DASHBOARD"
+        : (hoi4 ? "NATIONAL SITUATION REPORT" : "TACTICAL DASHBOARD")))
     property bool scanlines: false          // 少前没有 CRT 扫描线，默认关
     property bool grain: true
     property bool brackets: true

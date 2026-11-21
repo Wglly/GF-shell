@@ -4,6 +4,7 @@ import Quickshell.Wayland
 import qs.modules.common
 import qs.modules.common.widgets
 import qs.services
+import qs.modules.themes
 
 // SidebarPanel — 左/右侧边栏：组件可自由分配到左/右，高度与垂直对齐可调。
 PanelWindow {
@@ -73,6 +74,36 @@ PanelWindow {
         case "wallpaper": return "CompWallpaper";
         default: return "";
         }
+    }
+
+    function panelTitle() {
+        if (Theme.hoi4)
+            return root.side === "left" ? "NATIONAL ARCHIVES" : "FOREIGN OFFICE";
+        if (Theme.arknights)
+            return root.side === "left" ? "RHODES ISLAND" : "COMMS";
+        if (Theme.bf4)
+            return root.side === "left" ? "SQUAD COMMAND" : "NETWORK";
+        if (Theme.bf1)
+            return root.side === "left" ? "FIELD HQ" : "SIGNALS";
+        if (Theme.preset === "sangvis")
+            return root.side === "left" ? "SANGVIS FERRI" : "COMMS";
+        if (Theme.preset === "neural")
+            return root.side === "left" ? "NEURAL CLOUD" : "COMMS";
+        if (Theme.preset === "arctic")
+            return root.side === "left" ? "ARCTIC OPS" : "COMMS";
+        return root.side === "left" ? I18n.t("sidebar.squad") : I18n.t("sidebar.comms");
+    }
+
+    function panelSub() {
+        if (Theme.hoi4)
+            return root.side === "left" ? "ARMY GROUP · DOSSIER" : "DIPLOMATIC CORPS · CABLE";
+        if (Theme.arknights)
+            return root.side === "left" ? "OPERATOR FILE" : "RHODES NETWORK";
+        if (Theme.bf4)
+            return root.side === "left" ? "SQUAD DOSSIER" : "BATTLELOG";
+        if (Theme.bf1)
+            return root.side === "left" ? "FIELD DOSSIER" : "SIGNAL CORPS";
+        return root.side === "left" ? I18n.t("sidebar.squadSub") : I18n.t("sidebar.commsSub");
     }
 
     function close() {
@@ -155,6 +186,8 @@ PanelWindow {
                 opacity: 0.25
             }
 
+            Hoi4SidebarChrome { anchors.fill: parent }
+
             // 头部
             Item {
                 id: header
@@ -175,12 +208,12 @@ PanelWindow {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: -3
                     GfText {
-                        text: root.side === "left" ? I18n.t("sidebar.squad") : I18n.t("sidebar.comms")
+                        text: root.panelTitle()
                         role: "display"; size: Theme.sizeMedium + 1
                         tracking: 2.4; bold: true
                     }
                     GfText {
-                        text: root.side === "left" ? I18n.t("sidebar.squadSub") : I18n.t("sidebar.commsSub")
+                        text: root.panelSub()
                         role: "ui"; size: Theme.sizeTiny - 1; tone: "faint"
                     }
                 }

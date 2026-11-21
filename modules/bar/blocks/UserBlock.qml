@@ -35,7 +35,9 @@ Item {
             spacing: -2
 
             GfText {
-                text: "OPERATOR"
+                text: Theme.hoi4 ? "HEAD OF STATE"
+                    : (Theme.arknights ? "DOCTOR" : (Theme.bf4 ? "COMMANDER"
+                    : (Theme.bf1 ? "OFFICER" : "OPERATOR")))
                 role: "mono"
                 size: Theme.sizeTiny - 3
                 color: Theme.alpha(Theme.accent, 0.65)

@@ -32,8 +32,11 @@ Item {
                 height: Theme.px(24)
                 skew: Theme.px(7)
                 checked: tab.active
-                number: ("0" + (tab.modelData.idx !== undefined ? tab.modelData.idx
-                    : (tab.modelData.id !== undefined ? tab.modelData.id : (index + 1)))).slice(-2)
+                readonly property int slotNo: tab.modelData.idx !== undefined ? tab.modelData.idx
+                    : (tab.modelData.id !== undefined ? tab.modelData.id : (index + 1))
+                number: Theme.hoi4
+                    ? (["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][tab.slotNo - 1] || ("" + tab.slotNo))
+                    : ("0" + tab.slotNo).slice(-2)
 
                 // 占用指示
                 Rectangle {

@@ -13,6 +13,16 @@ Item {
     implicitWidth: loader.item ? loader.item.implicitWidth : 0
     implicitHeight: loader.item ? loader.item.implicitHeight : root.bar ? root.bar.thickness : Theme.barHeight
 
+    Rectangle {
+        visible: Theme.hoi4
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: Theme.px(4)
+        height: 1
+        color: Theme.alpha(Theme.accent, 0.20)
+    }
+
     Loader {
         id: loader
         anchors.verticalCenter: parent.verticalCenter

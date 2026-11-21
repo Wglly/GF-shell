@@ -263,6 +263,17 @@ QtObject {
             ink: "#020c12",
             scanlines: true, brackets: false
         },
+        hoi4: {
+            name: "HEARTS OF IRON IV",
+            accent: "#c9a84f", accentHi: "#e8d28a", accentDim: "#6d5b2a",
+            accent2: "#7d8a63",
+            bg0: "#0d0f0a", bg1: "#15180f", bg: "#10130c",
+            panel: "#1c1f13", panelAlt: "#262a18", panelHi: "#353a21",
+            line: "#4d4a2c", lineBright: "#b59a4e",
+            text: "#eadfbd", textDim: "#b7aa81", textFaint: "#807652", textGhost: "#50492f",
+            ink: "#17140c",
+            scanlines: false, brackets: true
+        },
         bf1: {
             name: "BATTLEFIELD 1",
             accent: "#c9a05a", accentHi: "#efd19a", accentDim: "#6e552e",

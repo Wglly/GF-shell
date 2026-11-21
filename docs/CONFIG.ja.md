@@ -189,6 +189,7 @@
 | `arknights` | ロドスアイランド：黒 + 産業シアン + 白 | `#3fd4e6` |
 | `bf4` | Battlefield 4：深い青 + スキャンライン + 橙 | `#2a8fb0` |
 | `bf1` | Battlefield 1：古紙 + 真鍮 + 暗赤 | `#c9a05a` |
+| `hoi4` | Hearts of Iron IV：オリーブ charcoal + 真鍮 + 参謀紙 | `#c9a84f` |
 | `light` | デイライト：ニュートラルライトグレー＋深い金（ライト） | `#a97b18` |
 
 プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が

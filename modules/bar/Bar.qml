@@ -5,6 +5,7 @@ import qs.modules.common
 import qs.modules.common.widgets
 import qs.modules.bar
 import qs.services
+import qs.modules.themes
 
 // Bar — 每屏一条。少前式顶部黑带：金色细线、斜切页签、资源式读数。
 PanelWindow {
@@ -138,6 +139,8 @@ PanelWindow {
             }
         }
     }
+
+    Hoi4BarChrome { anchors.fill: parent }
 
     // ---------------------------------------------------------------- 左段
     Row {
