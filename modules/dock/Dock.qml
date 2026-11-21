@@ -332,7 +332,9 @@ PanelWindow {
     Item {
         id: triggerArea
         // 水平 Dock：状态栏边缘的一条；垂直 Dock：整条侧边。
-        width: root.vertical ? root.trigger
+        // A side hot zone is a thin 4 px strip parallel to the screen edge.
+        // Its length is configurable; the horizontal dock still uses dock.trigger.
+        width: root.vertical ? Theme.px(4)
             : (root.barOnSameEdge ? Theme.px(96) : parent.width)
         // A vertical Dock must not turn the entire screen edge into a hot zone:
         // only the area around its aligned position reveals it.

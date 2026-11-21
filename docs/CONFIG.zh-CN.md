@@ -293,7 +293,7 @@ UI 一律通过 `Theme.alpha(color, a)`、`Theme.mix()`、`Theme.shade()` 取色
 - `dock.pinned` 是桌面文件名数组；Dock 按顺序显示固定项目，并把正在运行但未固定的应用接在后面，上限 `dock.maxItems`（默认 12）。
 - 设置 → Dock 的“PIN AN APP”可输入应用名称后按 Enter 直接固定。
 - 右键点击 Dock 图标可固定/取消固定、开新窗口或关闭；固定状态写回 `dock.pinned`。
-- `dock.trigger`（4–48px）是 Dock 收起时的热区厚度；左右 Dock 另由 `dock.triggerLength`（4–320px，默认 72）控制热区沿屏幕边的长度。收起时热区透明、面板完全隐藏，仅留 2px 指示线；`exclusiveZone` 为 0。
+- `dock.trigger`（4–48px）是水平 Dock 收起时的热区厚度；左右 Dock 是 4px 边缘细条，另由 `dock.triggerLength`（4–320px，默认 72）控制长度。收起时热区透明、面板完全隐藏，仅留 2px 指示线；`exclusiveZone` 为 0。
 - `dock.avoid` 只控制窗口避让；`dock.autoHide` 只控制自动隐藏，两者独立。
 - Dock 与状态栏同边时，热区与指示线画在状态栏边缘，Dock 本体贴住状态栏内侧；`mask` 只保留 Dock/热区输入，状态栏其余部分仍可点。
 

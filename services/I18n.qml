@@ -234,8 +234,8 @@ QtObject {
         "set.seconds": "SECONDS", "set.seconds.desc": "Show seconds",
         "set.enabled": "ENABLED", "set.enabled.desc": "Show this panel",
         "set.avoid": "AVOID WINDOWS", "set.avoid.desc": "Hide when windows are open; expand on hover and push windows away",
-        "set.trigger": "TRIGGER AREA", "set.trigger.desc": "Hot-zone height when the dock is hidden (4 – 48 px)",
-        "set.triggerLength": "SIDE HOT ZONE", "set.triggerLength.desc": "Length of the hot zone around a left/right dock (4 – 320 px)",
+        "set.trigger": "TRIGGER AREA", "set.trigger.desc": "Horizontal-dock hot-zone thickness when hidden (4 – 48 px); side docks use a 4 px strip",
+        "set.triggerLength": "SIDE HOT ZONE", "set.triggerLength.desc": "Length of the 4 px edge strip for a left/right dock (4 – 320 px)",
 
 
         "set.maxItems": "MAX ITEMS", "set.maxItems.desc": "Number of apps shown (5 – 12)",
@@ -423,8 +423,8 @@ QtObject {
         "set.seconds": "秒數", "set.seconds.desc": "顯示秒數",
         "set.enabled": "啟用", "set.enabled.desc": "顯示此面板",
         "set.avoid": "避讓視窗", "set.avoid.desc": "有視窗時收起；滑到熱區展開並推開視窗",
-        "set.trigger": "觸發面積", "set.trigger.desc": "Dock 收起時的热區高度（4 – 48px）",
-        "set.triggerLength": "側邊熱區長度", "set.triggerLength.desc": "左右 Dock 熱區沿螢幕邊的長度（4 – 320px）",
+        "set.trigger": "觸發面積", "set.trigger.desc": "水平 Dock 收起時的熱區厚度（4 – 48px）；左右 Dock 使用 4px 細條",
+        "set.triggerLength": "側邊熱區長度", "set.triggerLength.desc": "左右 Dock 4px 邊緣熱區的長度（4 – 320px）",
 
 
         "set.maxItems": "最大數量", "set.maxItems.desc": "顯示的應用數量（5 – 12）",
@@ -749,9 +749,9 @@ QtObject {
         "set.avoid": "避让视窗",
         "set.avoid.desc": "有视窗时收起；滑到热区展开并推开视窗",
         "set.trigger": "触发面积",
-        "set.trigger.desc": "Dock 收起时的热区高度（4 – 48px）",
+        "set.trigger.desc": "水平 Dock 收起时的热区厚度（4 – 48px）；左右 Dock 使用 4px 细条",
         "set.triggerLength": "侧边热区长度",
-        "set.triggerLength.desc": "左右 Dock 热区沿屏幕边的长度（4 – 320px）",
+        "set.triggerLength.desc": "左右 Dock 4px 边缘热区的长度（4 – 320px）",
         "set.maxItems": "最大数量",
         "set.maxItems.desc": "显示的应用数量（5 – 12）",
         "set.deployMode": "部署按钮",
@@ -1099,8 +1099,8 @@ QtObject {
         "set.seconds": "秒", "set.seconds.desc": "秒を表示",
         "set.enabled": "有効", "set.enabled.desc": "このパネルを表示",
         "set.avoid": "ウィンドウ回避", "set.avoid.desc": "ウィンドウがあると隠れ、ホバーで展開して押し出す",
-        "set.trigger": "トリガー領域", "set.trigger.desc": "Dock 非表示時のホットゾーン高さ（4 – 48px）",
-        "set.triggerLength": "サイドホットゾーン", "set.triggerLength.desc": "左右 Dock のホットゾーン長さ（4 – 320px）",
+        "set.trigger": "トリガー領域", "set.trigger.desc": "水平 Dock の非表示時ホットゾーン厚（4 – 48px）。左右 Dock は 4px ストリップ",
+        "set.triggerLength": "サイドホットゾーン", "set.triggerLength.desc": "左右 Dock の 4px エッジストリップ長（4 – 320px）",
 
 
         "set.maxItems": "最大項目", "set.maxItems.desc": "表示するアプリ数（5 – 12）",
