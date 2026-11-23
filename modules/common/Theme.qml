@@ -45,30 +45,30 @@ QtObject {
 
     // ------------------------------------------------------------------ 色板
     // 底色：暖炭黑，不是冷蓝黑 —— 少前界面在暖色美术上叠黑色 UI。
-    property color bg0: "#070708"
-    property color bg1: "#0d0d0f"
-    property color bg: "#0a0a0c"
-    property color panel: "#141416"
-    property color panelAlt: "#1a1a1d"
-    property color panelHi: "#24242a"
-    property color line: "#403a2e"          // 暖灰棕
-    property color lineSoft: "#252420"
-    property color lineBright: "#c9a24a"    // 金线
+    property color bg0: "#151513"
+    property color bg1: "#1d1d1a"
+    property color bg: "#191917"
+    property color panel: "#242421"
+    property color panelAlt: "#2d2d29"
+    property color panelHi: "#3a3a34"
+    property color line: "#46443c"          // 暖灰棕
+    property color lineSoft: "#2f2e29"
+    property color lineBright: "#c8a24c"    // 金线
 
     // 金色是主强调色；钢蓝色是「基地/数据」类界面的副色。
-    property color accent: "#e8bd4f"
-    property color accentHi: "#ffd977"
-    property color accentDim: "#7d6428"
-    property color accent2: "#6f9bc4"       // steel blue
-    property color red: "#d34a34"
-    property color warn: "#e0a33a"
-    property color ok: "#8fc08a"
-    property color ink: "#12100c"           // 铺在金色上的文字
+    property color accent: "#d8aa4b"
+    property color accentHi: "#f0cf7a"
+    property color accentDim: "#7a6127"
+    property color accent2: "#87a0b2"       // steel blue
+    property color red: "#c6523c"
+    property color warn: "#d99a3f"
+    property color ok: "#93a47c"
+    property color ink: "#181611"           // 铺在金色上的文字
 
-    property color text: "#f2eee3"          // 纸白
-    property color textDim: "#b9b1a1"
-    property color textFaint: "#7d7668"
-    property color textGhost: "#4a463d"
+    property color text: "#f2efe6"          // 纸白
+    property color textDim: "#bcb5a8"
+    property color textFaint: "#857f73"
+    property color textGhost: "#514d45"
 
     // Settings surface tokens: the daylight paper console is shared by every
     // preset; only accent, warning and selection colours follow the theme.
@@ -95,7 +95,7 @@ QtObject {
     readonly property color goldDim: accentDim
     readonly property color steel: accent2
     readonly property color paper: text
-    readonly property color borderGold: Qt.rgba(accent.r, accent.g, accent.b, 0.55)
+    readonly property color borderGold: Qt.rgba(lineBright.r, lineBright.g, lineBright.b, 0.62)
     readonly property color borderWhite: "#33f2eee3"
 
     // 面板透明度

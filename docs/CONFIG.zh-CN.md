@@ -79,28 +79,28 @@
     "preset": "gfl",
     "bf1Radius": 12,
     "mode": "dark",
-    "bg0": "#070708",
-    "bg1": "#0d0d0f",
-    "bg": "#0a0a0c",
-    "textFaint": "#7d7668",
-    "textGhost": "#4a463d",
-    "ink": "#12100c",
-    "accentHi": "#ffd977",
-    "accentDim": "#7d6428",
+    "bg0": "#151513",
+    "bg1": "#1d1d1a",
+    "bg": "#191917",
+    "textFaint": "#857f73",
+    "textGhost": "#514d45",
+    "ink": "#181611",
+    "accentHi": "#f0cf7a",
+    "accentDim": "#7a6127",
     "fontScale": 1.0,
     "animSpeed": 1.0,
     "lineOpacity": 1.0,
     "settingsOpacity": 0.9,
     "settingsGray": 0.22,
-    "accent": "#e8bd4f",
-    "accent2": "#6f9bc4",
-    "panel": "#141416",
-    "panelAlt": "#1a1a1d",
-    "panelHi": "#24242a",
-    "line": "#403a2e",
-    "lineBright": "#c9a24a",
-    "text": "#f2eee3",
-    "textDim": "#b9b1a1",
+    "accent": "#d8aa4b",
+    "accent2": "#87a0b2",
+    "panel": "#242421",
+    "panelAlt": "#2d2d29",
+    "panelHi": "#3a3a34",
+    "line": "#46443c",
+    "lineBright": "#c8a24c",
+    "text": "#f2efe6",
+    "textDim": "#bcb5a8",
     "scanlines": false,
     "brackets": true,
     "panelOpacity": 0.95,
@@ -113,12 +113,12 @@
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "blur": true, "animations": true
     },
     "niri": {
       "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "border": true, "focus": false
     }
   },
@@ -182,15 +182,15 @@
 
 | preset | 说明 | 主色 |
 | --- | --- | --- |
-| `gfl` | G&K 标准：暖炭底 + 哑光金 | `#e8bd4f` |
-| `sangvis` | 铁血：近黑 + 警戒红 | `#d34a34` |
-| `neural` | 神经网络：深蓝 + 冰青 | `#7eb2d6` |
-| `arctic` | 极地：冷灰 + 淡金 | `#cbb98a` |
-| `arknights` | 罗德岛：近黑 + 工业青 + 白 | `#3fd4e6` |
-| `bf4` | 战地 4：深蓝 + 扫描线 + 橙 | `#2a8fb0` |
-| `bf1` | 战地 1：旧纸 + 黄铜 + 暗红 | `#c9a05a` |
+| `gfl` | G&K 标准：暖炭底 + 哑光金 | `#d8aa4b` |
+| `sangvis` | 铁血：近黑 + 警戒红 | `#c6523c` |
+| `neural` | 神经网络：深蓝 + 冰青 | `#6f9eb8` |
+| `arctic` | 极地：冷灰 + 淡金 | `#c9b27a` |
+| `arknights` | 罗德岛：近黑 + 工业青 + 白 | `#58b9c2` |
+| `bf4` | 战地 4：深蓝 + 扫描线 + 橙 | `#4a9db5` |
+| `bf1` | 战地 1：旧纸 + 黄铜 + 暗红 | `#c7a15b` |
 | `hoi4` | 钢铁雄心：橄榄炭底 + 黄铜 + 参谋纸 | `#c9a84f` |
-| `light` | 日照：中性亮灰底 + 深金（亮色） | `#a97b18` |
+| `light` | 日照：中性亮灰底 + 深金（亮色） | `#b0832b` |
 
 预设会写入整个 `theme.*` 色板，包括 `panel`、`line`、`text`…，所以切换后 UI 会立刻整体变化。
 自定义 `accent` 会把 `preset` 设为 `custom`。

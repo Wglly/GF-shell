@@ -760,12 +760,12 @@ PanelWindow {
                                 SgChoice {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     options: [
-                                        { value: "#e8bd4f", label: "GOLD" },
-                                        { value: "#d34a34", label: "RED" },
-                                        { value: "#6f9bc4", label: "STEEL" },
+                                        { value: "#d8aa4b", label: "GOLD" },
+                                        { value: "#c6523c", label: "RED" },
+                                        { value: "#87a0b2", label: "STEEL" },
                                         { value: "#e9e5da", label: "PAPER" }
                                     ]
-                                    current: Settings.get("theme.accent", "#e8bd4f")
+                                    current: Settings.get("theme.accent", "#d8aa4b")
                                     onSelected: value => Settings.set("theme.accent", value)
                                 }
                             }
@@ -880,7 +880,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(180)
-                                    text: Settings.get("theme.bg0", "#070708")
+                                    text: Settings.get("theme.bg0", "#151513")
                                     onAccepted: value => root.setHex("bg0", value)
                                 }
                             }
@@ -889,7 +889,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(180)
-                                    text: Settings.get("theme.bg1", "#0d0d0f")
+                                    text: Settings.get("theme.bg1", "#1d1d1a")
                                     onAccepted: value => root.setHex("bg1", value)
                                 }
                             }
@@ -898,7 +898,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(180)
-                                    text: Settings.get("theme.panel", "#141416")
+                                    text: Settings.get("theme.panel", "#242421")
                                     onAccepted: value => root.setHex("panel", value)
                                 }
                             }
@@ -907,7 +907,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(180)
-                                    text: Settings.get("theme.text", "#f2eee3")
+                                    text: Settings.get("theme.text", "#f2efe6")
                                     onAccepted: value => root.setHex("text", value)
                                 }
                             }
@@ -916,7 +916,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(180)
-                                    text: Settings.get("theme.accent", "#e8bd4f")
+                                    text: Settings.get("theme.accent", "#d8aa4b")
                                     onAccepted: value => root.setHex("accent", value)
                                 }
                             }
@@ -2111,7 +2111,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(220)
-                                    text: Settings.get("compositor.hypr.activeColor", "#e8bd4f")
+                                    text: Settings.get("compositor.hypr.activeColor", "#d8aa4b")
                                     onAccepted: value => CompositorSettings.setHypr("activeColor", value)
                                 }
                             }
@@ -2122,7 +2122,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(220)
-                                    text: Settings.get("compositor.hypr.inactiveColor", "#403a2e")
+                                    text: Settings.get("compositor.hypr.inactiveColor", "#46443c")
                                     onAccepted: value => CompositorSettings.setHypr("inactiveColor", value)
                                 }
                             }
@@ -2197,7 +2197,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(220)
-                                    text: Settings.get("compositor.niri.activeColor", "#e8bd4f")
+                                    text: Settings.get("compositor.niri.activeColor", "#d8aa4b")
                                     onAccepted: value => CompositorSettings.setNiri("activeColor", value)
                                 }
                             }
@@ -2207,7 +2207,7 @@ PanelWindow {
                                 SgField {
                                     anchors.right: parent.right; anchors.verticalCenter: parent.verticalCenter
                                     width: Theme.fpx(220)
-                                    text: Settings.get("compositor.niri.inactiveColor", "#403a2e")
+                                    text: Settings.get("compositor.niri.inactiveColor", "#46443c")
                                     onAccepted: value => CompositorSettings.setNiri("inactiveColor", value)
                                 }
                             }

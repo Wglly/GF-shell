@@ -79,28 +79,28 @@ Config file: `~/.config/gf-shell/config.json`
     "preset": "gfl",
     "bf1Radius": 12,
     "mode": "dark",
-    "bg0": "#070708",
-    "bg1": "#0d0d0f",
-    "bg": "#0a0a0c",
-    "textFaint": "#7d7668",
-    "textGhost": "#4a463d",
-    "ink": "#12100c",
-    "accentHi": "#ffd977",
-    "accentDim": "#7d6428",
+    "bg0": "#151513",
+    "bg1": "#1d1d1a",
+    "bg": "#191917",
+    "textFaint": "#857f73",
+    "textGhost": "#514d45",
+    "ink": "#181611",
+    "accentHi": "#f0cf7a",
+    "accentDim": "#7a6127",
     "fontScale": 1.0,
     "animSpeed": 1.0,
     "lineOpacity": 1.0,
     "settingsOpacity": 0.9,
     "settingsGray": 0.22,
-    "accent": "#e8bd4f",
-    "accent2": "#6f9bc4",
-    "panel": "#141416",
-    "panelAlt": "#1a1a1d",
-    "panelHi": "#24242a",
-    "line": "#403a2e",
-    "lineBright": "#c9a24a",
-    "text": "#f2eee3",
-    "textDim": "#b9b1a1",
+    "accent": "#d8aa4b",
+    "accent2": "#87a0b2",
+    "panel": "#242421",
+    "panelAlt": "#2d2d29",
+    "panelHi": "#3a3a34",
+    "line": "#46443c",
+    "lineBright": "#c8a24c",
+    "text": "#f2efe6",
+    "textDim": "#bcb5a8",
     "scanlines": false,
     "brackets": true,
     "panelOpacity": 0.95,
@@ -113,12 +113,12 @@ Config file: `~/.config/gf-shell/config.json`
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "blur": true, "animations": true
     },
     "niri": {
       "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "border": true, "focus": false
     }
   },
@@ -181,15 +181,15 @@ Auto-hide order on narrow screens: `title` → `media` → `stats` → `tray` �
 
 | preset | Description | Accent |
 | --- | --- | --- |
-| `gfl` | G&K standard: warm charcoal surfaces + matte gold | `#e8bd4f` |
-| `sangvis` | Sangvis Ferri: near-black + alert red | `#d34a34` |
-| `neural` | Neural Cloud: deep blue + ice cyan | `#7eb2d6` |
-| `arctic` | Arctic: cool grey + pale gold | `#cbb98a` |
-| `arknights` | Rhodes Island: near-black + industrial cyan + white | `#3fd4e6` |
-| `bf4` | Battlefield 4: deep blue + scanlines + orange | `#2a8fb0` |
-| `bf1` | Battlefield 1: aged paper + brass + dark red | `#c9a05a` |
+| `gfl` | G&K standard: warm charcoal surfaces + matte gold | `#d8aa4b` |
+| `sangvis` | Sangvis Ferri: near-black + alert red | `#c6523c` |
+| `neural` | Neural Cloud: deep blue + ice cyan | `#6f9eb8` |
+| `arctic` | Arctic: cool grey + pale gold | `#c9b27a` |
+| `arknights` | Rhodes Island: near-black + industrial cyan + white | `#58b9c2` |
+| `bf4` | Battlefield 4: deep blue + scanlines + orange | `#4a9db5` |
+| `bf1` | Battlefield 1: aged paper + brass + dark red | `#c7a15b` |
 | `hoi4` | Hearts of Iron IV: olive charcoal + brass + staff paper | `#c9a84f` |
-| `light` | Daylight: neutral light grey + deep gold (light) | `#a97b18` |
+| `light` | Daylight: neutral light grey + deep gold (light) | `#b0832b` |
 
 A preset writes the whole `theme.*` palette, including `panel`, `line`, `text`…, so switching repaints
 the entire UI immediately. Setting a custom `accent` changes `preset` to `custom`.
@@ -218,10 +218,10 @@ fontMono    = "Share Tech Mono"     // data, IDs
 fontLabel   = "Rajdhani"            // small uppercase labels
 
 // core palette (black & gold)
-bg0  #070708      panel      #141416      accent   #e8bd4f   (gold)
-bg1  #0d0d0f      panelAlt   #1a1a1d      accent2  #6f9bc4   (steel)
-line #403a2e      panelHi    #24242a      red      #d34a34
-text #f2eee3      lineBright #c9a24a      ok       #8fc08a
+bg0  #151513      panel      #242421      accent   #d8aa4b   (gold)
+bg1  #1d1d1a      panelAlt   #2d2d29      accent2  #87a0b2   (steel)
+line #46443c      panelHi    #3a3a34      red      #c6523c
+text #f2efe6      lineBright #c8a24c      ok       #93a47c
 
 // geometry
 chamfer = 6px     border = 1px     barHeight = 38px

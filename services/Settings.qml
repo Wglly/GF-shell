@@ -18,7 +18,7 @@ QtObject {
 
     function defaults() {
         return {
-            version: 8,
+            version: 10,
             language: "auto",            // auto | zh_TW | zh_CN | en | ja
             bar: {
                 position: "top",         // top | bottom
@@ -67,31 +67,31 @@ QtObject {
             theme: {
                 preset: "gfl",           // gfl | sangvis | neural | arctic | light
                 mode: "dark",            // dark | light | custom
-                bg0: "#070708",
-                bg1: "#0d0d0f",
-                bg: "#0a0a0c",
-                textFaint: "#7d7668",
-                textGhost: "#4a463d",
-                ink: "#12100c",
-                accentHi: "#ffd977",
-                accentDim: "#7d6428",
+                bg0: "#151513",
+                bg1: "#1d1d1a",
+                bg: "#191917",
+                panel: "#242421",
+                panelAlt: "#2d2d29",
+                panelHi: "#3a3a34",
+                line: "#46443c",
+                lineBright: "#c8a24c",
+                text: "#f2efe6",
+                textDim: "#bcb5a8",
+                textFaint: "#857f73",
+                textGhost: "#514d45",
+                ink: "#181611",
+                accent: "#d8aa4b",
+                accentHi: "#f0cf7a",
+                accentDim: "#7a6127",
+                accent2: "#87a0b2",
+                scanlines: false,
+                brackets: true,
                 fontScale: 1.0,
                 bf1Radius: 12,
                 animSpeed: 1.0,
                 lineOpacity: 1.0,
                 settingsOpacity: 0.9,
                 settingsGray: 0.22,
-                accent: "#e8bd4f",
-                accent2: "#6f9bc4",
-                panel: "#141416",
-                panelAlt: "#1a1a1d",
-                panelHi: "#24242a",
-                line: "#403a2e",
-                lineBright: "#c9a24a",
-                text: "#f2eee3",
-                textDim: "#b9b1a1",
-                scanlines: false,
-                brackets: true,
                 panelOpacity: 0.95,
                 scale: 1.0,
                 animations: true
@@ -199,91 +199,202 @@ QtObject {
     readonly property var presets: ({
         gfl: {
             name: "G&K STANDARD",
-            accent: "#e8bd4f", accent2: "#6f9bc4",
-            panel: "#141416", panelAlt: "#1a1a1d", panelHi: "#24242a",
-            line: "#403a2e", lineBright: "#c9a24a",
-            text: "#f2eee3", textDim: "#b9b1a1",
-            scanlines: false, brackets: true
+            accent: "#d8aa4b",
+            accentHi: "#f0cf7a",
+            accentDim: "#7a6127",
+            accent2: "#87a0b2",
+            bg0: "#151513",
+            bg1: "#1d1d1a",
+            bg: "#191917",
+            panel: "#242421",
+            panelAlt: "#2d2d29",
+            panelHi: "#3a3a34",
+            line: "#46443c",
+            lineBright: "#c8a24c",
+            text: "#f2efe6",
+            textDim: "#bcb5a8",
+            textFaint: "#857f73",
+            textGhost: "#514d45",
+            ink: "#181611",
+            scanlines: false,
+            brackets: true
         },
         sangvis: {
             name: "SANGVIS FERRI",
-            accent: "#d34a34", accent2: "#cfcabf",
-            panel: "#171314", panelAlt: "#1e1819", panelHi: "#2a2021",
-            line: "#4a332e", lineBright: "#8a4a3e",
-            text: "#f3ece6", textDim: "#b8a9a1",
-            scanlines: false, brackets: true
+            accent: "#c6523c",
+            accentHi: "#e47a5f",
+            accentDim: "#6f2a20",
+            accent2: "#c9c2b4",
+            bg0: "#171414",
+            bg1: "#201c1c",
+            bg: "#1b1818",
+            panel: "#282323",
+            panelAlt: "#322c2c",
+            panelHi: "#403838",
+            line: "#4b4140",
+            lineBright: "#c8a24c",
+            text: "#f2eee9",
+            textDim: "#bfb4ad",
+            textFaint: "#877b75",
+            textGhost: "#514744",
+            ink: "#191312",
+            scanlines: false,
+            brackets: true
         },
         neural: {
             name: "NEURAL CLOUD",
-            accent: "#7eb2d6", accent2: "#a98ce0",
-            panel: "#10151a", panelAlt: "#151c23", panelHi: "#1e2831",
-            line: "#2f4150", lineBright: "#4e7590",
-            text: "#e9eef4", textDim: "#9fb0bf",
-            scanlines: false, brackets: true
+            accent: "#6f9eb8",
+            accentHi: "#9cc4d8",
+            accentDim: "#3d5b69",
+            accent2: "#c8a24c",
+            bg0: "#14181b",
+            bg1: "#1c2125",
+            bg: "#171c1f",
+            panel: "#242b30",
+            panelAlt: "#2e373d",
+            panelHi: "#3b464d",
+            line: "#3f4a51",
+            lineBright: "#c8a24c",
+            text: "#edf1f3",
+            textDim: "#b2bcc2",
+            textFaint: "#7e8a91",
+            textGhost: "#4b555b",
+            ink: "#111619",
+            scanlines: false,
+            brackets: true
+        },
+        arctic: {
+            name: "ARCTIC OPS",
+            accent: "#c9b27a",
+            accentHi: "#e4d3a0",
+            accentDim: "#6f6243",
+            accent2: "#8f9ea8",
+            bg0: "#161819",
+            bg1: "#1e2123",
+            bg: "#191c1d",
+            panel: "#272b2d",
+            panelAlt: "#313639",
+            panelHi: "#3e4447",
+            line: "#454b4f",
+            lineBright: "#c8a24c",
+            text: "#f0f1ef",
+            textDim: "#b9bfc0",
+            textFaint: "#838a8c",
+            textGhost: "#4f5557",
+            ink: "#131617",
+            scanlines: false,
+            brackets: false
+        },
+        arknights: {
+            name: "RHODES ISLAND",
+            accent: "#58b9c2",
+            accentHi: "#8bdde1",
+            accentDim: "#2b6d73",
+            accent2: "#d7d2c5",
+            bg0: "#131718",
+            bg1: "#1b2022",
+            bg: "#161b1c",
+            panel: "#232a2c",
+            panelAlt: "#2d3537",
+            panelHi: "#3a4346",
+            line: "#3c4749",
+            lineBright: "#c8a24c",
+            text: "#eef3f2",
+            textDim: "#b2bfbe",
+            textFaint: "#7b8988",
+            textGhost: "#4a5655",
+            ink: "#0e1516",
+            scanlines: false,
+            brackets: true
+        },
+        bf4: {
+            name: "BATTLEFIELD 4",
+            accent: "#4a9db5",
+            accentHi: "#7cc3d7",
+            accentDim: "#245a68",
+            accent2: "#d9873f",
+            bg0: "#11171b",
+            bg1: "#192127",
+            bg: "#141b20",
+            panel: "#222c33",
+            panelAlt: "#2c3840",
+            panelHi: "#39474f",
+            line: "#394a52",
+            lineBright: "#c8a24c",
+            text: "#e8f0f3",
+            textDim: "#a9b9c0",
+            textFaint: "#75868d",
+            textGhost: "#45555c",
+            ink: "#0b1215",
+            scanlines: true,
+            brackets: false
+        },
+        bf1: {
+            name: "BATTLEFIELD 1",
+            accent: "#c7a15b",
+            accentHi: "#e2c48a",
+            accentDim: "#6d5430",
+            accent2: "#9b4a36",
+            bg0: "#191612",
+            bg1: "#211d18",
+            bg: "#1c1915",
+            panel: "#29251e",
+            panelAlt: "#332e26",
+            panelHi: "#403a30",
+            line: "#494237",
+            lineBright: "#c8a24c",
+            text: "#f1eadc",
+            textDim: "#c1b6a3",
+            textFaint: "#887d6b",
+            textGhost: "#51493d",
+            ink: "#15110c",
+            scanlines: false,
+            brackets: true
+        },
+        hoi4: {
+            name: "HEARTS OF IRON IV",
+            accent: "#c9a84f",
+            accentHi: "#e3ce8a",
+            accentDim: "#6e5d2c",
+            accent2: "#87936c",
+            bg0: "#171810",
+            bg1: "#1f2117",
+            bg: "#1a1c13",
+            panel: "#27291f",
+            panelAlt: "#313428",
+            panelHi: "#3e4233",
+            line: "#464a3b",
+            lineBright: "#c8a24c",
+            text: "#eee9d8",
+            textDim: "#b9b29d",
+            textFaint: "#827c6a",
+            textGhost: "#4d493c",
+            ink: "#14150e",
+            scanlines: false,
+            brackets: true
         },
         light: {
             name: "DAYLIGHT OPS",
             mode: "light",
-            accent: "#a97b18", accent2: "#587489",
-            accentHi: "#cf9c22", accentDim: "#70540f",
-            bg0: "#e7e7e7", bg1: "#f1f1f1", bg: "#ebebeb",
-            panel: "#f6f6f6", panelAlt: "#e6e6e6", panelHi: "#d8d8d8",
-            line: "#bcbcbc", lineBright: "#8d8d8d",
-            text: "#1e1e1e", textDim: "#555555", textFaint: "#777777", textGhost: "#a3a3a3",
-            ink: "#111111",
-            scanlines: false, brackets: true
-        },
-        arctic: {
-            name: "ARCTIC OPS",
-            accent: "#cbb98a", accent2: "#9cb6c8",
-            panel: "#131517", panelAlt: "#191c1f", panelHi: "#23282c",
-            line: "#3a3f45", lineBright: "#6e7d88",
-            text: "#f0f2f4", textDim: "#aab4bc",
-            scanlines: false, brackets: false
-        },
-        arknights: {
-            name: "RHODES ISLAND",
-            accent: "#3fd4e6", accentHi: "#a9f7ff", accentDim: "#1d6d78",
-            accent2: "#e7e9e6",
-            bg0: "#080b0c", bg1: "#101516", bg: "#0b1011",
-            panel: "#11191b", panelAlt: "#172225", panelHi: "#223236",
-            line: "#2c4146", lineBright: "#4b858e",
-            text: "#f1f6f6", textDim: "#a7b8ba", textFaint: "#718486", textGhost: "#435354",
-            ink: "#061012",
-            scanlines: false, brackets: true
-        },
-        bf4: {
-            name: "BATTLEFIELD 4",
-            accent: "#2a8fb0", accentHi: "#73c9df", accentDim: "#145064",
-            accent2: "#e06b1f",
-            bg0: "#020509", bg1: "#071019", bg: "#04090e",
-            panel: "#07131c", panelAlt: "#0b1e2b", panelHi: "#122c3d",
-            line: "#173446", lineBright: "#2b6178",
-            text: "#d9edf5", textDim: "#89a8b5", textFaint: "#5f7f8c", textGhost: "#354d58",
-            ink: "#020c12",
-            scanlines: true, brackets: false
-        },
-        hoi4: {
-            name: "HEARTS OF IRON IV",
-            accent: "#c9a84f", accentHi: "#e8d28a", accentDim: "#6d5b2a",
-            accent2: "#7d8a63",
-            bg0: "#0d0f0a", bg1: "#15180f", bg: "#10130c",
-            panel: "#1c1f13", panelAlt: "#262a18", panelHi: "#353a21",
-            line: "#4d4a2c", lineBright: "#b59a4e",
-            text: "#eadfbd", textDim: "#b7aa81", textFaint: "#807652", textGhost: "#50492f",
-            ink: "#17140c",
-            scanlines: false, brackets: true
-        },
-        bf1: {
-            name: "BATTLEFIELD 1",
-            accent: "#c9a05a", accentHi: "#efd19a", accentDim: "#6e552e",
-            accent2: "#9b3a2a",
-            bg0: "#12100b", bg1: "#1b1710", bg: "#16120c",
-            panel: "#1e1810", panelAlt: "#272015", panelHi: "#34291b",
-            line: "#4c3f2b", lineBright: "#a9874e",
-            text: "#f1e6cf", textDim: "#c5b392", textFaint: "#8f7c5d", textGhost: "#5f513c",
-            ink: "#140f08",
-            scanlines: false, brackets: true
+            accent: "#b0832b",
+            accentHi: "#c99d43",
+            accentDim: "#705219",
+            accent2: "#6f7f86",
+            bg0: "#f0ede6",
+            bg1: "#f6f3ec",
+            bg: "#f2efe8",
+            panel: "#faf7f0",
+            panelAlt: "#eae5da",
+            panelHi: "#ddd6c8",
+            line: "#c9c0ae",
+            lineBright: "#b38c3e",
+            text: "#211f1b",
+            textDim: "#5c574f",
+            textFaint: "#8a8377",
+            textGhost: "#b7afa1",
+            ink: "#17140f",
+            scanlines: false,
+            brackets: true
         }
     })
 
@@ -356,6 +467,17 @@ QtObject {
         else
             root.set("language", "auto");
         root.set("version", 5);
+    }
+
+    // v9 → v10: harmonise every preset with the Sunborn charcoal / brass palette.
+    function migratePalette(parsed) {
+        var v = parsed && parsed.version ? parsed.version : 0;
+        if (v >= 10)
+            return;
+        var preset = root.get("theme.preset", "gfl");
+        if (root.presets[preset])
+            root.applyPreset(preset);
+        root.set("version", 10);
     }
 
     function applyPreset(name) {
@@ -499,6 +621,7 @@ QtObject {
                 root.migrateBluetooth(parsed);
                 root.migrateDockLimit(parsed);
                 root.migrateWallpaperComponent(parsed);
+                root.migratePalette(parsed);
             }
             if (!parsed)
                 root.save();

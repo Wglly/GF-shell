@@ -20,11 +20,11 @@ cannot be bundled.
 
 ## Rules extracted from the references
 
-1. **Base**: warm charcoal (`#141416` / `#070708`), not cold blue-black — it makes gold and paper-white
+1. **Base**: warm charcoal (`#242421` / `#151513`), not cold blue-black — it makes gold and paper-white
    text pop.
-2. **Primary accent**: matte gold `#e8bd4f`; the selected state is a **solid gold fill with black
+2. **Primary accent**: matte gold `#d8aa4b`; the selected state is a **solid gold fill with black
    text**, not just an outline.
-3. **Secondary accent**: steel blue `#6f9bc4` (base/data); **red** `#d34a34` is reserved for combat
+3. **Secondary accent**: steel blue `#87a0b2` (base/data); **red** `#c6523c` is reserved for combat
    power, alerts and dangerous actions.
 4. **Frames**: a 1 px gold line plus a second thin white line inset by 4 px (double frame); chamfers
    only on selected corners (top-right / bottom-left).

@@ -79,28 +79,28 @@
     "preset": "gfl",
     "bf1Radius": 12,
     "mode": "dark",
-    "bg0": "#070708",
-    "bg1": "#0d0d0f",
-    "bg": "#0a0a0c",
-    "textFaint": "#7d7668",
-    "textGhost": "#4a463d",
-    "ink": "#12100c",
-    "accentHi": "#ffd977",
-    "accentDim": "#7d6428",
+    "bg0": "#151513",
+    "bg1": "#1d1d1a",
+    "bg": "#191917",
+    "textFaint": "#857f73",
+    "textGhost": "#514d45",
+    "ink": "#181611",
+    "accentHi": "#f0cf7a",
+    "accentDim": "#7a6127",
     "fontScale": 1.0,
     "animSpeed": 1.0,
     "lineOpacity": 1.0,
     "settingsOpacity": 0.9,
     "settingsGray": 0.22,
-    "accent": "#e8bd4f",
-    "accent2": "#6f9bc4",
-    "panel": "#141416",
-    "panelAlt": "#1a1a1d",
-    "panelHi": "#24242a",
-    "line": "#403a2e",
-    "lineBright": "#c9a24a",
-    "text": "#f2eee3",
-    "textDim": "#b9b1a1",
+    "accent": "#d8aa4b",
+    "accent2": "#87a0b2",
+    "panel": "#242421",
+    "panelAlt": "#2d2d29",
+    "panelHi": "#3a3a34",
+    "line": "#46443c",
+    "lineBright": "#c8a24c",
+    "text": "#f2efe6",
+    "textDim": "#bcb5a8",
     "scanlines": false,
     "brackets": true,
     "panelOpacity": 0.95,
@@ -113,12 +113,12 @@
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "blur": true, "animations": true
     },
     "niri": {
       "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "border": true, "focus": false
     }
   },
@@ -182,15 +182,15 @@
 
 | preset | 說明 | 主色 |
 | --- | --- | --- |
-| `gfl` | G&K 標準：暖炭底 + 啞光金 | `#e8bd4f` |
-| `sangvis` | 鐵血：近黑 + 警戒紅 | `#d34a34` |
-| `neural` | 神經網絡：深藍 + 冰青 | `#7eb2d6` |
-| `arctic` | 極地：冷灰 + 淡金 | `#cbb98a` |
-| `arknights` | 羅德島：近黑 + 工業青 + 白 | `#3fd4e6` |
-| `bf4` | 戰地 4：深藍 + 掃描線 + 橙 | `#2a8fb0` |
-| `bf1` | 戰地 1：舊紙 + 黃銅 + 暗紅 | `#c9a05a` |
+| `gfl` | G&K 標準：暖炭底 + 啞光金 | `#d8aa4b` |
+| `sangvis` | 鐵血：近黑 + 警戒紅 | `#c6523c` |
+| `neural` | 神經網絡：深藍 + 冰青 | `#6f9eb8` |
+| `arctic` | 極地：冷灰 + 淡金 | `#c9b27a` |
+| `arknights` | 羅德島：近黑 + 工業青 + 白 | `#58b9c2` |
+| `bf4` | 戰地 4：深藍 + 掃描線 + 橙 | `#4a9db5` |
+| `bf1` | 戰地 1：舊紙 + 黃銅 + 暗紅 | `#c7a15b` |
 | `hoi4` | 鋼鐵雄心：橄欖炭底 + 黃銅 + 參謀紙 | `#c9a84f` |
-| `light` | 日照：中性亮灰底 + 深金（亮色） | `#a97b18` |
+| `light` | 日照：中性亮灰底 + 深金（亮色） | `#b0832b` |
 
 預設只會寫入 `theme.*` 的色票，其餘 token（`panel`、`line`、`text`…）也會一起被覆寫，
 所以切換後 UI 會立刻整體變化。自訂 `accent` 會把 `preset` 設為 `custom`。
@@ -219,10 +219,10 @@ fontMono    = "Share Tech Mono"     // 數據、編號
 fontLabel   = "Rajdhani"            // 小號大寫標籤
 
 // 主要色（黑金）
-bg0  #070708      panel      #141416      accent   #e8bd4f   (gold)
-bg1  #0d0d0f      panelAlt   #1a1a1d      accent2  #6f9bc4   (steel)
-line #403a2e      panelHi    #24242a      red      #d34a34
-text #f2eee3      lineBright #c9a24a      ok       #8fc08a
+bg0  #151513      panel      #242421      accent   #d8aa4b   (gold)
+bg1  #1d1d1a      panelAlt   #2d2d29      accent2  #87a0b2   (steel)
+line #46443c      panelHi    #3a3a34      red      #c6523c
+text #f2efe6      lineBright #c8a24c      ok       #93a47c
 
 // 幾何
 chamfer = 6px     border = 1px     barHeight = 38px

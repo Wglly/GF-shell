@@ -51,8 +51,8 @@ ShellRoot {
     Binding { target: Theme; property: "fontLabel"; value: Settings.get("fonts.label", "") !== "" ? Settings.get("fonts.label", "") : "Rajdhani" }
     Binding { target: Theme; property: "light"; value: Settings.get("theme.mode", "dark") === "light" }
     Binding { target: Theme; property: "bf1Radius"; value: Settings.get("theme.bf1Radius", 12) }
-    Binding { target: Theme; property: "accent"; value: Settings.get("theme.accent", "#e8bd4f") }
-    Binding { target: Theme; property: "accent2"; value: Settings.get("theme.accent2", "#6f9bc4") }
+    Binding { target: Theme; property: "accent"; value: Settings.get("theme.accent", "#d8aa4b") }
+    Binding { target: Theme; property: "accent2"; value: Settings.get("theme.accent2", "#87a0b2") }
     Binding { target: Theme; property: "scanlines"; value: Settings.get("theme.scanlines", true) }
     Binding { target: Theme; property: "brackets"; value: Settings.get("theme.brackets", true) }
     Binding { target: Theme; property: "panelOpacity"; value: Settings.get("theme.panelOpacity", 0.94) }
@@ -63,21 +63,21 @@ ShellRoot {
     Binding { target: Theme; property: "lineOpacity"; value: Settings.get("theme.lineOpacity", 1.0) }
 
     // 主题预设写入的完整色板
-    Binding { target: Theme; property: "bg0"; value: Settings.get("theme.bg0", "#070708") }
-    Binding { target: Theme; property: "bg1"; value: Settings.get("theme.bg1", "#0d0d0f") }
-    Binding { target: Theme; property: "bg"; value: Settings.get("theme.bg", "#0a0a0c") }
-    Binding { target: Theme; property: "textFaint"; value: Settings.get("theme.textFaint", "#7d7668") }
-    Binding { target: Theme; property: "textGhost"; value: Settings.get("theme.textGhost", "#4a463d") }
-    Binding { target: Theme; property: "ink"; value: Settings.get("theme.ink", "#12100c") }
-    Binding { target: Theme; property: "accentHi"; value: Settings.get("theme.accentHi", "#ffd977") }
-    Binding { target: Theme; property: "accentDim"; value: Settings.get("theme.accentDim", "#7d6428") }
-    Binding { target: Theme; property: "panel"; value: Settings.get("theme.panel", "#141416") }
-    Binding { target: Theme; property: "panelAlt"; value: Settings.get("theme.panelAlt", "#1a1a1d") }
-    Binding { target: Theme; property: "panelHi"; value: Settings.get("theme.panelHi", "#24242a") }
-    Binding { target: Theme; property: "line"; value: Settings.get("theme.line", "#403a2e") }
-    Binding { target: Theme; property: "lineBright"; value: Settings.get("theme.lineBright", "#c9a24a") }
-    Binding { target: Theme; property: "text"; value: Settings.get("theme.text", "#f2eee3") }
-    Binding { target: Theme; property: "textDim"; value: Settings.get("theme.textDim", "#b9b1a1") }
+    Binding { target: Theme; property: "bg0"; value: Settings.get("theme.bg0", "#151513") }
+    Binding { target: Theme; property: "bg1"; value: Settings.get("theme.bg1", "#1d1d1a") }
+    Binding { target: Theme; property: "bg"; value: Settings.get("theme.bg", "#191917") }
+    Binding { target: Theme; property: "textFaint"; value: Settings.get("theme.textFaint", "#857f73") }
+    Binding { target: Theme; property: "textGhost"; value: Settings.get("theme.textGhost", "#514d45") }
+    Binding { target: Theme; property: "ink"; value: Settings.get("theme.ink", "#181611") }
+    Binding { target: Theme; property: "accentHi"; value: Settings.get("theme.accentHi", "#f0cf7a") }
+    Binding { target: Theme; property: "accentDim"; value: Settings.get("theme.accentDim", "#7a6127") }
+    Binding { target: Theme; property: "panel"; value: Settings.get("theme.panel", "#242421") }
+    Binding { target: Theme; property: "panelAlt"; value: Settings.get("theme.panelAlt", "#2d2d29") }
+    Binding { target: Theme; property: "panelHi"; value: Settings.get("theme.panelHi", "#3a3a34") }
+    Binding { target: Theme; property: "line"; value: Settings.get("theme.line", "#46443c") }
+    Binding { target: Theme; property: "lineBright"; value: Settings.get("theme.lineBright", "#c8a24c") }
+    Binding { target: Theme; property: "text"; value: Settings.get("theme.text", "#f2efe6") }
+    Binding { target: Theme; property: "textDim"; value: Settings.get("theme.textDim", "#bcb5a8") }
 
     // --------------------------------------------------------------- 快捷键
     GlobalShortcut {

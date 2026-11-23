@@ -79,28 +79,28 @@
     "preset": "gfl",
     "bf1Radius": 12,
     "mode": "dark",
-    "bg0": "#070708",
-    "bg1": "#0d0d0f",
-    "bg": "#0a0a0c",
-    "textFaint": "#7d7668",
-    "textGhost": "#4a463d",
-    "ink": "#12100c",
-    "accentHi": "#ffd977",
-    "accentDim": "#7d6428",
+    "bg0": "#151513",
+    "bg1": "#1d1d1a",
+    "bg": "#191917",
+    "textFaint": "#857f73",
+    "textGhost": "#514d45",
+    "ink": "#181611",
+    "accentHi": "#f0cf7a",
+    "accentDim": "#7a6127",
     "fontScale": 1.0,
     "animSpeed": 1.0,
     "lineOpacity": 1.0,
     "settingsOpacity": 0.9,
     "settingsGray": 0.22,
-    "accent": "#e8bd4f",
-    "accent2": "#6f9bc4",
-    "panel": "#141416",
-    "panelAlt": "#1a1a1d",
-    "panelHi": "#24242a",
-    "line": "#403a2e",
-    "lineBright": "#c9a24a",
-    "text": "#f2eee3",
-    "textDim": "#b9b1a1",
+    "accent": "#d8aa4b",
+    "accent2": "#87a0b2",
+    "panel": "#242421",
+    "panelAlt": "#2d2d29",
+    "panelHi": "#3a3a34",
+    "line": "#46443c",
+    "lineBright": "#c8a24c",
+    "text": "#f2efe6",
+    "textDim": "#bcb5a8",
     "scanlines": false,
     "brackets": true,
     "panelOpacity": 0.95,
@@ -113,12 +113,12 @@
   "compositor": {
     "hypr": {
       "gapsIn": 5, "gapsOut": 10, "borderWidth": 1, "rounding": 8,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "blur": true, "animations": true
     },
     "niri": {
       "gaps": 16, "borderWidth": 2, "focusWidth": 4, "radius": 12,
-      "activeColor": "#e8bd4f", "inactiveColor": "#403a2e",
+      "activeColor": "#d8aa4b", "inactiveColor": "#46443c",
       "border": true, "focus": false
     }
   },
@@ -182,15 +182,15 @@
 
 | preset | 説明 | アクセント |
 | --- | --- | --- |
-| `gfl` | G&K 標準：ウォームチャコール + マットゴールド | `#e8bd4f` |
-| `sangvis` | サングヴィス・フェリ：ほぼ黒 + 警告の赤 | `#d34a34` |
-| `neural` | ニューラルクラウド：深い青 + アイスシアン | `#7eb2d6` |
-| `arctic` | アークティック：冷たいグレー + 淡い金 | `#cbb98a` |
-| `arknights` | ロドスアイランド：黒 + 産業シアン + 白 | `#3fd4e6` |
-| `bf4` | Battlefield 4：深い青 + スキャンライン + 橙 | `#2a8fb0` |
-| `bf1` | Battlefield 1：古紙 + 真鍮 + 暗赤 | `#c9a05a` |
+| `gfl` | G&K 標準：ウォームチャコール + マットゴールド | `#d8aa4b` |
+| `sangvis` | サングヴィス・フェリ：ほぼ黒 + 警告の赤 | `#c6523c` |
+| `neural` | ニューラルクラウド：深い青 + アイスシアン | `#6f9eb8` |
+| `arctic` | アークティック：冷たいグレー + 淡い金 | `#c9b27a` |
+| `arknights` | ロドスアイランド：黒 + 産業シアン + 白 | `#58b9c2` |
+| `bf4` | Battlefield 4：深い青 + スキャンライン + 橙 | `#4a9db5` |
+| `bf1` | Battlefield 1：古紙 + 真鍮 + 暗赤 | `#c7a15b` |
 | `hoi4` | Hearts of Iron IV：オリーブ charcoal + 真鍮 + 参謀紙 | `#c9a84f` |
-| `light` | デイライト：ニュートラルライトグレー＋深い金（ライト） | `#a97b18` |
+| `light` | デイライト：ニュートラルライトグレー＋深い金（ライト） | `#b0832b` |
 
 プリセットは `panel`、`line`、`text` などを含む `theme.*` 全体を書き換えるため、切り替えると UI 全体が
 即座に変わります。`accent` を個別に指定すると `preset` は `custom` になります。
