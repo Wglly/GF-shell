@@ -26,6 +26,7 @@ PanelWindow {
     readonly property bool arknights: Theme.arknights
     readonly property bool bf4: Theme.bf4
     readonly property bool bf1: Theme.bf1
+    readonly property bool hoi4: Theme.hoi4
     readonly property real cx: Math.max(Theme.px(300), Math.min(width - Theme.px(300), ShellState.roseX))
     readonly property real cy: Math.max(Theme.px(230), Math.min(height - Theme.px(230), ShellState.roseY))
     readonly property real radius: Math.min(Theme.px(235), Math.min(width, height) * 0.24)
@@ -203,14 +204,68 @@ PanelWindow {
             }
         }
 
+        // HoI4：参谋罗盘环 + 四向刻记 + 细密月桂刻度
+        Repeater {
+            model: root.hoi4 ? 4 : 0
+            Item {
+                required property int index
+                rotation: index * 90
+                Rectangle {
+                    x: root.radius * 0.92
+                    y: -1
+                    width: Theme.px(20)
+                    height: 2
+                    color: Theme.alpha(Theme.accentHi, 0.75)
+                }
+                Rectangle {
+                    x: root.radius * 0.98
+                    y: -2
+                    width: 4
+                    height: 4
+                    rotation: 45
+                    color: Theme.accentHi
+                }
+            }
+        }
+        Repeater {
+            model: root.hoi4 ? 32 : 0
+            Item {
+                required property int index
+                rotation: index * 11.25
+                Rectangle {
+                    x: root.radius * 0.87
+                    y: -0.5
+                    width: index % 4 === 0 ? Theme.px(8) : Theme.px(3)
+                    height: 1
+                    color: Theme.alpha(Theme.accent, index % 4 === 0 ? 0.55 : 0.25)
+                }
+            }
+        }
+        // Crosshair rules behind the centre plaque.
+        Rectangle {
+            visible: root.hoi4
+            anchors.centerIn: parent
+            width: root.radius * 1.55
+            height: 1
+            color: Theme.alpha(Theme.accent, 0.10)
+        }
+        Rectangle {
+            visible: root.hoi4
+            anchors.centerIn: parent
+            width: 1
+            height: root.radius * 1.55
+            color: Theme.alpha(Theme.accent, 0.10)
+        }
+
         // 中心徽章
         GfFrame {
             anchors.centerIn: parent
             width: Theme.px(194)
             height: Theme.px(82)
-            fill: root.bf1 ? "transparent" : Theme.alpha(Theme.bg0, 0.92)
-            borderColor: root.bf1 ? "transparent" : Theme.alpha(Theme.accent, 0.8)
-            chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? Theme.px(2) : Theme.px(6))
+            fill: root.bf1 ? "transparent" : Theme.alpha(Theme.bg0, root.hoi4 ? 0.96 : 0.92)
+            borderColor: root.bf1 ? "transparent"
+                : (root.hoi4 ? Theme.alpha(Theme.lineBright, 0.9) : Theme.alpha(Theme.accent, 0.8))
+            chamfer: root.bf1 ? 0 : (root.arknights || root.bf4 ? Theme.px(2) : (root.hoi4 ? 0 : Theme.px(6)))
             innerLine: !root.bf1
             padding: 0
 
@@ -223,29 +278,62 @@ PanelWindow {
                 border.color: Theme.lineColor(Theme.alpha(Theme.accent, 0.7))
             }
 
-            Column {
+            Rectangle {
+                visible: root.hoi4
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.top: parent.top
+                width: Theme.px(82)
+                height: Theme.px(3)
+                color: Theme.lineBright
+            }
+            Rectangle {
+                visible: root.hoi4
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                width: Theme.px(54)
+                height: 1
+                color: Theme.alpha(Theme.lineBright, 0.6)
+            }
+
+            Row {
                 anchors.centerIn: parent
-                spacing: 0
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: root.arknights ? "RHODES COMMAND"
-                        : (root.bf4 ? "COMMANDER"
-                        : (root.bf1 ? "FIELD ORDERS" : "G&K COMMAND"))
-                    font.family: Theme.fontDisplay
-                    font.pixelSize: Theme.fs(14)
-                    font.letterSpacing: 1.8
-                    color: Theme.arknights ? Theme.text : Theme.accentHi
+                spacing: root.hoi4 ? Theme.px(9) : 0
+
+                ThemeEmblemBadge {
+                    visible: root.hoi4
+                    width: root.hoi4 ? Theme.px(34) : 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    size: Theme.px(34)
+                    ribbon: false
+                    active: true
                 }
-                Text {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: root.arknights ? "COMMAND UPLINK"
-                        : (root.bf4 ? "SQUAD // ROSE"
-                        : (root.bf1 ? "1918 // SIGNAL"
-                        : "RIGHT CLICK // DESKTOP"))
-                    font.family: Theme.fontMono
-                    font.pixelSize: Theme.fs(7)
-                    font.letterSpacing: 1.2
-                    color: Theme.textDim
+
+                Column {
+                    anchors.verticalCenter: parent.verticalCenter
+                    spacing: 0
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: root.hoi4 ? "HIGH COMMAND"
+                            : (root.arknights ? "RHODES COMMAND"
+                        : (root.bf4 ? "COMMANDER"
+                        : (root.bf1 ? "FIELD ORDERS" : "G&K COMMAND")))
+                        font.family: Theme.fontDisplay
+                        font.pixelSize: Theme.fs(14)
+                        font.letterSpacing: root.hoi4 ? 1.4 : 1.8
+                        color: root.hoi4 ? Theme.lineBright : (Theme.arknights ? Theme.text : Theme.accentHi)
+                    }
+                    Text {
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        text: root.hoi4 ? "NATIONAL ORDERS // 1936"
+                            : (root.arknights ? "COMMAND UPLINK"
+                            : (root.bf4 ? "SQUAD // ROSE"
+                            : (root.bf1 ? "1918 // SIGNAL"
+                            : "RIGHT CLICK // DESKTOP")))
+                        font.family: Theme.fontMono
+                        font.pixelSize: Theme.fs(7)
+                        font.letterSpacing: 1.2
+                        color: root.hoi4 ? Theme.alpha(Theme.text, 0.72) : Theme.textDim
+                    }
                 }
             }
         }
