@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=GF Terminal
+Comment=GF-shell themed terminal with Kitty image support
+Exec=gf-term
+Terminal=false
+Categories=System;TerminalEmulator;
+Icon=utilities-terminal
+Keywords=terminal;shell;command;

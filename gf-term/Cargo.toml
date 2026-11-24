@@ -1,0 +1,33 @@
+[package]
+name = "gf-term"
+version = "0.1.0"
+edition = "2021"
+description = "GF-shell themed terminal with native Kitty-style image output"
+license = "MIT"
+repository = "https://github.com/Wglly/GF-shell"
+
+[[bin]]
+name = "gf-term"
+path = "src/main.rs"
+
+[[bin]]
+name = "gf-img"
+path = "src/bin/gf-img.rs"
+
+[dependencies]
+anyhow = "1"
+base64 = "0.22"
+fontdb = "0.23"
+fontdue = "0.9"
+image = { version = "0.25", default-features = false, features = ["png", "jpeg", "gif", "webp"] }
+portable-pty = "0.9"
+serde_json = "1"
+softbuffer = "0.4"
+unicode-width = "0.2"
+vte = "0.15"
+winit = "0.30"
+
+[profile.release]
+opt-level = 2
+lto = "thin"
+strip = true

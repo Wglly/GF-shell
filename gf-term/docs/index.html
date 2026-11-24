@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GF TERMINAL — GF-shell</title>
+<style>
+:root{--bg:#151513;--panel:#242421;--panel2:#2d2d29;--line:#46443c;--gold:#c8a24c;--accent:#d8aa4b;--text:#f2efe6;--dim:#bcb5a8;--faint:#857f73;--ink:#181611}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.6 "JetBrains Mono","Share Tech Mono",monospace}
+.wrap{max-width:1080px;margin:0 auto;padding:40px 26px 64px}
+header{border:1px solid var(--line);background:linear-gradient(135deg,var(--panel2),var(--panel));padding:26px 28px;position:relative;overflow:hidden}
+header:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(135deg,transparent 0 18px,#c8a24c0c 18px 19px);pointer-events:none}
+h1{font-size:clamp(28px,5vw,54px);letter-spacing:.16em;margin:0;color:var(--gold);font-weight:700}
+.sub{color:var(--faint);letter-spacing:.18em;margin:8px 0 0;font-size:12px}
+.badge{display:inline-block;border:1px solid var(--gold);color:var(--accent);padding:2px 8px;margin-top:16px;font-size:11px;letter-spacing:.14em}
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(240px,.8fr);gap:22px;margin-top:22px}
+.hero img{width:100%;display:block;border:1px solid var(--line);box-shadow:0 16px 40px #0008}
+.card{border:1px solid var(--line);background:var(--panel);padding:18px 20px}
+.card h2{font-size:12px;letter-spacing:.18em;color:var(--gold);margin:0 0 12px}
+ul{margin:0;padding-left:18px;color:var(--dim)} li{margin:6px 0}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}
+.grid .card h3{color:var(--text);font-size:14px;margin:0 0 6px} .grid .card p{color:var(--faint);margin:0;font-size:13px}
+pre{background:#0f0f0d;border:1px solid var(--line);padding:14px 16px;overflow:auto;color:var(--dim);font-size:13px}
+code{color:var(--accent)}
+a{color:var(--accent)} .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+.links a{border:1px solid var(--line);padding:8px 12px;text-decoration:none} .links a:hover{border-color:var(--gold);color:var(--text)}
+footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;letter-spacing:.1em}
+@media(max-width:760px){.hero,.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body><div class="wrap">
+<header>
+  <h1>GF TERMINAL</h1>
+  <p class="sub">A RUST TERMINAL FOR GF-SHELL // KITTY GRAPHICS NATIVE</p>
+  <span class="badge">CHARCOAL // BRASS // 0.1.0</span>
+</header>
+
+<div class="hero">
+  <img src="gf-term.png" alt="GF Terminal showing an emblem through Kitty graphics">
+  <div class="card">
+    <h2>DESIGN</h2>
+    <ul>
+      <li>GF-shell palette and monospace font loaded from config</li>
+      <li>Custom charcoal/brass title bar</li>
+      <li>ANSI/256 colour, CJK wide cells, scrollback</li>
+      <li>Native Kitty APC image protocol</li>
+      <li>Live theme reload with <code>Ctrl+Shift+R</code></li>
+    </ul>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="card"><h3>01 // IMAGES</h3><p>Run <code>gf-img photo.webp</code> inside the terminal. PNG, JPEG, GIF and WebP are converted and streamed as Kitty graphics.</p></div>
+  <div class="card"><h3>02 // THEME</h3><p>Uses <code>~/.config/gf-shell/config.json</code>: bg0, panel, lineBright, accent, text and fonts.mono. Falls back to GFL.</p></div>
+  <div class="card"><h3>03 // INPUT</h3><p>Arrow keys, function keys, Ctrl combinations, UTF-8 text, wheel scrollback, draggable custom title bar.</p></div>
+</div>
+
+<div class="card" style="margin-top:22px">
+<h2>INSTALL</h2>
+<pre><code>git clone https://github.com/Wglly/GF-shell.git
+cd GF-shell/gf-term
+cargo build --release
+./install.sh</code></pre>
+<p style="color:var(--faint);font-size:13px;margin-bottom:0">Installs <code>gf-term</code>, <code>gf-img</code> and a desktop entry into <code>~/.local</code>. Requires Rust, Wayland/X11 dev libraries, fontconfig and freetype2.</p>
+</div>
+
+<div class="links">
+<a href="https://github.com/Wglly/GF-shell/tree/main/gf-term">Source</a>
+<a href="https://github.com/Wglly/GF-shell/blob/main/gf-term/README.md">README / install details</a>
+<a href="https://github.com/Wglly/GF-shell">GF-shell</a>
+</div>
+<footer>GF-SHELL // GF TERMINAL // BUILT IN RUST</footer>
+</div></body></html>
