@@ -126,6 +126,8 @@ pub struct Terminal {
     pub title: String,
     pub bell: bool,
     pub theme: Theme,
+    pub cell_w: usize,
+    pub cell_h: usize,
     alternate: Option<Grid>,
 }
 
@@ -142,6 +144,8 @@ impl Terminal {
             title,
             bell: false,
             theme,
+            cell_w: 8,
+            cell_h: 18,
             alternate: None,
         }
     }
@@ -408,13 +412,32 @@ impl Terminal {
         }
     }
 
-    pub fn place_image(&mut self, id: u32, image: Arc<RgbaImage>) {
+    pub fn set_cell_size(&mut self, width: usize, height: usize) {
+        self.cell_w = width.max(1);
+        self.cell_h = height.max(1);
+    }
+
+    pub fn place_image(&mut self, id: u32, image: Arc<RgbaImage>, advance: bool) {
+        let row = self.grid.cy;
+        let col = self.grid.cx;
+        let rows = ((image.height() as usize + self.cell_h - 1) / self.cell_h).max(1);
         self.images.push(ImagePlacement {
             _id: id,
-            row: self.grid.cy as i32,
-            col: self.grid.cx,
+            row: row as i32,
+            col,
             image,
         });
+        if !advance {
+            return;
+        }
+        // Reserve the image's cells: the next prompt/session output starts below
+        // the image instead of being painted over it.
+        let target = row.saturating_add(rows).min(self.grid.rows.saturating_sub(1));
+        while self.grid.cy < target {
+            self.linefeed();
+        }
+        self.grid.cx = 0;
+        self.view_offset = 0;
     }
 
     fn set_fg_rgb(&mut self, c: Rgb) {

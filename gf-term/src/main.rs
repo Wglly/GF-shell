@@ -28,6 +28,7 @@ struct App {
     renderer: Renderer,
     parser: vte::Parser,
     splitter: ApcSplitter,
+    pending: Vec<u8>,
     term: Option<Terminal>,
     pty: Option<PtySession>,
     window: Option<Rc<Window>>,
@@ -55,6 +56,7 @@ impl App {
             renderer,
             parser: vte::Parser::new(),
             splitter: ApcSplitter::default(),
+            pending: Vec::new(),
             term: None,
             pty: None,
             window: None,
@@ -77,6 +79,7 @@ impl App {
         let (cols, rows) = self.renderer.cols_rows(width, height);
         let mut term = Terminal::new(cols, rows, self.theme.clone(), "shell".into());
         term.theme = self.theme.clone();
+        term.set_cell_size(self.renderer.cell_w, self.renderer.cell_h);
         self.term = Some(term);
         match PtySession::spawn(cols, rows) {
             Ok(p) => self.pty = Some(p),
@@ -93,6 +96,7 @@ impl App {
             .renderer
             .cols_rows(self.size.width as usize, self.size.height as usize);
         if let Some(t) = self.term.as_mut() {
+            t.set_cell_size(self.renderer.cell_w, self.renderer.cell_h);
             t.resize(cols, rows);
         }
         if let Some(p) = self.pty.as_mut() {
@@ -429,8 +433,16 @@ impl ApplicationHandler for App {
                 if c.is_empty() {
                     break;
                 }
-                self.feed(&c);
+                self.pending.extend_from_slice(&c);
             }
+        }
+        // Process output in bounded slices. A huge paste/image does not starve
+        // the renderer; the next prompt is parsed only after the output queued
+        // before it, so windows/prompts cannot be painted into half-drawn text.
+        if !self.pending.is_empty() {
+            let take = self.pending.len().min(256 * 1024);
+            let chunk: Vec<u8> = self.pending.drain(..take).collect();
+            self.feed(&chunk);
         }
         if self.dirty {
             self.dirty = false;
@@ -438,8 +450,9 @@ impl ApplicationHandler for App {
                 w.request_redraw();
             }
         }
+        let delay = if self.pending.is_empty() { 16 } else { 2 };
         event_loop.set_control_flow(ControlFlow::WaitUntil(
-            Instant::now() + Duration::from_millis(16),
+            Instant::now() + Duration::from_millis(delay),
         ));
     }
 }

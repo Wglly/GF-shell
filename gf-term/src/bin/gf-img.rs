@@ -60,6 +60,5 @@ fn main() {
         }
         pos = end;
     }
-    let _ = out.write_all(b"\r\n");
     let _ = out.flush();
 }

@@ -63,7 +63,7 @@ QtObject {
 
         "user.session": "SESSION", "user.host": "HOST", "user.uptime": "UPTIME",
         "user.loadout": "LOADOUT", "user.deploy": "DEPLOY", "user.tact": "TACT",
-        "user.config": "CONFIG", "user.halt": "HALT",
+        "user.config": "CONFIG", "user.halt": "HALT", "user.terminal": "TERMINAL",
 
         "media.lyrics": "LYRICS", "media.synced": "SYNCED", "media.plain": "PLAIN",
         "media.syncing": "SYNCING LYRIC DATABASE…", "media.linking": "LINKING…",
@@ -291,7 +291,7 @@ QtObject {
         "bar.launcher": "Deployment", "bar.workspaces": "Echelon", "bar.media": "Now playing",
         "bar.stats": "System load", "bar.network": "Network", "bar.bluetooth": "Bluetooth", "bar.wallpaper": "Wallpaper", "bar.volume": "Volume",
         "bar.battery": "Power cell", "bar.tray": "Tray", "bar.overview": "Operation map",
-        "bar.control": "Tactical control", "bar.power": "System halt"
+        "bar.control": "Tactical control", "bar.power": "System halt", "bar.terminal": "Terminal"
     })
 
     readonly property var zhTW: ({
@@ -502,7 +502,7 @@ QtObject {
 
         "user.session": "會話", "user.host": "主機", "user.uptime": "上線時間",
         "user.loadout": "裝備", "user.deploy": "部署", "user.tact": "戰術",
-        "user.config": "設定", "user.halt": "停機",
+        "user.config": "設定", "user.halt": "停機", "user.terminal": "終端",
 
         "media.lyrics": "歌詞", "media.synced": "同步", "media.plain": "純文字",
         "media.syncing": "同步歌詞資料庫…", "media.linking": "連線中…",
@@ -546,7 +546,7 @@ QtObject {
         "bar.clock": "時計", "bar.title": "視窗標題", "bar.media": "播放",
         "bar.stats": "系統負載", "bar.network": "網路", "bar.bluetooth": "藍牙", "bar.wallpaper": "壁紙", "bar.volume": "音量",
         "bar.battery": "電池", "bar.tray": "托盤", "bar.overview": "作戰地圖",
-        "bar.control": "戰術控制", "bar.power": "系統停機"
+        "bar.control": "戰術控制", "bar.power": "系統停機", "bar.terminal": "終端"
     })
 
     readonly property var zhCN: ({
@@ -888,7 +888,7 @@ QtObject {
         "user.deploy": "部署",
         "user.tact": "战术",
         "user.config": "设定",
-        "user.halt": "停机",
+        "user.halt": "停机", "user.terminal": "终端",
         "media.lyrics": "歌词",
         "media.synced": "同步",
         "media.plain": "纯文字",
@@ -971,7 +971,7 @@ QtObject {
         "bar.tray": "托盘",
         "bar.overview": "作战地图",
         "bar.control": "战术控制",
-        "bar.power": "系统停机"
+        "bar.power": "系统停机", "bar.terminal": "终端"
 })
 
     readonly property var ja: ({
@@ -1174,7 +1174,7 @@ QtObject {
         "popup.hint": "ESC  /  外側をクリックで閉じる",
         "user.session": "セッション", "user.host": "ホスト", "user.uptime": "稼働時間",
         "user.loadout": "装備", "user.deploy": "出撃", "user.tact": "戦術",
-        "user.config": "設定", "user.halt": "停止",
+        "user.config": "設定", "user.halt": "停止", "user.terminal": "端末",
         "media.lyrics": "歌詞", "media.synced": "同期", "media.plain": "プレーン",
         "media.syncing": "歌詞データベースを同期中…", "media.linking": "接続中…",
         "media.noLink": "未接続", "media.online": "オンライン",
@@ -1209,7 +1209,7 @@ QtObject {
         "bar.clock": "時計", "bar.title": "ウィンドウタイトル", "bar.media": "再生中",
         "bar.stats": "システム負荷", "bar.network": "ネットワーク", "bar.bluetooth": "Bluetooth", "bar.wallpaper": "壁紙", "bar.volume": "音量",
         "bar.battery": "バッテリー", "bar.tray": "トレイ", "bar.overview": "作戦マップ",
-        "bar.control": "戦術コントロール", "bar.power": "システム停止"
+        "bar.control": "戦術コントロール", "bar.power": "システム停止", "bar.terminal": "端末"
     })
 
     function t(key) {

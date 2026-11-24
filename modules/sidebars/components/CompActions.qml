@@ -14,6 +14,13 @@ Column {
         color: Theme.accent; tracking: 1.4
     }
 
+    GfButton {
+        width: parent.width
+        height: Theme.px(30)
+        text: I18n.t("user.terminal")
+        onClicked: { ShellState.closeSidebars(); Terminal.launch() }
+    }
+
     Grid {
         width: parent.width
         columns: 2

@@ -18,7 +18,7 @@ QtObject {
 
     function defaults() {
         return {
-            version: 10,
+            version: 11,
             language: "auto",            // auto | zh_TW | zh_CN | en | ja
             bar: {
                 position: "top",         // top | bottom
@@ -36,7 +36,7 @@ QtObject {
                 size: 1.0,
                 left: ["launcher", "user", "workspaces", "title"],
                 center: ["clock"],
-                right: ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]
+                right: ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "terminal", "control", "power"]
             },
             dock: {
                 enabled: true,
@@ -480,6 +480,25 @@ QtObject {
         root.set("version", 10);
     }
 
+    // v10 → v11: the branded GF Terminal gets a bar launcher.
+    function migrateTerminalItem(parsed) {
+        var v = parsed && parsed.version ? parsed.version : 0;
+        if (v >= 11)
+            return;
+        var left = root.get("bar.left", []);
+        var center = root.get("bar.center", []);
+        var right = root.get("bar.right", []);
+        var present = function (a) { return Array.isArray(a) && a.indexOf("terminal") >= 0; };
+        if (!present(left) && !present(center) && !present(right)) {
+            right = Array.isArray(right) ? right.slice() : [];
+            var idx = right.indexOf("control");
+            if (idx >= 0) right.splice(idx, 0, "terminal");
+            else right.push("terminal");
+            root.set("bar.right", right);
+        }
+        root.set("version", 11);
+    }
+
     function applyPreset(name) {
         var p = root.presets[name];
         if (!p)
@@ -622,6 +641,7 @@ QtObject {
                 root.migrateDockLimit(parsed);
                 root.migrateWallpaperComponent(parsed);
                 root.migratePalette(parsed);
+                root.migrateTerminalItem(parsed);
             }
             if (!parsed)
                 root.save();

@@ -65,7 +65,9 @@ PanelWindow {
 
     readonly property var leftItems: Settings.get("bar.left", ["launcher", "workspaces", "title"])
     readonly property var centerItems: Settings.get("bar.center", ["clock"])
-    readonly property var rightItems: Settings.get("bar.right", ["stats", "net", "bluetooth", "control", "power"])
+    readonly property var rightItems: Settings.get(
+        "bar.right",
+        ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "terminal", "control", "power"])
 
     // 窄屏幕按优先级隐藏
     function itemVisible(kind) {

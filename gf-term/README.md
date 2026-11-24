@@ -15,6 +15,9 @@ A self-contained HTML introduction is available at [docs/index.html](docs/index.
   accent, monospace font and family name.
 - Custom GF-style title bar: charcoal/brass frame, live shell title, close and
   minimise controls, draggable header.
+- **Launch from GF-shell**: the bar has a Terminal icon and the sidebar Quick
+  Actions card has a Terminal button; both call `Terminal.launch()`, so no
+  command line is needed.
 - **CFG popup** in the top-left: switches between the five GF-shell presets
   (G&K, Arknights, Battlefield 1, Battlefield 4, Hearts of Iron IV) and adjusts
   window opacity. The choice is saved in `~/.config/gf-term/config.json`.
@@ -24,7 +27,11 @@ A self-contained HTML introduction is available at [docs/index.html](docs/index.
   scrolling, cursor, bold/underline/reverse/strike attributes.
 - **Native image output**: implements the Kitty graphics APC protocol directly,
   including base64 PNG and raw RGB/RGBA transmission. There is no Sixel
-  dependency and no external image viewer.
+  dependency and no external image viewer. Images reserve their cell rows, so
+  the next prompt is printed below the image instead of over it.
+- **Flow-controlled output**: PTY bytes are parsed in bounded slices; a large
+  paste or image cannot starve the renderer or overlap the next prompt/session
+  block.
 - Ships with `gf-img`, a tiny helper that prints a Kitty graphics sequence for
   any PNG/JPEG/GIF/WebP file. It also works in Kitty, Ghostty and other
   Kitty-graphics terminals.
@@ -78,7 +85,17 @@ install -Dm755 target/release/gf-term ~/.local/bin/gf-term
 install -Dm755 target/release/gf-img ~/.local/bin/gf-img
 ```
 
-## Run
+## Run from GF-shell
+
+After `./install.sh`, click the **Terminal** icon on the GF-shell bar or the
+**Terminal** button in the sidebar Quick Actions card. Both launch `gf-term`
+directly. If the binary lives somewhere else, set:
+
+```json
+"terminal": { "command": "/path/to/gf-term" }
+```
+
+in `~/.config/gf-shell/config.json`. A manual launch is still available:
 
 ```bash
 gf-term
@@ -157,6 +174,8 @@ This is a focused terminal, not a clone of Alacritty or Kitty:
 - VT/ANSI coverage is broad but not exhaustive (alternate screen, scroll
   regions, SGR, cursor/erase, wide chars and common modes are implemented).
 - No text selection/clipboard or mouse-reporting modes yet.
+- Image placement reserves rows; very tall images larger than the viewport are
+  clipped rather than scaled into a separate floating layer.
 - Opacity is a whole-window alpha, so text fades with the frame rather than
   keeping a fully opaque glyph layer.
 - Kitty graphics is implemented at the transmit/place level; animation,

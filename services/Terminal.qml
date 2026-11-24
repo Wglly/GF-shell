@@ -12,7 +12,9 @@ QtObject {
     function launch() {
         var cmd = root.configured;
         if (cmd === "")
-            cmd = "for t in kitty foot alacritty wezterm konsole gnome-terminal; do command -v \"$t\" >/dev/null 2>&1 && exec \"$t\"; done";
+            cmd = "if command -v gf-term >/dev/null 2>&1; then exec gf-term; fi; "
+                + "for t in kitty foot alacritty wezterm konsole gnome-terminal; do "
+                + "command -v \"$t\" >/dev/null 2>&1 && exec \"$t\"; done";
         Quickshell.execDetached(["sh", "-c", cmd]);
     }
 

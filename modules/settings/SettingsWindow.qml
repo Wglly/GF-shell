@@ -107,6 +107,7 @@ PanelWindow {
         { key: "battery", labelKey: "bar.battery" },
         { key: "tray", labelKey: "bar.tray" },
         { key: "overview", labelKey: "bar.overview" },
+        { key: "terminal", labelKey: "bar.terminal" },
         { key: "control", labelKey: "bar.control" },
         { key: "power", labelKey: "bar.power" }
     ]
@@ -1251,7 +1252,7 @@ PanelWindow {
                                 onClicked: {
                                     Settings.set("bar.left", ["launcher", "user", "workspaces", "title"]);
                                     Settings.set("bar.center", ["clock"]);
-                                    Settings.set("bar.right", ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "control", "power"]);
+                                    Settings.set("bar.right", ["media", "wallpaper", "stats", "net", "bluetooth", "volume", "battery", "tray", "overview", "terminal", "control", "power"]);
                                 }
                             }
                         }

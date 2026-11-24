@@ -57,6 +57,8 @@ Item {
                 return Qt.resolvedUrl("blocks/TrayBlock.qml");
             case "overview":
                 return Qt.resolvedUrl("blocks/OverviewBlock.qml");
+            case "terminal":
+                return Qt.resolvedUrl("blocks/TerminalBlock.qml");
             case "control":
                 return Qt.resolvedUrl("blocks/ControlBlock.qml");
             case "power":

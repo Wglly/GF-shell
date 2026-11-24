@@ -46,6 +46,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:v
       <li>ANSI/256 colour, CJK wide cells, scrollback</li>
       <li>Native Kitty APC image protocol</li>
       <li>CFG panel: five GF-shell presets and window opacity</li>
+      <li>Launches from the GF-shell bar and sidebar Quick Actions</li>
       <li>Live theme reload with <code>Ctrl+Shift+R</code></li>
     </ul>
   </div>
@@ -54,7 +55,7 @@ footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);color:v
 <div class="grid">
   <div class="card"><h3>01 // IMAGES</h3><p>Run <code>gf-img photo.webp</code> inside the terminal. PNG, JPEG, GIF and WebP are converted and streamed as Kitty graphics.</p></div>
   <div class="card"><h3>02 // THEME + OPACITY</h3><p>CFG popup switches G&amp;K, Arknights, Battlefield 1, Battlefield 4 and Hearts of Iron IV; the slider sets window opacity. Both persist in <code>~/.config/gf-term/config.json</code>.</p></div>
-  <div class="card"><h3>03 // INPUT</h3><p>Arrow keys, function keys, Ctrl combinations, UTF-8 text, wheel scrollback, draggable custom title bar.</p></div>
+  <div class="card"><h3>03 // FLOW</h3><p>Images reserve cell rows and output is parsed in bounded slices, so the next prompt waits until the image or large output has finished.</p></div>
 </div>
 
 <div class="card" style="margin-top:22px">

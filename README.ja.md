@@ -63,7 +63,7 @@ IPC](#キーバインドと-ipc)
 | モジュール | 内容 |
 | --- | --- |
 | **ステータスバー (Bar)** | テーマ別の展開ターミナル（テーマごとの紋章と指揮表記、プリセット名は表示しない）、オペレーター入口、エシュロン／ワークスペース番号、アクティブウィンドウのタイトル、中央時計、メディア、CPU／メモリ、ネットワーク、Bluetooth、音量、バッテリー、展開式トレイ（アイコン＋最近のメッセージ）、壁紙ライブラリ、作戦マップ／戦術コントロール／システム停止への入口。狭い画面では副次ブロックを自動的に隠します。「設定 → ステータスバー → コンポーネント」の end-4pc 風ボードで、チップを左／中央／右へドラッグして並べ替え、OFF で非表示にできます。ネットワーク／Bluetooth／パフォーマンスは独立したブロックで、クリックすると詳細が開きます。ネットワーク詳細には付近の Wi-Fi 一覧が表示されます。 |
-| **GF TERMINAL** | GF-shell 専用の Rust 製ターミナル。チャコール／真鍮のタイトルバー、GF-shell のテーマ／フォント、ANSI／256 色、CJK、スクロールバック、Kitty 画像プロトコルをネイティブ対応。左上の CFG パネルで G&K／Arknights／Battlefield 1／Battlefield 4／Hearts of Iron IV と不透明度を切り替え可能。`gf-img` で PNG／JPEG／GIF／WebP を端末内に表示できます。詳細は [gf-term/README.md](gf-term/README.md)。 |
+| **GF TERMINAL** | GF-shell 専用の Rust 製ターミナル。チャコール／真鍮のタイトルバー、GF-shell のテーマ／フォント、ANSI／256 色、CJK、スクロールバック、Kitty 画像プロトコルをネイティブ対応。バーの Terminal アイコンとサイドバーの Quick Actions から起動可能。左上の CFG パネルで G&K／Arknights／Battlefield 1／Battlefield 4／Hearts of Iron IV と不透明度を切り替え可能。`gf-img` で PNG／JPEG／GIF／WebP を端末内に表示できます。詳細は [gf-term/README.md](gf-term/README.md)。 |
 | **デプロイ端末 (Launcher)** | 全画面のユニット一覧。カテゴリ（すべて／最近／通信／開発／メディア／オフィス／戦闘／システム）、あいまい検索、キーボード操作、右側のユニット情報（CLASS／STATUS／SOURCE／EXEC）と DEPLOY ボタン。展開後のタイトル、指揮サブタイトル、円形メダルは現在のテーマの紋章に切り替わります。マウスホイール／ドラッグでスクロールできます。 |
 | **ダッシュボード** | macOS Launchpad 風の全画面一覧。テーマ別タイトル、システム／電力／リンク／メディアの 4 枚のカード、ユニット検索、アプリグリッド、SETTINGS／CONTROL／MAP／LAUNCHER ショートカット。GFL／Arknights／BF4／BF1 でタイトル・背景・カード輪郭が変わります。 |
 | **戦術コントロール (Control Center)** | リンク状態（Wi-Fi／Bluetooth）、音量・亮度のセグメントスライダー、モジュールスイッチ、CPU／MEM／BAT のセグメントゲージ、通知履歴、メディア操作。バーポップアップ（`popupKind=control`）として開くため、デスクトップウィジェットは表示されたままです。 |

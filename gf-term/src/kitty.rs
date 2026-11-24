@@ -120,7 +120,8 @@ impl KittyParser {
         }
         if put {
             if let Some(img) = self.images.get(&id).cloned() {
-                term.place_image(id, img);
+                let advance = get("C").map(|v| v != "1").unwrap_or(true);
+                term.place_image(id, img, advance);
             }
             return;
         }
@@ -181,7 +182,8 @@ impl KittyParser {
             let arc = Arc::new(img);
             self.images.insert(id, arc.clone());
             if display {
-                term.place_image(id, arc);
+                let advance = get("C").map(|v| v != "1").unwrap_or(true);
+                term.place_image(id, arc, advance);
             }
             let _ = quiet;
         }
