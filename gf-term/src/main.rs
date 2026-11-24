@@ -1,3 +1,4 @@
+mod gl;
 mod kitty;
 mod pty;
 mod render;
@@ -11,10 +12,11 @@ use anyhow::Result;
 use winit::application::ApplicationHandler;
 use winit::dpi::{LogicalSize, PhysicalSize};
 use winit::event::{ElementState, MouseButton, MouseScrollDelta, WindowEvent};
-use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop, OwnedDisplayHandle};
+use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
 use winit::keyboard::{Key, ModifiersState, NamedKey};
 use winit::window::{Window, WindowId};
 
+use gl::GlState;
 use kitty::ApcSplitter;
 use pty::PtySession;
 use render::{Canvas, Renderer};
@@ -29,11 +31,15 @@ struct App {
     term: Option<Terminal>,
     pty: Option<PtySession>,
     window: Option<Rc<Window>>,
-    surface: Option<softbuffer::Surface<OwnedDisplayHandle, Rc<Window>>>,
-    context: Option<softbuffer::Context<OwnedDisplayHandle>>,
+    gl: Option<GlState>,
     size: PhysicalSize<u32>,
     mods: ModifiersState,
     close_hover: bool,
+    settings_hover: bool,
+    hover_theme: Option<usize>,
+    settings_open: bool,
+    dragging_opacity: bool,
+    opacity: f32,
     cursor: (f64, f64),
     dirty: bool,
     font_size: f32,
@@ -43,6 +49,7 @@ impl App {
     fn new(font_size: f32) -> Self {
         let theme = Theme::load();
         let renderer = Renderer::new(theme.clone(), font_size);
+        let (_, opacity) = theme::load_preferences();
         Self {
             theme,
             renderer,
@@ -51,11 +58,15 @@ impl App {
             term: None,
             pty: None,
             window: None,
-            surface: None,
-            context: None,
+            gl: None,
             size: PhysicalSize::new(1100, 720),
             mods: ModifiersState::empty(),
             close_hover: false,
+            settings_hover: false,
+            hover_theme: None,
+            settings_open: false,
+            dragging_opacity: false,
+            opacity,
             cursor: (0.0, 0.0),
             dirty: true,
             font_size,
@@ -102,6 +113,31 @@ impl App {
         }
     }
 
+    fn set_theme(&mut self, key: &str) {
+        if let Some(mut t) = Theme::preset(key) {
+            t.font = self.theme.font.clone();
+            self.theme = t.clone();
+            self.renderer.theme = t.clone();
+            if let Some(term) = self.term.as_mut() {
+                term.theme = t;
+            }
+            theme::save_preferences(&self.theme.name, self.opacity);
+            self.dirty = true;
+            if let Some(w) = self.window.as_ref() {
+                w.request_redraw();
+            }
+        }
+    }
+
+    fn set_opacity(&mut self, value: f32) {
+        self.opacity = value.clamp(0.25, 1.0);
+        theme::save_preferences(&self.theme.name, self.opacity);
+        self.dirty = true;
+        if let Some(w) = self.window.as_ref() {
+            w.request_redraw();
+        }
+    }
+
     fn feed(&mut self, bytes: &[u8]) {
         let mut clean = Vec::with_capacity(bytes.len());
         let mut apcs = Vec::new();
@@ -129,6 +165,32 @@ impl App {
     }
 
     fn send_key(&mut self, event: &winit::event::KeyEvent) {
+        if event.logical_key == Key::Named(NamedKey::F2) {
+            self.settings_open = !self.settings_open;
+            self.hover_theme = None;
+            self.dirty = true;
+            if let Some(w) = self.window.as_ref() { w.request_redraw(); }
+            return;
+        }
+        if self.settings_open && event.logical_key == Key::Named(NamedKey::Escape) {
+            self.settings_open = false;
+            self.hover_theme = None;
+            self.dirty = true;
+            return;
+        }
+        if self.settings_open {
+            if let Some(text) = event.text.as_ref() {
+                if let Some(ch) = text.chars().next() {
+                    if ('1'..='5').contains(&ch) {
+                        let key = theme::PRESET_KEYS[ch as usize - '1' as usize];
+                        self.set_theme(key);
+                        return;
+                    }
+                    if ch == '[' { self.set_opacity(self.opacity - 0.05); return; }
+                    if ch == ']' { self.set_opacity(self.opacity + 0.05); return; }
+                }
+            }
+        }
         let Some(text) = event.text.as_ref() else {
             self.send_named(event);
             return;
@@ -140,9 +202,6 @@ impl App {
                     return;
                 }
                 if self.mods.shift_key() && ch.eq_ignore_ascii_case(&'q') {
-                    if let Some(w) = self.window.as_ref() {
-                        w.request_redraw();
-                    }
                     return;
                 }
                 let c = ch.to_ascii_lowercase();
@@ -217,34 +276,22 @@ impl ApplicationHandler for App {
         let attrs = Window::default_attributes()
             .with_title("GF TERMINAL")
             .with_inner_size(LogicalSize::new(1100.0, 720.0))
-            .with_min_inner_size(LogicalSize::new(560.0, 340.0))
+            .with_min_inner_size(LogicalSize::new(620.0, 380.0))
             .with_decorations(false)
+            .with_transparent(true)
             .with_resizable(true);
-        let window = match event_loop.create_window(attrs) {
-            Ok(w) => Rc::new(w),
-            Err(_) => {
-                event_loop.exit();
-                return;
-            }
-        };
-        window.set_ime_allowed(true);
-        let context = match softbuffer::Context::new(event_loop.owned_display_handle()) {
+        let created = match GlState::create(event_loop, attrs, self.opacity) {
             Ok(c) => c,
-            Err(_) => {
+            Err(e) => {
+                eprintln!("gf-term: {e}");
                 event_loop.exit();
                 return;
             }
         };
-        let surface = match softbuffer::Surface::new(&context, window.clone()) {
-            Ok(s) => s,
-            Err(_) => {
-                event_loop.exit();
-                return;
-            }
-        };
+        let window = Rc::new(created.window);
+        window.set_ime_allowed(true);
         self.size = window.inner_size();
-        self.context = Some(context);
-        self.surface = Some(surface);
+        self.gl = Some(created.gl);
         self.window = Some(window.clone());
         self.create_session(self.size.width as usize, self.size.height as usize);
         window.request_redraw();
@@ -255,11 +302,10 @@ impl ApplicationHandler for App {
             WindowEvent::CloseRequested => event_loop.exit(),
             WindowEvent::Resized(size) => {
                 self.size = size;
-                if let (Some(surface), Some(w)) = (self.surface.as_mut(), self.window.as_ref()) {
-                    let _ = surface.resize(
-                        w.inner_size().width.max(1).try_into().unwrap(),
-                        w.inner_size().height.max(1).try_into().unwrap(),
-                    );
+                if let Some(w) = self.window.as_ref() {
+                    if let Some(gl) = self.gl.as_mut() {
+                        gl.resize(w);
+                    }
                 }
                 self.resize_all();
                 if let Some(w) = self.window.as_ref() {
@@ -269,6 +315,9 @@ impl ApplicationHandler for App {
             WindowEvent::ScaleFactorChanged { .. } => {
                 if let Some(w) = self.window.as_ref() {
                     self.size = w.inner_size();
+                    if let Some(gl) = self.gl.as_mut() {
+                        gl.resize(w);
+                    }
                 }
                 self.resize_all();
                 if let Some(w) = self.window.as_ref() {
@@ -283,33 +332,74 @@ impl ApplicationHandler for App {
             }
             WindowEvent::CursorMoved { position, .. } => {
                 self.cursor = (position.x, position.y);
-                let w = self
-                    .window
-                    .as_ref()
-                    .map(|w| w.inner_size().width)
-                    .unwrap_or(0);
-                let hover = position.x > (w as f64 - 38.0)
-                    && position.x < (w as f64 - 8.0)
+                let old = (self.settings_hover, self.hover_theme);
+                self.settings_hover = render::settings_button_hit(position.x, position.y);
+                self.hover_theme = if self.settings_open {
+                    render::panel_theme_at(position.x, position.y)
+                } else {
+                    None
+                };
+                let width = self.window.as_ref().map(|w| w.inner_size().width).unwrap_or(0);
+                let close = position.x > (width as f64 - 38.0)
+                    && position.x < (width as f64 - 8.0)
                     && position.y < 32.0;
-                if hover != self.close_hover {
-                    self.close_hover = hover;
+                self.close_hover = close;
+                if self.dragging_opacity && self.settings_open {
+                    if let Some(v) = render::panel_opacity_at(position.x, position.y) {
+                        self.set_opacity(v);
+                    }
+                }
+                if old != (self.settings_hover, self.hover_theme) || close {
                     if let Some(w) = self.window.as_ref() {
                         w.request_redraw();
                     }
                 }
             }
             WindowEvent::MouseInput { state, button, .. } => {
-                if state == ElementState::Pressed && button == MouseButton::Left {
+                if button != MouseButton::Left {
+                    return;
+                }
+                if state == ElementState::Released {
+                    self.dragging_opacity = false;
+                    return;
+                }
+                if state != ElementState::Pressed {
+                    return;
+                }
+                let (x, y) = self.cursor;
+                if render::settings_button_hit(x, y) {
+                    self.settings_open = !self.settings_open;
+                    self.dirty = true;
                     if let Some(w) = self.window.as_ref() {
-                        let ww = w.inner_size().width as f64;
-                        if self.close_hover {
-                            event_loop.exit();
-                        } else if self.cursor.1 < 34.0 {
-                            if self.cursor.0 > ww - 72.0 && self.cursor.0 < ww - 42.0 {
-                                w.set_minimized(true);
-                            } else {
-                                let _ = w.drag_window();
-                            }
+                        w.request_redraw();
+                    }
+                    return;
+                }
+                if self.settings_open {
+                    if let Some(i) = render::panel_theme_at(x, y) {
+                        let key = theme::PRESET_KEYS[i];
+                        self.set_theme(key);
+                        return;
+                    }
+                    if let Some(v) = render::panel_opacity_at(x, y) {
+                        self.dragging_opacity = true;
+                        self.set_opacity(v);
+                        return;
+                    }
+                    if render::panel_contains(x, y) {
+                        return;
+                    }
+                    self.settings_open = false;
+                }
+                if let Some(w) = self.window.as_ref() {
+                    let ww = w.inner_size().width as f64;
+                    if self.close_hover {
+                        event_loop.exit();
+                    } else if y < 34.0 {
+                        if x > ww - 72.0 && x < ww - 42.0 {
+                            w.set_minimized(true);
+                        } else {
+                            let _ = w.drag_window();
                         }
                     }
                 }
@@ -327,9 +417,7 @@ impl ApplicationHandler for App {
                     w.request_redraw();
                 }
             }
-            WindowEvent::RedrawRequested => {
-                self.draw();
-            }
+            WindowEvent::RedrawRequested => self.draw(),
             _ => {}
         }
     }
@@ -361,9 +449,6 @@ impl App {
         let Some(window) = self.window.as_ref().cloned() else {
             return;
         };
-        let Some(surface) = self.surface.as_mut() else {
-            return;
-        };
         let Some(term) = self.term.as_ref() else {
             return;
         };
@@ -371,26 +456,30 @@ impl App {
         if size.width == 0 || size.height == 0 {
             return;
         }
-        let _ = surface.resize(
-            size.width.max(1).try_into().unwrap(),
-            size.height.max(1).try_into().unwrap(),
-        );
-        let Ok(mut buffer) = surface.buffer_mut() else {
-            return;
-        };
-        let mut canvas = Canvas {
-            buf: &mut buffer,
-            w: size.width as usize,
-            h: size.height as usize,
-        };
-        self.renderer.draw(
-            &mut canvas,
-            term,
-            &term.title,
-            self.close_hover,
-            &self.theme.name,
-        );
-        let _ = buffer.present();
+        let w = size.width as usize;
+        let h = size.height as usize;
+        let mut pixels = vec![0u32; w * h];
+        {
+            let mut canvas = Canvas {
+                buf: &mut pixels,
+                w,
+                h,
+            };
+            self.renderer.draw(
+                &mut canvas,
+                term,
+                &term.title,
+                self.close_hover,
+                &self.theme.name,
+                self.settings_open,
+                self.opacity,
+                self.settings_hover,
+                self.hover_theme,
+            );
+        }
+        if let Some(gl) = self.gl.as_mut() {
+            gl.draw(&pixels, w, h, self.opacity);
+        }
         let title = if term.title.trim().is_empty() {
             "GF TERMINAL".to_string()
         } else {
@@ -413,8 +502,9 @@ fn main() -> Result<()> {
             "--help" | "-h" => {
                 println!("GF TERMINAL — GF-shell themed terminal with Kitty graphics");
                 println!("usage: gf-term [--font-size N]");
-                println!("  Ctrl+Shift+R  reload GF-shell theme");
-                println!("  gf-img FILE   display an image inside the terminal");
+                println!("  CFG (top-left)  terminal theme and opacity");
+                println!("  Ctrl+Shift+R    reload GF-shell theme");
+                println!("  gf-img FILE     display an image inside the terminal");
                 return Ok(());
             }
             "--version" | "-V" => {

@@ -3,7 +3,9 @@
 A small Rust terminal built for **GF-shell**, with its own title bar, the current
 GF-shell palette, and **native Kitty-style image output**.
 
-![GF TERMINAL showing the G&K crest through the Kitty graphics protocol](docs/gf-term.png)
+![GF TERMINAL with the CFG theme and opacity panel open](docs/gf-term.png)
+
+![GF TERMINAL showing the G&K crest through the Kitty graphics protocol](docs/gf-term-image.png)
 
 A self-contained HTML introduction is available at [docs/index.html](docs/index.html).
 
@@ -13,7 +15,11 @@ A self-contained HTML introduction is available at [docs/index.html](docs/index.
   accent, monospace font and family name.
 - Custom GF-style title bar: charcoal/brass frame, live shell title, close and
   minimise controls, draggable header.
-- `Ctrl+Shift+R` reloads the GF-shell theme without restarting the shell.
+- **CFG popup** in the top-left: switches between the five GF-shell presets
+  (G&K, Arknights, Battlefield 1, Battlefield 4, Hearts of Iron IV) and adjusts
+  window opacity. The choice is saved in `~/.config/gf-term/config.json`.
+- `Ctrl+Shift+R` reloads the GF-shell palette without restarting the shell;
+  the terminal preset and opacity are preserved.
 - Truecolor ANSI/256 colour terminal, wide CJK characters, scrollback, wheel
   scrolling, cursor, bold/underline/reverse/strike attributes.
 - **Native image output**: implements the Kitty graphics APC protocol directly,
@@ -31,12 +37,13 @@ Requirements:
 - Wayland and/or X11 development libraries
 - `fontconfig` + `freetype2`
 - `libxkbcommon` (Wayland)
+- Mesa / EGL or GLX (`glutin` creates the transparent OpenGL window)
 - a system monospace font; Nerd Fonts are recommended for glyph-heavy prompts
 
 Arch Linux example:
 
 ```bash
-sudo pacman -S --needed rust wayland libxkbcommon fontconfig freetype2
+sudo pacman -S --needed rust wayland libxkbcommon fontconfig freetype2 mesa
 ```
 
 Build:
@@ -89,6 +96,8 @@ custom title bar instead of client-side decorations:
 - drag the header to move the window
 - `×` closes
 - `_` minimises
+- `F2` or the sliders icon (top-left) opens the terminal settings panel
+- `1`–`5` inside the panel switches theme; `[` / `]` adjusts opacity
 - `Ctrl+Shift+R` reloads the GF-shell theme
 - mouse wheel scrolls back through history
 
@@ -126,6 +135,18 @@ The terminal reads these fields from `~/.config/gf-shell/config.json`:
 | `theme.text` / `textDim` | text |
 | `fonts.mono` | terminal font family |
 
+The terminal's own selection is stored separately:
+
+```json
+{
+  "theme": "gfl",
+  "opacity": 1.0
+}
+```
+
+`theme` is one of `gfl`, `arknights`, `bf1`, `bf4`, `hoi4`; `opacity` is
+`0.25`–`1.0`. The CFG panel writes this file immediately.
+
 If the file is absent, the GFL charcoal/brass palette is used. Set
 `GF_TERM_CONFIG` to use a different config file.
 
@@ -136,6 +157,8 @@ This is a focused terminal, not a clone of Alacritty or Kitty:
 - VT/ANSI coverage is broad but not exhaustive (alternate screen, scroll
   regions, SGR, cursor/erase, wide chars and common modes are implemented).
 - No text selection/clipboard or mouse-reporting modes yet.
+- Opacity is a whole-window alpha, so text fades with the frame rather than
+  keeping a fully opaque glyph layer.
 - Kitty graphics is implemented at the transmit/place level; animation,
   source-rectangle cropping and image deletion commands are not yet covered.
 - Images are anchored to terminal rows and scroll with the grid; scrollback
@@ -147,7 +170,8 @@ This is a focused terminal, not a clone of Alacritty or Kitty:
 gf-term/
 ├── src/main.rs        winit app, input, PTY wiring
 ├── src/terminal.rs    grid, VTE performer, ANSI/CSI handling
-├── src/render.rs      CPU framebuffer, fontdue glyphs, theme chrome
+├── src/render.rs      CPU framebuffer, fontdue glyphs, CFG panel
+├── src/gl.rs          OpenGL surface, alpha window output
 ├── src/kitty.rs       APC splitter + Kitty graphics parser
 ├── src/pty.rs         portable-pty session
 ├── src/theme.rs       GF-shell config/palette loader

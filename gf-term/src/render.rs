@@ -11,6 +11,36 @@ use crate::theme::{Rgb, Theme};
 
 const TITLE_H: usize = 36;
 const PAD: usize = 10;
+pub const PANEL_X: i32 = 8;
+pub const PANEL_Y: i32 = TITLE_H as i32 + 8;
+pub const PANEL_W: i32 = 330;
+pub const PANEL_H: i32 = 314;
+const ROW_Y: i32 = PANEL_Y + 48;
+const ROW_H: i32 = 34;
+const ROW_GAP: i32 = 5;
+
+pub fn settings_button_hit(x: f64, y: f64) -> bool { x >= 7.0 && x <= 45.0 && y >= 5.0 && y <= 31.0 }
+pub fn panel_contains(x: f64, y: f64) -> bool {
+    let x = x as i32; let y = y as i32;
+    x >= PANEL_X && x <= PANEL_X + PANEL_W && y >= PANEL_Y && y <= PANEL_Y + PANEL_H
+}
+pub fn panel_theme_at(x: f64, y: f64) -> Option<usize> {
+    let x = x as i32; let y = y as i32;
+    if x < PANEL_X + 14 || x > PANEL_X + PANEL_W - 14 { return None; }
+    for i in 0..5 {
+        let ry = ROW_Y + i as i32 * (ROW_H + ROW_GAP);
+        if y >= ry && y <= ry + ROW_H { return Some(i); }
+    }
+    None
+}
+pub fn panel_opacity_at(x: f64, y: f64) -> Option<f32> {
+    let x = x as i32; let y = y as i32;
+    let tx = PANEL_X + 16;
+    let tw = PANEL_W - 32;
+    let ty = PANEL_Y + 262;
+    if x < tx - 6 || x > tx + tw + 6 || y < ty - 12 || y > ty + 18 { return None; }
+    Some(((x - tx) as f32 / tw as f32).clamp(0.0, 1.0))
+}
 
 struct Glyph {
     width: usize,
@@ -326,6 +356,10 @@ impl Renderer {
         window_title: &str,
         close_hover: bool,
         preset: &str,
+        settings_open: bool,
+        opacity: f32,
+        settings_hover: bool,
+        hover_theme: Option<usize>,
     ) {
         let bg = self.theme.bg;
         let panel = self.theme.panel;
@@ -341,24 +375,18 @@ impl Renderer {
         canvas.rect(0, TITLE_H as i32 - 1, canvas.w as i32, 1, gold.darken(0.1));
         canvas.rect(0, 0, 5, TITLE_H as i32, gold);
         let base = (TITLE_H as f32 * 0.68) as i32;
-        self.draw_text(canvas, "GF TERMINAL", 18, base, gold, true);
+        // Settings launcher, top-left.
+        canvas.rect(7, 6, 38, 24, if settings_open || settings_hover { accent.darken(0.12) } else { panel });
+        canvas.rect(7, 6, 2, 24, gold);
+        let ic = if settings_open || settings_hover { ink } else { self.theme.text_dim };
+        for (iy, kx) in [(13, 15), (18, 25), (23, 19)] {
+            canvas.rect(14, iy, 22, 1, ic);
+            canvas.rect(kx, iy - 3, 4, 7, ic);
+        }
+        self.draw_text(canvas, "GF TERMINAL", 58, base, gold, true);
         let tw = self.text_width("GF TERMINAL");
-        self.draw_text(
-            canvas,
-            "//",
-            18 + tw as i32 + 8,
-            base,
-            self.theme.text_faint,
-            false,
-        );
-        self.draw_text(
-            canvas,
-            &preset.to_uppercase(),
-            18 + tw as i32 + 28,
-            base,
-            self.theme.text_dim,
-            false,
-        );
+        self.draw_text(canvas, "//", 58 + tw as i32 + 8, base, self.theme.text_faint, false);
+        self.draw_text(canvas, &preset.to_uppercase(), 58 + tw as i32 + 28, base, self.theme.text_dim, false);
         let title = window_title.replace('\n', " ");
         let max_chars = ((canvas.w.saturating_sub(380)) / self.cell_w.max(1)).max(8);
         let title: String = title.chars().take(max_chars).collect();
@@ -486,19 +514,40 @@ impl Renderer {
         canvas.rect(0, fy - 2, canvas.w as i32, 30, panel);
         canvas.rect(0, fy - 2, canvas.w as i32, 1, self.theme.line);
         self.draw_text(canvas, "GF-SHELL // TERMINAL", 12, fy + 15, gold, false);
-        let hint = if term.view_offset > 0 {
-            "SCROLLBACK"
-        } else {
-            "KITTY GRAPHICS READY"
-        };
-        let hint_w = self.text_width(hint) as i32;
-        self.draw_text(
-            canvas,
-            hint,
-            canvas.w as i32 - hint_w - 12,
-            fy + 15,
-            self.theme.text_faint,
-            false,
-        );
+        if settings_open {
+            let x = PANEL_X;
+            let y = PANEL_Y;
+            canvas.rect(x + 4, y + 5, PANEL_W, PANEL_H, Rgb::new(0, 0, 0));
+            canvas.rect(x, y, PANEL_W, PANEL_H, panel);
+            canvas.rect(x, y, PANEL_W, 1, gold);
+            canvas.rect(x, y, 1, PANEL_H, gold);
+            canvas.rect(x + PANEL_W - 1, y, 1, PANEL_H, gold);
+            canvas.rect(x, y + PANEL_H - 1, PANEL_W, 1, gold);
+            self.draw_text(canvas, "TERMINAL SETTINGS", x + 16, y + 22, gold, true);
+            self.draw_text(canvas, "ESC / CLICK OUTSIDE", x + 16, y + 39, self.theme.text_faint, false);
+            for i in 0..5 {
+                let ry = ROW_Y + i as i32 * (ROW_H + ROW_GAP);
+                let selected = preset == crate::theme::PRESET_KEYS[i];
+                let hovered = hover_theme == Some(i);
+                let row_bg = if selected { accent } else if hovered { accent.darken(0.55) } else { panel_alt };
+                canvas.rect(PANEL_X + 14, ry, PANEL_W - 28, ROW_H, row_bg);
+                canvas.rect(PANEL_X + 14, ry, 3, ROW_H, if selected { ink } else { gold });
+                let swatch = crate::theme::Theme::preset(crate::theme::PRESET_KEYS[i]).map(|t| t.accent).unwrap_or(gold);
+                canvas.rect(PANEL_X + 26, ry + 10, 14, 14, swatch);
+                self.draw_text(canvas, crate::theme::PRESET_LABELS[i], PANEL_X + 50, ry + 22, if selected { ink } else { text }, selected);
+                if selected { self.draw_text(canvas, "ACTIVE", PANEL_X + PANEL_W - 92, ry + 22, ink, false); }
+            }
+            self.draw_text(canvas, "OPACITY", PANEL_X + 16, PANEL_Y + 250, gold, false);
+            let pct = format!("{}%", (opacity * 100.0).round() as i32);
+            let pw = self.text_width(&pct) as i32;
+            self.draw_text(canvas, &pct, PANEL_X + PANEL_W - 16 - pw, PANEL_Y + 250, text, false);
+            let tx = PANEL_X + 16;
+            let tw = PANEL_W - 32;
+            canvas.rect(tx, PANEL_Y + 262, tw, 6, self.theme.line);
+            let fill = (tw as f32 * opacity.clamp(0.0, 1.0)) as i32;
+            canvas.rect(tx, PANEL_Y + 262, fill, 6, accent);
+            canvas.rect(tx + fill - 4, PANEL_Y + 257, 8, 16, gold);
+            self.draw_text(canvas, "GF-SHELL THEME SET", PANEL_X + 16, PANEL_Y + 298, self.theme.text_faint, false);
+        }
     }
 }

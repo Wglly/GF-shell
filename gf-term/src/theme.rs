@@ -90,7 +90,84 @@ fn config_path() -> PathBuf {
     PathBuf::from(base).join("gf-shell/config.json")
 }
 
+pub const PRESET_KEYS: [&str; 5] = ["gfl", "arknights", "bf1", "bf4", "hoi4"];
+pub const PRESET_LABELS: [&str; 5] = ["G&K", "ARKNIGHTS", "BATTLEFIELD 1", "BATTLEFIELD 4", "HEARTS OF IRON IV"];
+
+fn state_path() -> PathBuf {
+    if let Ok(p) = env::var("GF_TERM_STATE") {
+        return PathBuf::from(p);
+    }
+    let base = env::var("XDG_CONFIG_HOME")
+        .ok()
+        .or_else(|| env::var("HOME").ok().map(|h| format!("{h}/.config")))
+        .unwrap_or_else(|| ".".into());
+    PathBuf::from(base).join("gf-term/config.json")
+}
+
+pub fn load_preferences() -> (Option<String>, f32) {
+    let text = fs::read_to_string(state_path()).ok();
+    let mut theme = None;
+    let mut opacity = 1.0f32;
+    if let Some(text) = text {
+        if let Ok(v) = serde_json::from_str::<Value>(&text) {
+            if let Some(t) = v.get("theme").and_then(|x| x.as_str()) { theme = Some(t.to_string()); }
+            if let Some(o) = v.get("opacity").and_then(|x| x.as_f64()) { opacity = o.clamp(0.25, 1.0) as f32; }
+        }
+    }
+    (theme, opacity)
+}
+
+pub fn save_preferences(theme: &str, opacity: f32) {
+    let path = state_path();
+    if let Some(dir) = path.parent() { let _ = fs::create_dir_all(dir); }
+    let v = serde_json::json!({ "theme": theme, "opacity": opacity.clamp(0.25, 1.0) });
+    if let Ok(s) = serde_json::to_string_pretty(&v) { let _ = fs::write(path, s + "\n"); }
+}
+
 impl Theme {
+    pub fn preset(name: &str) -> Option<Self> {
+        let mut t = Self::default();
+        t.name = name.to_string();
+        match name {
+            "arknights" => {
+                t.bg = Rgb::new(0x13, 0x17, 0x18); t.panel = Rgb::new(0x23, 0x2a, 0x2c);
+                t.panel_alt = Rgb::new(0x2d, 0x35, 0x37); t.line = Rgb::new(0x3c, 0x47, 0x49);
+                t.gold = Rgb::new(0xc8, 0xa2, 0x4c); t.accent = Rgb::new(0x58, 0xb9, 0xc2);
+                t.accent_hi = Rgb::new(0x8b, 0xdd, 0xe1); t.accent2 = Rgb::new(0xd7, 0xd2, 0xc5);
+                t.text = Rgb::new(0xee, 0xf3, 0xf2); t.text_dim = Rgb::new(0xb2, 0xbf, 0xbe);
+                t.text_faint = Rgb::new(0x7b, 0x89, 0x88); t.ink = Rgb::new(0x0e, 0x15, 0x16);
+            }
+            "bf1" => {
+                t.bg = Rgb::new(0x19, 0x16, 0x12); t.panel = Rgb::new(0x29, 0x25, 0x1e);
+                t.panel_alt = Rgb::new(0x33, 0x2e, 0x26); t.line = Rgb::new(0x49, 0x42, 0x37);
+                t.gold = Rgb::new(0xc8, 0xa2, 0x4c); t.accent = Rgb::new(0xc7, 0xa1, 0x5b);
+                t.accent_hi = Rgb::new(0xe2, 0xc4, 0x8a); t.accent2 = Rgb::new(0x9b, 0x4a, 0x36);
+                t.text = Rgb::new(0xf1, 0xea, 0xdc); t.text_dim = Rgb::new(0xc1, 0xb6, 0xa3);
+                t.text_faint = Rgb::new(0x88, 0x7d, 0x6b); t.ink = Rgb::new(0x15, 0x11, 0x0c);
+            }
+            "bf4" => {
+                t.bg = Rgb::new(0x11, 0x17, 0x1b); t.panel = Rgb::new(0x22, 0x2c, 0x33);
+                t.panel_alt = Rgb::new(0x2c, 0x38, 0x40); t.line = Rgb::new(0x39, 0x4a, 0x52);
+                t.gold = Rgb::new(0xc8, 0xa2, 0x4c); t.accent = Rgb::new(0x4a, 0x9d, 0xb5);
+                t.accent_hi = Rgb::new(0x7c, 0xc3, 0xd7); t.accent2 = Rgb::new(0xd9, 0x87, 0x3f);
+                t.text = Rgb::new(0xe8, 0xf0, 0xf3); t.text_dim = Rgb::new(0xa9, 0xb9, 0xc0);
+                t.text_faint = Rgb::new(0x75, 0x86, 0x8d); t.ink = Rgb::new(0x0b, 0x12, 0x15);
+            }
+            "hoi4" => {
+                t.bg = Rgb::new(0x17, 0x18, 0x10); t.panel = Rgb::new(0x27, 0x29, 0x1f);
+                t.panel_alt = Rgb::new(0x31, 0x34, 0x28); t.line = Rgb::new(0x46, 0x4a, 0x3b);
+                t.gold = Rgb::new(0xc8, 0xa2, 0x4c); t.accent = Rgb::new(0xc9, 0xa8, 0x4f);
+                t.accent_hi = Rgb::new(0xe3, 0xce, 0x8a); t.accent2 = Rgb::new(0x87, 0x93, 0x6c);
+                t.text = Rgb::new(0xee, 0xe9, 0xd8); t.text_dim = Rgb::new(0xb9, 0xb2, 0x9d);
+                t.text_faint = Rgb::new(0x82, 0x7c, 0x6a); t.ink = Rgb::new(0x14, 0x15, 0x0e);
+            }
+            "gfl" => {}
+            _ => return None,
+        }
+        t.build_ansi();
+        Some(t)
+    }
+
     pub fn load() -> Self {
         let mut theme = Self::default();
         let path = config_path();
@@ -114,6 +191,16 @@ impl Theme {
                     theme.font = f;
                 }
             }
+        }
+        let base_font = theme.font.clone();
+        let gf_preset = theme.name.clone();
+        let (saved, _) = load_preferences();
+        let chosen = saved.or_else(|| {
+            if PRESET_KEYS.contains(&gf_preset.as_str()) { Some(gf_preset) } else { None }
+        }).unwrap_or_else(|| "gfl".into());
+        if let Some(mut p) = Self::preset(&chosen) {
+            p.font = base_font;
+            theme = p;
         }
         theme.build_ansi();
         theme

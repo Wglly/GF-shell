@@ -60,7 +60,7 @@ IPC](#快捷键与-ipc)
 | 模块 | 说明 |
 | --- | --- |
 | **状态栏 (Bar)** | 主题化部署终端（各主题不同徽记与指挥字样，不直接写主题名）、操作员入口、梯队/工作区编号、当前单位（窗口）标题、中央时钟、通讯/CPU/内存/网络/蓝牙/音量/电池/可展开托盘（图标＋最近消息）、壁纸库、作战地图、战术控制、系统停机。窄屏幕会自动隐藏次要区块；组件可在「设置 → 状态栏 → 组件」用 end-4pc 式拖放看板拖到左/中/右排序，或拖到 OFF 关闭。网络、蓝牙、性能监控为独立组件，点击展开详情；网络详情会列出附近可连接的 Wi-Fi。 |
-| **GF TERMINAL** | 用 Rust 编写的 GF-shell 专属终端：自绘炭黑/黄铜标题栏、读取 GF-shell 主题与字体、ANSI/256 色、CJK、滚动历史，并原生支持 Kitty 图片协议；附带 `gf-img` 可直接在终端显示 PNG/JPEG/GIF/WebP。详见 [gf-term/README.md](gf-term/README.md)。 |
+| **GF TERMINAL** | 用 Rust 编写的 GF-shell 专属终端：自绘炭黑/黄铜标题栏、读取 GF-shell 主题与字体、ANSI/256 色、CJK、滚动历史，并原生支持 Kitty 图片协议；左上角 CFG 面板可切换 G&K／明日方舟／战地 1／战地 4／钢铁雄心主题与窗口透明度；附带 `gf-img` 可直接在终端显示 PNG/JPEG/GIF/WebP。详见 [gf-term/README.md](gf-term/README.md)。 |
 | **部署终端 (Launcher)** | 全屏单位清单：分类（全部/最近/通讯/开发/媒体/文书/作战/系统）、模糊搜索、键盘导航、右侧单位档案（CLASS/STATUS/SOURCE/EXEC）与 DEPLOY；展开后的标题、指挥副标题与圆形勋章会换成当前主题的徽章；支持鼠标滚轮与拖动滚动。 |
 | **仪表盘 (Dashboard)** | macOS Launchpad 式全屏总览：顶部主题化标题、系统/电力/链路/媒体四张状态卡、单位搜索、应用网格与 SETTINGS/CONTROL/MAP/LAUNCHER 快捷键；GFL、Arknights、BF4、BF1 各有不同标题、背景与卡片轮廓。 |
 | **战术控制 (Control Center)** | 链路（Wi-Fi/蓝牙）、音量/亮度分段滑条、模块开关、CPU/MEM/BAT 分段仪表、通讯记录、随媒体控制。现在以状态栏弹出方式展开（`popupKind=control`），桌面组件保持可见。 |
