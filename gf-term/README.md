@@ -15,7 +15,7 @@ A self-contained HTML introduction is available at [docs/index.html](docs/index.
   minimise controls, draggable header.
 - `Ctrl+Shift+R` reloads the GF-shell theme without restarting the shell.
 - Truecolor ANSI/256 colour terminal, wide CJK characters, scrollback, wheel
-  scrolling, cursor, bold/italic/underline/reverse attributes.
+  scrolling, cursor, bold/underline/reverse/strike attributes.
 - **Native image output**: implements the Kitty graphics APC protocol directly,
   including base64 PNG and raw RGB/RGBA transmission. There is no Sixel
   dependency and no external image viewer.
